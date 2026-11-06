@@ -9,12 +9,14 @@ ROOT = Path(__file__).resolve().parents[1]
 class Inspector(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.links=[]; self.ids=set(); self.images=[]; self.title=False; self.lang=False
+        self.links=[]; self.ids=set(); self.duplicate_ids=set(); self.images=[]; self.title=False; self.lang=False
     def handle_starttag(self, tag, attrs):
         a=dict(attrs)
         if tag=="html": self.lang=bool(a.get("lang"))
         if tag=="title": self.title=True
-        if a.get("id"): self.ids.add(a["id"])
+        if a.get("id"):
+            if a["id"] in self.ids: self.duplicate_ids.add(a["id"])
+            self.ids.add(a["id"])
         if tag in ("a","link","script","img"):
             key={"a":"href","link":"href","script":"src","img":"src"}[tag]
             if a.get(key): self.links.append((tag,a[key]))
@@ -30,6 +32,7 @@ def main():
         except Exception as exc:
             failures.append(f"{name}: HTML parse error: {exc}");continue
         parsed[name]=doc
+        for duplicate in sorted(doc.duplicate_ids): failures.append(f"{name}: duplicate id {duplicate}")
         if not doc.lang: failures.append(f"{name}: missing html lang")
         if not doc.title: failures.append(f"{name}: missing title")
         for img in doc.images:
@@ -44,6 +47,10 @@ def main():
             if target.startswith("/"): continue  # site-root absolute URL; deployment dependent
             if not target and not u.fragment: continue
             path=(ROOT/name).parent/target if target else ROOT/name
+            path=path.resolve()
+            if not path.is_relative_to(ROOT.resolve()):
+                failures.append(f"{name}: local reference escapes site root {href}")
+                continue
             if path.is_dir(): path=path/"index.html"
             if not path.is_file():
                 failures.append(f"{name}: broken local {tag} reference {href}")
