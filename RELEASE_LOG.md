@@ -1,3 +1,12 @@
+## 2026-11-06 — Evidence assurance standards and claim acceptance matrix
+
+- Created `evidence-standards.html` (commit `4cf99fc`) with an accessible, responsive evidence classification reference and acceptance matrix for source-only, mock-only, DEV-reported/verified and production-verified claims.
+- Added a homepage entry point (commit `7bbd9c5`) and links to the verification ledger and screenshot register.
+- Evidence boundary: governance documentation, not new ServiceNow runtime functionality. No original screenshots or private materials were published; no production claims were added.
+- Verification: GitHub commits confirmed. Live Pages propagation and cross-device browser testing not independently verified.
+- Outstanding: source-to-runtime testing, authorised image review and approval, release propagation checks.
+- Licensing: static page none; ServiceNow scoped app, product-specific capabilities, IntegrationHub, AI, analytics and external API entitlements require target review.
+
 ## 2026-11-06 — Mobile navigation usability improvement
 
 - Commit `36a8634826ff375685d8c32a16ffbb93a4624050`: replaced the small-screen hidden primary navigation with a native HTML `details`/ `summary` expandable directory. Provides direct mobile access to both flagship projects, engineering case studies, pattern library, verification ledger, visual evidence and contact. The desktop navigation remains unchanged.
