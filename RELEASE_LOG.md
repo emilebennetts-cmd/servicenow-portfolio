@@ -1,3 +1,11 @@
+## 2026-11-06 — Source-led verification ledger
+
+- Added `verification-ledger.html` (commit `6d7f9fb`), linked from the portfolio home (commit `c578383`). Nine searchable/filterable evidence records with responsive presentation, keyboard-accessible filters, source links, claim-graduation criteria and entitlement disclosures.
+- Re-read current public Delivery Workbench and Diagnostic Workbench READMEs and the private portfolio-control README. Delivery source identifies v4.22.2; its Jira/Confluence/Notion contracts remain mock-only, and MIM showcase is synthetic. Diagnostic README asserts installation on dev438211, classified as **DEV-reported**, not independently DEV-verified. Knowledge Intelligence remains separately deployed and not integrated into local-first page navigation.
+- No production-verified claims. The ten screenshot candidates remain unpublished pending pixel-level review and explicit sanitisation. No private source or screenshot bytes were copied into the public repository.
+- Pending: independent runtime read-back, screenshot inspection/approval, current source reconciliation for the cross-workbench handoff, and public Pages propagation check.
+- Licensing: static site needs no ServiceNow entitlement; scoped app, product modules, spokes, AI and external provider access require target-specific verification.
+
 ## 2026-11-06 — Interactive pattern readiness gate
 
 - Added `pattern-readiness.html` (commit `e2af033`) and linked it from the Pattern Library Engineering case study (commit `3049a5a`).
