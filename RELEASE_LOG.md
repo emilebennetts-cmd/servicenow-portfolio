@@ -1,3 +1,12 @@
+## 2026-11-07 — Source-traced dual-workbench architecture case study
+
+- Commit `0ebfc92`: published `workbench-architecture.html`, a responsive, accessible case study contrasting Diagnostic Workbench 2 (`x_1577958_dw2`) and Universal Delivery Workbench (`x_1577958_vdf`) using their public source README files.
+- Commit `0ee34c2`: added a prominent homepage route to the new case study.
+- Preserved distinctions: Delivery 4.22.2 is source-declared; DEV 4.20.0 baseline is repository-reported; external connectors and MIM demonstrations are mock-only; live cross-workbench integration, current DEV and production verification remain unconfirmed.
+- No screenshot, private control material, customer data or credential published. Google Drive As-Built candidate located but not treated as public clearance.
+- Licensing: static site needs no ServiceNow entitlement; scoped-app deployment and optional product modules, IntegrationHub/spokes, AI and analytics require target-instance review.
+- Validation: commits accepted; independent CI result and public browser propagation for this revision not yet confirmed.
+
 ## 2026-11-07 — Independent GitHub Actions outcome reconciliation
 
 - Queried the repository's GitHub Actions workflow-run API and confirmed **Portfolio quality gate** run [42260316927](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/42260316927) completed **successfully** for commit `666cbd27dbbc7f3bb9183ea78529e90a69413a52`.
