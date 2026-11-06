@@ -1,3 +1,9 @@
+## 2026-11-07 — Screenshot provenance and publication workflow
+
+- Commit `b4e5a0e`: added `evidence/SCREENSHOT_REVIEW_PROCEDURE.md` documenting source intake, private approval records, irreversible redaction, environment evidence classification, accessible gallery requirements and release validation.
+- **Status: procedure committed; no original screenshots inspected, approved or published in this increment.** No new DEV or production verification claimed.
+- Publication control: image allowlist remains empty unless a reviewer explicitly authorises an inspected sanitised derivative. Static gallery requires no ServiceNow entitlement; application reproduction may require scoped-app, module, IntegrationHub, AI and analytics entitlements.
+
 ## 2026-11-07 — Automated public publication safety gate
 
 - Commits `a983175`, `b565270`, `045fd87`: implemented a dependency-free public asset scanner, six synthetic regression tests, and mandatory GitHub Actions execution.
