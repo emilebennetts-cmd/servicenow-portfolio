@@ -14,3 +14,17 @@
 **Security and publication:** No private code or raw screenshots published. External Drive originals are linked without changing access permissions. Customer-specific data, private DEV URL and synthetic engagement identifiers omitted. Screenshot version mismatch identified: September training guide explicitly requires fresh version-matched captures.
 
 **Remaining:** Verify latest repo version and current DEV release separately; inspect image assets before sanitised publication; develop corresponding Diagnostic Workbench deep-dive and evidence gallery; validate public GitHub Pages deployment after publish.
+
+## 2026-11-06 — Screenshot provenance and review records
+
+**Commit:** `82ef68dc5386a743f9fdffe5875c3dcfe31aa6ad`
+
+**Updated:** `visual-evidence.html` now has ten independently identified evidence records (DW-IMG-01–06 and VD-IMG-01–04), each with an accessible expandable reviewer record, product association, verification boundary, publication status and targeted inspection criteria.
+
+**Source references:** Existing Google Drive image candidates previously discovered under Workbench dashboard, modules, finding explorer, script search, runs, report output, native workbench and overview pages 1–3. Private Google Drive file identifiers are not exposed on the public page. No screenshots or sensitive contents were copied to the public repository.
+
+**Evidence classification:** All ten remain candidate/unverified and withheld. A filename alone does not establish DEV installation, screenshot provenance, production deployment or permission to publish.
+
+**Next:** Inspect image pixels through an authorised source, redact confidential details, establish version/provenance and owner clearance, then add genuine annotated images. Check public Pages deployment after propagation.
+
+**Entitlements:** Static GitHub Pages needs no ServiceNow entitlement. Scoped application execution and optional spokes/AI/analytics remain subject to platform licensing and permissions.
