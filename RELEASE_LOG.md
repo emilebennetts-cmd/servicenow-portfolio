@@ -1,3 +1,12 @@
+
+## 2026-11-06 — Pattern library assessment case study
+
+- Published `pattern-library.html` (commit `5753735`) and linked it from the homepage (commit `01e81a6`).
+- Evidence: Google Drive `02_existing_96_pattern_assessment.md`, a 28 September 2026 read-only export assessment of 96 solution patterns and 4,595 pattern items; and 5 November 2026 executive pattern-library talking points.
+- Historical metrics, quality/completeness scores and the missing SLS pattern-item consumption pathway are explicitly scoped to the assessment baseline. No current DEV or production deployment is asserted.
+- Publication: No private source, screenshot pixels, customer information or credentials copied. Source links may require Google Drive permissions.
+- Follow-up: independently verify GitHub Pages deployment; inspect screenshot candidates before embedding; cross-check current repository implementation against the historical architecture gap.
+- Entitlements: static website requires no ServiceNow licence; scoped apps, products and optional IntegrationHub/AI/analytics require environment-specific checks.
 # Portfolio release log
 
 ## 2026-11-06 — Source-backed architecture case study
