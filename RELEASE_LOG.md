@@ -1,3 +1,12 @@
+## 2026-11-07 — Evidence-first diagnostic lifecycle deep dive
+
+- Commit `c721f9e`: published `diagnostic-evidence-lifecycle.html`, a responsive source-traced case study covering collector isolation, DIAG envelope intake, 42 rules / four correlations, 67 guided runbooks, pack-health controls and draft remediation.
+- Commit `eee830f`: added mobile navigation entry from the homepage.
+- Source: `Diagnostic-Workbench2/README_BUILD.md` and `README.md`. The 1 September 2026 local Playwright and DEV acceptance statements are **repository-reported historical results**, not independently reproduced tests.
+- Knowledge Intelligence remains a separately deployed companion; no claim of connected navigation, production acceptance, or approved screenshot evidence.
+- No customer data, private repository content, credentials or unreviewed imagery introduced.
+- Verification: commits accepted by GitHub; CI and public browser rendering of this revision remain to be checked. Licensing depends on instance scoped-app entitlements and any licensed modules used by collectors.
+
 ## 2026-11-07 — Reusable pattern lifecycle engineering case study
 
 - Commit `b5e6e03`: added responsive `pattern-lifecycle.html` with a six-stage candidate-pattern lifecycle, explicit review gates, evidence ledger, primary source links and licensing caveats.
