@@ -1,3 +1,12 @@
+## 2026-11-06 — Diagnostic Workbench 2 engineering case study
+
+- Created `diagnostic-engineering.html` (commit `519cf97`) and linked it from the homepage (commit `ea7f559`).
+- Evidence: public `Diagnostic-Workbench2/README_BUILD.md` and `knowledge-intelligence/README.md`, reviewed 6 November 2026. The historical source describes 18 stages / 6 phases, 67 runbooks, 20 collector packs, 42 rules and 4 correlations. Knowledge Intelligence 0.1.0 lists 16 packs, 45 collectors, 65 rules and 38 solution patterns.
+- Verification boundary: source-backed architecture and historical repository-reported DEV acceptance; Knowledge Intelligence September 30 DEV installation is repository-reported, not independently revalidated. Companion navigation integration remains incomplete. No production claim.
+- Security: no customer names, private instance hostnames, screenshots, secrets or private repository content published. Images remain gated pending review.
+- Licensing: static page none; custom application, target modules, source KB licensing and optional integrations require entitlement checks.
+- Outstanding: independent DEV read-back, cross-workbench handoff testing, screenshot sanitisation and public Pages propagation verification.
+
 ## 2026-11-06 — Delivery release case study homepage integration
 
 - Linked the existing `delivery-release-evolution.html` case study from the portfolio homepage with a dedicated responsive section (commit `d64186012c87013c9ffcbc0c1ee0929b7f99732a`). Confirmed the target file exists in the public repository before linking.
