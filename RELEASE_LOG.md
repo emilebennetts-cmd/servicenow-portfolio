@@ -1,3 +1,11 @@
+## 2026-11-06 — Mobile navigation usability improvement
+
+- Commit `36a8634826ff375685d8c32a16ffbb93a4624050`: replaced the small-screen hidden primary navigation with a native HTML `details`/ `summary` expandable directory. Provides direct mobile access to both flagship projects, engineering case studies, pattern library, verification ledger, visual evidence and contact. The desktop navigation remains unchanged.
+- Evidence: existing public portfolio HTML and current Diagnostic Workbench repository README; searched connected Drive for diagnostic documents. No screenshot pixels or private material were published.
+- Verification: GitHub write confirmed; live GitHub Pages deployment and mobile browser interaction not independently tested. This is a static-site usability improvement, not evidence of ServiceNow DEV or production functionality.
+- Outstanding: inspect and approve actual screenshot pixels, perform mobile browser accessibility testing, independently verify Pages deployment, and test the application runtime in an authorised DEV instance.
+- Licensing: public static navigation needs none; underlying ServiceNow custom apps and optional licensed modules, IntegrationHub, AI and third-party spokes require target-instance entitlement review.
+
 ## 2026-11-06 — Diagnostic Workbench 2 engineering case study
 
 - Created `diagnostic-engineering.html` (commit `519cf97`) and linked it from the homepage (commit `ea7f559`).
