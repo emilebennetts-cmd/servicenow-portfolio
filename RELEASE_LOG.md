@@ -53,3 +53,12 @@
 **Next:** Inspect image pixels through an authorised source, redact confidential details, establish version/provenance and owner clearance, then add genuine annotated images. Check public Pages deployment after propagation.
 
 **Entitlements:** Static GitHub Pages needs no ServiceNow entitlement. Scoped application execution and optional spokes/AI/analytics remain subject to platform licensing and permissions.
+
+## 2026-11-06 — Source-to-runtime implementation assurance
+
+- Added `implementation-boundaries.html`, a responsive, accessible technical case study with client problem framing, source-declared implementation details, verification matrix, OOTB-first controls, screenshot publication safeguards and licensing dependencies.
+- Linked the new page from `index.html`.
+- **Source evidence:** `solution-lifecycle-studio/README.md` declares Delivery Workbench 4.22.2, Delivery Plan, eight narrative document types and mock-only external integration tests; `Diagnostic-Workbench2/README.md` declares the DEV installation and separately deployed Knowledge Intelligence 0.1.0 companion. These are repository statements, not independently executed tests.
+- **Status classification:** source-reported, DEV installation reported (not independently verified), mock-only, proposed architecture, and production not verified. No private source, screenshots, credentials or customer data published.
+- **Outstanding:** visually inspect and sanitise the ten Drive screenshot candidates; obtain version/rights clearance; validate current DEV behaviour and production evidence; confirm live provider credentials and entitlements before integration claims.
+- **Release check:** GitHub commit confirmed; public GitHub Pages propagation not independently confirmed.
