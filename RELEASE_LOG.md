@@ -1,3 +1,10 @@
+## 2026-11-07 — Quality gate regression tests
+
+- Added `scripts/test_check_site.py` with four dependency-free regression tests covering parser semantics, missing metadata/alt failure, valid cross-page anchors and broken fragment failure (commit `ca62fa7`).
+- Updated `.github/workflows/portfolio-quality.yml` to run `unittest` before static site validation (commit `cb3dd82`).
+- Evidence: source-only implementation; CI execution and public Pages deployment are not independently confirmed in this change. Tests cover the checker, not application runtime or browser accessibility.
+- Publication controls unchanged: no screenshots, private source, credentials or customer data added. Licensing: no ServiceNow entitlement for static checks; scoped-app and optional module/spoke entitlements require target-instance validation.
+
 ## 2026-11-07 — Automated portfolio quality gate
 
 - Commit `cb671ca`: added `scripts/check_site.py`, a Python standard-library-only static checker for local links, same-page and cross-page fragment targets, HTML language/title presence and image alt attributes.
