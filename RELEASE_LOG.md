@@ -1,3 +1,12 @@
+## 2026-11-07 — Automated portfolio quality gate
+
+- Commit `cb671ca`: added `scripts/check_site.py`, a Python standard-library-only static checker for local links, same-page and cross-page fragment targets, HTML language/title presence and image alt attributes.
+- Commit `bad7f36`: added `.github/workflows/portfolio-quality.yml` to run the checker on main pushes, pull requests and manual dispatch. The workflow uses read-only repository permissions and does not deploy or publish assets.
+- Verification classification: **source-only** implementation of the checker and CI workflow. A passing GitHub Actions execution has not yet been confirmed; this is not ServiceNow DEV or production verification.
+- Scope limits: does not verify external links, dynamic JavaScript behaviour, visual layout, screenshots, accessibility conformance or GitHub Pages propagation. Root-absolute links are deliberately skipped because their resolution depends on the hosting base path.
+- Privacy: no screenshots, private code, customer data or secrets introduced.
+- Licensing: static site checks require no ServiceNow entitlement; deployed scoped applications and optional IntegrationHub, AI or product-specific capabilities require target-instance entitlement review.
+
 ## 2026-11-06 — Interactive evidence-to-delivery walkthrough
 
 - Commit `8dd5b40`: created `evidence-to-delivery.html`, an accessible five-stage, mobile-responsive synthetic walkthrough covering collection, validation, draft finding, reviewed delivery planning and assurance. Synthetic example IDs, counts and hypotheses are explicitly labelled. No customer data, screenshot or private code included.
