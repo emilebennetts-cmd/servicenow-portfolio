@@ -1,3 +1,10 @@
+## 2026-11-06 — Delivery release case study homepage integration
+
+- Linked the existing `delivery-release-evolution.html` case study from the portfolio homepage with a dedicated responsive section (commit `d64186012c87013c9ffcbc0c1ee0929b7f99732a`). Confirmed the target file exists in the public repository before linking.
+- Source basis: `solution-lifecycle-studio` README declares 4.22.2 source; its 4.20.0 DEV read-back is repository-reported, not independently verified. Jira/Confluence/Notion remain mock-only for live provider operations. No production claim.
+- Google Drive search located `01-Universal-Delivery-Workbench-Solution-As-Built.pdf`; no private document or screenshot contents were published. Image review and independent public URL verification remain open.
+- Licensing: public HTML needs no ServiceNow licence; scoped-app deployment and product-specific patterns, IntegrationHub, AI and advanced analytics require entitlement review.
+
 ## 2026-11-06 — Screenshot publication assurance gate
 
 - Created `screenshot-publication-gate.html` (commit `899afe3`), linked from homepage evidence library (commit `9de266e`). Responsive, accessible local-only review tool with nine mandatory controls, source/DEV/mock/production classifications, live blocking status, reset and JSON review-record export.
