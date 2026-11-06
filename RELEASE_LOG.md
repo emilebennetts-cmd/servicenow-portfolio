@@ -1,3 +1,11 @@
+## 2026-11-06 — Interactive pattern readiness gate
+
+- Added `pattern-readiness.html` (commit `e2af033`) and linked it from the Pattern Library Engineering case study (commit `3049a5a`).
+- Delivered a working, mobile-responsive, browser-only 12-control evaluator with five mandatory blockers, remediation output, reset and print support. No backend, analytics, persistence or customer data collection.
+- Evidence boundary: illustrative scoring and decision-support only; no claims of live ServiceNow integration, DEV verification, production readiness or formal certification. Current Delivery source README identifies v4.22.2; the September 2026 export assessment is an older historical baseline.
+- Security: no private source, Drive screenshot pixels, credentials or client records published. Remaining: image-by-image sanitation and provenance review, current-source-to-historical baseline reconciliation and public deployment check.
+- Licensing: static tool needs no ServiceNow entitlement; real scoped application operation and optional product/integration capabilities require applicable licences.
+
 
 ## 2026-11-06 — Pattern library assessment case study
 
