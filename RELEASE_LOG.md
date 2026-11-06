@@ -1,3 +1,11 @@
+## 2026-11-07 — Knowledge Intelligence companion architecture case study
+
+- Published `knowledge-intelligence.html` using the public `Diagnostic-Workbench2/knowledge-intelligence/README.md` as primary evidence; added a contextual route from `diagnostic-evidence-lifecycle.html`.
+- Documented the separately deployed 0.1.0 companion, seed inventory, read-only collector controls, human review, installation boundaries and content-licensing obligations.
+- The 30 September DEV acceptance (347 inserts, 45 collector lint checks) is **repository-reported**, not independently reproduced. No current DEV, production or cross-navigation integration is asserted.
+- No screenshots, customer information, secrets or private repository material were published. Source commits confirmed; CI and public browser rendering await independent verification.
+- Static website requires no ServiceNow licence; scoped-app deployment, underlying product modules and external content rights require entitlement review.
+
 ## 2026-11-07 — Evidence-first diagnostic lifecycle deep dive
 
 - Commit `c721f9e`: published `diagnostic-evidence-lifecycle.html`, a responsive source-traced case study covering collector isolation, DIAG envelope intake, 42 rules / four correlations, 67 guided runbooks, pack-health controls and draft remediation.
