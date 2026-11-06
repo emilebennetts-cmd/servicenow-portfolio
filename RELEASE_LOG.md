@@ -1,3 +1,10 @@
+## 2026-11-06 — Screenshot publication assurance gate
+
+- Created `screenshot-publication-gate.html` (commit `899afe3`), linked from homepage evidence library (commit `9de266e`). Responsive, accessible local-only review tool with nine mandatory controls, source/DEV/mock/production classifications, live blocking status, reset and JSON review-record export.
+- Security boundaries: no image bytes fetched, embedded or published; no network submission, storage, analytics or automatic release. The ten screenshot candidates remain unverified and unpublished. A checked control is a self-declaration, not independently confirmed approval.
+- Outstanding: open and inspect original images, verify provenance and capture versions, redact and independently review final pixels, obtain explicit publication approval, then add approved galleries. Check GitHub Pages propagation separately.
+- Licensing: static review tool requires no ServiceNow entitlement; live scoped applications, platform products and optional integration/AI features require target-specific entitlement checks.
+
 ## 2026-11-06 — Source-led verification ledger
 
 - Added `verification-ledger.html` (commit `6d7f9fb`), linked from the portfolio home (commit `c578383`). Nine searchable/filterable evidence records with responsive presentation, keyboard-accessible filters, source links, claim-graduation criteria and entitlement disclosures.
