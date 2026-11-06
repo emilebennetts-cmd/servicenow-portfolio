@@ -1,3 +1,13 @@
+## 2026-11-06 — Interactive evidence-to-delivery walkthrough
+
+- Commit `8dd5b40`: created `evidence-to-delivery.html`, an accessible five-stage, mobile-responsive synthetic walkthrough covering collection, validation, draft finding, reviewed delivery planning and assurance. Synthetic example IDs, counts and hypotheses are explicitly labelled. No customer data, screenshot or private code included.
+- Commit `281eaa8`: linked the walkthrough from the public homepage.
+- Source evidence reviewed: `solution-lifecycle-studio/README.md` (4.22.2 source-declared; reference-only diagnostic handoff and mock-only external sync) and `Diagnostic-Workbench2/README_BUILD.md` (read-only collectors, DIAG envelopes, 42 rules and historical repository-reported DEV verification).
+- Classification: the walkthrough is **mock-only**; underlying architecture is **source-only**; historical DEV results are **repository-reported, not independently DEV-verified**; no production verification. This is not a live cross-workbench transfer.
+- Security: no customer identifiers, instance URL, secrets, unpublished images or private source were copied into the public site.
+- Validation: GitHub write operations confirmed; live GitHub Pages propagation, keyboard/mobile interaction and independent instance testing remain unverified.
+- Entitlements: public static site none; scoped apps, licensed ServiceNow modules, IntegrationHub, AI and provider spokes require target-instance entitlement review.
+
 ## 2026-11-06 — Evidence assurance standards and claim acceptance matrix
 
 - Created `evidence-standards.html` (commit `4cf99fc`) with an accessible, responsive evidence classification reference and acceptance matrix for source-only, mock-only, DEV-reported/verified and production-verified claims.
