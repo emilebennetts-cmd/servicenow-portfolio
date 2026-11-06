@@ -1,3 +1,12 @@
+## 2026-11-07 — Automated public publication safety gate
+
+- Commits `a983175`, `b565270`, `045fd87`: implemented a dependency-free public asset scanner, six synthetic regression tests, and mandatory GitHub Actions execution.
+- Gate scans public HTML/JS/CSS/JSON/SVG assets for selected credential patterns and blocks raster images without a path in `evidence/approved-public-images.txt`. An allowlist entry is an administrative record, **not proof of actual image review**; publication still requires human inspection and permission.
+- Repository tree at implementation time contained **no raster screenshot assets**; no image was approved or published. Existing diagrams are HTML/CSS mock representations, not application screenshots.
+- Classification: website quality-control **source implemented**; CI execution and live Pages propagation not independently confirmed. No new DEV or production verification.
+- Limitations: heuristic patterns do not guarantee detection of all secrets, embedded SVG confidentiality, private data or screenshot suitability. Human review remains mandatory.
+- Licensing: static checks require no ServiceNow entitlement. Scoped apps, IntegrationHub, AI and product-specific capabilities require target-instance entitlement assessment.
+
 ## 2026-11-07 — Static site link safety and document integrity
 
 - Commit `d0b95d0`: reject local HTML links that resolve outside the site root (including percent-encoded parent paths) and detect duplicate element IDs. This closes a validation blind spot where an existing file outside the publishing tree could incorrectly satisfy a link.
