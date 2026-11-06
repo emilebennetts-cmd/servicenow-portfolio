@@ -1,3 +1,12 @@
+## 2026-11-07 — Reusable pattern lifecycle engineering case study
+
+- Commit `b5e6e03`: added responsive `pattern-lifecycle.html` with a six-stage candidate-pattern lifecycle, explicit review gates, evidence ledger, primary source links and licensing caveats.
+- Commit `0f1c41b`: added a homepage route to the new case study.
+- Source basis: public `solution-lifecycle-studio` README and linked implementation-presets/catalogue release analyses. Catalogue counts (11,000 issues, 2,234 candidate patterns), 4.22.2 version and historical DEV baseline are **repository assertions**, not independently audited runtime results.
+- No customer-specific scenario presented as fact; no unreviewed screenshots, private repository content, secrets or production claims published.
+- Verification: source commits accepted. CI, live public HTTP rendering and current DEV/production functionality **not independently verified in this increment**.
+- Entitlements: static case study requires none; scoped-app deployment, licensed product modules and live integrations require instance-specific entitlement and API review.
+
 ## 2026-11-07 — Source-traced dual-workbench architecture case study
 
 - Commit `0ebfc92`: published `workbench-architecture.html`, a responsive, accessible case study contrasting Diagnostic Workbench 2 (`x_1577958_dw2`) and Universal Delivery Workbench (`x_1577958_vdf`) using their public source README files.
