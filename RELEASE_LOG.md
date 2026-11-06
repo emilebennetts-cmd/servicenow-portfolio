@@ -1,3 +1,11 @@
+## 2026-11-07 — Static site link safety and document integrity
+
+- Commit `d0b95d0`: reject local HTML links that resolve outside the site root (including percent-encoded parent paths) and detect duplicate element IDs. This closes a validation blind spot where an existing file outside the publishing tree could incorrectly satisfy a link.
+- Commit `0f44b07`: add four regression tests for duplicate IDs, direct and encoded directory escapes, and valid local fragments. Existing GitHub Actions unittest discovery automatically includes the new test module; no workflow configuration change required.
+- Verification: GitHub source commits confirmed; CI result and live Pages propagation not yet independently confirmed. These are static website checks, **not** ServiceNow DEV or production verification.
+- Publication: no private repository contents, customer data, instance credentials or unreviewed screenshots included.
+- Entitlements: static checker requires no ServiceNow licence; scoped applications and optional product modules, IntegrationHub and AI require target-instance entitlement review.
+
 ## 2026-11-07 — Quality gate regression tests
 
 - Added `scripts/test_check_site.py` with four dependency-free regression tests covering parser semantics, missing metadata/alt failure, valid cross-page anchors and broken fragment failure (commit `ca62fa7`).
