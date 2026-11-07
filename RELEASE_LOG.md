@@ -271,3 +271,13 @@
 - **Evidence boundary:** No independent DEV or production verification performed; no screenshot publication approval inferred. Google Drive source candidates were searched, but no image pixels were inspected or released.
 - **Validation:** Script committed; execution in GitHub Actions and Pages propagation not yet independently confirmed. To execute locally: `python3 scripts/check_verification_register.py`.
 - **Licensing:** Static register and validator require no ServiceNow entitlement. Scoped applications and optional IntegrationHub, AI, analytics and licensed product modules require separate environment-specific assessment.
+
+## 2026-11-08 — Case-study discoverability
+
+- Homepage desktop navigation now links to `engineering-case-studies.html`.
+- Mobile directory exposes the same page; proof-path section includes a prominent call to action.
+- Implementation commit: `6c75508629961064e1dac0c340a13cd871165192`.
+- Source provenance: existing engineering case-study page and public Delivery/Diagnostic Workbench repository READMEs. No new runtime testing or screenshot approval performed.
+- Evidence status: website change SOURCE-ONLY pending GitHub Pages/browser confirmation; underlying architectural narratives SOURCE-ONLY; historical DEV observations remain historical; illustrative demos MOCK-ONLY; no current DEV-VERIFIED or PRODUCTION-VERIFIED claim.
+- Next: review authentic screenshot provenance and approvals, check deployment and mobile browser navigation, and verify accessibility.
+- Licensing: static website none; ServiceNow runtime/custom application and optional IntegrationHub, ITOM, AI/analytics or connector entitlements require separate assessment.
