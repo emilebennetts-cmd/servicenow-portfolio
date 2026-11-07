@@ -209,3 +209,11 @@
 - **Status classification:** source-reported, DEV installation reported (not independently verified), mock-only, proposed architecture, and production not verified. No private source, screenshots, credentials or customer data published.
 - **Outstanding:** visually inspect and sanitise the ten Drive screenshot candidates; obtain version/rights clearance; validate current DEV behaviour and production evidence; confirm live provider credentials and entitlements before integration claims.
 - **Release check:** GitHub commit confirmed; public GitHub Pages propagation not independently confirmed.
+
+## 2026-11-07 — Machine-readable verification governance
+
+- Added `evidence/public-verification-register.json` with six individually classified public claims: Delivery source, historical Delivery DEV, Diagnostic source, Knowledge Intelligence historical DEV, mock external integrations, and proposed cross-workbench handoff.
+- Added `scripts/check_verification_register.py`, a standard-library validator checking unique claim IDs, classification vocabulary, required claim provenance, local case-study targets and dated evidence for any future independently verified claims.
+- **Evidence boundary:** No independent DEV or production verification performed; no screenshot publication approval inferred. Google Drive source candidates were searched, but no image pixels were inspected or released.
+- **Validation:** Script committed; execution in GitHub Actions and Pages propagation not yet independently confirmed. To execute locally: `python3 scripts/check_verification_register.py`.
+- **Licensing:** Static register and validator require no ServiceNow entitlement. Scoped applications and optional IntegrationHub, AI, analytics and licensed product modules require separate environment-specific assessment.
