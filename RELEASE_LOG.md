@@ -1,3 +1,12 @@
+## 2026-11-07 — Integrated interactive application explorer
+
+- Commit `14b937425e0dc795c2ce7259b655028d765e51c2`: added a responsive, accessible, in-page application explorer to `index.html`, including Diagnostic Command Centre interface reconstruction, Delivery Workbench lifecycle board and functional five-stage governed-handoff walkthrough.
+- Original Diagnostic Command Centre capture in connected Google Drive was visually inspected. The interface reconstruction uses its client-neutral navigation and historical metrics, clearly marked illustrative, not live telemetry or original screenshot.
+- **Evidence status:** Diagnostic and Delivery application features are source-backed; historical DEV results are repository-reported; cross-workbench handoff is proposed/mock-only. No independently DEV-verified or production-verified claims added.
+- **Publication boundary:** No original screenshot, confidential client material or private application source was copied to the public repository. Genuine embedded screenshot gallery remains pending image-by-image sanitisation and release review.
+- **Licensing:** Public static explorer requires no ServiceNow entitlement. Underlying scoped apps, IntegrationHub and licensed workflow capabilities require instance access and applicable subscription entitlements.
+- **Verification:** GitHub contents API accepted the homepage commit. Public GitHub Pages build and browser rendering remain to be independently confirmed.
+
 ## 2026-11-07 — Verification attestation hardening
 
 - Commit `1e0f504`: tightened the public verification register validator: canonical in-repository HTML paths, ISO verification dates, future-date rejection, HTTPS evidence references and explicit production authorisation.
