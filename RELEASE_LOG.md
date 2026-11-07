@@ -1,3 +1,12 @@
+## 2026-11-07 — Embedded Diagnostic operator walkthrough
+
+- Commit `22862b059fa06a363a379c94edd80a80575b06bb`: replaced the homepage's external Google Drive screenshot call-to-action section with a self-contained, responsive five-stage Diagnostic Workbench operator walkthrough.
+- Implemented five selectable stages, previous/next navigation, stage-specific expected outputs, keyboard-operable buttons, mobile horizontal stage selector, and expandable evidence/licensing disclosures.
+- **Source:** visually inspected original client-neutral Diagnostic Command Centre capture from connected Drive; the five-step operator sequence and UI terminology are based on that capture. This implementation is a **source-informed reconstruction**, not a published original screenshot, live runtime or independently verified deployment.
+- **Security:** no customer screenshot, private source, Google sharing link or unreviewed binary asset was embedded. The source capture stays private pending sanitisation and approval.
+- **Verification:** GitHub contents update succeeded; automated browser rendering and latest GitHub Pages deployment were not independently confirmed in this change.
+- **Licensing:** static in-page demo needs no ServiceNow licence; real instance execution requires applicable roles, instance permissions and relevant product entitlements.
+
 ## 2026-11-07 — Integrated interactive application explorer
 
 - Commit `14b937425e0dc795c2ce7259b655028d765e51c2`: added a responsive, accessible, in-page application explorer to `index.html`, including Diagnostic Command Centre interface reconstruction, Delivery Workbench lifecycle board and functional five-stage governed-handoff walkthrough.
