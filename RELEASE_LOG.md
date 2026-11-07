@@ -1,3 +1,12 @@
+## 2026-11-07 — Governed diagnostic-to-delivery handoff contract
+
+- Commit `beba342`: added `governed-handoff-contract.html`, a mobile-friendly proposed versioned integration envelope with synthetic sample payload, five bounded workflow stages, replay/idempotency, conflict, authorisation and failure test criteria.
+- Commit `42c9db2`: added homepage route from cross-workbench architecture to the contract.
+- Sources reviewed: public `solution-lifecycle-studio/README.md` and `Diagnostic-Workbench2/README.md`. Google Drive search performed; no original screenshot pixels reviewed or approved.
+- Classification: contract is **proposed/reference only**, source capabilities are **source-only**, historical DEV reports remain **repository-reported**, external connectors **mock-only**; no independent current DEV or production verification claimed.
+- No private source, customer records, credentials or unreviewed screenshots published. GitHub commit acceptance confirmed; CI and browser deployment validation pending.
+- Entitlements: static page none; scoped applications, IntegrationHub/spokes and underlying licensed modules subject to assessment.
+
 ## 2026-11-07 — Deployment assurance engineering case study
 
 - Commit `ee3fb334`: added `deployment-assurance.html`, a responsive source-traced case study with five proposed release gates, verification matrix, architectural controls, licensing and primary public-source links.
