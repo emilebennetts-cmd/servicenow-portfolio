@@ -1,4 +1,5 @@
 """Publication gate regression tests: synthetic data only."""
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -21,8 +22,23 @@ class PublicationTests(unittest.TestCase):
             root = Path(directory)
             (root / "screen.png").write_bytes(b"fake")
             allowlist = root / "approved.txt"
-            allowlist.write_text("screen.png\n", encoding="utf-8")
+            allowlist.write_text("screen.png " + hashlib.sha256(b"fake").hexdigest() + "\n", encoding="utf-8")
             self.assertEqual([], check(root, allowlist))
+    def test_changed_image_requires_fresh_approval(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "screen.png").write_bytes(b"original")
+            allowlist = root / "approved.txt"
+            allowlist.write_text("screen.png " + hashlib.sha256(b"original").hexdigest() + "\\n", encoding="utf-8")
+            (root / "screen.png").write_bytes(b"changed")
+            self.assertTrue(any("changed since" in issue for issue in check(root, allowlist)))
+    def test_legacy_path_only_approval_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "screen.png").write_bytes(b"fake")
+            allowlist = root / "approved.txt"
+            allowlist.write_text("screen.png\\n", encoding="utf-8")
+            self.assertTrue(check(root, allowlist))
     def test_detects_secret_in_html(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
