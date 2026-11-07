@@ -52,8 +52,9 @@ def audit(root):
                 if target not in pages:
                     p = Page()
                     p.feed(target.read_text(encoding="utf-8"))
-                    pages[target] = p
-                if unquote(url.fragment) not in pages[target].ids:
+                else:
+                    p = pages[target]
+                if unquote(url.fragment) not in p.ids:
                     errors.append(f"{source.name}: missing fragment: {value}")
     return errors
 
