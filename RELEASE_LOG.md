@@ -1,3 +1,13 @@
+
+## 2026-11-07 — Inline diagnostic technical proof
+
+- Added homepage section `#technical-proof`: evidence processing pipeline, 20 collector packs, 67 runbooks, 42 rules + 4 correlations, and five expandable implementation notes. All counts are repository-sourced catalogue counts, not new runtime observations.
+- Source: `emilebennetts-cmd/Diagnostic-Workbench2/README_BUILD.md`, including historical 1 September 2026 local and DEV test claims.
+- Verification: source-backed architecture and historical DEV-reported test results only. No current instance access, independent DEV read-back or production verification performed in this increment.
+- Publication: no screenshots, instance URLs, client names, credentials, sys_ids or private repository contents added to the public page.
+- Licensing: static site needs no ServiceNow entitlement; actual scoped application deployment and optional integrations require platform permissions and product entitlement assessment.
+- Outstanding: sanitised original screenshot review and embedded image gallery; public deployment/browser checks.
+
 ## 2026-11-07 — Embedded Diagnostic operator walkthrough
 
 - Commit `22862b059fa06a363a379c94edd80a80575b06bb`: replaced the homepage's external Google Drive screenshot call-to-action section with a self-contained, responsive five-stage Diagnostic Workbench operator walkthrough.
