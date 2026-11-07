@@ -1,3 +1,12 @@
+## 2026-11-07 — Verification attestation hardening
+
+- Commit `1e0f504`: tightened the public verification register validator: canonical in-repository HTML paths, ISO verification dates, future-date rejection, HTTPS evidence references and explicit production authorisation.
+- Commit `02a2e92`: added four regression tests covering future dates, insecure evidence references, missing production authorisation and non-HTML page references.
+- The quality workflow already executes this validator and discovers its regression tests; new workflow run result has not yet been independently checked.
+- Drive metadata searched for Workbench assets. No original screenshots reviewed, redacted or approved; none published.
+- Evidence classifications unchanged: source-only and DEV-reported are not independent runtime verification; mock-only and proposed are not deployed.
+- No ServiceNow entitlement required for static validation; scoped apps, IntegrationHub, AI, analytics and product modules may require licensed entitlements.
+
 ## 2026-11-07 — Evidence register enforced in CI
 
 - Commit `d43055b`: wired `scripts/check_verification_register.py` into the push/PR quality workflow, preventing unchecked evidence classifications from being merged without a failing check.
