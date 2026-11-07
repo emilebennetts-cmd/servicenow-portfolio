@@ -1,3 +1,10 @@
+## 2026-11-07 — Evidence register enforced in CI
+
+- Commit `d43055b`: wired `scripts/check_verification_register.py` into the push/PR quality workflow, preventing unchecked evidence classifications from being merged without a failing check.
+- Commit `70919e3`: added six unit tests covering valid register, duplicate claims, unsupported classification, unsupported production promotion, path traversal and missing case-study references.
+- Previous revision `e074fb3` had successful quality and Pages workflow runs (42328400368 and 42328400318); the new revision's workflow outcome must be checked separately.
+- No screenshot assets, customer data, private repository contents or secrets published. Static checks need no ServiceNow entitlements; underlying scoped apps and optional integrations still require target-instance licensing assessment.
+
 ## 2026-11-07 — Governed diagnostic-to-delivery handoff contract
 
 - Commit `beba342`: added `governed-handoff-contract.html`, a mobile-friendly proposed versioned integration envelope with synthetic sample payload, five bounded workflow stages, replay/idempotency, conflict, authorisation and failure test criteria.
