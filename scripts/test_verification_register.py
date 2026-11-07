@@ -35,5 +35,27 @@ class VerificationRegisterTests(unittest.TestCase):
         self.assertTrue(any("missing or unsafe" in error for error in validate(self.data)))
 
 
+    def test_future_verification_rejected(self):
+        entry = self.data["items"][0]
+        entry.update(classification="DEV-verified", verification_date="2999-01-01",
+                     verification_reference="https://example.org/evidence")
+        self.assertTrue(any("future" in error for error in validate(self.data)))
+
+    def test_insecure_evidence_reference_rejected(self):
+        entry = self.data["items"][0]
+        entry.update(classification="DEV-verified", verification_date="2026-09-30",
+                     verification_reference="http://example.org/evidence")
+        self.assertTrue(any("HTTPS" in error for error in validate(self.data)))
+
+    def test_production_authorisation_required(self):
+        entry = self.data["items"][0]
+        entry.update(classification="production-verified", verification_date="2026-09-30",
+                     verification_reference="https://example.org/evidence")
+        self.assertTrue(any("authorisation" in error for error in validate(self.data)))
+
+    def test_non_html_evidence_page_rejected(self):
+        self.data["items"][0]["page"] = "evidence/public-verification-register.json"
+        self.assertTrue(any("unsafe case-study" in error for error in validate(self.data)))
+
 if __name__ == "__main__":
     unittest.main()
