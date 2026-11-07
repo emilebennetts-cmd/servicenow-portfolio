@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "updated_utc": "2026-11-07",
+  "purpose": "Public, non-sensitive verification register; not a deployment attestation",
+  "classification_definitions": {
+    "source-only": "Claim supported by source documentation or code, without independent runtime execution",
+    "DEV-reported": "Historical DEV result stated in a source document; not independently reproduced",
+    "DEV-verified": "Directly observed DEV behaviour with dated, attributable test evidence",
+    "mock-only": "Synthetic demonstration or simulated integration, not a live provider transaction",
+    "production-verified": "Directly observed production behaviour with authorised, dated evidence",
+    "proposed": "Reference design or acceptance criteria, not implemented"
+  },
+  "items": [
+    {
+      "id": "DELIVERY",
+      "title": "Universal Delivery Workbench",
+      "classification": "source-only",
+      "basis": "solution-lifecycle-studio README; source-declared 4.22.2",
+      "runtime_verification": "not independently established",
+      "public_screenshot_status": "withheld pending provenance, sanitisation and approval",
+      "page": "delivery-architecture.html"
+    },
+    {
+      "id": "DELIVERY-DEV",
+      "title": "Historical Delivery DEV baseline",
+      "classification": "DEV-reported",
+      "basis": "repository historical DEV 4.20.0 testing statements",
+      "runtime_verification": "historical report only",
+      "public_screenshot_status": "not evidence of current release",
+      "page": "deployment-assurance.html"
+    },
+    {
+      "id": "DIAGNOSTIC",
+      "title": "Diagnostic Workbench 2",
+      "classification": "source-only",
+      "basis": "Diagnostic-Workbench2 repository documentation",
+      "runtime_verification": "not independently established",
+      "public_screenshot_status": "withheld pending review",
+      "page": "diagnostic-evidence-lifecycle.html"
+    },
+    {
+      "id": "KNOWLEDGE",
+      "title": "Knowledge Intelligence companion",
+      "classification": "DEV-reported",
+      "basis": "repository reports DEV installation on 2026-09-30",
+      "runtime_verification": "historical report only",
+      "public_screenshot_status": "withheld pending review",
+      "page": "knowledge-intelligence.html"
+    },
+    {
+      "id": "EXTERNAL-INTEGRATIONS",
+      "title": "External integration demonstrations",
+      "classification": "mock-only",
+      "basis": "repository-described mocked test scenarios",
+      "runtime_verification": "no live provider verification",
+      "public_screenshot_status": "not applicable",
+      "page": "governed-handoff-contract.html"
+    },
+    {
+      "id": "HANDOFF",
+      "title": "Cross-workbench handoff contract",
+      "classification": "proposed",
+      "basis": "published reference architecture and synthetic payload",
+      "runtime_verification": "not deployed or independently tested",
+      "public_screenshot_status": "synthetic example only",
+      "page": "governed-handoff-contract.html"
+    }
+  ],
+  "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Production-verified claims require separate affirmative evidence."
+}
