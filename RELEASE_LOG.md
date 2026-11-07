@@ -1,3 +1,13 @@
+## 2026-11-07 — Source-traced proof paths (commit fc392b2)
+
+- Added three responsive, keyboard-accessible engineering proof-path cards to the homepage, immediately before the 90-second review: diagnostic envelope intake and rules, governed implementation presets, and diagnostic-to-delivery evidence ownership.
+- Each card explains the operational pain, repository-documented mechanism, evidence boundary and specific synthetic DEV acceptance test. Native `details/summary` provides progressive disclosure without a framework.
+- Visual treatment: high-contrast light panel, single-column layout under 900px, visible focus indicators. This is an implementation, not an original ServiceNow screenshot gallery.
+- Provenance: `Diagnostic-Workbench2/README_BUILD.md` and `solution-lifecycle-studio/README.md` (including implementation-preset release reference). Counts and capabilities remain **SOURCE-ONLY / historical DEV-reported**, not independently DEV-verified. Cross-workbench handoff remains **MOCK-ONLY**. No production verification claimed.
+- Privacy: no client names, instance URLs, scope IDs, sys_ids, ticket identifiers, private code or unreviewed screenshots added in this change.
+- Verification: checked successful GitHub contents update and expected three card insertions; no live-browser accessibility audit or GitHub Pages deployment confirmation in this run.
+- Outstanding: approved sanitised real screenshot gallery; independent DEV read-back; site-wide privacy/accessibility/performance audit. Static website has no ServiceNow licensing requirement; scoped apps and optional ITOM/IntegrationHub/AI functions depend on appropriate roles and entitlements.
+
 
 ## 2026-11-07 — Inline diagnostic technical proof
 
