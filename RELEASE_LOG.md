@@ -1,3 +1,10 @@
+## 2026-11-07 — Deployment assurance engineering case study
+
+- Commit `ee3fb334`: added `deployment-assurance.html`, a responsive source-traced case study with five proposed release gates, verification matrix, architectural controls, licensing and primary public-source links.
+- Compared the public Delivery and Diagnostic README files; distinguished Delivery 4.22.2 source declaration, historical 4.20.0 DEV report, mock-only external connectors, separately deployed Knowledge Intelligence companion and unverified production status.
+- Google Drive As-Built candidate located; no Drive screenshot was inspected or published. No private source, customer data or credentials included.
+- GitHub commit accepted; independent CI and public HTTP verification pending.
+
 ## 2026-11-07 — Knowledge Intelligence companion architecture case study
 
 - Published `knowledge-intelligence.html` using the public `Diagnostic-Workbench2/knowledge-intelligence/README.md` as primary evidence; added a contextual route from `diagnostic-evidence-lifecycle.html`.
