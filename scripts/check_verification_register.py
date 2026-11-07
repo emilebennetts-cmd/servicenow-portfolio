@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate public verification claims without requiring third-party packages."""
 import json
+from datetime import date
+from urllib.parse import urlparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +17,7 @@ def validate(data, root=ROOT):
     if set(definitions) != VALID:
         errors.append("Classification definitions are incomplete")
     ids = set()
+    root = Path(root).resolve()
     for entry in data.get("items", []):
         key = entry.get("id")
         if not key or key in ids:
@@ -26,11 +29,29 @@ def validate(data, root=ROOT):
             if not entry.get(field):
                 errors.append(f"{key}: missing {field}")
         page = entry.get("page", "")
-        if not page or Path(page).is_absolute() or ".." in Path(page).parts or not (root / page).is_file():
+        target = (root / page).resolve() if isinstance(page, str) and page else root
+        if (not isinstance(page, str) or not page.endswith(".html") or Path(page).is_absolute()
+                or ".." in Path(page).parts or not target.is_relative_to(root)
+                or not target.is_file()):
             errors.append(f"{key}: missing or unsafe case-study page {page}")
         if entry.get("classification") in {"DEV-verified", "production-verified"}:
-            if not entry.get("verification_date") or not entry.get("verification_reference"):
+            when = entry.get("verification_date")
+            reference = entry.get("verification_reference")
+            if not when or not reference:
                 errors.append(f"{key}: independent verification requires dated evidence")
+            else:
+                try:
+                    verified_on = date.fromisoformat(when)
+                    if verified_on > date.today():
+                        errors.append(f"{key}: verification date cannot be in the future")
+                except (TypeError, ValueError):
+                    errors.append(f"{key}: verification date must be ISO YYYY-MM-DD")
+                parsed = urlparse(reference) if isinstance(reference, str) else None
+                if (not parsed or parsed.scheme != "https" or not parsed.netloc
+                        or parsed.username or parsed.password):
+                    errors.append(f"{key}: verification reference must be an HTTPS evidence URL")
+            if entry.get("classification") == "production-verified" and not entry.get("production_authorisation"):
+                errors.append(f"{key}: production verification requires authorisation record")
     if not ids:
         errors.append("Register contains no claims")
     return errors
