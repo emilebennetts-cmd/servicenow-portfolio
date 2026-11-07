@@ -1,3 +1,13 @@
+## 2026-11-08 — Engineering evidence register and case-study navigation
+
+- Published `engineering-evidence.html` with source-to-claim traceability, DEV/production verification boundaries, screenshot approval steps and licensing caveats.
+- Linked the register from `engineering-case-studies.html`.
+- Sources reviewed: public `solution-lifecycle-studio/README.md`, `Diagnostic-Workbench2/README.md`, and existing portfolio case-study content.
+- **Evidence:** SOURCE-ONLY for documented capabilities; external sync and public walkthroughs MOCK-ONLY where indicated; historical DEV reports are not independently reproduced; no production verification claimed.
+- **Security:** No screenshots, private source, credentials or client records published. Screenshot release still requires approved sanitised captures and digest verification.
+- **Validation pending:** live Pages deployment, mobile browser/a11y testing and authorised DEV runtime checks.
+- Commits: `abbd2c5` (new page), `aa98ee6` (navigation).
+
 ## 2026-11-07 — Source-traced proof paths (commit fc392b2)
 
 - Added three responsive, keyboard-accessible engineering proof-path cards to the homepage, immediately before the 90-second review: diagnostic envelope intake and rules, governed implementation presets, and diagnostic-to-delivery evidence ownership.
