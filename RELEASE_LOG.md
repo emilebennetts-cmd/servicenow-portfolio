@@ -1,3 +1,13 @@
+## 2026-11-09 — Print review state and empty-result safeguards
+
+- Implemented commit `447eaccc1cdee3c7a3035587a514ba0446f0bd81` in `visual-evidence.html`.
+- Printing matching evidence records now expands details temporarily and restores each record's original disclosure state after the browser's `afterprint` event. Native Ctrl/Cmd+P also expands matching records using `beforeprint`.
+- Print is disabled when filters return zero candidates, consistent with CSV export. A DOM observer tracks the existing result-count updates without changing filter behaviour.
+- **Evidence classification:** SOURCE-ONLY; no browser execution, GitHub Pages propagation, DEV acceptance or production validation is claimed. Existing illustrative screens remain MOCK-ONLY; ten image candidates remain HOLD and CANDIDATE-ONLY.
+- **Source review:** Public Delivery and Diagnostic READMEs, private portfolio-control README, existing gallery source, and Google Drive document discovery. Original image pixels were not inspected, sanitised or approved; no private Drive links or customer data were published.
+- **Follow-up:** Browser-test print/cancel, empty-result filtering, and mobile layout; inspect original image assets privately and obtain explicit publication clearance before adding derivatives.
+- **Entitlements:** Static website requires none; ServiceNow scoped app runtime and optional ITSM/ITOM, IntegrationHub, Performance Analytics and AI capabilities require relevant instance and product entitlements.
+
 ## 2026-11-09 — Filtered printable evidence review sheets
 
 - Commit `f0e551c1cff8280fb6fdbc41b806faa509ea2313`: added a print action to the existing visual evidence gallery. The action expands the visible candidates' evidence records and prints a clean, paper-friendly reviewer sheet with the active search/product filters applied.
