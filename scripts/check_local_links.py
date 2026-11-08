@@ -26,7 +26,9 @@ class Page(HTMLParser):
 
 def audit(root):
     pages = {}
-    for path in root.glob("*.html"):
+    for path in root.rglob("*.html"):
+        if any(part.startswith(".") for part in path.relative_to(root).parts):
+            continue
         p = Page()
         p.feed(path.read_text(encoding="utf-8"))
         pages[path.resolve()] = p
@@ -45,7 +47,7 @@ def audit(root):
                 target /= "index.html"
             target = target.resolve()
             if not target.is_relative_to(root.resolve()):
-                errors.append(f"{source.name}: {attribute} escapes site root: {value}")
+                errors.append(f"{source.relative_to(root)}: {attribute} escapes site root: {value}")
             elif not target.is_file():
                 errors.append(f"{source.name}: missing local target: {value}")
             elif url.fragment and target.suffix.lower() == ".html":
