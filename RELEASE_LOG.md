@@ -1,3 +1,12 @@
+## 2026-11-08 — Capability traceability and verification boundaries
+
+- Published `capability-traceability.html`: mobile-friendly, source-linked capability matrix for Diagnostic Workbench 2 and Universal Delivery Workbench, including Knowledge Intelligence's separately deployed companion status, delivery version drift, and mock-only provider integration boundaries.
+- Linked the matrix from `visual-evidence-intake.html`.
+- Evidence: public README and build documentation in `emilebennetts-cmd/Diagnostic-Workbench2` and `emilebennetts-cmd/solution-lifecycle-studio`; architecture boundaries in this site. No private control material or screenshots were published.
+- Classification: **SOURCE-ONLY** for the new page and current application implementation claims; **MOCK-ONLY** for simulated external integrations; historical DEV installation statements remain repository-reported, not independently DEV-VERIFIED. No production verification claimed.
+- Acceptance pending: CI and live deployment check, independent DEV execution, screenshot review and approval.
+- Entitlements: static page none; runtime custom app, ITSM/ITOM, IntegrationHub, Performance Analytics, AI and provider entitlements subject to instance-specific review.
+
 ## 2026-11-08 — Job-level CI publication evidence
 
 - Added `ci-job-evidence.html` with the independently retrieved GitHub Actions job ID 128637024742 for run 42450018822, including five named quality-gate steps each reporting success.
