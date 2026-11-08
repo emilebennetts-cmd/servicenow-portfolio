@@ -1,3 +1,13 @@
+## 2026-11-08 — Job-level CI publication evidence
+
+- Added `ci-job-evidence.html` with the independently retrieved GitHub Actions job ID 128637024742 for run 42450018822, including five named quality-gate steps each reporting success.
+- Linked the job evidence from `publication-quality.html` for direct reviewer navigation.
+- **Provenance:** GitHub Actions REST job collection for the named run, inspected 8 November 2026; job conclusion and step conclusions were observed, not independently re-executed.
+- **Classification:** Website CI execution OBSERVED SUCCESS; application source remains SOURCE-ONLY or historically DEV-reported where applicable; interactive simulations MOCK-ONLY; no new DEV-VERIFIED or PRODUCTION-VERIFIED evidence.
+- **Security:** No private repository material, customer information, credentials or unapproved screenshots included.
+- **Outstanding:** Independent published-site/mobile-browser verification and approved original Workbench screenshots.
+- **Entitlements:** No ServiceNow licence for static site CI; runtime scoped applications and optional ITOM/IntegrationHub/PA/AI may require entitlements.
+
 ## 2026-11-08 — Engineering evidence register and case-study navigation
 
 - Published `engineering-evidence.html` with source-to-claim traceability, DEV/production verification boundaries, screenshot approval steps and licensing caveats.
