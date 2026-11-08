@@ -1,3 +1,10 @@
+## 2026-11-09 — Filtered printable evidence review sheets
+
+- Commit `f0e551c1cff8280fb6fdbc41b806faa509ea2313`: added a print action to the existing visual evidence gallery. The action expands the visible candidates' evidence records and prints a clean, paper-friendly reviewer sheet with the active search/product filters applied.
+- Print CSS removes navigation, placeholder graphics and controls; excludes hidden cards; and keeps each evidence record together where supported by the browser.
+- Verification: SOURCE-ONLY committed; print preview and live GitHub Pages deployment not independently tested. All ten candidate images remain HOLD; no DEV-VERIFIED or PRODUCTION-VERIFIED claims.
+- Security: no original screenshots, private documents or customer data added. Licensing: static printing requires none; ServiceNow runtime verification and optional ITSM/ITOM, IntegrationHub, Performance Analytics and AI features depend on instance entitlements.
+
 ## 2026-11-09 — Gallery filter recovery and safe empty-state export
 
 - Commit `e8e257725bff963de8f95f485753f389fda89cb5`: added an accessible Clear filters action that restores the full ten-candidate inventory, removes search and product query parameters and returns keyboard focus to search.
