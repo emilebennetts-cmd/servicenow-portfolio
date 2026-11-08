@@ -43,6 +43,16 @@ def check(root=ROOT, allowlist=ALLOWLIST):
                 issues.append(f"approval manifest line {line_number}: expected path and SHA-256 digest")
                 continue
             relative_path, digest = fields
+            candidate = Path(relative_path)
+            # Only canonical, repository-relative image paths are eligible.
+            # Reject traversal, alternate separators, and paths outside the
+            # dedicated screenshot directory before inspecting any bytes.
+            if (candidate.is_absolute() or "\\" in relative_path
+                    or any(part in {".", ".."} for part in relative_path.split("/"))
+                    or not relative_path.startswith("assets/screenshots/")
+                    or candidate.as_posix() != relative_path):
+                issues.append(f"approval manifest line {line_number}: unsafe image path")
+                continue
             if relative_path in approved:
                 issues.append(f"approval manifest line {line_number}: duplicate path {relative_path}")
             approved[relative_path] = digest.lower()
@@ -50,6 +60,11 @@ def check(root=ROOT, allowlist=ALLOWLIST):
         if not path.is_file() or any(part in SKIP_DIRS for part in path.relative_to(root).parts):
             continue
         relative = path.relative_to(root).as_posix()
+        # A symlink inside the public tree must never cause a private file
+        # outside the repository to be read or hashed by this gate.
+        if path.is_symlink() and not path.resolve().is_relative_to(root.resolve()):
+            issues.append(f"{relative}: symlink escapes public repository")
+            continue
         if path.suffix.lower() in IMAGE_EXTENSIONS:
             if relative not in approved:
                 issues.append(f"{relative}: image lacks recorded publication approval")
@@ -66,6 +81,7 @@ def check(root=ROOT, allowlist=ALLOWLIST):
     for relative in approved:
         target = root / relative
         if (not target.is_file() or target.suffix.lower() not in IMAGE_EXTENSIONS
+                or not target.resolve().is_relative_to(root.resolve())
                 or ".." in Path(relative).parts or Path(relative).is_absolute()):
             issues.append(f"{relative}: approval entry does not reference a valid public image")
     return issues
