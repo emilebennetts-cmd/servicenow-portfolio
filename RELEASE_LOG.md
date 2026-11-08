@@ -1,3 +1,12 @@
+## 2026-11-09 — Gallery DOM and navigation regression coverage
+
+- Commit `36b252cb6442bf193f645d85401ee0e0f3108750` extends `tests/test_visual_evidence_contract.py` with duplicate DOM ID detection and local fragment-link integrity checks.
+- These tests protect accessible label/target relationships and in-page navigation as the visual gallery evolves. No dependencies or confidential assets were introduced.
+- **Verification:** SOURCE-ONLY; test execution and browser deployment have not been independently observed. Ten screenshot candidates remain HOLD; no new DEV-VERIFIED or PRODUCTION-VERIFIED claims.
+- **Sources consulted:** Delivery and Diagnostic repository READMEs, existing gallery and tests, and Google Drive Diagnostic Workbench discovery. Drive image contents were not opened or published.
+- **Next:** Run offline tests in CI, verify published mobile experience, and privately inspect/redact images before requesting explicit release clearance.
+- **Entitlements:** Static checks require none. ServiceNow runtime requires authorised instance/custom app access; optional ITSM/ITOM, IntegrationHub, Performance Analytics and AI entitlements are feature-dependent.
+
 ## 2026-11-09 — Print review state and empty-result safeguards
 
 - Implemented commit `447eaccc1cdee3c7a3035587a514ba0446f0bd81` in `visual-evidence.html`.
