@@ -50,7 +50,7 @@ class EvidenceGalleryContract(unittest.TestCase):
         ids = [x[0] for x in self.page.candidates]
         self.assertEqual(len(ids), len(set(ids)), "Duplicate evidence ID")
         self.assertEqual(len(ids), 10, "Update inventory contract when candidate count changes")
-        self.assertTrue(all(re.fullmatch(r"(DW|UDW)-IMG-\d{2}", x) for x in ids))
+        self.assertTrue(all(re.fullmatch(r"(DW|VD)-IMG-\d{2}", x) for x in ids))
 
     def test_group_and_review_details(self):
         self.assertEqual(sum(group == "diagnostic" for _, group in self.page.candidates), 6)
