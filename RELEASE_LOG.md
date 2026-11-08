@@ -1,3 +1,12 @@
+## 2026-11-09 — Screenshot publication gate security hardening
+
+- Hardened `scripts/check_publication.py` to reject absolute, traversal and non-canonical approval paths; approvals are restricted to `assets/screenshots/`.
+- Reject escaping symlinks before reading or hashing public assets, and verify resolved approval targets stay inside the repository.
+- Added `tests/test_screenshot_gate_security.py` covering valid approved bytes, path traversal, absolute paths, external symlinks and post-approval image mutation.
+- Evidence classification: **SOURCE-ONLY** for this gate implementation; tests committed but no new CI run independently verified in this release. No DEV-VERIFIED or PRODUCTION-VERIFIED ServiceNow claims.
+- All ten screenshot candidates remain **HOLD** pending authorised human privacy review and publication approval. No new images published.
+- Licensing: static publication gate requires no ServiceNow licence; runtime Workbench verification depends on authorised instance access, custom application entitlements and feature-specific ITSM/ITOM, IntegrationHub, Performance Analytics or AI subscriptions.
+
 
 ## 2026-11-09 — Screenshot review workspace
 - Commit: aebe02c0e361fab700407abdb66bd659d9e993be
