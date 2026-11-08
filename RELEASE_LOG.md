@@ -1,3 +1,10 @@
+
+## 2026-11-09 — Screenshot review workspace
+- Commit: aebe02c0e361fab700407abdb66bd659d9e993be
+- Added a practical, accessible review checklist directly to the existing ten-candidate visual evidence register, with source links, digest requirements, confidentiality review and explicit HOLD status.
+- Verification: SOURCE-ONLY website change; candidate screenshots remain unpublished. No new DEV-VERIFIED or PRODUCTION-VERIFIED claims. Browser deployment and CI outcome not independently verified for this commit.
+- Security: no original screenshots, customer data or private control-repository content published. Licensing: static page none; runtime platform/custom-app and optional ITSM/ITOM, IntegrationHub, PA and AI entitlements depend on installed capabilities.
+
 ## 2026-11-08 — Capability traceability and verification boundaries
 
 - Published `capability-traceability.html`: mobile-friendly, source-linked capability matrix for Diagnostic Workbench 2 and Universal Delivery Workbench, including Knowledge Intelligence's separately deployed companion status, delivery version drift, and mock-only provider integration boundaries.
