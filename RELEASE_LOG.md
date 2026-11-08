@@ -1,3 +1,11 @@
+## 2026-11-09 — Downloadable screenshot review register
+
+- Added a client-side CSV export to the existing visual evidence gallery. It exports only the currently filtered candidate records: evidence ID, product, screen, HOLD publication decision, CANDIDATE-ONLY verification status and reviewer guidance.
+- Export is generated locally without external services or access to original Drive assets. UTF-8 BOM supports spreadsheet readers; CSV fields are quoted and formula-like prefixes escaped.
+- Commit: 944aa1cb15e55bbf45d31986ccda9da72d3db032.
+- Verification: SOURCE-ONLY; browser interaction and live Pages deployment not independently confirmed. Ten screenshot candidates remain HOLD, no DEV-VERIFIED or PRODUCTION-VERIFIED claims and no sensitive images published.
+- Licensing: static CSV export needs no ServiceNow entitlement. Scoped application execution and optional ITSM/ITOM, IntegrationHub, Performance Analytics and AI features require instance-specific licence verification.
+
 ## 2026-11-09 — Screenshot publication gate security hardening
 
 - Hardened `scripts/check_publication.py` to reject absolute, traversal and non-canonical approval paths; approvals are restricted to `assets/screenshots/`.
