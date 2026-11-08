@@ -1,3 +1,10 @@
+## 2026-11-09 — Gallery filter recovery and safe empty-state export
+
+- Commit `e8e257725bff963de8f95f485753f389fda89cb5`: added an accessible Clear filters action that restores the full ten-candidate inventory, removes search and product query parameters and returns keyboard focus to search.
+- Disabled CSV export when zero records match, avoiding misleading empty review registers; added disabled-state styling and accessible state.
+- Verification: SOURCE-ONLY change committed; browser and live deployment not independently verified. Ten candidates remain HOLD; no new DEV-VERIFIED or PRODUCTION-VERIFIED evidence and no images published.
+- Licensing: static website and CSV controls require no ServiceNow licence; scoped Workbench runtime and optional ITSM/ITOM, IntegrationHub, Performance Analytics and AI capabilities require applicable entitlements.
+
 ## 2026-11-09 — Downloadable screenshot review register
 
 - Added a client-side CSV export to the existing visual evidence gallery. It exports only the currently filtered candidate records: evidence ID, product, screen, HOLD publication decision, CANDIDATE-ONLY verification status and reviewer guidance.
