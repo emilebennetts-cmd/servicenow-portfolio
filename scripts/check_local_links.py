@@ -29,6 +29,8 @@ def audit(root):
     for path in root.rglob("*.html"):
         if any(part.startswith(".") for part in path.relative_to(root).parts):
             continue
+        if not path.resolve().is_relative_to(root.resolve()):
+            continue  # Never read symlinked HTML outside the publication root.
         p = Page()
         p.feed(path.read_text(encoding="utf-8"))
         pages[path.resolve()] = p
@@ -49,7 +51,7 @@ def audit(root):
             if not target.is_relative_to(root.resolve()):
                 errors.append(f"{source.relative_to(root)}: {attribute} escapes site root: {value}")
             elif not target.is_file():
-                errors.append(f"{source.name}: missing local target: {value}")
+                errors.append(f"{source.relative_to(root)}: missing local target: {value}")
             elif url.fragment and target.suffix.lower() == ".html":
                 if target not in pages:
                     p = Page()
@@ -57,7 +59,7 @@ def audit(root):
                 else:
                     p = pages[target]
                 if unquote(url.fragment) not in p.ids:
-                    errors.append(f"{source.name}: missing fragment: {value}")
+                    errors.append(f"{source.relative_to(root)}: missing fragment: {value}")
     return errors
 
 if __name__ == "__main__":
