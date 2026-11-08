@@ -17,6 +17,7 @@ class GalleryParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.ids = set()
+        self.duplicate_ids = set()
         self.candidates = []
         self.images = []
         self.links = []
@@ -26,6 +27,8 @@ class GalleryParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if "id" in a:
+            if a["id"] in self.ids:
+                self.duplicate_ids.add(a["id"])
             self.ids.add(a["id"])
         if tag == "article" and "data-evidence-id" in a:
             self.candidates.append((a["data-evidence-id"], a.get("data-group")))
@@ -45,6 +48,13 @@ class EvidenceGalleryContract(unittest.TestCase):
         cls.html = PAGE.read_text(encoding="utf-8")
         cls.page = GalleryParser()
         cls.page.feed(cls.html)
+
+    def test_unique_dom_ids(self):
+        self.assertFalse(self.page.duplicate_ids, "Duplicate DOM IDs: " + str(self.page.duplicate_ids))
+
+    def test_local_fragment_links_resolve(self):
+        broken = [href for href in self.page.links if href.startswith("#") and href != "#" and href[1:] not in self.page.ids]
+        self.assertFalse(broken, "Broken in-page links: " + str(broken))
 
     def test_unique_candidate_identifiers(self):
         ids = [x[0] for x in self.page.candidates]
