@@ -22,6 +22,7 @@ class Page(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.ids, self.hrefs, self.images, self.titles = set(), [], [], []
+        self.external_tabs = []
         self.duplicates = []
         self.viewport = False
         self.main = 0
@@ -35,6 +36,8 @@ class Page(HTMLParser):
             self.ids.add(a["id"])
         if tag == "a" and a.get("href"):
             self.hrefs.append(a["href"])
+            if a.get("target", "").lower() == "_blank":
+                self.external_tabs.append(a)
         if tag == "img":
             self.images.append(a)
         if tag == "meta" and a.get("name", "").lower() == "viewport":
@@ -82,6 +85,13 @@ def audit():
         for marker in PRIVATE_MARKERS:
             if marker in source.lower():
                 issue("private-reference", marker)
+        for anchor in page.external_tabs:
+            href = anchor.get("href", "")
+            destination = urlsplit(href)
+            if destination.scheme.lower() in ("https", "http") or destination.netloc:
+                rel = set(anchor.get("rel", "").lower().split())
+                if "noopener" not in rel and "noreferrer" not in rel:
+                    issue("external-tab-opener", f"Add rel=noopener to external _blank link: {href[:160]}")
         for img in page.images:
             if "alt" not in img:
                 issue("missing-image-alt", img.get("src", "(no src)"))
