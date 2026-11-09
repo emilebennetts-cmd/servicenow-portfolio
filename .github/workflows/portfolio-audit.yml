@@ -18,6 +18,8 @@ jobs:
           python-version: '3.12'
       - name: Validate auditor syntax
         run: python -m py_compile tests/audit_public_site.py
+      - name: Run auditor regression tests
+        run: python -m unittest discover -s tests -p 'test_site_audit.py' -v
       - name: Run site audit and capture findings
         id: audit
         shell: bash
