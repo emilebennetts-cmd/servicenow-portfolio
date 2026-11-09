@@ -1,0 +1,47 @@
+name: Portfolio quality audit
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  site-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate auditor syntax
+        run: python -m py_compile tests/audit_public_site.py
+      - name: Run site audit and capture findings
+        id: audit
+        shell: bash
+        run: |
+          mkdir -p audit-output
+          python tests/audit_public_site.py > audit-output/site-audit.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          result = json.loads(Path("audit-output/site-audit.json").read_text())
+          summary = (
+              "## Portfolio site audit\n\n"
+              f"- Pages checked: {result['pages_checked']}\n"
+              f"- Findings: {result['finding_count']}\n"
+              "- Evidence classification: SOURCE-ONLY (static checks, not browser or runtime verification).\n"
+              "- Findings are reported, not yet enforced as a blocking release gate.\n"
+          )
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as handle:
+              handle.write(summary)
+          print(summary)
+          PY
+      - name: Upload machine-readable audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-site-audit
+          path: audit-output/site-audit.json
+          retention-days: 30
