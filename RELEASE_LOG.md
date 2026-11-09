@@ -367,3 +367,15 @@
 - Evidence status: website change SOURCE-ONLY pending GitHub Pages/browser confirmation; underlying architectural narratives SOURCE-ONLY; historical DEV observations remain historical; illustrative demos MOCK-ONLY; no current DEV-VERIFIED or PRODUCTION-VERIFIED claim.
 - Next: review authentic screenshot provenance and approvals, check deployment and mobile browser navigation, and verify accessibility.
 - Licensing: static website none; ServiceNow runtime/custom application and optional IntegrationHub, ITOM, AI/analytics or connector entitlements require separate assessment.
+
+
+## 2026-11-10 — Cross-workbench evidence-to-delivery visual walkthrough
+
+- Added `finding-to-delivery.html`: responsive, keyboard-operable five-stage synthetic finding lifecycle, with explicit Diagnostic ownership versus Delivery source-reference boundary and accessible live stage detail.
+- Connected the existing pattern explorer to the new walkthrough.
+- Source provenance reviewed: `solution-lifecycle-studio/README.md` and `Diagnostic-Workbench2/README.md`. Both contain historical development baseline statements; neither was independently runtime-tested during this change.
+- Evidence classification: **MOCK-ONLY** for interactive synthetic walkthrough; **SOURCE-ONLY** for architectural repository descriptions and this website change. **DEV-VERIFIED: not newly established. PRODUCTION-VERIFIED: not established.**
+- Safety: no private repository content, customer data, credentials, real screenshots, or live connectors included. No repository visibility changes.
+- Entitlements: static page requires none; actual ServiceNow scoped app, ITSM/ITOM, IntegrationHub, PA, AI and provider integrations depend on contracted entitlements and deployment architecture.
+- Commits: `7d968202eb56d09fc923e665eeb3471c725cdf91` (walkthrough), `da713491b1e80d69ed3b4ba912dcb919e6a024da` (navigation).
+- Verification: GitHub commit acceptance confirmed; GitHub Pages deployment, browser rendering and CI completion not yet independently confirmed.
