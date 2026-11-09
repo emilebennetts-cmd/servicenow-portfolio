@@ -62,5 +62,25 @@ class PortfolioAuditTests(unittest.TestCase):
         self.assertIn("main-landmark", self.codes())
 
 
+    def test_missing_image_asset(self):
+        self.page("index.html", '<img src="assets/absent.png" alt="Screenshot">')
+        self.assertIn("missing-local-target", self.codes())
+
+    def test_existing_image_asset(self):
+        self.page("index.html", '<img src="assets/approved.png" alt="Approved evidence">')
+        asset = self.root / "assets" / "approved.png"
+        asset.parent.mkdir(parents=True)
+        asset.write_bytes(b"fixture")
+        self.assertEqual(audit_module.audit()["finding_count"], 0)
+
+    def test_unsafe_script_url(self):
+        self.page("index.html", '<a href="javascript:alert(1)">Link</a>')
+        self.assertIn("unsafe-resource-url", self.codes())
+
+    def test_root_absolute_path(self):
+        self.page("index.html", '<a href="/delivery-case-study.html">Delivery</a>')
+        self.assertIn("root-absolute-resource", self.codes())
+
+
 if __name__ == "__main__":
     unittest.main()
