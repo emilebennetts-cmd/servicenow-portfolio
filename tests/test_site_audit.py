@@ -77,6 +77,18 @@ class PortfolioAuditTests(unittest.TestCase):
         self.page("index.html", '<a href="javascript:alert(1)">Link</a>')
         self.assertIn("unsafe-resource-url", self.codes())
 
+    def test_external_new_tab_requires_opener_isolation(self):
+        self.page("index.html", '<a href="https://example.org" target="_blank">External</a>')
+        self.assertIn("external-tab-opener", self.codes())
+
+    def test_external_new_tab_noopener_passes(self):
+        self.page("index.html", '<a href="https://example.org" target="_blank" rel="noopener">External</a>')
+        self.assertNotIn("external-tab-opener", self.codes())
+
+    def test_external_new_tab_noreferrer_passes(self):
+        self.page("index.html", '<a href="//example.org" target="_blank" rel="noreferrer">External</a>')
+        self.assertNotIn("external-tab-opener", self.codes())
+
     def test_root_absolute_path(self):
         self.page("index.html", '<a href="/delivery-case-study.html">Delivery</a>')
         self.assertIn("root-absolute-resource", self.codes())
