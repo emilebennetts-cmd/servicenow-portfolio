@@ -85,15 +85,20 @@ def audit():
         for img in page.images:
             if "alt" not in img:
                 issue("missing-image-alt", img.get("src", "(no src)"))
-        for href in page.hrefs:
+        resources = [(href, "link") for href in page.hrefs] + [(img.get("src", ""), "image") for img in page.images if img.get("src")]
+        for href, kind in resources:
             target = urlsplit(href)
+            if target.scheme.lower() in ("javascript", "data", "vbscript"):
+                issue("unsafe-resource-url", f"{kind}: {href[:160]}")
+                continue
             if target.scheme or target.netloc or href.startswith("//"):
                 continue
             if not target.path and not target.fragment:
                 continue
             relative = unquote(target.path)
             if relative.startswith("/"):
-                # Root-absolute routes are valid on the hosted site; report separately.
+                # GitHub Pages project sites use a subpath; avoid silently approving ambiguous absolute links.
+                issue("root-absolute-resource", f"{kind}: {href}")
                 continue
             destination = (path.parent / relative).resolve() if relative else path
             if relative and destination.is_dir():
@@ -102,7 +107,7 @@ def audit():
                 issue("path-escape", href)
                 continue
             if not destination.is_file():
-                issue("missing-local-target", href)
+                issue("missing-local-target", f"{kind}: {href}")
                 continue
             if target.fragment and destination.suffix.lower() == ".html":
                 target_page = documents.get(destination)
