@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://emilebennetts-cmd.github.io/servicenow-portfolio/sitemap.xml
