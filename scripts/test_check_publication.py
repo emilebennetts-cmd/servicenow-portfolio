@@ -15,30 +15,42 @@ class PublicationTests(unittest.TestCase):
     def test_unapproved_image_is_blocked(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "screen.png").write_bytes(b"fake")
+            (root / "assets" / "screenshots").mkdir(parents=True, exist_ok=True)
+            (root / "assets" / "screenshots" / "screen.png").write_bytes(b"fake")
             self.assertEqual(1, len(check(root, root / "missing.txt")))
     def test_allowlisted_image_is_accepted(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "assets" / "screenshots").mkdir(parents=True, exist_ok=True)
+            (root / "assets" / "screenshots" / "screen.png").write_bytes(b"fake")
+            allowlist = root / "approved.txt"
+            allowlist.write_text("assets/screenshots/screen.png " + hashlib.sha256(b"fake").hexdigest() + "\n", encoding="utf-8")
+            self.assertEqual([], check(root, allowlist))
+    def test_changed_image_requires_fresh_approval(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "assets" / "screenshots").mkdir(parents=True, exist_ok=True)
+            (root / "assets" / "screenshots" / "screen.png").write_bytes(b"original")
+            allowlist = root / "approved.txt"
+            allowlist.write_text("assets/screenshots/screen.png " + hashlib.sha256(b"original").hexdigest() + "\n", encoding="utf-8")
+            (root / "assets" / "screenshots").mkdir(parents=True, exist_ok=True)
+            (root / "assets" / "screenshots" / "screen.png").write_bytes(b"changed")
+            self.assertTrue(any("changed since" in issue for issue in check(root, allowlist)))
+    def test_legacy_path_only_approval_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "assets" / "screenshots").mkdir(parents=True, exist_ok=True)
+            (root / "assets" / "screenshots" / "screen.png").write_bytes(b"fake")
+            allowlist = root / "approved.txt"
+            allowlist.write_text("assets/screenshots/screen.png\n", encoding="utf-8")
+            self.assertTrue(check(root, allowlist))
+    def test_approval_outside_screenshot_directory_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "screen.png").write_bytes(b"fake")
             allowlist = root / "approved.txt"
             allowlist.write_text("screen.png " + hashlib.sha256(b"fake").hexdigest() + "\n", encoding="utf-8")
-            self.assertEqual([], check(root, allowlist))
-    def test_changed_image_requires_fresh_approval(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "screen.png").write_bytes(b"original")
-            allowlist = root / "approved.txt"
-            allowlist.write_text("screen.png " + hashlib.sha256(b"original").hexdigest() + "\n", encoding="utf-8")
-            (root / "screen.png").write_bytes(b"changed")
-            self.assertTrue(any("changed since" in issue for issue in check(root, allowlist)))
-    def test_legacy_path_only_approval_is_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "screen.png").write_bytes(b"fake")
-            allowlist = root / "approved.txt"
-            allowlist.write_text("screen.png\n", encoding="utf-8")
-            self.assertTrue(check(root, allowlist))
+            self.assertTrue(any("unsafe image path" in issue for issue in check(root, allowlist)))
     def test_detects_secret_in_html(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
