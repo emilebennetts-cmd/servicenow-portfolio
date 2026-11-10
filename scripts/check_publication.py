@@ -21,6 +21,24 @@ SENSITIVE = [
 ]
 # Public image assets must be manually reviewed and recorded before publication.
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff"}
+MAX_PUBLIC_IMAGE_BYTES = 8 * 1024 * 1024  # guard against accidental raw exports
+
+def image_format_matches(path, data):
+    """Reject files disguised with an image suffix; no external dependencies."""
+    suffix = path.suffix.lower()
+    if suffix == ".png":
+        return data.startswith(b"\x89PNG\r\n\x1a\n")
+    if suffix in {".jpg", ".jpeg"}:
+        return data.startswith(b"\xff\xd8\xff") and data.endswith(b"\xff\xd9")
+    if suffix == ".webp":
+        return len(data) >= 12 and data[:4] == b"RIFF" and data[8:12] == b"WEBP"
+    if suffix == ".gif":
+        return data.startswith((b"GIF87a", b"GIF89a"))
+    if suffix == ".bmp":
+        return data.startswith(b"BM")
+    if suffix in {".tif", ".tiff"}:
+        return data.startswith((b"II*\x00", b"MM\x00*"))
+    return False
 # Existing images are not automatically deemed safe; the gate flags new ones via a
 # separately maintained reviewed-image allowlist. No unreviewed image is permitted.
 ALLOWLIST = ROOT / "evidence" / "approved-public-images.txt"
@@ -68,8 +86,14 @@ def check(root=ROOT, allowlist=ALLOWLIST):
         if path.suffix.lower() in IMAGE_EXTENSIONS:
             if relative not in approved:
                 issues.append(f"{relative}: image lacks recorded publication approval")
-            elif hashlib.sha256(path.read_bytes()).hexdigest() != approved[relative]:
-                issues.append(f"{relative}: image bytes changed since publication approval")
+            else:
+                image_bytes = path.read_bytes()
+                if len(image_bytes) > MAX_PUBLIC_IMAGE_BYTES:
+                    issues.append(f"{relative}: image exceeds 8 MiB public size limit")
+                if not image_format_matches(path, image_bytes):
+                    issues.append(f"{relative}: image signature does not match its extension")
+                if hashlib.sha256(image_bytes).hexdigest() != approved[relative]:
+                    issues.append(f"{relative}: image bytes changed since publication approval")
         if path.suffix.lower() in WEB_EXTENSIONS:
             try:
                 contents = path.read_text(encoding="utf-8")
