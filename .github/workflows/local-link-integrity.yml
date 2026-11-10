@@ -1,0 +1,25 @@
+name: Portfolio local link integrity
+on:
+  push:
+    paths:
+      - '**/*.html'
+      - 'scripts/check-local-links.py'
+      - '.github/workflows/local-link-integrity.yml'
+  pull_request:
+    paths:
+      - '**/*.html'
+      - 'scripts/check-local-links.py'
+      - '.github/workflows/local-link-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit relative links and fragments
+        run: python3 scripts/check-local-links.py
