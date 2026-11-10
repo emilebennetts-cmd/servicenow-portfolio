@@ -93,4 +93,25 @@
 (function(){const tabs=[...document.querySelectorAll('[role="tab"]')];tabs.forEach(tab=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const group=tabs.filter(x=>x.dataset.group===tab.dataset.group);const idx=group.indexOf(tab);const next=e.key==='Home'?group[0]:e.key==='End'?group[group.length-1]:group[(idx+(e.key==='ArrowRight'?1:-1)+group.length)%group.length];activate(next);next.focus()})});function activate(tab){const group=tabs.filter(x=>x.dataset.group===tab.dataset.group);group.forEach(x=>{const active=x===tab;x.setAttribute('aria-selected',String(active));x.tabIndex=active?0:-1;document.getElementById(x.dataset.tab).hidden=!active})}})();
 
 (function(){const stages=[['Synchronise script sources','Select a local, client-neutral script folder. The browser maps recognised script files to the guided assessment catalogue.','A catalogue of diagnostic scripts ready for guided execution; no remote instance connection is made by this portfolio.'],['Run guided diagnostics','Choose a diagnostic and review its purpose, safety notes, expected output and mapping before execution in an authorised instance.','An operator-executed diagnostic result that can be associated with its assessment module.'],['Load and validate results','Import JSON, CSV, TXT or log output, validate the payload and link the run to its source script and assessment module.','A traceable result record with validation status and source context.'],['Generate assessment report','Consolidate assessment coverage, observations and provenance into an evidence-backed report.','A standalone assessment report describing findings and their supporting observations.'],['Explore evidence mapping','Review candidate findings and mapped artefacts, then trace evidence back to its diagnostic source and run.','An evidence explorer connecting findings, source runs and assessment artefacts.']];let index=0;const buttons=[...document.querySelectorAll('[data-screen-step]')];if(!buttons.length)return;const render=()=>{buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));document.getElementById('screen-counter').textContent='STEP '+String(index+1).padStart(2,'0')+' / 05';document.getElementById('screen-heading').textContent=stages[index][0];document.getElementById('screen-description').textContent=stages[index][1];document.getElementById('screen-result').textContent=stages[index][2];document.getElementById('screen-prev').disabled=index===0;document.getElementById('screen-next').disabled=index===stages.length-1;document.getElementById('screen-progress-fill').style.width=((index+1)/stages.length*100)+'%';document.getElementById('screen-announcement').textContent='Illustrative demonstration, stage '+(index+1)+' of '+stages.length+': '+stages[index][0];};buttons.forEach((b,i)=>b.addEventListener('click',()=>{index=i;render()}));document.getElementById('screen-prev').addEventListener('click',()=>{index=Math.max(0,index-1);render()});document.getElementById('screen-next').addEventListener('click',()=>{index=Math.min(stages.length-1,index+1);render()});render()})();
+</script>
+<script>
+/* Keep the compact navigation usable for keyboard and touch users. */
+(() => {
+  const menu = document.querySelector('.mobile-directory');
+  if (!menu) return;
+  const summary = menu.querySelector('summary');
+  menu.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.open) {
+      menu.open = false;
+      summary?.focus();
+      event.preventDefault();
+    }
+  });
+  document.addEventListener('pointerdown', event => {
+    if (menu.open && !menu.contains(event.target)) menu.open = false;
+  });
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    menu.open = false;
+  }));
+})();
 </script></body></html>
