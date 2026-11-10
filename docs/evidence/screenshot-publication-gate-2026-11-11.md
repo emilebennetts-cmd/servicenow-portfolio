@@ -19,7 +19,7 @@ Publish real ServiceNow Workbench screens only after source provenance, sanitisa
 | Sensitive content check | Names, emails, sys_ids, instance URLs, hostnames, IPs, ticket numbers, financial or health data, customer branding, tokens |
 | Redaction | Irreversible flattened image; original retained only in restricted storage |
 | Reviewer | Reviewer, review date and decision |
-| Public path | Only after approval, under assets/evidence/ |
+| Public path | Only after approval, under assets/screenshots/ (the enforced allowlist path) |
 | Caption | What is genuinely shown, version/environment and limitation |
 | Source reference | Public safe design document or sanitized evidence reference |
 
@@ -44,3 +44,6 @@ No screenshot is approved for publication by this document. Existing illustrativ
 
 ## Entitlements
 This intake process and static gallery need no ServiceNow licence. Capturing and demonstrating runtime features depends on the instance and contractual entitlements, potentially App Engine, ITSM/ITOM, IntegrationHub, Performance Analytics and AI; confirm the actual product subscriptions before claiming deployability.
+
+## 11 November 2026 — automated binary checks
+The public CI publication gate now checks the magic-byte signature of each approved PNG, JPEG, WebP, GIF, BMP or TIFF against its extension, rejects approved files over 8 MiB, and still verifies the SHA-256 allowlist. Unit tests cover disguised files, mismatched bytes and oversized captures. These are **technical guardrails, not a content, EXIF, rights or sanitisation review**. Final human approval remains mandatory. Verification: SOURCE-ONLY until the corresponding GitHub Actions run passes. No new image was approved or published in this change.
