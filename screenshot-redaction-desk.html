@@ -76,7 +76,9 @@ footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted)}
 <div class="actions"><button id="add-rect" disabled>Add solid area</button><button id="undo-rect" disabled>Undo last</button><button id="clear-rect" disabled>Clear areas</button></div>
 <h3>3. Review and export locally</h3>
 <label class="confirm" for="reviewed"><input id="reviewed" type="checkbox" disabled><span>I visually inspected the redacted preview and understand that exporting does <strong>not</strong> authorise public publication.</span></label>
-<button class="primary" id="export-png" disabled>Download flattened PNG</button>
+<div class="actions"><button class="primary" id="export-png" disabled>Download flattened PNG</button><button id="export-receipt" disabled>Download SHA-256 review receipt</button></div>
+<p class="hint">Only after a PNG is exported does the desk compute SHA-256 of <strong>those exact PNG bytes</strong> and make a separate JSON receipt. The receipt excludes source filename, source image bytes and redaction geometry. It is not an approval or evidence of platform execution.</p>
+<p class="hint"><strong>Exported PNG SHA-256:</strong> <code id="export-sha256" style="overflow-wrap:anywhere">Not generated</code></p>
 <p class="hint">Export requires an image, at least one solid area and manual-review acknowledgement. A new opaque PNG is rendered from scratch; original filename and source metadata are not carried into the export. Reopen the downloaded file and inspect it at full size.</p>
 <div id="status" role="status" aria-live="polite">No file loaded. Select an image to begin.</div>
 </div>
@@ -99,14 +101,16 @@ const $=id=>document.getElementById(id);
 const file=$("source-file"), canvas=$("preview"), ctx=canvas.getContext("2d",{willReadFrequently:true});
 const status=$("status"), reviewed=$("reviewed"), exportBtn=$("export-png");
 const MAX_BYTES=15*1024*1024, MAX_PIXELS=16000000;
-let image=null, areas=[], draft=null, pointerStart=null, loadToken=0;
+let image=null, areas=[], draft=null, pointerStart=null, loadToken=0, lastReceipt=null;
+function clearReceipt(){lastReceipt=null;$("export-receipt").disabled=true;$("export-sha256").textContent="Not generated";}
 function tell(message){status.textContent=message;}
-function revokeReview(){reviewed.checked=false; refreshActions();}
+function revokeReview(){reviewed.checked=false;clearReceipt();refreshActions();}
 function refreshActions(){
  const ready=!!image, hasAreas=areas.length>0;
  $("add-rect").disabled=!ready;$("undo-rect").disabled=!hasAreas;$("clear-rect").disabled=!hasAreas;
  reviewed.disabled=!(ready&&hasAreas);
  exportBtn.disabled=!(ready&&hasAreas&&reviewed.checked);
+ $("export-receipt").disabled=!lastReceipt;
  $("image-size").textContent=ready?(image.width+" × "+image.height):"—";
  $("area-count").textContent=String(areas.length);
  $("export-state").textContent=exportBtn.disabled?"Locked":"Ready";
@@ -135,7 +139,7 @@ function reset(message){
  image=null;areas=[];draft=null;pointerStart=null;
  canvas.hidden=true;$("empty-preview").hidden=false;
  canvas.width=1;canvas.height=1;
- reviewed.checked=false;refreshActions();tell(message);
+ reviewed.checked=false;clearReceipt();refreshActions();tell(message);
 }
 function imageReady(decoded,token){
  if(token!==loadToken)return;
@@ -143,7 +147,7 @@ function imageReady(decoded,token){
  image=decoded;areas=[];draft=null;pointerStart=null;
  canvas.width=decoded.width;canvas.height=decoded.height;
  canvas.hidden=false;$("empty-preview").hidden=true;
- reviewed.checked=false;draw();refreshActions();
+ reviewed.checked=false;clearReceipt();draw();refreshActions();
  tell("Image loaded locally. Add solid redaction areas; then manually review the whole preview.");
 }
 file.addEventListener("change",function(){
@@ -195,19 +199,54 @@ $("add-rect").addEventListener("click",function(){
 });
 $("undo-rect").addEventListener("click",function(){if(!areas.length)return;areas.pop();revokeReview();draw();tell("Last area undone; review acknowledgement cleared.");});
 $("clear-rect").addEventListener("click",function(){areas=[];revokeReview();draw();tell("All areas removed; review acknowledgement cleared.");});
-reviewed.addEventListener("change",refreshActions);
+reviewed.addEventListener("change",function(){if(!reviewed.checked)clearReceipt();refreshActions();});
 exportBtn.addEventListener("click",function(){
  if(!image||!areas.length||!reviewed.checked)return;
+ clearReceipt();
+ const sourceToken=loadToken, sourceImage=image, maskSignature=JSON.stringify(areas);
+ const stillCurrent=()=>sourceToken===loadToken&&image===sourceImage&&
+    maskSignature===JSON.stringify(areas)&&reviewed.checked;
  const flattened=document.createElement("canvas");flattened.width=image.width;flattened.height=image.height;
  const out=flattened.getContext("2d");if(!out){tell("Could not prepare export context.");return;}
  paint(out,false);
- flattened.toBlob(function(blob){
+ flattened.toBlob(async function(blob){
   if(!blob||blob.type!=="image/png"){tell("Local PNG export failed. Nothing uploaded.");return;}
-  const url=URL.createObjectURL(blob);const a=document.createElement("a");
-  a.href=url;a.download="workbench-redacted-review.png";document.body.appendChild(a);a.click();a.remove();
-  setTimeout(function(){URL.revokeObjectURL(url);},1000);
-  tell("Flattened PNG prepared locally. Reopen it at full resolution and obtain separate publication approval.");
+  if(!stillCurrent()){tell("Image or redactions changed during export. Review the current image again.");return;}
+  try{
+   if(!crypto.subtle)throw new Error("SHA-256 is not available in this browser context.");
+   const hash=await crypto.subtle.digest("SHA-256",await blob.arrayBuffer());
+   const digest=Array.from(new Uint8Array(hash),b=>b.toString(16).padStart(2,"0")).join("");
+   if(!stillCurrent()){tell("Image or redactions changed during hashing; export cancelled.");return;}
+   const receipt={
+    schema:"servicenow-portfolio-redacted-image-receipt/v1",
+    exported_file:"workbench-redacted-review.png",
+    sha256:digest,
+    dimensions_px:{width:sourceImage.width,height:sourceImage.height},
+    redaction_area_count:areas.length,
+    generated_utc:new Date().toISOString(),
+    evidence_class:"SOURCE-ONLY TOOL OUTPUT",
+    publication_status:"HOLD",
+    publication_approved:false,
+    service_now_dev_verified:false,
+    service_now_production_verified:false,
+    independent_export_review:"REQUIRED",
+    warning:"A digest proves only the identity of exported bytes. This receipt is not a confidentiality assessment, publication approval or ServiceNow runtime verification."
+   };
+   const url=URL.createObjectURL(blob),a=document.createElement("a");
+   a.href=url;a.download="workbench-redacted-review.png";document.body.appendChild(a);a.click();a.remove();
+   setTimeout(function(){URL.revokeObjectURL(url);},1000);
+   lastReceipt=receipt;$("export-sha256").textContent=digest;refreshActions();
+   tell("Flattened PNG and SHA-256 prepared locally. Download the matching review receipt; reopen the PNG at full resolution and seek separate publication approval.");
+  }catch(err){clearReceipt();tell("Secure SHA-256 export failed; no PNG downloaded. "+(err&&err.message||"Browser error"));}
  },"image/png");
+});
+$("export-receipt").addEventListener("click",function(){
+ if(!lastReceipt)return;
+ const blob=new Blob([JSON.stringify(lastReceipt,null,2)+"\\n"],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="workbench-redacted-review.receipt.json";document.body.appendChild(a);a.click();a.remove();
+ setTimeout(function(){URL.revokeObjectURL(url);},1000);
+ tell("Review receipt downloaded locally. Verify the SHA-256 against the actual PNG file; approval remains HOLD.");
 });
 refreshActions();
 })();
