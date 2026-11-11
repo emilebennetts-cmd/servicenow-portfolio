@@ -87,7 +87,7 @@ class ResponsiveNavigationTests(unittest.TestCase):
     def test_responsive_breakpoints_and_keyboard_support(self):
         self.assertIn('<style id="reviewer-navigation-20261111">', HTML)
         css = HTML.split('<style id="reviewer-navigation-20261111">', 1)[1].split("</style>", 1)[0]
-        self.assertIn("@media(max-width:820px)", css)
+        self.assertIn("@media(max-width:980px)", css)
         self.assertIn("@media(max-width:540px)", css)
         self.assertIn("max-height:min(78vh,650px)", css)
         self.assertIn("overscroll-behavior:contain", css)
