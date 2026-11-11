@@ -69,7 +69,7 @@ class LocalRedactionDeskContract(unittest.TestCase):
                     'MAX_PIXELS=16000000', 'decoded.width*decoded.height>MAX_PIXELS',
                     'URL.createObjectURL(f)', 'URL.revokeObjectURL(url)',
                     'target.fillStyle="#000000"', 'target.fillRect(r.x,r.y,r.w,r.h)',
-                    'paint(out,false)', 'flattened.toBlob(function(blob)',
+                    'paint(out,false)', 'flattened.toBlob(async function(blob)',
                     '"image/png"', 'workbench-redacted-review.png',
                     'reviewed.checked', 'exportBtn.disabled',
                     'id="export-receipt"', 'id="export-sha256"',
