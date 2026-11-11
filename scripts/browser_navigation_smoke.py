@@ -476,7 +476,7 @@ def check_screenshot_receipt_verifier(browser, width):
                 and "CRC mismatch" in page.locator("#explanation").inner_text(),
                 f"{width}px: CRC-invalid PNG passed with matching receipt hash")
         # Inject a valid-CRC metadata chunk: must fail even with a matching digest.
-        metadata=b"source\\x00PRIVATE-DO-NOT-PUBLISH"
+        metadata=b"source\x00PRIVATE-DO-NOT-PUBLISH"
         ancillary=(struct.pack(">I",len(metadata))+b"tEXt"+metadata+
                    struct.pack(">I",zlib.crc32(b"tEXt"+metadata)))
         with_metadata=data[:33]+ancillary+data[33:]
