@@ -1,3 +1,12 @@
+## 2026-11-11 — Responsive reviewer navigation and evidence-first directory
+
+- Corrected homepage header navigation that had grown to **18 desktop links** and was not collapsed at laptop/tablet widths. Main nav now contains four high-value paths: case studies, architecture, visual evidence and contact.
+- Made the semantic, keyboard-accessible `Explore all` directory available at every viewport; 18 links are grouped under Start here, Workbench solutions, and Evidence & assurance. Added tablet/mobile breakpoints, scrollable overlay and accessible summary target.
+- Added CI-discovered `scripts/test_home_navigation.py` checking link priorities, existence of public destinations/fragment IDs, disclosure semantics and responsive breakpoints.
+- **SOURCE-ONLY:** HTML/CSS and tests committed; final-commit CI and live rendering are separate checks. Historical DEV reports not re-executed, illustrative screens MOCK-ONLY and PRODUCTION-VERIFIED not established. No screenshots approved or published.
+- **Release:** [Responsive navigation hierarchy](releases/2026-11-11-responsive-navigation-hierarchy.md).
+- **Entitlements:** Static site none; ServiceNow custom-app/App Engine, ITSM/ITOM, selected IntegrationHub spokes, analytics/AI and provider subscriptions conditional on runtime deployment.
+
 ## 2026-11-11 — Public reviewer link closure across the full site
 
 - Audited all 53 top-level published HTML pages for links to restricted source repositories; replaced 72 inaccessible source links across 25 additional pages with context-matched public case studies, architecture, verification and entitlement summaries.
