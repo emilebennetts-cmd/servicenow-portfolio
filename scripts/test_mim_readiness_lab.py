@@ -50,7 +50,11 @@ class MIMLabContract(unittest.TestCase):
         for link in self.dom.links:
             self.assertFalse(link.startswith(('http:','https:','//')))
             target=link.split('#')[0]
-            if target: self.assertTrue((ROOT/target).is_file(),link)
+            if target:
+                candidate=(ROOT/target).resolve()
+                self.assertTrue(candidate.is_relative_to(ROOT.resolve()),link)
+                if candidate.is_dir(): candidate=candidate/"index.html"
+                self.assertTrue(candidate.is_file(),link)
 
 if __name__=="__main__":
     unittest.main()
