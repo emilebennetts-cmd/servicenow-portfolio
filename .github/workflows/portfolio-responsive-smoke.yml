@@ -8,6 +8,8 @@ on:
       - 'reusable-delivery-patterns-case-study.html'
       - 'cmdb-ire-assurance.html'
       - 'cmdb-diagnostic-trust-lab.html'
+      - 'major-incident-implementation-lab.html'
+      - 'itsm-greenfield-build-sequencer.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
