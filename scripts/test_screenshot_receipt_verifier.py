@@ -50,7 +50,8 @@ class Contract(unittest.TestCase):
     def test_integrity_and_hold(self):
         for marker in ("crypto.subtle.digest(\"SHA-256\"","MAX_PNG_BYTES=64*1024*1024",
                        "MAX_RECEIPT_BYTES=64*1024","MAX_PIXELS=16000000",
-                       "readPNG(bytes)","cursor===bytes.length","!hasMetadata",
+                       "readPNG(bytes)","cursor===bytes.length","CRC_TABLE","chunkCRC(bytes","PNG chunk CRC mismatch",
+                       "safeAncillary","!afterIDAT","Expected a non-interlaced 8-bit truecolour canvas PNG.",
                        "servicenow-portfolio-redacted-image-receipt/v1",
                        "r.publication_status===\"HOLD\"","r.publication_approved===false",
                        "r.independent_export_review===\"REQUIRED\"",
