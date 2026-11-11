@@ -332,7 +332,7 @@ def check_local_redaction_desk(browser, width):
         source = source[:33] + text_chunk + source[33:]
         page.locator("#source-file").set_input_files(
             {"name":"private-synthetic-fixture.png","mimeType":"image/png","buffer":source})
-        page.locator("#image-size").get_by_text("80 × 50").wait_for(timeout=10000)
+        page.wait_for_function("() => document.getElementById('image-size').textContent === '80 × 50'", timeout=10000)
         require(page.locator("#export-png").is_disabled(), "export without redactions permitted")
         page.locator("#rect-w").fill("50")
         page.locator("#rect-h").fill("50")
