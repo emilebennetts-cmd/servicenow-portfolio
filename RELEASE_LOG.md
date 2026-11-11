@@ -1,3 +1,7 @@
+## 12 November 2026 — CMDB / IRE assurance source-review deep dive
+
+Published a mobile-responsive CMDB and IRE case study with five source-defined control families, evidence-limitation analysis (grouped identifiers, bounded aggregation, null/partial handling, overlapping relationship counts), six acceptance criteria and customer-neutral licensing boundaries. Added homepage/Diagnostic navigation, sitemap registration and static regression tests. Status: **SOURCE-ONLY**. Schematic: **MOCK-ONLY**. DEV re-execution and production verification: **not established**. Genuine screenshots remain **HOLD**. See `releases/2026-11-12-cmdb-ire-assurance.md`.
+
 ## 2026-11-12 — Source-traced technical implementation maps and case-study regression checks
 
 - **Diagnostic:** published a two-lane architecture explanation separating local-first Workbench UI from the separately deployed Knowledge Intelligence package; added a six-control acceptance-evidence matrix and corrected private-source wording.
