@@ -1,3 +1,12 @@
+## 12 November 2026 — Two additional pixel-reviewed Workbench source captures entered into public evidence register (HOLD)
+
+- Extended the text-only [visual-evidence gallery](visual-evidence.html#reviewed-captures) from four to six privately pixel-inspected source summaries, adding Diagnostic discovery/process packs and Delivery scope/implementation context. The two images show explicit demo/synthetic MIM content, so their pictured workflow material is **MOCK-ONLY**, not native acceptance or live Jira/Notion integration evidence.
+- Reconciled the intake statistics without summing the separate ten placeholders and six reviewed examples (overlap is possible). No original images, private IDs/hashes, confidential content, Drive links, thumbnails or sanitised derivatives were published. All images still require per-image approval and are on **HOLD**.
+- Extended static privacy/review-registry checks and four-viewport Chromium browser coverage to enforce six reviews, ten placeholders, synthetic labels, privacy boundaries and no embedded `img` elements. Evidence provenance and original image digests are recorded in the private control repository only.
+- **SOURCE-ONLY:** portfolio website source and tests. **MOCK-ONLY:** two observed synthetic MIM source examples. **DEV-VERIFIED:** historical version-scoped claims only, not independently re-tested. **PRODUCTION-VERIFIED:** none.
+- No ServiceNow licensing needed for public static pages/browser QA; actual Workbench, ITSM/MIM, App Engine, CMDB/ITOM, IntegrationHub, analytics/AI and external connectors remain contract-/ACL-dependent.
+- Verify GitHub quality, Chromium and Pages outcomes against final release SHA. [Release note](release-notes/2026-11-12-six-screen-reviewed-evidence-boundary.md).
+
 ## 12 November 2026 — PNG receipt structural hardening
 
 - Added per-chunk CRC-32, explicit 8-bit canvas PNG header checks, contiguous image data and a strict benign ancillary allowlist to the local screenshot receipt verifier. Newly forged receipts cannot mask corrupted PNG chunk bytes or embedded text metadata. This is **structural checking only**, not full pixel decoding or source authenticity.
