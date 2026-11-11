@@ -1,3 +1,7 @@
+## 12 November 2026 — Interactive CMDB Diagnostic Trust Lab
+
+Published an accessible five-scenario synthetic fixture lab showing complete PASS, grouping-limit PARTIAL, source-unavailable NOT ASSESSED, deduplicated relationship REVIEW and ownership/freshness REVIEW. This is **MOCK-ONLY** demonstration data and **SOURCE-ONLY** website code, not a ServiceNow test run or production health score. Linked from the homepage and CMDB / IRE case study; added sitemap, static confidentiality/semantic tests and four-viewport Chromium scenario checks. Historical DEV evidence is unchanged and PRODUCTION-VERIFIED remains unestablished. All existing genuine screenshot candidates remain HOLD. See [release record](releases/2026-11-12-cmdb-diagnostic-trust-lab.md). Static hosting requires no ServiceNow licence; actual collector, CMDB/ITOM and connector entitlements are feature-dependent.
+
 ## 12 November 2026 — CMDB / IRE assurance source-review deep dive
 
 Published a mobile-responsive CMDB and IRE case study with five source-defined control families, evidence-limitation analysis (grouped identifiers, bounded aggregation, null/partial handling, overlapping relationship counts), six acceptance criteria and customer-neutral licensing boundaries. Added homepage/Diagnostic navigation, sitemap registration and static regression tests. Status: **SOURCE-ONLY**. Schematic: **MOCK-ONLY**. DEV re-execution and production verification: **not established**. Genuine screenshots remain **HOLD**. See `releases/2026-11-12-cmdb-ire-assurance.md`.
