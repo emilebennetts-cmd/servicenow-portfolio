@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-07",
+  "updated_utc": "2026-11-12",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -64,6 +64,15 @@
       "runtime_verification": "not deployed or independently tested",
       "public_screenshot_status": "synthetic example only",
       "page": "governed-handoff-contract.html"
+    },
+    {
+      "id": "CMDB-IRE-ASSURANCE",
+      "title": "CMDB and IRE diagnostic source review",
+      "classification": "source-only",
+      "basis": "Reviewed source-defined CI inventory, IRE, duplicate, relationship and lifecycle collector families; design limitations are summarised, with private source withheld",
+      "runtime_verification": "No fresh collector execution or DEV read-back; assessment recommendations are not established runtime defects",
+      "public_screenshot_status": "No genuine screenshot published; existing candidate publication gate remains HOLD",
+      "page": "cmdb-ire-assurance.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Production-verified claims require separate affirmative evidence."
