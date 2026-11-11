@@ -345,13 +345,14 @@ def check_local_redaction_desk(browser, width):
         require(page.locator("#reviewed").is_disabled() and page.locator("#export-png").is_disabled(),
                 "undo did not revoke review")
         # Pointer interaction independently exercises pixel coordinates.
+        page.evaluate("""() => { window.__redactionEvents=[]; const c=document.getElementById("preview"); ["pointerdown","pointermove","pointerup","pointercancel"].forEach(t=>c.addEventListener(t,e=>window.__redactionEvents.push(t+":"+e.button))); }""")
         bounds = page.locator("#preview").bounding_box()
         require(bounds is not None, "canvas is not visible")
         page.mouse.move(bounds["x"]+5,bounds["y"]+5)
         page.mouse.down()
         page.mouse.move(bounds["x"]+35,bounds["y"]+30,steps=5)
         page.mouse.up()
-        require(page.locator("#area-count").inner_text()=="1", "pointer rectangle not registered")
+        require(page.locator("#area-count").inner_text()=="1", "pointer rectangle not registered: " + str(page.evaluate("() => ({events:window.__redactionEvents,status:document.getElementById('status').textContent,box:document.getElementById('preview').getBoundingClientRect().toJSON()})")) )
         page.locator("#reviewed").check()
         with page.expect_download(timeout=10000) as event:
             page.locator("#export-png").click()
