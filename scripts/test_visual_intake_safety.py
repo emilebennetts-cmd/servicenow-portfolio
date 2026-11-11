@@ -68,7 +68,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         )
         self.assertEqual(4, len(set(x[0] for x in self.tags.reviewed)))
         self.assertIn("not a screenshot", self.html)
-        self.assertIn("not DEV-VERIFIED", self.html)
+        self.assertIn("None of these four reviews is DEV-VERIFIED", self.html)
         self.assertIn("not a published screenshot gallery", self.html)
         self.assertEqual(4, self.html.count('class="hold">HOLD'))
 
