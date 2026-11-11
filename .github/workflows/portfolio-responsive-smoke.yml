@@ -27,7 +27,11 @@ jobs:
           python-version: '3.12'
       - name: Install pinned browser test dependency
         run: python -m pip install playwright==1.55.0
-      - name: Install headless Chromium
-        run: python -m playwright install --with-deps chromium
+      # ubuntu-latest already includes the Chromium runtime libraries. Avoid
+      # Playwright's --with-deps apt/font downloads, which failed when the
+      # Ubuntu package mirror could not be resolved (run 43048806716).
+      # The test only launches the headless browser, not full Chrome.
+      - name: Install Chromium headless shell (without apt downloads)
+        run: python -m playwright install chromium --only-shell
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py
