@@ -1,3 +1,12 @@
+## 12 November 2026 — Local-only screenshot redaction desk
+
+- Implemented `screenshot-redaction-desk.html` as a browser-local, CSP-restricted preparation tool for held Workbench image evidence. Accepts PNG/JPEG/WebP within bounded size/dimensions; draws solid black rectangles by touch/pointer or keyboard percentage controls; exports a separately rasterised, opaque PNG without copying original metadata or filename.
+- Export is disabled until a redaction exists and the owner acknowledges visual review. All image bytes remain in the browser; there are no network requests, telemetry or retained user storage. **This does not authorise publication.**
+- Added a direct link from the existing HOLD gallery, homepage evidence directory and sitemap; built a static privacy contract and Chromium synthetic-fixture test that checks blacked-out pixels, unaffected pixels, filename and PNG metadata stripping at four viewport widths.
+- **SOURCE-ONLY:** public tool and code; **MOCK-ONLY:** synthetic test input; **DEV-VERIFIED:** no new ServiceNow runtime read-back; **PRODUCTION-VERIFIED:** not established. All genuine screenshot candidates remain HOLD.
+- Quality, browser and deployment workflow results must be read from GitHub Actions against the final change; source commits do not imply passing verification. [Implementation, threat model, release and rollback](releases/2026-11-12-local-screenshot-redaction-desk.md).
+- The static utility requires no ServiceNow licence; real Workbench runtime and platform modules have contract-dependent entitlements. Image rights/publication authorisation are a separate gate.
+
 ## 12 November 2026 — Major Incident design lab
 
 - Added a responsive, OOTB-first synthetic MIM design laboratory: three workshops, nine gates, three fixtures and structured JSON receipts with no instance execution claims.
