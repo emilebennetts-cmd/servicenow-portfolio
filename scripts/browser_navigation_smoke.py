@@ -71,6 +71,7 @@ def check_viewport(browser, width):
 CASE_STUDIES = (
     ("diagnostic-workbench-case-study.html", "implementation"),
     ("reusable-delivery-patterns-case-study.html", "build-map"),
+    ("cmdb-ire-assurance.html", "metrics"),
 )
 
 
