@@ -243,6 +243,129 @@ def check_itsm_greenfield_sequencer(browser, width):
     finally:
         page.close()
 
+
+def verify_png_pixels(blob, inside, outside):
+    """Inspect browser-exported PNG without image packages or retaining a file."""
+    import struct
+    import zlib
+
+    require(blob[:8] == b"\\x89PNG\\r\\n\\x1a\\n", "export must be a PNG")
+    pos, rgba, size, compressed, chunks = 8, None, None, bytearray(), []
+    while pos + 12 <= len(blob):
+        length = struct.unpack(">I", blob[pos:pos + 4])[0]
+        kind = blob[pos + 4:pos + 8]
+        content = blob[pos + 8:pos + 8 + length]
+        chunks.append(kind)
+        if kind == b"IHDR":
+            width, height, depth, colour, *_ = struct.unpack(">IIBBBBB", content)
+            require(depth == 8 and colour in (2, 6), "unsupported export PNG colour mode")
+            rgba = 4 if colour == 6 else 3
+            size = (width, height)
+        elif kind == b"IDAT":
+            compressed.extend(content)
+        pos += length + 12
+        if kind == b"IEND":
+            break
+    require(size == (80, 50), "export dimensions changed from source")
+    require(not any(kind in (b"tEXt", b"iTXt", b"zTXt", b"eXIf") for kind in chunks),
+            "source metadata must not survive canvas raster re-encoding")
+    require(b"PRIVATE-DO-NOT-PUBLISH" not in blob, "source metadata leaked")
+    raw = zlib.decompress(bytes(compressed))
+    stride = size[0] * rgba
+    rows, previous, index = [], bytearray(stride), 0
+    for _ in range(size[1]):
+        f = raw[index]
+        scan = raw[index + 1:index + stride + 1]
+        index += stride + 1
+        row = bytearray(stride)
+        for i, value in enumerate(scan):
+            left = row[i - rgba] if i >= rgba else 0
+            above = previous[i]
+            upper_left = previous[i - rgba] if i >= rgba else 0
+            if f == 0: predictor = 0
+            elif f == 1: predictor = left
+            elif f == 2: predictor = above
+            elif f == 3: predictor = (left + above) // 2
+            elif f == 4:
+                p = left + above - upper_left
+                distances = (abs(p - left), abs(p - above), abs(p - upper_left))
+                predictor = (left, above, upper_left)[distances.index(min(distances))]
+            else: raise AssertionError("unsupported PNG filter")
+            row[i] = (value + predictor) & 255
+        rows.append(row)
+        previous = row
+    def rgb(pos):
+        x, y = pos
+        return tuple(rows[y][x * rgba:x * rgba + 3])
+    require(rgb(inside) == (0, 0, 0), "redacted source pixels survived the PNG export")
+    require(rgb(outside) == (230, 65, 65), "unredacted synthetic pixels were changed")
+
+
+def check_local_redaction_desk(browser, width):
+    """End-to-end synthetic image redaction and metadata stripping; no real files."""
+    import base64
+    import struct
+    import zlib
+
+    url = (Path(__file__).resolve().parents[1] / "screenshot-redaction-desk.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce", accept_downloads=True)
+    remote = []
+    page.on("request", lambda req: remote.append(req.url) if req.url.startswith(("http:", "https:")) else None)
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: local redaction page landmarks")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: redaction page horizontal overflow")
+        require(page.locator("#export-png").is_disabled(), "export should start locked")
+        fixture = page.evaluate("""() => {
+            const c=document.createElement('canvas');c.width=80;c.height=50;
+            const x=c.getContext('2d');x.fillStyle='#e64141';x.fillRect(0,0,80,50);
+            return c.toDataURL('image/png').split(',')[1];
+        }""")
+        source = base64.b64decode(fixture)
+        # Insert an explicit source-only PNG text chunk to prove it is excluded.
+        payload = b"source\\x00PRIVATE-DO-NOT-PUBLISH"
+        text_chunk = (struct.pack(">I",len(payload)) + b"tEXt" + payload
+                      + struct.pack(">I",zlib.crc32(b"tEXt" + payload)))
+        source = source[:33] + text_chunk + source[33:]
+        page.locator("#source-file").set_input_files(
+            {"name":"private-synthetic-fixture.png","mimeType":"image/png","buffer":source})
+        page.locator("#image-size").get_by_text("80 × 50").wait_for(timeout=10000)
+        require(page.locator("#export-png").is_disabled(), "export without redactions permitted")
+        page.locator("#rect-w").fill("50")
+        page.locator("#rect-h").fill("50")
+        page.locator("#add-rect").click()
+        require(page.locator("#area-count").inner_text()=="1", "keyboard rectangle missing")
+        require(page.locator("#export-png").is_disabled(), "export without visual acknowledgement permitted")
+        page.locator("#reviewed").check()
+        require(page.locator("#export-png").is_enabled(), "acknowledged export remains locked")
+        page.locator("#undo-rect").click()
+        require(page.locator("#reviewed").is_disabled() and page.locator("#export-png").is_disabled(),
+                "undo did not revoke review")
+        # Pointer interaction independently exercises pixel coordinates.
+        bounds = page.locator("#preview").bounding_box()
+        require(bounds is not None, "canvas is not visible")
+        page.mouse.move(bounds["x"]+5,bounds["y"]+5)
+        page.mouse.down()
+        page.mouse.move(bounds["x"]+35,bounds["y"]+30,steps=5)
+        page.mouse.up()
+        require(page.locator("#area-count").inner_text()=="1", "pointer rectangle not registered")
+        page.locator("#reviewed").check()
+        with page.expect_download(timeout=10000) as event:
+            page.locator("#export-png").click()
+        download=event.value
+        require(download.suggested_filename=="workbench-redacted-review.png",
+                "private input filename leaked into output")
+        from pathlib import Path as _Path
+        exported=_Path(download.path()).read_bytes()  # Chromium's temporary file, not repository.
+        verify_png_pixels(exported,(10,10),(70,40))
+        require(not remote, f"{width}px: local tool made remote requests: {remote}")
+        print(f"PASS {width}px: local image privacy, keyboard/pointer masking, export bytes and metadata")
+    finally:
+        page.close()
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -254,6 +377,7 @@ def main():
                 check_cmdb_trust_lab(browser, width)
                 check_mim_design_lab(browser, width)
                 check_itsm_greenfield_sequencer(browser, width)
+                check_local_redaction_desk(browser, width)
         finally:
             browser.close()
 
