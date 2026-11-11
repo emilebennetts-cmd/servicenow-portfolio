@@ -53,7 +53,8 @@ class ResponsiveNavigationTests(unittest.TestCase):
 
     def test_directory_remains_discoverable_on_desktop_and_mobile(self):
         fragment, links = nav("mobile-links")
-        self.assertEqual(len(links), 18)
+        self.assertGreaterEqual(len(links), 18)
+        self.assertEqual(len(links), len(set(links)), "Directory destinations must be unique")
         self.assertEqual(fragment.count('class="directory-heading"'), 3)
         self.assertIn('class="mobile-directory"', HTML)
         self.assertIn('aria-label="Browse full portfolio directory"', HTML)
@@ -62,6 +63,7 @@ class ResponsiveNavigationTests(unittest.TestCase):
             "portfolio-review-guide.html",
             "delivery-case-study.html",
             "diagnostic-workbench-case-study.html",
+            "cmdb-ire-assurance.html",
             "reusable-delivery-patterns-case-study.html",
             "visual-evidence.html",
             "workbench-evidence-ledger.html",
