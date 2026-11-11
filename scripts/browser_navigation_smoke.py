@@ -520,12 +520,41 @@ def check_screenshot_receipt_verifier(browser, width):
         page.close()
 
 
+
+def check_reviewed_evidence_gallery(browser, width):
+    """Review-source cards are safe, labelled and responsive without publishing image bytes."""
+    url = (Path(__file__).resolve().parents[1] / "visual-evidence.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator('article[data-review-id]').count() == 6,
+                f"{width}px: six inspected evidence records not visible")
+        require(page.locator('article[data-evidence-id]').count() == 10,
+                f"{width}px: ten separate candidate placeholders altered")
+        require(page.locator("img").count() == 0,
+                f"{width}px: private or unapproved image embedded")
+        for record in ("RV-05", "RV-06"):
+            card = page.locator(f'article[data-review-id="{record}"]')
+            require(card.get_attribute("data-source-class") == "mock-only",
+                    f"{width}px: {record} missing synthetic boundary")
+            require("HOLD" in card.inner_text()
+                    and "Not established" in card.inner_text(),
+                    f"{width}px: {record} missing review and publication boundary")
+        require(page.evaluate(
+            "() => document.documentElement.scrollWidth <= window.innerWidth + 2"
+        ), f"{width}px: evidence gallery overflows screen")
+        print(f"PASS {width}px: six evidence reviews, strict HOLD, no image publication")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         try:
             for width in VIEWPORTS:
                 check_viewport(browser, width)
+                check_reviewed_evidence_gallery(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
