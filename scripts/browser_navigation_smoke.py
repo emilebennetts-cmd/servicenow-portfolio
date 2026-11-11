@@ -195,6 +195,54 @@ def check_mim_design_lab(browser, width):
     finally:
         page.close()
 
+
+def check_itsm_greenfield_sequencer(browser, width):
+    """Exercise customer-neutral ITSM sequencing, blocking gates and honest receipts."""
+    url = (Path(__file__).resolve().parents[1] / "itsm-greenfield-build-sequencer.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: ITSM sequencer page landmarks")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: ITSM sequencer document overflow")
+        require(page.locator("#modules button").count() == 9,
+                f"{width}px: ITSM sequencer capability count")
+        require(page.locator("#gate-list input").count() == 8,
+                f"{width}px: ITSM sequencer control count")
+        def receipt(expected_status, expected_fixture):
+            data = json.loads(page.locator("#readiness-receipt").inner_text())
+            require(data["readiness_status"] == expected_status and
+                    data["fixture"] == expected_fixture and
+                    data["evidence_class"] == "MOCK-ONLY" and
+                    data["service_now_instance"] is None and
+                    not data["dev_execution_verified"] and
+                    not data["customer_approval"] and
+                    not data["production_deployment_verified"] and
+                    not data["release_identity_verified"],
+                    f"{width}px: ITSM receipt missing trust boundary: {data}")
+            return data
+        require(receipt("MODEL COMPLETE", "baseline")["checked_controls"] == 8,
+                f"{width}px: ITSM initial fixture incomplete")
+        page.locator('[data-fixture="access"]').click()
+        require(set(receipt("BLOCKED", "access")["blocking_gates"]) ==
+                {"baseline", "requirements"}, f"{width}px: access blockers")
+        page.locator('[data-fixture="evidence"]').click()
+        require(set(receipt("BLOCKED", "evidence")["blocking_gates"]) ==
+                {"tests", "release"}, f"{width}px: execution blockers")
+        page.locator('#gate-list input[data-gate="tests"]').check()
+        page.locator('#gate-list input[data-gate="release"]').check()
+        require(receipt("REVIEW", "custom")["review_gates"] == ["handover"],
+                f"{width}px: review gate incorrect")
+        page.locator("#modules button").nth(6).click()
+        require(receipt("REVIEW", "custom")["capability"] == "MIM",
+                f"{width}px: MIM selection did not propagate to receipt")
+        page.locator('[data-fixture="baseline"]').click()
+        receipt("MODEL COMPLETE", "baseline")
+        print(f"PASS {width}px: ITSM sequencer selection, synthetic blockers and provenance")
+    finally:
+        page.close()
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -205,6 +253,7 @@ def main():
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
                 check_mim_design_lab(browser, width)
+                check_itsm_greenfield_sequencer(browser, width)
         finally:
             browser.close()
 
