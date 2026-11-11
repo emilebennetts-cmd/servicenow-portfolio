@@ -1,3 +1,11 @@
+## 2026-11-12 — Source-traced technical implementation maps and case-study regression checks
+
+- **Diagnostic:** published a two-lane architecture explanation separating local-first Workbench UI from the separately deployed Knowledge Intelligence package; added a six-control acceptance-evidence matrix and corrected private-source wording.
+- **Delivery:** documented eight actual source-described Plan views as a clearly labelled **SCHEMATIC ONLY**, scope/pattern/approval/connector gates, and the **4.22.2 source versus historical 4.20.0 DEV** acceptance distinction.
+- **Assurance:** extended Chromium smoke test to the two case studies at 390/768/1024/1440px; added standard-library provenance/security tests and updated CI path triggers. Commits and workflow definition confirmed; CI execution and deployed-site rendering require separate verification.
+- **Evidence:** diagrams MOCK-ONLY; published changes SOURCE-ONLY; 1/30 September Diagnostic and 5 October Delivery DEV results are historical source-reported receipts, not new instance verification; PRODUCTION-VERIFIED not established. No held Google Drive screenshots, private source or customer data published.
+- **Release / licensing:** [Implementation and rollback record](releases/2026-11-12-technical-case-study-boundaries.md). Static website no ServiceNow licence. Scoped app/custom tables, read access, integration spokes/transactions, provider subscriptions and knowledge-content rights require deployment-specific entitlement review.
+
 ## 2026-11-11 — Responsive reviewer navigation and evidence-first directory
 
 - Corrected homepage header navigation that had grown to **18 desktop links** and was not collapsed at laptop/tablet widths. Main nav now contains four high-value paths: case studies, architecture, visual evidence and contact.
