@@ -67,7 +67,7 @@ class CaseStudyContract(unittest.TestCase):
                     else:
                         target = urlsplit(href)
                         if not target.scheme and not target.netloc:
-                            local = target.path or "index.html"
+                            local = "index.html" if target.path in {"", "./", "."} else target.path
                             self.assertTrue((ROOT / local).is_file(), href)
 
     def test_evidence_status_and_publication_gate(self):
