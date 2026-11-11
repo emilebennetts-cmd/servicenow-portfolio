@@ -363,6 +363,38 @@ def check_local_redaction_desk(browser, width):
         from pathlib import Path as _Path
         exported=_Path(download.path()).read_bytes()  # Chromium's temporary file, not repository.
         verify_png_pixels(exported,(10,10),(70,40))
+        import hashlib
+        digest=hashlib.sha256(exported).hexdigest()
+        page.wait_for_function(
+            "() => document.getElementById('export-receipt').disabled === false",
+            timeout=10000
+        )
+        require(page.locator("#export-sha256").inner_text() == digest,
+                f"{width}px: displayed SHA-256 does not match exported PNG bytes")
+        with page.expect_download(timeout=10000) as receipt_event:
+            page.locator("#export-receipt").click()
+        receipt_download=receipt_event.value
+        require(receipt_download.suggested_filename=="workbench-redacted-review.receipt.json",
+                "unexpected redaction receipt download filename")
+        receipt=json.loads(_Path(receipt_download.path()).read_text())
+        require(receipt["sha256"]==digest and
+                receipt["dimensions_px"]=={"width":80,"height":50} and
+                receipt["redaction_area_count"]==1 and
+                receipt["publication_status"]=="HOLD" and
+                receipt["publication_approved"] is False and
+                receipt["service_now_dev_verified"] is False and
+                receipt["service_now_production_verified"] is False and
+                receipt["independent_export_review"]=="REQUIRED",
+                f"{width}px: receipt hash or publication guard invalid")
+        require("private-synthetic-fixture" not in json.dumps(receipt) and
+                "PRIVATE-DO-NOT-PUBLISH" not in json.dumps(receipt),
+                f"{width}px: private source detail leaked into receipt")
+        # Editing a mask invalidates the old digest and receipt.
+        page.locator("#add-rect").click()
+        require(page.locator("#export-receipt").is_disabled() and
+                page.locator("#export-sha256").inner_text()=="Not generated" and
+                page.locator("#reviewed").is_checked() is False,
+                f"{width}px: old receipt remained valid after mask revision")
         require(not remote, f"{width}px: local tool made remote requests: {remote}")
         print(f"PASS {width}px: local image privacy, keyboard/pointer masking, export bytes and metadata")
     finally:
