@@ -1,3 +1,11 @@
+## 12 November 2026 — Local SHA-256 receipt for redacted screenshots
+
+- Extended the existing browser-local redaction desk with a SHA-256 digest of **the exact exported PNG bytes** and an independently downloadable JSON review receipt. Records dimensions, area count and HOLD/no-approval/no-runtime-verification controls, but not the source filename, original pixels or mask coordinates. No remote upload or retained browser storage.
+- Source/mask changes revoke the prior receipt; stale asynchronous exports are blocked. Export fails closed when secure hashing is unavailable.
+- Strengthened static checks and Chromium tests to compare exported PNG bytes to receipt SHA-256 across four viewports, verify metadata and pixel redactions, and enforce receipt invalidation on image edits. CI and GitHub Pages outcomes are verified separately.
+- SOURCE-ONLY public implementation; MOCK-ONLY test image; no new DEV-VERIFIED or PRODUCTION-VERIFIED ServiceNow evidence; genuine Workbench images remain HOLD. A digest is not permission to publish or proof of adequate redaction.
+- [Implementation and trust boundaries](release-notes/2026-11-12-redaction-sha256-receipt.md). Static website requires no ServiceNow licence; runtime feature entitlements and image rights remain conditional.
+
 ## 12 November 2026 — Local-only screenshot redaction desk
 
 - Implemented `screenshot-redaction-desk.html` as a browser-local, CSP-restricted preparation tool for held Workbench image evidence. Accepts PNG/JPEG/WebP within bounded size/dimensions; draws solid black rectangles by touch/pointer or keyboard percentage controls; exports a separately rasterised, opaque PNG without copying original metadata or filename.
