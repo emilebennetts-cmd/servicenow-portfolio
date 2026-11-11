@@ -11,6 +11,7 @@ on:
       - 'major-incident-implementation-lab.html'
       - 'itsm-greenfield-build-sequencer.html'
       - 'screenshot-redaction-desk.html'
+      - 'screenshot-receipt-verifier.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
