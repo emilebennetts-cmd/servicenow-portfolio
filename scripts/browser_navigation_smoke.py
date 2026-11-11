@@ -400,6 +400,84 @@ def check_local_redaction_desk(browser, width):
     finally:
         page.close()
 
+def check_screenshot_receipt_verifier(browser, width):
+    """Verify PNG/receipt binding and publication HOLD with synthetic data only."""
+    import base64
+    import hashlib
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    remote=[]
+    page.on("request", lambda req: remote.append(req.url)
+            if req.url.startswith(("http:", "https:")) else None)
+    url=(Path(__file__).resolve().parents[1] / "screenshot-receipt-verifier.html").as_uri()
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count()==1 and page.locator("main").count()==1,
+                f"{width}px: receipt verifier landmarks")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: receipt verifier horizontal overflow")
+        require(page.locator("#verify").is_disabled(), "verification enabled without two files")
+        b64=page.evaluate("""() => {
+            const c=document.createElement('canvas');c.width=80;c.height=50;
+            const ctx=c.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,40,30);
+            ctx.fillStyle='#72aacc';ctx.fillRect(40,0,40,50);
+            return c.toDataURL('image/png').split(',')[1];
+        }""")
+        data=base64.b64decode(b64)
+        receipt={
+            "schema":"servicenow-portfolio-redacted-image-receipt/v1",
+            "exported_file":"workbench-redacted-review.png",
+            "sha256":hashlib.sha256(data).hexdigest(),
+            "dimensions_px":{"width":80,"height":50},
+            "redaction_area_count":1,
+            "generated_utc":"2026-11-12T00:00:00.000Z",
+            "evidence_class":"SOURCE-ONLY TOOL OUTPUT",
+            "publication_status":"HOLD","publication_approved":False,
+            "service_now_dev_verified":False,"service_now_production_verified":False,
+            "independent_export_review":"REQUIRED"
+        }
+        page.locator("#png-file").set_input_files(
+            {"name":"redacted-synthetic.png","mimeType":"image/png","buffer":data})
+        require(page.locator("#verify").is_disabled(), "verification enabled without receipt")
+        def load_receipt(record):
+            page.locator("#receipt-file").set_input_files(
+                {"name":"review.receipt.json","mimeType":"application/json",
+                 "buffer":json.dumps(record).encode("utf-8")})
+        load_receipt(receipt)
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="match",
+                f"{width}px: synthetic receipt did not match")
+        require(page.locator("#actual-digest").inner_text()==receipt["sha256"],
+                f"{width}px: verifier did not hash actual PNG bytes")
+        require("HOLD" in page.locator("#publication-state").inner_text(),
+                f"{width}px: publication HOLD not displayed")
+        forged={**receipt,"sha256":"0"*64}
+        load_receipt(forged)
+        require(page.locator("#actual-digest").inner_text()=="Not calculated",
+                "changing receipt did not invalidate prior match")
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="fail"
+                and "mismatch" in page.locator("#explanation").inner_text().lower(),
+                f"{width}px: altered hash incorrectly accepted")
+        unsafe={**receipt,"publication_approved":True}
+        load_receipt(unsafe)
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="fail",
+                f"{width}px: unsafe approval claim accepted")
+        wrong={**receipt,"dimensions_px":{"width":81,"height":50}}
+        load_receipt(wrong)
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="fail",
+                f"{width}px: incorrect dimensions accepted")
+        require(not remote, f"{width}px: verifier made external requests: {remote}")
+        print(f"PASS {width}px: local receipt SHA-256 match, mismatch, HOLD and dimensions")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -412,6 +490,7 @@ def main():
                 check_mim_design_lab(browser, width)
                 check_itsm_greenfield_sequencer(browser, width)
                 check_local_redaction_desk(browser, width)
+                check_screenshot_receipt_verifier(browser, width)
         finally:
             browser.close()
 
