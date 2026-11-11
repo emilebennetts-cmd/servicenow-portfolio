@@ -76,8 +76,14 @@ class CaseStudyContract(unittest.TestCase):
                 doc = (ROOT / filename).read_text(encoding="utf-8")
                 for item in STATUS:
                     self.assertIn(item, doc)
-                self.assertTrue(\n                    "No genuine ServiceNow screenshots" in doc or\n                    "No genuine instance images" in doc\n                )
-                self.assertTrue(\n                    "publication approval" in doc.lower() or\n                    "explicit approval" in doc.lower()\n                )
+                self.assertTrue(
+                    "No genuine ServiceNow screenshots" in doc or
+                    "No genuine instance images" in doc
+                )
+                self.assertTrue(
+                    "publication approval" in doc.lower() or
+                    "explicit approval" in doc.lower()
+                )
                 for blocked in BLOCKED_DESTINATIONS:
                     self.assertNotIn(blocked, doc)
                 self.assertNotIn("dev438211.service-now.com", doc)
