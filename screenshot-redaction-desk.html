@@ -242,7 +242,7 @@ exportBtn.addEventListener("click",function(){
 });
 $("export-receipt").addEventListener("click",function(){
  if(!lastReceipt)return;
- const blob=new Blob([JSON.stringify(lastReceipt,null,2)+"\\n"],{type:"application/json"});
+ const blob=new Blob([JSON.stringify(lastReceipt,null,2)+"\n"],{type:"application/json"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download="workbench-redacted-review.receipt.json";document.body.appendChild(a);a.click();a.remove();
  setTimeout(function(){URL.revokeObjectURL(url);},1000);
