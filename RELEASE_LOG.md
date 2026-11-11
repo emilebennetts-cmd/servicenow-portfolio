@@ -1,3 +1,11 @@
+## 2026-11-11 — Public technical evidence navigation reconciliation
+
+- Replaced 18 private-repository links across six public case-study/architecture/review pages with context-matched public-safe pages, correcting misleading "public source" labels. The visual gallery's two similar links were corrected earlier in this same release sequence.
+- Added offline CI-discovered `scripts/test_public_reviewer_navigation.py` to protect seven reviewer paths and local targets against access-restricted GitHub links or broken public HTML destinations.
+- **Publication boundary:** 0 images approved or added. Existing SOURCE-ONLY and MOCK-ONLY classifications retained; no new DEV-VERIFIED or PRODUCTION-VERIFIED evidence. Public summaries are not independent source inspection or production attestation.
+- **Release detail:** [Public reviewer navigation](releases/2026-11-11-public-reviewer-navigation.md). Final-commit CI and GitHub Pages status are separate acceptance checks.
+- **Licensing:** Static site none. ServiceNow custom-app, ITSM/ITOM, IntegrationHub, analytics/AI, provider rights conditional on actual runtime scope.
+
 ## 2026-11-11 — Reviewed evidence cards and public reviewer routes
 
 - Published four mobile-responsive, individually classified review records on `visual-evidence.html#reviewed-captures`: two SOURCE-ONLY UI captures, one MOCK-ONLY synthetic workshop example, and one source-document excerpt (not an application screenshot). Descriptions are based on privately inspected source files; **no original pixels, image identifiers or customer data were released**.
