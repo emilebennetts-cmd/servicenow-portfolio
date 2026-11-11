@@ -67,12 +67,56 @@ def check_viewport(browser, width):
         page.close()
 
 
+
+CASE_STUDIES = (
+    ("diagnostic-workbench-case-study.html", "implementation"),
+    ("reusable-delivery-patterns-case-study.html", "build-map"),
+)
+
+
+def check_case_study(browser, filename, anchor, width):
+    """Inspect the actual local HTML in Chromium; never ingest private captures."""
+    url = (Path(__file__).resolve().parents[1] / filename).as_uri()
+    page = browser.new_page(
+        viewport={"width": width, "height": 900},
+        device_scale_factor=1,
+        reduced_motion="reduce",
+    )
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1, f"{filename}: expected one page title")
+        require(page.locator("main").count() == 1, f"{filename}: expected one main landmark")
+        require(
+            page.evaluate("() => document.documentElement.scrollWidth <= window.innerWidth + 2"),
+            f"{filename} at {width}px: horizontal document overflow",
+        )
+        text = page.locator("body").inner_text()
+        for classification in ("SOURCE-ONLY", "DEV-VERIFIED", "MOCK-ONLY", "PRODUCTION-VERIFIED"):
+            require(classification in text, f"{filename}: missing {classification} boundary")
+        require(
+            "not" in text.lower() and "screenshot" in text.lower(),
+            f"{filename}: missing screenshot publication boundary",
+        )
+        page.locator(f'a[href="#{anchor}"]').click()
+        require(page.url.endswith(f"#{anchor}"), f"{filename}: broken architecture anchor")
+        require(page.locator(f"#{anchor}").count() == 1, f"{filename}: missing architecture section")
+        require(
+            page.locator(f"#{anchor}").evaluate("(el) => el.getBoundingClientRect().width > 0"),
+            f"{filename}: architecture section is not rendered",
+        )
+        print(f"PASS {width}px: {filename} document bounds, provenance and architecture link")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         try:
             for width in VIEWPORTS:
                 check_viewport(browser, width)
+                for filename, anchor in CASE_STUDIES:
+                    check_case_study(browser, filename, anchor, width)
         finally:
             browser.close()
 
