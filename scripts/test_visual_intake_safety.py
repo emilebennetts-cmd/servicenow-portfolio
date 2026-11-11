@@ -18,6 +18,7 @@ class Tags(HTMLParser):
         self.images = []
         self.anchors = []
         self.candidates = []
+        self.reviewed = []
         self.ids = set()
 
     def handle_starttag(self, tag, attrs):
@@ -30,6 +31,8 @@ class Tags(HTMLParser):
             self.anchors.append(a.get("href", ""))
         if tag == "article" and a.get("data-evidence-id"):
             self.candidates.append(a["data-evidence-id"])
+        if tag == "article" and a.get("data-review-id"):
+            self.reviewed.append((a["data-review-id"], a.get("data-source-class", "")))
 
 
 class VisualIntakeSafetyTests(unittest.TestCase):
@@ -55,6 +58,39 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertFalse(any("drive.google.com" in a or "docs.google.com" in a
                              for a in self.tags.anchors))
         self.assertNotIn("servicenow-portfolio-control", self.html)
+
+    def test_reviewed_source_sample_is_separate_and_classified(self):
+        self.assertIn("reviewed-captures", self.tags.ids)
+        self.assertEqual(
+            [("RV-01", "source-only"), ("RV-02", "source-only"),
+             ("RV-03", "mock-only"), ("RV-04", "source-document")],
+            self.tags.reviewed,
+        )
+        self.assertEqual(4, len(set(x[0] for x in self.tags.reviewed)))
+        self.assertIn("not a screenshot", self.html)
+        self.assertIn("not DEV-VERIFIED", self.html)
+        self.assertIn("not a published screenshot gallery", self.html)
+        self.assertEqual(4, self.html.count('class="hold">HOLD'))
+
+    def test_public_review_links_do_not_point_at_private_source(self):
+        restricted = (
+            "/emilebennetts-cmd/Diagnostic-Workbench2",
+            "/emilebennetts-cmd/solution-lifecycle-studio",
+            "/emilebennetts-cmd/servicenow-portfolio-control",
+        )
+        self.assertFalse(
+            [(anchor, path) for anchor in self.tags.anchors for path in restricted
+             if path in anchor],
+            "Reviewer links must lead to public case studies, not restricted repositories",
+        )
+        for href in (
+            "delivery-case-study.html",
+            "diagnostic-workbench-case-study.html",
+            "reusable-delivery-patterns-case-study.html",
+            "workbench-architecture-gallery.html",
+        ):
+            self.assertIn(href, self.tags.anchors)
+            self.assertTrue((GALLERY.parent / href).is_file())
 
     def test_existing_candidate_register_remains_intact(self):
         self.assertEqual(10, len(self.tags.candidates))
