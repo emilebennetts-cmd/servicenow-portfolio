@@ -52,7 +52,7 @@ def embedded_metadata_markers(path, data):
             if chunk in data:
                 markers.append(chunk.decode("ascii"))
     elif suffix in {".jpg", ".jpeg"}:
-        for label, token in (("EXIF", b"Exif\\x00\\x00"), ("XMP", b"http://ns.adobe.com/xap/1.0/"),
+        for label, token in (("EXIF", b"Exif\x00\x00"), ("XMP", b"http://ns.adobe.com/xap/1.0/"),
                              ("Photoshop", b"Photoshop 3.0")):
             if token in data:
                 markers.append(label)
@@ -60,7 +60,7 @@ def embedded_metadata_markers(path, data):
         for chunk in (b"EXIF", b"XMP "):
             if chunk in data:
                 markers.append(chunk.decode("ascii").strip())
-    elif suffix == ".gif" and b"\\x21\\xfe" in data:
+    elif suffix == ".gif" and b"\x21\xfe" in data:
         markers.append("GIF comment")
     return markers
 
