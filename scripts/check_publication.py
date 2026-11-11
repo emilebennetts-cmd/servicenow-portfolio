@@ -39,6 +39,31 @@ def image_format_matches(path, data):
     if suffix in {".tif", ".tiff"}:
         return data.startswith((b"II*\x00", b"MM\x00*"))
     return False
+def embedded_metadata_markers(path, data):
+    """Conservative markers for common image metadata containers.
+
+    This is not a complete parser. A clean result cannot establish that a
+    screenshot has been sanitised; human review remains mandatory.
+    """
+    suffix = path.suffix.lower()
+    markers = []
+    if suffix == ".png":
+        for chunk in (b"tEXt", b"zTXt", b"iTXt", b"eXIf"):
+            if chunk in data:
+                markers.append(chunk.decode("ascii"))
+    elif suffix in {".jpg", ".jpeg"}:
+        for label, token in (("EXIF", b"Exif\\x00\\x00"), ("XMP", b"http://ns.adobe.com/xap/1.0/"),
+                             ("Photoshop", b"Photoshop 3.0")):
+            if token in data:
+                markers.append(label)
+    elif suffix == ".webp":
+        for chunk in (b"EXIF", b"XMP "):
+            if chunk in data:
+                markers.append(chunk.decode("ascii").strip())
+    elif suffix == ".gif" and b"\\x21\\xfe" in data:
+        markers.append("GIF comment")
+    return markers
+
 # Existing images are not automatically deemed safe; the gate flags new ones via a
 # separately maintained reviewed-image allowlist. No unreviewed image is permitted.
 ALLOWLIST = ROOT / "evidence" / "approved-public-images.txt"
@@ -92,6 +117,8 @@ def check(root=ROOT, allowlist=ALLOWLIST):
                     issues.append(f"{relative}: image exceeds 8 MiB public size limit")
                 if not image_format_matches(path, image_bytes):
                     issues.append(f"{relative}: image signature does not match its extension")
+                for marker in embedded_metadata_markers(path, image_bytes):
+                    issues.append(f"{relative}: embedded {marker} metadata requires removal and reapproval")
                 if hashlib.sha256(image_bytes).hexdigest() != approved[relative]:
                     issues.append(f"{relative}: image bytes changed since publication approval")
         if path.suffix.lower() in WEB_EXTENSIONS:
