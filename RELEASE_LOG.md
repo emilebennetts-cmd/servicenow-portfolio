@@ -1,3 +1,12 @@
+## 12 November 2026 — Restore real responsive browser verification
+
+- Resolved failed Chromium CI bootstrap (previous run `43048806716`) caused by transient Ubuntu apt-mirror DNS errors during Playwright's optional `--with-deps` install. New runner downloads the pinned Chromium headless shell without apt/font package installation.
+- **Verified browser result:** [Responsive workflow 43057361014 — SUCCESS](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43057361014) against commit `75bf7915`: homepage navigation, three technical case studies and all five synthetic CMDB Trust Lab scenarios passed in Chromium at 390, 768, 1024 and 1440px. This is web QA, **not ServiceNow instance testing**.
+- Added a standard-library regression contract preventing apt-based browser bootstrap and accidental screenshot output; subsequent CI and GitHub Pages deployments are tracked separately per commit.
+- **SOURCE-ONLY:** workflow, tests and log; **MOCK-ONLY:** synthetic lab fixtures; **DEV-VERIFIED:** no new platform execution; **PRODUCTION-VERIFIED:** not established. All held screenshots remain unpublished.
+- Read-only Drive As-Built and private source README contain different historical DEV version claims; reconciliation recorded privately, not publicly promoted. [Release and recovery record](releases/2026-11-12-responsive-browser-ci-recovery.md).
+- **Entitlements:** static website and Chromium QA none; custom scoped applications, App Engine, ITSM/CMDB/ITOM, IntegrationHub, AI/analytics and external connectors require deployment-specific verification.
+
 ## 12 November 2026 — Interactive CMDB Diagnostic Trust Lab
 
 Published an accessible five-scenario synthetic fixture lab showing complete PASS, grouping-limit PARTIAL, source-unavailable NOT ASSESSED, deduplicated relationship REVIEW and ownership/freshness REVIEW. This is **MOCK-ONLY** demonstration data and **SOURCE-ONLY** website code, not a ServiceNow test run or production health score. Linked from the homepage and CMDB / IRE case study; added sitemap, static confidentiality/semantic tests and four-viewport Chromium scenario checks. Historical DEV evidence is unchanged and PRODUCTION-VERIFIED remains unestablished. All existing genuine screenshot candidates remain HOLD. See [release record](releases/2026-11-12-cmdb-diagnostic-trust-lab.md). Static hosting requires no ServiceNow licence; actual collector, CMDB/ITOM and connector entitlements are feature-dependent.
