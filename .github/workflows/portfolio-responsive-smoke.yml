@@ -6,6 +6,7 @@ on:
       - 'index.html'
       - 'diagnostic-workbench-case-study.html'
       - 'reusable-delivery-patterns-case-study.html'
+      - 'cmdb-ire-assurance.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
