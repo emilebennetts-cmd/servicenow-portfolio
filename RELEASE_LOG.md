@@ -1,3 +1,12 @@
+## 2026-11-11 — Public reviewer link closure across the full site
+
+- Audited all 53 top-level published HTML pages for links to restricted source repositories; replaced 72 inaccessible source links across 25 additional pages with context-matched public case studies, architecture, verification and entitlement summaries.
+- Added `scripts/test_public_private_repo_links.py` to scan **every top-level HTML page** in the quality gate and prevent regressions when a new page is introduced.
+- Maintained honest reader-facing labels, without claiming public access to private source. 0 screenshots or private documents published; no repository visibility changed.
+- **Evidence:** SOURCE-ONLY navigation and tests. Existing DEV claims are historical and version-specific; MOCK-ONLY remains synthetic; PRODUCTION-VERIFIED not established.
+- **Release:** [Public reviewer source-link closure](releases/2026-11-11-public-source-link-closure.md). Final CI and Pages outcome subject to workflow verification.
+- **Entitlements:** Static site none; custom app/App Engine, ITSM/ITOM, IntegrationHub, analytics/AI and provider rights conditional.
+
 ## 2026-11-11 — Public technical evidence navigation reconciliation
 
 - Replaced 18 private-repository links across six public case-study/architecture/review pages with context-matched public-safe pages, correcting misleading "public source" labels. The visual gallery's two similar links were corrected earlier in this same release sequence.
