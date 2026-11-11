@@ -71,7 +71,12 @@ class LocalRedactionDeskContract(unittest.TestCase):
                     'target.fillStyle="#000000"', 'target.fillRect(r.x,r.y,r.w,r.h)',
                     'paint(out,false)', 'flattened.toBlob(function(blob)',
                     '"image/png"', 'workbench-redacted-review.png',
-                    'reviewed.checked', 'exportBtn.disabled')
+                    'reviewed.checked', 'exportBtn.disabled',
+                    'id="export-receipt"', 'id="export-sha256"',
+                    'crypto.subtle.digest("SHA-256"', 'publication_status:"HOLD"',
+                    'publication_approved:false', 'independent_export_review:"REQUIRED"',
+                    'clearReceipt()', 'maskSignature===JSON.stringify(areas)',
+                    'workbench-redacted-review.receipt.json')
         for item in required:
             with self.subTest(item=item): self.assertIn(item, self.html)
         self.assertIn('["image/png","image/jpeg","image/webp"]', self.html)
