@@ -346,6 +346,7 @@ def check_local_redaction_desk(browser, width):
                 "undo did not revoke review")
         # Pointer interaction independently exercises pixel coordinates.
         page.evaluate("""() => { window.__redactionEvents=[]; const c=document.getElementById("preview"); ["pointerdown","pointermove","pointerup","pointercancel"].forEach(t=>c.addEventListener(t,e=>window.__redactionEvents.push(t+":"+e.button))); }""")
+        page.locator("#preview").scroll_into_view_if_needed()
         bounds = page.locator("#preview").bounding_box()
         require(bounds is not None, "canvas is not visible")
         page.mouse.move(bounds["x"]+5,bounds["y"]+5)
