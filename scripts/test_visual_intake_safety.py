@@ -59,7 +59,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
     def test_existing_candidate_register_remains_intact(self):
         self.assertEqual(10, len(self.tags.candidates))
         self.assertEqual(10, len(set(self.tags.candidates)))
-        self.assertTrue(all(re.fullmatch(r"(DW|VD)-IMG-\\d{2}", i)
+        self.assertTrue(all(re.fullmatch(r"(DW|VD)-IMG-\d{2}", i)
                             for i in self.tags.candidates))
 
 
