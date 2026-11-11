@@ -249,7 +249,7 @@ def verify_png_pixels(blob, inside, outside):
     import struct
     import zlib
 
-    require(blob[:8] == b"\\x89PNG\\r\\n\\x1a\\n", "export must be a PNG")
+    require(blob[:8] == bytes([137,80,78,71,13,10,26,10]), "export must be a PNG")
     pos, rgba, size, compressed, chunks = 8, None, None, bytearray(), []
     while pos + 12 <= len(blob):
         length = struct.unpack(">I", blob[pos:pos + 4])[0]
@@ -326,7 +326,7 @@ def check_local_redaction_desk(browser, width):
         }""")
         source = base64.b64decode(fixture)
         # Insert an explicit source-only PNG text chunk to prove it is excluded.
-        payload = b"source\\x00PRIVATE-DO-NOT-PUBLISH"
+        payload = b"source" + bytes([0]) + b"PRIVATE-DO-NOT-PUBLISH"
         text_chunk = (struct.pack(">I",len(payload)) + b"tEXt" + payload
                       + struct.pack(">I",zlib.crc32(b"tEXt" + payload)))
         source = source[:33] + text_chunk + source[33:]
