@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071822">
+<meta name="description" content="Verify a redacted PNG against its SHA-256 review receipt locally. Byte integrity is not screenshot approval or ServiceNow runtime evidence.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'none'; form-action 'none'; img-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; object-src 'none'">
+<title>Screenshot Evidence Receipt Verifier | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#081724;--panel:#102b3b;--sub:#0c2130;--border:#466779;--text:#f5fbff;--soft:#cee1e9;--mint:#8ce8d5;--amber:#ffdda8;--red:#ffbbbb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--mint);text-underline-offset:4px}a:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px}p,li{color:var(--soft)}h1,h2,h3{line-height:1.16}h1{font-size:clamp(2.4rem,6vw,4.8rem);letter-spacing:-.06em;max-width:900px;margin:15px 0 25px}h2{font-size:clamp(1.4rem,3vw,2rem)}button,input{font:inherit}button{background:var(--mint);color:#05232b;border:0;padding:12px 22px;border-radius:9px;font-weight:800;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.wrap{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-100vw}.skip:focus{left:10px;top:10px;background:white;color:black;padding:10px;z-index:3}header{border-bottom:1px solid var(--border)}nav{padding:19px 0;display:flex;gap:18px;justify-content:space-between;flex-wrap:wrap}nav a{text-decoration:none;font-weight:700}.hero{padding:60px 0;background:radial-gradient(ellipse at 85% 0%,#147a7970,transparent 58%)}.eyebrow{font-size:.78rem;color:var(--mint);font-weight:800;text-transform:uppercase;letter-spacing:.16em}.lead{max-width:780px;font-size:1.13rem}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.chip{padding:5px 12px;border:1px solid var(--border);border-radius:24px;font-size:.74rem;font-weight:800}.panel{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:24px;min-width:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.section{padding:42px 0;border-top:1px solid var(--border)}label{font-weight:750;display:block;margin:5px 0 11px}input[type=file]{width:100%;min-width:0;padding:15px;color:var(--text);background:var(--sub);border:1px solid var(--border);border-radius:9px}.fine{font-size:.88rem}.check{display:grid;grid-template-columns:minmax(140px,.35fr) minmax(0,1fr);gap:10px;border-top:1px solid var(--border);padding:12px 0}.check strong{color:var(--mint)}.check span{overflow-wrap:anywhere}.notice{border-left:4px solid var(--amber);background:#3a3024;padding:18px 22px;border-radius:0 10px 10px 0}.notice p{color:#fff0d2;margin:0}.result{margin-top:20px;border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--sub)}#status{color:var(--amber);font-weight:800;font-size:1.2rem;margin-bottom:9px}#status[data-kind=match]{color:var(--mint)}#status[data-kind=fail]{color:var(--red)}code{color:#c7f8ed;overflow-wrap:anywhere}footer{padding:30px 0;border-top:1px solid var(--border);color:var(--soft)}@media(max-width:710px){.grid{grid-template-columns:1fr}.hero{padding:42px 0}.panel{padding:18px}.check{grid-template-columns:1fr;gap:3px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body><a class="skip" href="#main">Skip to main content</a>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a href="./">ServiceNow Portfolio</a><a href="screenshot-redaction-desk.html">Redaction desk</a><a href="visual-evidence.html">Visual evidence register</a></nav></header>
+<main id="main">
+<section class="hero"><div class="wrap"><div class="eyebrow">Evidence integrity / Browser-local verification</div><h1>Check the exported image, not just the receipt.</h1><p class="lead">Select a flattened PNG and its matching SHA-256 review receipt. This verifier recalculates the digest from the actual file bytes, checks the recorded dimensions and preserves the screenshot's publication HOLD. Files are processed only in your browser.</p><div class="chips"><span class="chip">LOCAL-ONLY</span><span class="chip">SOURCE-ONLY UTILITY</span><span class="chip">PUBLICATION HOLD</span></div><div class="notice"><p><strong>Trust boundary:</strong> A matching hash proves that these image bytes match the supplied receipt's recorded digest. Anyone with a copy can generate another receipt. This is not proof of authenticity, confidential-data removal, ownership, DEV execution, production verification or permission to publish.</p></div></div></section>
+<section class="section" aria-labelledby="verify-title"><div class="wrap"><h2 id="verify-title">Independent local receipt check</h2><div class="grid"><div class="panel"><h3>1. Select exported PNG</h3><label for="png-file">Flattened image — PNG, up to 64 MB</label><input type="file" id="png-file" accept="image/png,.png"><p class="fine">Use the exported copy, never a customer original. Renaming a file does not invalidate its hash.</p></div><div class="panel"><h3>2. Select receipt JSON</h3><label for="receipt-file">Review receipt — JSON, up to 64 KB</label><input type="file" id="receipt-file" accept="application/json,.json"><p class="fine">The receipt generated by the Redaction Desk records a digest and explicit HOLD restrictions, not approval.</p></div></div><p><button type="button" id="verify" disabled>Verify image and receipt locally</button></p><div class="result" role="status" aria-live="polite" aria-atomic="true"><div id="status" data-kind="pending">Select both local files.</div><p id="explanation">Nothing has been read or uploaded.</p><div class="check"><strong>PNG SHA-256</strong><span><code id="actual-digest">Not calculated</code></span></div><div class="check"><strong>Receipt SHA-256</strong><span><code id="expected-digest">Not checked</code></span></div><div class="check"><strong>PNG dimensions</strong><span id="png-dimensions">Not checked</span></div><div class="check"><strong>Receipt state</strong><span id="publication-state">Not checked</span></div><div class="check"><strong>Verification scope</strong><span>Byte identity and structural checks only. An independent full-resolution visual and rights review remains REQUIRED.</span></div></div></div></section>
+<section class="section"><div class="wrap"><h2>Architecture and verification boundaries</h2><div class="grid"><article class="panel"><h3>What this checks</h3><p>PNG file signature, IHDR dimensions, bounded chunk structure, suspicious embedded text or EXIF chunks, SHA-256 of actual bytes and strict v1 receipt fields. A changed pixel or any other byte produces a digest mismatch.</p></article><article class="panel"><h3>What remains gated</h3><p>Image-by-image customer and owner approval, visual redaction inspection, runtime source/instance evidence, deployment identity and screenshot captions. Genuine Workbench image candidates are still <strong>HOLD</strong>.</p></article></div><p class="fine"><strong>Evidence classification:</strong> SOURCE-ONLY — this verifier's public source; MOCK-ONLY — synthetic regression fixtures; DEV-VERIFIED — historical, version-scoped platform evidence only; PRODUCTION-VERIFIED — not established. <strong>Licensing:</strong> static verification needs no ServiceNow licence. Actual Workbench instances require appropriate roles, ACLs and contract-specific App Engine/custom-application, ITSM, CMDB/ITOM, IntegrationHub, analytics/AI or provider entitlements as applicable.</p></div></section>
+</main>
+<footer><div class="wrap">No upload, no storage, no telemetry · <a href="evidence-methodology.html">Publication and verification policy</a></div></footer>
+<script>
+"use strict";
+(function(){
+const $=id=>document.getElementById(id);
+const png=$("png-file"), receipt=$("receipt-file"), button=$("verify");
+const MAX_PNG_BYTES=64*1024*1024, MAX_RECEIPT_BYTES=64*1024, MAX_PIXELS=16000000;
+let generation=0;
+function show(kind,title,message){
+ $("status").dataset.kind=kind;$("status").textContent=title;$("explanation").textContent=message;
+}
+function clear(){
+ generation++;
+ button.disabled=!(png.files&&png.files.length&&receipt.files&&receipt.files.length);
+ $("actual-digest").textContent="Not calculated";
+ $("expected-digest").textContent="Not checked";
+ $("png-dimensions").textContent="Not checked";
+ $("publication-state").textContent="Not checked";
+ show("pending",button.disabled?"Select both local files.":"Ready to verify.","All processing stays within your browser. No result has been carried forward from an earlier selection.");
+}
+png.addEventListener("change",clear);receipt.addEventListener("change",clear);
+function requireCheck(value,message){if(!value)throw new Error(message);}
+function readPNG(bytes){
+ const sig=[137,80,78,71,13,10,26,10];requireCheck(sig.every((b,i)=>bytes[i]===b),"File does not have a PNG signature.");
+ const d=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+ requireCheck(bytes.length>=45,"PNG is truncated.");
+ let cursor=8,width=0,height=0,seenIHDR=false,seenIEND=false,hasIDAT=false,hasMetadata=false,chunkCount=0;
+ while(cursor+12<=bytes.length){
+   requireCheck(++chunkCount<=200000,"Excessive PNG chunk count.");
+   const length=d.getUint32(cursor),type=String.fromCharCode(...bytes.subarray(cursor+4,cursor+8));
+   requireCheck(length<=bytes.length-cursor-12,"Invalid or truncated PNG chunk length.");
+   requireCheck(/^[A-Za-z]{4}$/.test(type),"Invalid PNG chunk type.");
+   if(!seenIHDR){
+     requireCheck(type==="IHDR"&&length===13,"First PNG chunk must be IHDR.");
+     width=d.getUint32(cursor+8);height=d.getUint32(cursor+12);
+     requireCheck(width>0&&height>0&&width*height<=MAX_PIXELS,"PNG dimensions exceed the 16 megapixel review limit.");
+     seenIHDR=true;
+   }else requireCheck(type!=="IHDR","Duplicate PNG header.");
+   if(type==="IDAT")hasIDAT=true;
+   if(["tEXt","iTXt","zTXt","eXIf"].includes(type))hasMetadata=true;
+   cursor+=length+12;
+   if(type==="IEND"){requireCheck(length===0,"Invalid PNG ending.");seenIEND=true;break;}
+ }
+ requireCheck(seenIHDR&&seenIEND&&hasIDAT&&cursor===bytes.length,"PNG image stream is incomplete or has trailing bytes.");
+ requireCheck(!hasMetadata,"PNG contains embedded text/EXIF chunks. Re-export and review metadata.");
+ return {width,height};
+}
+function checkReceipt(r,dimensions){
+ requireCheck(r&&typeof r==="object"&&!Array.isArray(r),"Receipt must be a JSON object.");
+ requireCheck(r.schema==="servicenow-portfolio-redacted-image-receipt/v1","Unsupported receipt schema.");
+ requireCheck(typeof r.sha256==="string"&&/^[a-f0-9]{64}$/.test(r.sha256),"Receipt SHA-256 must be 64 lowercase hexadecimal characters.");
+ requireCheck(r.dimensions_px&&r.dimensions_px.width===dimensions.width&&r.dimensions_px.height===dimensions.height,"Receipt dimensions do not match the PNG header.");
+ requireCheck(Number.isSafeInteger(r.redaction_area_count)&&r.redaction_area_count>=1,"Receipt has no valid recorded redaction areas.");
+ requireCheck(r.publication_status==="HOLD"&&r.publication_approved===false&&r.independent_export_review==="REQUIRED","Receipt does not retain mandatory publication HOLD controls.");
+ requireCheck(r.service_now_dev_verified===false&&r.service_now_production_verified===false,"Receipt contains an unsupported ServiceNow runtime claim.");
+ requireCheck(r.evidence_class==="SOURCE-ONLY TOOL OUTPUT","Unexpected evidence classification.");
+ requireCheck(r.exported_file==="workbench-redacted-review.png","Unexpected receipt export identity.");
+ requireCheck(typeof r.generated_utc==="string"&&!Number.isNaN(Date.parse(r.generated_utc)),"Missing receipt generation date.");
+}
+button.addEventListener("click",async function(){
+ const imageFile=png.files&&png.files[0],receiptFile=receipt.files&&receipt.files[0],token=++generation;
+ if(!imageFile||!receiptFile)return;
+ button.disabled=true;
+ $("actual-digest").textContent="Calculating…";
+ show("pending","Checking local files…","No bytes are transmitted. The digest is calculated from the selected PNG.");
+ try{
+  requireCheck(imageFile.size>0&&imageFile.size<=MAX_PNG_BYTES,"PNG must be non-empty and at most 64 MB.");
+  requireCheck(receiptFile.size>0&&receiptFile.size<=MAX_RECEIPT_BYTES,"Receipt must be non-empty and at most 64 KB.");
+  requireCheck(!!crypto.subtle,"Secure browser hashing is unavailable. Use a secure browser context.");
+  const [raw,jsonText]=await Promise.all([imageFile.arrayBuffer(),receiptFile.text()]);
+  if(token!==generation)return;
+  const bytes=new Uint8Array(raw),dim=readPNG(bytes);
+  $("png-dimensions").textContent=dim.width+" × "+dim.height+" px";
+  const r=JSON.parse(jsonText);$("expected-digest").textContent=typeof r.sha256==="string"?r.sha256:"Invalid digest";
+  checkReceipt(r,dim);
+  $("publication-state").textContent="HOLD · Independent visual review REQUIRED · No runtime verification";
+  const digest=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",raw)),b=>b.toString(16).padStart(2,"0")).join("");
+  if(token!==generation)return;
+  $("actual-digest").textContent=digest;
+  requireCheck(digest===r.sha256,"SHA-256 mismatch. The PNG bytes do not match this receipt.");
+  show("match","MATCH — bytes correspond to this receipt","The image has the receipt's SHA-256 and stated dimensions. Publication is STILL ON HOLD. This result is not authenticity, safe-redaction, rights or ServiceNow runtime approval.");
+ }catch(error){
+  if(token!==generation)return;
+  show("fail","NOT VERIFIED — review required",error&&error.message||"Unable to verify the selected files.");
+ }finally{if(token===generation)button.disabled=false;}
+});
+clear();
+})();
+</script>
+</body>
+</html>
