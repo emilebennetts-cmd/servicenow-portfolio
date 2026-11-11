@@ -1,3 +1,13 @@
+## 2026-11-11 — Visually inspected intake and binary metadata safety
+
+- Corrected JPEG EXIF and GIF comment checks to match real binary bytes, not literal backslash escape characters. Added CI-discovered metadata regression tests and verified the publication gate still requires approved image bytes.
+- Published a public-safe, responsive status panel at `visual-evidence.html` based on a **separate four-file private intake sample**: 2 UI captures without independently established runtime verification, 1 explicit synthetic example (MOCK-ONLY), 1 overview document page. All 4 remain HOLD; 0 approved images; they are **not** conflated with the existing ten placeholder IDs.
+- Added a CI-discovered visual-intake safety contract; its candidate-ID regular expression was corrected after a failed initial quality-gate run.
+- Maintained SHA-256 receipts and original source pointers privately. No image, private source or customer information was published.
+- **Evidence tier:** SOURCE-ONLY implementation, mock-only demonstration, no new DEV-VERIFIED or PRODUCTION-VERIFIED claims.
+- **Release details:** [Visual intake and metadata regression](releases/2026-11-11-visual-intake-metadata-regression.md). Verify final commit quality-gate and Pages results separately.
+- **Licensing:** Static site and standard-library CI controls none; ServiceNow runtime App Engine/custom app, ITSM/ITOM, IntegrationHub, analytics, AI and provider entitlements conditional on scope.
+
 ## 2026-11-09 — Gallery DOM and navigation regression coverage
 
 - Commit `36b252cb6442bf193f645d85401ee0e0f3108750` extends `tests/test_visual_evidence_contract.py` with duplicate DOM ID detection and local fragment-link integrity checks.
