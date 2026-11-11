@@ -10,6 +10,7 @@ on:
       - 'cmdb-diagnostic-trust-lab.html'
       - 'major-incident-implementation-lab.html'
       - 'itsm-greenfield-build-sequencer.html'
+      - 'screenshot-redaction-desk.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
