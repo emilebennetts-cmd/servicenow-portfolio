@@ -6,6 +6,7 @@ The test serves local public HTML via file:// and never logs in to ServiceNow,
 opens private source documents, or creates public image artifacts.
 """
 from pathlib import Path
+import json
 from playwright.sync_api import sync_playwright
 
 INDEX_URL = (Path(__file__).resolve().parents[1] / "index.html").as_uri()
@@ -110,6 +111,52 @@ def check_case_study(browser, filename, anchor, width):
         page.close()
 
 
+def check_cmdb_trust_lab(browser, width):
+    """Exercise synthetic fixture decisions: no ServiceNow calls or captures."""
+    url = (Path(__file__).resolve().parents[1] / "cmdb-diagnostic-trust-lab.html").as_uri()
+    page = browser.new_page(
+        viewport={"width": width, "height": 900},
+        device_scale_factor=1,
+        reduced_motion="reduce",
+    )
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1, f"{width}px: Trust Lab title absent")
+        require(page.locator("main").count() == 1, f"{width}px: Trust Lab main absent")
+        require(page.evaluate(
+            "() => document.documentElement.scrollWidth <= window.innerWidth + 2"
+        ), f"{width}px: Trust Lab horizontal overflow")
+        require(page.locator("#overall-status").inner_text() == "PASS",
+                f"{width}px: initial fixture should PASS")
+        cases = (
+            ("truncated", "PARTIAL", 0),
+            ("unavailable", "NOT ASSESSED", None),
+            ("overlap", "REVIEW", 7),
+            ("ownership", "REVIEW", 0),
+        )
+        for key, expected, relation_count in cases:
+            button = page.locator('[data-scenario="' + key + '"]')
+            button.click()
+            require(button.get_attribute("aria-pressed") == "true",
+                    f"{width}px: {key} not selected")
+            require(page.locator("#overall-status").inner_text() == expected,
+                    f"{width}px: {key} status incorrect")
+            receipt = json.loads(page.locator("#fixture-receipt").inner_text())
+            require(receipt["fixture"] == key
+                    and receipt["assessment_status"] == expected
+                    and receipt["evidence_class"] == "MOCK-ONLY"
+                    and receipt["service_now_instance"] == "none",
+                    f"{width}px: {key} receipt invalid")
+            require(receipt["distinct_incomplete_relationships"] == relation_count,
+                    f"{width}px: {key} relationship union invalid")
+        page.locator('[data-scenario="baseline"]').click()
+        require(page.locator("#overall-status").inner_text() == "PASS",
+                f"{width}px: baseline did not restore")
+        print(f"PASS {width}px: CMDB Trust Lab fixture decisions and mobile bounds")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -118,6 +165,7 @@ def main():
                 check_viewport(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
+                check_cmdb_trust_lab(browser, width)
         finally:
             browser.close()
 
