@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081824">
+<meta name="description" content="Local-only screenshot redaction utility for ServiceNow portfolio evidence intake. Flatten solid redactions into a clean PNG without uploading any images.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'none'; form-action 'none'; img-src blob: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; object-src 'none'">
+<title>Private Screenshot Redaction Desk | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#091722;--panel:#122b3d;--panel2:#0d2231;--line:#49677b;--ink:#f3f9fa;--muted:#c5d7e1;--mint:#92f0da;--amber:#ffdda4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.62 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--mint);text-underline-offset:4px}
+button,input{font:inherit}button{cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.5rem,6vw,4.8rem);line-height:1.06;letter-spacing:-.055em;max-width:940px;margin:16px 0 20px}h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+p,li{color:var(--muted)}strong{color:var(--ink)}
+.wrap{width:min(1160px,calc(100% - 38px));margin:auto}
+.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;background:white;color:#081824;padding:10px;z-index:4}
+header{border-bottom:1px solid var(--line)}nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:19px 0}
+nav .links{display:flex;gap:16px;flex-wrap:wrap}nav a{text-decoration:none;font-weight:700}nav .brand{color:var(--ink)}
+.hero{padding:66px 0 48px;background:radial-gradient(circle at 85% 12%,#176d7450,transparent 55%)}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;font-weight:800;color:var(--mint)}
+.lead{max-width:860px;font-size:1.17rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #527184;border-radius:30px;padding:5px 12px;font-weight:700;font-size:.75rem}
+.section{padding:48px 0;border-top:1px solid var(--line)}
+.workbench{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(0,1.45fr);gap:18px;align-items:start}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:23px;min-width:0}
+label{display:block;font-weight:750;margin:13px 0 7px}
+input[type=file],input[type=number]{width:100%;background:var(--panel2);color:var(--ink);border:1px solid #688698;border-radius:9px;padding:11px;min-width:0}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--mint);flex-shrink:0}
+.coords{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 13px}
+.hint{font-size:.86rem;color:#c1d4e0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:19px 0}
+button{border:1px solid #7794a2;background:#193c4d;border-radius:9px;color:var(--ink);padding:11px 15px;font-weight:800}
+button.primary{background:var(--mint);color:#07262c;border-color:var(--mint)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.notice{border-left:4px solid var(--amber);background:#3a3022;padding:17px 20px;border-radius:0 10px 10px 0;color:#fff2d8}
+.notice p{color:#fff0d4;margin:0}
+.canvas-wrap{background:#06121d;border:1px solid #567286;border-radius:11px;min-height:260px;display:grid;place-items:center;overflow:hidden;position:relative}
+#preview{display:block;max-width:100%;height:auto;touch-action:none;cursor:crosshair}
+.empty{padding:30px;text-align:center;max-width:480px;color:var(--muted)}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0}
+.summary div{background:#0c2433;border:1px solid #406175;border-radius:9px;padding:13px;min-width:0}.summary strong{display:block;color:var(--mint);font-size:1.15rem;overflow-wrap:anywhere}.summary span{font-size:.75rem;color:var(--muted)}
+#rectangle-list{padding-left:20px;max-height:155px;overflow:auto;font-size:.86rem}
+#status{min-height:3em;padding:11px 13px;background:#0b2836;border-radius:10px;border:1px solid #3e6875;color:#def9ee}
+.confirm{display:flex;align-items:flex-start;gap:12px;margin:16px 0;font-weight:600}
+.small{font-size:.86rem}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:13px}
+.card h3{font-size:1.1rem;margin-bottom:8px}.card p{margin:0}
+footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted)}
+@media(max-width:900px){.workbench{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
+@media(max-width:520px){.wrap{width:calc(100% - 28px)}.hero{padding:43px 0 28px}.section{padding:32px 0}.panel{padding:17px}.summary{grid-template-columns:1fr 1fr}.coords{grid-template-columns:1fr 1fr}nav .links{gap:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body><a class="skip" href="#main">Skip to main content</a>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a class="brand" href="./">ServiceNow Portfolio</a><div class="links"><a href="visual-evidence.html">Evidence gallery</a><a href="evidence-methodology.html">Publication policy</a><a href="index.html">Home</a></div></nav></header>
+<main id="main">
+<section class="hero"><div class="wrap"><div class="eyebrow">Local evidence preparation / No upload</div><h1>Redact the pixels. Keep publication approval separate.</h1><p class="lead">A practical, browser-local preparation desk for Workbench captures. Draw permanent solid-black areas on a copy, inspect the result and download a newly rendered PNG. Nothing is sent to GitHub, ServiceNow or a server.</p>
+<div class="chips"><span class="chip">LOCAL-ONLY IMAGE PROCESSING</span><span class="chip">SOURCE-ONLY TOOL</span><span class="chip">NOT A PUBLICATION APPROVAL</span></div>
+<div class="notice"><p><strong>Important:</strong> This tool does not discover secrets automatically. Inspect every pixel, browser chrome, tooltips, record identifiers, embedded captions, logos and file names. Obtain permission for each image and caption before publishing. Never upload an original customer screenshot to the public repository.</p></div></div></section>
+<section class="section" aria-labelledby="editor-title"><div class="wrap"><h2 id="editor-title">Local redaction workbench</h2><div class="workbench">
+<div class="panel">
+<h3>1. Select a private image</h3><label for="source-file">PNG, JPEG or WebP (maximum 15 MB / 16 megapixels)</label><input id="source-file" type="file" accept="image/png,image/jpeg,image/webp">
+<p class="hint">No drag-and-drop upload, analytics, tracking, network requests or retained browser storage. Refresh to clear the working image.</p>
+<h3>2. Cover confidential regions</h3><p class="hint">Drag across the preview with mouse, pen or touch. For keyboard access, enter coordinates as percentages of the original image and choose Add solid area.</p>
+<div class="coords">
+<div><label for="rect-x">X position (%)</label><input id="rect-x" type="number" min="0" max="99" step="1" value="0"></div>
+<div><label for="rect-y">Y position (%)</label><input id="rect-y" type="number" min="0" max="99" step="1" value="0"></div>
+<div><label for="rect-w">Width (%)</label><input id="rect-w" type="number" min="1" max="100" step="1" value="25"></div>
+<div><label for="rect-h">Height (%)</label><input id="rect-h" type="number" min="1" max="100" step="1" value="15"></div>
+</div>
+<div class="actions"><button id="add-rect" disabled>Add solid area</button><button id="undo-rect" disabled>Undo last</button><button id="clear-rect" disabled>Clear areas</button></div>
+<h3>3. Review and export locally</h3>
+<label class="confirm" for="reviewed"><input id="reviewed" type="checkbox" disabled><span>I visually inspected the redacted preview and understand that exporting does <strong>not</strong> authorise public publication.</span></label>
+<button class="primary" id="export-png" disabled>Download flattened PNG</button>
+<p class="hint">Export requires an image, at least one solid area and manual-review acknowledgement. A new opaque PNG is rendered from scratch; original filename and source metadata are not carried into the export. Reopen the downloaded file and inspect it at full size.</p>
+<div id="status" role="status" aria-live="polite">No file loaded. Select an image to begin.</div>
+</div>
+<div class="panel">
+<h3>Original-resolution preview</h3><p class="hint">The preview scales to the available width; redaction coordinates and exported output use the original pixel dimensions.</p>
+<div class="canvas-wrap"><canvas id="preview" aria-label="Interactive image preview for drawing solid redaction rectangles" hidden></canvas><div id="empty-preview" class="empty">Your image appears here only in your browser. The public website never receives the image bytes.</div></div>
+<div class="summary" aria-label="Local processing summary"><div><strong id="image-size">—</strong><span>Source dimensions</span></div><div><strong id="area-count">0</strong><span>Solid redaction areas</span></div><div><strong id="export-state">Locked</strong><span>Local export</span></div></div>
+<h3>Redaction area register</h3><ol id="rectangle-list"><li>No redaction areas created.</li></ol>
+</div></div></div></section>
+<section class="section" aria-labelledby="limits"><div class="wrap"><h2 id="limits">Evidence and security boundaries</h2><div class="cards">
+<article class="card"><h3>Source identity</h3><p>Preserve capture date, Workbench release and instance environment in a private register. Do not claim DEV-VERIFIED merely because a screenshot exists.</p></article>
+<article class="card"><h3>Irreversible output</h3><p>Black regions are painted into a new PNG raster, not CSS overlays or reversible annotation objects. Verify the export separately; no algorithm guarantees complete redaction.</p></article>
+<article class="card"><h3>Approval gate</h3><p>All historical Workbench screenshot candidates remain <strong>HOLD</strong>. Publication still requires rights, image-by-image approval, caption review and evidence classification.</p></article>
+</div><p class="small" style="margin-top:22px"><strong>Evidence classes:</strong> SOURCE-ONLY — this local utility and documented design; MOCK-ONLY — any synthetic examples used to test the tool; DEV-VERIFIED — requires separate instance read-back or witnessed execution; PRODUCTION-VERIFIED — not established by this workflow. <strong>Licensing:</strong> this static tool requires no ServiceNow licence. Runtime Workbench captures may involve custom application/App Engine, ITSM/CMDB/ITOM, IntegrationHub and provider entitlements determined by the deployed feature.</p></div></section>
+</main><footer><div class="wrap">Local evidence preparation only · No uploads · No hosted image storage · <a href="visual-evidence.html">Review withheld image inventory</a></div></footer>
+<script>
+"use strict";
+(function(){
+const $=id=>document.getElementById(id);
+const file=$("source-file"), canvas=$("preview"), ctx=canvas.getContext("2d",{willReadFrequently:true});
+const status=$("status"), reviewed=$("reviewed"), exportBtn=$("export-png");
+const MAX_BYTES=15*1024*1024, MAX_PIXELS=16000000;
+let image=null, areas=[], draft=null, pointerStart=null, loadToken=0;
+function tell(message){status.textContent=message;}
+function revokeReview(){reviewed.checked=false; refreshActions();}
+function refreshActions(){
+ const ready=!!image, hasAreas=areas.length>0;
+ $("add-rect").disabled=!ready;$("undo-rect").disabled=!hasAreas;$("clear-rect").disabled=!hasAreas;
+ reviewed.disabled=!(ready&&hasAreas);
+ exportBtn.disabled=!(ready&&hasAreas&&reviewed.checked);
+ $("image-size").textContent=ready?(image.width+" × "+image.height):"—";
+ $("area-count").textContent=String(areas.length);
+ $("export-state").textContent=exportBtn.disabled?"Locked":"Ready";
+ const list=$("rectangle-list");list.replaceChildren();
+ if(!hasAreas){const li=document.createElement("li");li.textContent="No redaction areas created.";list.appendChild(li);}
+ for(const [i,r] of areas.entries()){
+   const li=document.createElement("li");
+   const pct=n=>Math.round(n*1000)/10+"%";
+   li.textContent="Area "+(i+1)+": x "+pct(r.x/image.width)+", y "+pct(r.y/image.height)+", w "+pct(r.w/image.width)+", h "+pct(r.h/image.height);
+   list.appendChild(li);
+ }
+}
+function paint(target,withDraft){
+ if(!image)return;
+ const c=target.canvas;
+ target.fillStyle="#ffffff";target.fillRect(0,0,c.width,c.height);target.drawImage(image,0,0,c.width,c.height);
+ target.fillStyle="#000000";
+ for(const r of areas){target.fillRect(r.x,r.y,r.w,r.h);}
+ if(withDraft&&draft){
+   target.fillStyle="rgba(0,0,0,0.82)";target.fillRect(draft.x,draft.y,draft.w,draft.h);
+   target.strokeStyle="#fff7b6";target.lineWidth=Math.max(1,c.width/1200);target.strokeRect(draft.x,draft.y,draft.w,draft.h);
+ }
+}
+function draw(){if(image)paint(ctx,true);}
+function reset(message){
+ image=null;areas=[];draft=null;pointerStart=null;
+ canvas.hidden=true;$("empty-preview").hidden=false;
+ canvas.width=1;canvas.height=1;
+ reviewed.checked=false;refreshActions();tell(message);
+}
+function imageReady(decoded,token){
+ if(token!==loadToken)return;
+ if(!decoded.width||!decoded.height||decoded.width*decoded.height>MAX_PIXELS){reset("Image exceeds 16 megapixels or has invalid dimensions.");return;}
+ image=decoded;areas=[];draft=null;pointerStart=null;
+ canvas.width=decoded.width;canvas.height=decoded.height;
+ canvas.hidden=false;$("empty-preview").hidden=true;
+ reviewed.checked=false;draw();refreshActions();
+ tell("Image loaded locally. Add solid redaction areas; then manually review the whole preview.");
+}
+file.addEventListener("change",function(){
+ const f=file.files&&file.files[0];const token=++loadToken;
+ reset("Checking local image…");
+ if(!f){tell("No file selected.");return;}
+ if(!["image/png","image/jpeg","image/webp"].includes(f.type)){reset("Unsupported image type. Select PNG, JPEG or WebP.");return;}
+ if(!f.size||f.size>MAX_BYTES){reset("File must be non-empty and at most 15 MB.");return;}
+ const url=URL.createObjectURL(f);const decoded=new Image();
+ decoded.onload=function(){URL.revokeObjectURL(url);imageReady(decoded,token);};
+ decoded.onerror=function(){URL.revokeObjectURL(url);if(token===loadToken)reset("Image could not be decoded safely.");};
+ decoded.src=url;
+});
+function bounds(x1,y1,x2,y2){
+ if(!image)return null;
+ const x=Math.max(0,Math.min(x1,x2)),y=Math.max(0,Math.min(y1,y2));
+ const right=Math.min(image.width,Math.max(x1,x2)),bottom=Math.min(image.height,Math.max(y1,y2));
+ const r={x:Math.round(x),y:Math.round(y),w:Math.round(right-x),h:Math.round(bottom-y)};
+ return r.w>=2&&r.h>=2?r:null;
+}
+function add(r){if(!r)return false;areas.push(r);draft=null;revokeReview();draw();tell("Solid area "+areas.length+" added. Inspect for any remaining confidential details.");return true;}
+function point(event){
+ const b=canvas.getBoundingClientRect();
+ return {x:Math.max(0,Math.min(canvas.width,(event.clientX-b.left)*canvas.width/b.width)),
+         y:Math.max(0,Math.min(canvas.height,(event.clientY-b.top)*canvas.height/b.height))};
+}
+canvas.addEventListener("pointerdown",function(e){
+ if(!image||e.button!==0)return;
+ e.preventDefault();pointerStart=point(e);draft=null;canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener("pointermove",function(e){
+ if(!pointerStart)return;const end=point(e);draft=bounds(pointerStart.x,pointerStart.y,end.x,end.y);draw();
+});
+canvas.addEventListener("pointerup",function(e){
+ if(!pointerStart)return;
+ const end=point(e),r=bounds(pointerStart.x,pointerStart.y,end.x,end.y);
+ pointerStart=null;draft=null;if(!add(r)){draw();tell("Area was too small; draw a larger rectangle.");}
+});
+canvas.addEventListener("pointercancel",function(){pointerStart=null;draft=null;draw();});
+$("add-rect").addEventListener("click",function(){
+ if(!image)return;
+ const ids=["rect-x","rect-y","rect-w","rect-h"],vals=ids.map(id=>Number($(id).value));
+ if(vals.some(n=>!Number.isFinite(n))||vals[0]<0||vals[1]<0||vals[2]<=0||vals[3]<=0||
+ vals[0]+vals[2]>100||vals[1]+vals[3]>100){tell("Invalid percentages. X + width and Y + height must not exceed 100%.");return;}
+ const [x,y,w,h]=vals;
+ if(!add(bounds(x*image.width/100,y*image.height/100,(x+w)*image.width/100,(y+h)*image.height/100))){
+  tell("Redaction region must cover at least 2 × 2 source pixels.");
+ }
+});
+$("undo-rect").addEventListener("click",function(){if(!areas.length)return;areas.pop();revokeReview();draw();tell("Last area undone; review acknowledgement cleared.");});
+$("clear-rect").addEventListener("click",function(){areas=[];revokeReview();draw();tell("All areas removed; review acknowledgement cleared.");});
+reviewed.addEventListener("change",refreshActions);
+exportBtn.addEventListener("click",function(){
+ if(!image||!areas.length||!reviewed.checked)return;
+ const flattened=document.createElement("canvas");flattened.width=image.width;flattened.height=image.height;
+ const out=flattened.getContext("2d");if(!out){tell("Could not prepare export context.");return;}
+ paint(out,false);
+ flattened.toBlob(function(blob){
+  if(!blob||blob.type!=="image/png"){tell("Local PNG export failed. Nothing uploaded.");return;}
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download="workbench-redacted-review.png";document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  tell("Flattened PNG prepared locally. Reopen it at full resolution and obtain separate publication approval.");
+ },"image/png");
+});
+refreshActions();
+})();
+</script>
+</body></html>
