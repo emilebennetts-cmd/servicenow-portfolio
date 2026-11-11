@@ -1,3 +1,10 @@
+## 12 November 2026 — PNG receipt structural hardening
+
+- Added per-chunk CRC-32, explicit 8-bit canvas PNG header checks, contiguous image data and a strict benign ancillary allowlist to the local screenshot receipt verifier. Newly forged receipts cannot mask corrupted PNG chunk bytes or embedded text metadata. This is **structural checking only**, not full pixel decoding or source authenticity.
+- Chromium synthetic-fixture checks now cover CRC-corrupted payloads and valid-CRC metadata with matching hashes, alongside existing positive, HOLD, false-approval and dimension checks. CI and Pages status must be verified against the final commit, not assumed from source.
+- **SOURCE-ONLY:** verifier and regression source. **MOCK-ONLY:** synthetic fixtures. **DEV-VERIFIED:** historical/version-specific only; no new native execution. **PRODUCTION-VERIFIED:** not established. Real Workbench captures remain HOLD with no publication authority.
+- No uploads or network access. No ServiceNow licence for static web utilities; runtime custom application and ITSM/CMDB/ITOM/IntegrationHub entitlements remain conditional. [Technical release note](release-notes/2026-11-12-png-receipt-structural-hardening.md).
+
 ## 12 November 2026 — Independent screenshot receipt verification
 
 - Added a public, browser-local receipt verifier that accepts a flattened PNG and its JSON receipt. It checks bounded PNG structure, metadata chunks, dimensions, explicit HOLD/zero-runtime-approval fields and a fresh SHA-256 computed over the selected PNG's actual bytes. Both files stay local; mismatches are rejected; stale comparisons are invalidated on input changes.
