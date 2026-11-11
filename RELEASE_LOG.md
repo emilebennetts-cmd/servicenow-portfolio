@@ -1,3 +1,12 @@
+## 2026-11-11 — Reviewed evidence cards and public reviewer routes
+
+- Published four mobile-responsive, individually classified review records on `visual-evidence.html#reviewed-captures`: two SOURCE-ONLY UI captures, one MOCK-ONLY synthetic workshop example, and one source-document excerpt (not an application screenshot). Descriptions are based on privately inspected source files; **no original pixels, image identifiers or customer data were released**.
+- Preserved ten separate unreviewed gallery candidates and zero approved public screenshots; every reviewed record remains HOLD. Corrected public visual-evidence links that previously pointed to private GitHub repositories.
+- Added CI-discovered regression coverage for review aliases, classifications, all HOLD states, public-safe navigation and candidate separation. Private source-alias mappings remain only in the restricted evidence register.
+- **Verification:** SOURCE-ONLY commit; no new independently verified ServiceNow DEV or production test. CI and Pages results must be checked against the final commit.
+- **Release:** [Reviewed visual evidence cards](releases/2026-11-11-reviewed-visual-evidence-cards.md).
+- **Entitlements:** Static website none. Runtime custom-app rights, ITSM/ITOM, IntegrationHub, analytics/AI and external subscriptions conditional.
+
 ## 2026-11-11 — Visually inspected intake and binary metadata safety
 
 - Corrected JPEG EXIF and GIF comment checks to match real binary bytes, not literal backslash escape characters. Added CI-discovered metadata regression tests and verified the publication gate still requires approved image bytes.
