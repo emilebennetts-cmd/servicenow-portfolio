@@ -11,6 +11,9 @@ on:
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
+concurrency:
+  group: responsive-smoke-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
