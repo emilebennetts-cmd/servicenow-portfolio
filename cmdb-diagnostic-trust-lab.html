@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081624">
+<meta name="description" content="Explore synthetic CMDB and IRE diagnostic acceptance fixtures. See why unavailable data, truncated grouping and overlapping relationship counts must never be presented as a healthy ServiceNow result.">
+<title>CMDB Diagnostic Trust Lab | ServiceNow Engineering Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071521;--panel:#112b3d;--panel2:#17394c;--edge:#426274;--text:#eef9fb;--sub:#c4d9e2;--mint:#8bf0d5;--amber:#ffd28a;--red:#ffb1aa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}h1,h2,h3{line-height:1.15;letter-spacing:-.035em}h1{font-size:clamp(2.4rem,6.5vw,5rem);max-width:880px;margin:18px 0 20px}h2{font-size:clamp(1.6rem,3.5vw,2.4rem)}h3{font-size:1.13rem}p,li{color:var(--sub)}.wrap{width:min(1100px,calc(100% - 36px));margin:0 auto}.skip{position:absolute;left:12px;top:-90px;background:#fff;color:#071521;padding:9px;z-index:20}.skip:focus{top:8px}.mast{background:radial-gradient(ellipse at 85% 12%,#205e70aa,transparent 55%),linear-gradient(130deg,#09263b,#101c2e);border-bottom:1px solid var(--edge)}.mast .wrap{padding:76px 0 64px}.eyebrow{color:var(--mint);font-size:.76rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}.lead{font-size:1.14rem;max-width:760px}.nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.nav a{display:inline-flex;align-items:center;min-height:44px;padding:9px 15px;background:#13364a;border:1px solid var(--edge);border-radius:100px;text-decoration:none;font-weight:750;font-size:.89rem}.nav a:hover{background:#20526a}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:29px}.badge{border:1px solid #608191;border-radius:100px;padding:4px 11px;font-weight:850;font-size:.75rem}.badge.mock{color:var(--amber);border-color:#b49261}.badge.source{color:var(--mint);border-color:#73ceb4}section{padding:55px 0;border-bottom:1px solid #2d4b5a}.intro{max-width:790px}.scenario-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:23px 0}.scenario{border:1px solid var(--edge);border-radius:12px;padding:14px;text-align:left;background:#132d3f;color:var(--text);font:inherit;min-height:102px;cursor:pointer}.scenario span{display:block;font-size:.73rem;font-weight:800;color:var(--mint);margin-bottom:5px}.scenario strong{font-size:.9rem;line-height:1.3;display:block}.scenario:hover,.scenario[aria-pressed="true"]{background:#1f4959;border-color:var(--mint)}.scenario[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--mint)}.statusline{display:flex;align-items:flex-start;flex-wrap:wrap;gap:16px;justify-content:space-between}.statusline h3{margin:0}.result{border:1px solid var(--edge);background:var(--panel);padding:22px;border-radius:16px}.pill{display:inline-block;border-radius:100px;border:1px solid var(--edge);background:#1a3849;color:var(--text);padding:4px 12px;font-weight:850;font-size:.83rem;white-space:normal}.pill.good{border-color:#74caa8;color:#a6fce1}.pill.partial{border-color:#eac782;color:#ffe5aa}.pill.unknown{border-color:#b9bdc6;color:#e0e3eb}.pill.review{border-color:#ff9b8f;color:#ffd2cb}.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:23px 0}.metric{background:var(--panel2);border:1px solid var(--edge);padding:17px;border-radius:12px;min-width:0}.metric b{display:block;font-size:1.65rem;line-height:1.25;color:#fff;overflow-wrap:anywhere}.metric span{display:block;color:#c7dee6;font-size:.86rem}.verdict{background:#0d2432;border-left:4px solid var(--mint);padding:13px 16px;margin-top:17px;border-radius:0 8px 8px 0}.verdict p{margin:0}.columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{border:1px solid var(--edge);border-radius:14px;background:var(--panel);padding:22px}.panel h3{margin-top:0}.panel ul{margin-bottom:0;padding-left:20px}.panel li+li{margin-top:9px}.receipt{white-space:pre-wrap;overflow-wrap:anywhere;background:#071a27;border:1px solid #38596c;border-radius:11px;color:#d1f4ec;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;padding:17px;margin-top:14px;max-width:100%}.note{background:#312b21;border:1px solid #736345;padding:18px 22px;border-radius:12px}.note p{color:#ffdeb1;margin:0}.footer{padding:34px 0 50px;color:#c9dce2;display:flex;gap:18px;flex-wrap:wrap;font-size:.88rem}abbr{text-decoration:none;border-bottom:1px dotted currentColor}.hidden{display:none}@media(max-width:900px){.scenario-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.mast .wrap{padding:60px 0 45px}.scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-grid{grid-template-columns:1fr}.columns{grid-template-columns:1fr}.scenario{min-height:80px}section{padding:37px 0}}@media(max-width:340px){.scenario-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to interactive lab</a>
+<header class="mast"><div class="wrap">
+<div class="eyebrow">Technical case study · Interactive engineering evidence</div>
+<h1>When a CMDB health check cannot be trusted.</h1>
+<p class="lead">Explore five entirely synthetic diagnostic fixtures. The lab demonstrates why a read-only collector must distinguish complete results, truncated populations, missing data and overlapping relationship counts before a finding can be used in an architectural decision.</p>
+<nav class="nav" aria-label="Page navigation"><a href="cmdb-ire-assurance.html">CMDB &amp; IRE source review</a><a href="#lab">Try the fixtures</a><a href="#controls">Architectural controls</a><a href="visual-evidence.html">Actual screen intake</a><a href="index.html">Portfolio home</a></nav>
+<div class="badges"><span class="badge mock">MOCK-ONLY · synthetic fixture data</span><span class="badge source">SOURCE-ONLY · testable website implementation</span><span class="badge">No instance connection</span></div>
+</div></header>
+<main id="main" class="wrap">
+<section id="lab" aria-labelledby="lab-heading">
+<div class="eyebrow">01 / Try the diagnostic boundaries</div>
+<h2 id="lab-heading">Five conditions. Five defensible outcomes.</h2>
+<p class="intro">Select a fixture to inspect how status and evidence are calculated. Values are invented for this demonstration and are <strong>not</strong> exported from a real CMDB. No identifiers, scripts, API calls, customer records, persistence or ServiceNow credentials are used.</p>
+<div class="scenario-grid" role="group" aria-label="Synthetic diagnostic scenarios">
+<button class="scenario" type="button" data-scenario="baseline" aria-pressed="true"><span>01 · Complete</span><strong>Healthy baseline</strong></button>
+<button class="scenario" type="button" data-scenario="truncated" aria-pressed="false"><span>02 · Partial</span><strong>Grouping limit reached</strong></button>
+<button class="scenario" type="button" data-scenario="unavailable" aria-pressed="false"><span>03 · Unknown</span><strong>Source table unavailable</strong></button>
+<button class="scenario" type="button" data-scenario="overlap" aria-pressed="false"><span>04 · Review</span><strong>Overlapping null relationships</strong></button>
+<button class="scenario" type="button" data-scenario="ownership" aria-pressed="false"><span>05 · Review</span><strong>Owner and freshness gaps</strong></button>
+</div>
+<div class="result" aria-live="polite" aria-atomic="true">
+<div class="statusline"><div><div class="eyebrow">Calculated result</div><h3 id="scenario-title">Healthy baseline</h3></div><strong id="overall-status" class="pill good">PASS</strong></div>
+<p id="scenario-context">All required fixture sources are available and complete.</p>
+<div class="metric-grid">
+<div class="metric"><span>Inventory assessed</span><b id="inventory-count">120</b><span id="inventory-note">Available</span></div>
+<div class="metric"><span>Duplicate clusters found</span><b id="cluster-count">0</b><span id="cluster-note">Complete grouped scan</span></div>
+<div class="metric"><span>Distinct incomplete relationships</span><b id="relationship-count">0</b><span id="relationship-note">Deduplicated union</span></div>
+</div>
+<div class="verdict"><p id="verdict-text">Safe to report the fixture result as complete; real execution still requires approved instance verification.</p></div>
+</div>
+</section>
+<section id="controls" aria-labelledby="controls-heading">
+<div class="eyebrow">02 / Evidence controls</div><h2 id="controls-heading">What the status actually means</h2>
+<div class="columns"><article class="panel"><h3>Acceptance logic</h3><ul>
+<li><strong>NOT ASSESSED:</strong> unavailable source cannot be treated as zero, PASS or FAIL.</li>
+<li><strong>PARTIAL:</strong> truncated grouped scan cannot establish a whole-population duplicate rate.</li>
+<li><strong>REVIEW:</strong> known duplicate, missing ownership, stale assets or invalid relationships require human triage.</li>
+<li><strong>PASS:</strong> only a complete, accessible synthetic fixture with no configured anomalies; not a production acceptance.</li>
+<li><strong>Relationship union:</strong> distinct incomplete records = missing parent + missing child − both missing. The subtraction prevents double-counting within this fixture.</li>
+</ul></article>
+<article class="panel"><h3>What would constitute real proof</h3><ul>
+<li>Approved release and instance, service account permissions and full query guard checks.</li>
+<li>Reproducible ATF/DEV fixtures, expected/actual results, execution timestamps and collector/source SHA.</li>
+<li>Permission-denied, missing-table, timeout and high-cardinality tests; evidence output allowlist.</li>
+<li>Reconcile findings to OOTB CMDB Health, IRE rules, CI Class Manager and applicable CSDM.</li>
+<li>Sanitised screenshots and reports require provenance, review and explicit publication approval.</li>
+</ul></article></div>
+</section>
+<section id="receipt-section"><div class="eyebrow">03 / Transparent test receipt</div>
+<h2>Inspect the generated fixture receipt</h2>
+<p class="intro">This receipt is generated locally in your browser from hard-coded synthetic numbers. It is intentionally not a ServiceNow execution log, production health score, evidence of installed capability or a downloadable customer extract.</p>
+<pre class="receipt" id="fixture-receipt" aria-label="Synthetic fixture receipt"></pre>
+<div class="note"><p><strong>Verification boundary:</strong> The interactive page is SOURCE-ONLY as a web implementation. Its results and interface are MOCK-ONLY. Historical DEV-VERIFIED evidence cited elsewhere is version-specific and does not verify this diagnostic. PRODUCTION-VERIFIED is not established. No genuine screenshots are reproduced here; the public visual-evidence gallery retains the publication approval boundary.</p></div>
+</section>
+<section><div class="columns"><div><div class="eyebrow">Architectural best practices</div><h2>OOTB-first and evidence-led</h2><p>ServiceNow identification and reconciliation rules remain authoritative. The collector's role is to observe, describe its confidence, minimise exported data and initiate governed remediation — not update a CI or invent a green KPI when inputs fail.</p></div><div><div class="eyebrow">Licensing &amp; entitlements</div><h2>No runtime entitlement implied</h2><p>This static interactive lab requires <strong>no ServiceNow licence</strong>. Any actual collector requires approved platform access, applicable roles/ACLs and release-tested tables. CMDB Health, Discovery/ITOM Visibility, Service Graph connectors, App Engine and IntegrationHub are feature- and subscription-dependent; confirm customer entitlements before deploying functionality.</p></div></div></section>
+</main>
+<footer class="wrap footer"><span>Source-backed analysis with deliberately synthetic training data.</span><a href="cmdb-ire-assurance.html#acceptance">Read the acceptance criteria</a><a href="index.html">Return to portfolio home</a></footer>
+<script>
+"use strict";
+/* Public synthetic fixtures only. No instance URLs, identifiers or network requests. */
+(function () {
+  const fixtures = Object.freeze({
+    baseline: {title:"Healthy baseline",count:120,tableAvailable:true,groups:12,groupLimit:400,truncated:false,clusters:0,missingParent:0,missingChild:0,bothMissing:0,missingOwner:0,stale:0,context:"All required fixture sources are available and complete."},
+    truncated: {title:"Grouping limit reached",count:45000,tableAvailable:true,groups:400,groupLimit:400,truncated:true,clusters:7,missingParent:0,missingChild:0,bothMissing:0,missingOwner:0,stale:0,context:"Only the first 400 synthetic groups were enumerated; additional groups may exist."},
+    unavailable: {title:"Source table unavailable",count:null,tableAvailable:false,groups:null,groupLimit:400,truncated:false,clusters:null,missingParent:null,missingChild:null,bothMissing:null,missingOwner:null,stale:null,context:"Inventory and related inputs are unavailable. Unknown is not zero."},
+    overlap: {title:"Overlapping null relationships",count:500,tableAvailable:true,groups:35,groupLimit:400,truncated:false,clusters:3,missingParent:4,missingChild:5,bothMissing:2,missingOwner:0,stale:0,context:"Two synthetic relationship rows have both parent and child missing. Adding the two counts would double-count them."},
+    ownership: {title:"Owner and freshness gaps",count:1200,tableAvailable:true,groups:48,groupLimit:400,truncated:false,clusters:0,missingParent:0,missingChild:0,bothMissing:0,missingOwner:14,stale:9,context:"Fixture includes 14 missing-owner records and 9 stale records; counts are illustrative and may overlap."}
+  });
+  function assess(record) {
+    if (!record.tableAvailable) return {status:"NOT ASSESSED",kind:"unknown",relationships:null,reason:"Required source unavailable. Report NOT ASSESSED, not a healthy zero."};
+    const relationships = record.missingParent + record.missingChild - record.bothMissing;
+    if (record.truncated || record.groups > record.groupLimit) return {status:"PARTIAL",kind:"partial",relationships:relationships,reason:"Observed groups reached the fixture limit. Duplicate counts are lower bounds, not a complete population metric."};
+    if (record.clusters > 0 || relationships > 0 || record.missingOwner > 0 || record.stale > 0) return {status:"REVIEW",kind:"review",relationships:relationships,reason:"Actionable synthetic anomalies exist. Validate fixtures and reconcile with authoritative OOTB mechanisms before deciding remediation."};
+    return {status:"PASS",kind:"good",relationships:relationships,reason:"Complete fixture with no anomalies. This PASS is only a synthetic test result, not instance or production verification."};
+  }
+  const byId = (id) => document.getElementById(id);
+  function render(key) {
+    const record=fixtures[key]; if (!record) return;
+    const r=assess(record);
+    document.querySelectorAll("[data-scenario]").forEach((button) => button.setAttribute("aria-pressed",String(button.dataset.scenario===key)));
+    byId("scenario-title").textContent=record.title;
+    byId("scenario-context").textContent=record.context;
+    byId("overall-status").textContent=r.status;
+    byId("overall-status").className="pill "+r.kind;
+    byId("inventory-count").textContent=record.tableAvailable?record.count.toLocaleString("en-AU"):"Unknown";
+    byId("inventory-note").textContent=record.tableAvailable?"Fixture source available":"Source unavailable";
+    byId("cluster-count").textContent=record.clusters===null?"Unknown":String(record.clusters);
+    byId("cluster-note").textContent=!record.tableAvailable?"Not assessed":record.truncated?"Lower bound; truncated":"Complete grouped scan";
+    byId("relationship-count").textContent=r.relationships===null?"Unknown":String(r.relationships);
+    byId("relationship-note").textContent=r.relationships===null?"Not assessed":"Deduplicated union";
+    byId("verdict-text").textContent=r.reason;
+    const receipt={evidence_class:"MOCK-ONLY",data_origin:"hard-coded synthetic fixture",service_now_instance:"none",fixture:key,assessment_status:r.status,inventory_assessed:record.count,group_scan:{observed:record.groups,limit:record.groupLimit,truncated:record.truncated},duplicate_clusters_observed:record.clusters,distinct_incomplete_relationships:r.relationships,owner_missing:record.missingOwner,stale_records:record.stale,verification:"No ServiceNow instance execution. Not DEV-VERIFIED or PRODUCTION-VERIFIED."};
+    byId("fixture-receipt").textContent=JSON.stringify(receipt,null,2);
+  }
+  document.querySelectorAll("[data-scenario]").forEach((button)=>button.addEventListener("click",()=>render(button.dataset.scenario)));
+  window.CMDBTrustLab={assess:assess,fixtures:fixtures};
+  render("baseline");
+}());
+</script>
+</body>
+</html>
