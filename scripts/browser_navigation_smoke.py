@@ -157,6 +157,44 @@ def check_cmdb_trust_lab(browser, width):
         page.close()
 
 
+
+def check_mim_design_lab(browser, width):
+    """Test synthetic MIM gate decisions and receipt, never ServiceNow execution."""
+    url = (Path(__file__).resolve().parents[1] / "major-incident-implementation-lab.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count()==1 and page.locator("main").count()==1,
+                f"{width}px: MIM page landmarks")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= window.innerWidth + 2"),
+                f"{width}px: MIM page horizontal overflow")
+        def check(expected):
+            receipt=json.loads(page.locator("#readiness-receipt").inner_text())
+            require(receipt["readiness_status"]==expected, f"{width}px: expected {expected}")
+            require(receipt["evidence_class"]=="MOCK-ONLY"
+                    and receipt["service_now_instance"] is None
+                    and not receipt["platform_execution"] and not receipt["customer_approval"],
+                    f"{width}px: MIM receipt unsafe classification")
+            return receipt
+        require(check("COMPLETE")["controls_completed"]==9,
+                f"{width}px: initial MIM control count")
+        page.locator('[data-fixture="authority"]').click()
+        require(set(check("BLOCKED")["blocking_control_ids"])=={"declaration","roles"},
+                f"{width}px: MIM authority blockers incorrect")
+        page.locator('[data-fixture="integration"]').click()
+        check("REVIEW")
+        page.locator('[data-gate="entitlement"]').uncheck()
+        check("BLOCKED")
+        page.locator('[data-gate="entitlement"]').check()
+        check("REVIEW")
+        page.locator('[data-fixture="complete"]').click()
+        check("COMPLETE")
+        require(page.locator('[data-fixture="complete"]').get_attribute("aria-pressed")=="true",
+                f"{width}px: MIM fixture not focus/selection accessible")
+        print(f"PASS {width}px: MIM synthetic gates and receipt")
+    finally:
+        page.close()
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -166,6 +204,7 @@ def main():
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
+                check_mim_design_lab(browser, width)
         finally:
             browser.close()
 

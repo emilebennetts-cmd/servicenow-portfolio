@@ -1,3 +1,11 @@
+## 12 November 2026 — Major Incident design lab
+
+- Added a responsive, OOTB-first synthetic MIM design laboratory: three workshops, nine gates, three fixtures and structured JSON receipts with no instance execution claims.
+- Linked from homepage, Delivery case study and sitemap; automated privacy/HTML contract and four-width Chromium decision tests added.
+- SOURCE-ONLY: public implementation. MOCK-ONLY: all interactive fixtures. DEV-VERIFIED: no new platform execution. PRODUCTION-VERIFIED: not established. Authentic screenshots remain HOLD.
+- Static site licensing none; live MIM, App Engine, IntegrationHub and provider rights require separate contracted entitlement assessment.
+- CI and Pages deployment must be verified after this commit. [Release record](releases/2026-11-12-major-incident-implementation-lab.md).
+
 ## 12 November 2026 — Restore real responsive browser verification
 
 - Resolved failed Chromium CI bootstrap (previous run `43048806716`) caused by transient Ubuntu apt-mirror DNS errors during Playwright's optional `--with-deps` install. New runner downloads the pinned Chromium headless shell without apt/font package installation.
