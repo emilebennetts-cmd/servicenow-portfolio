@@ -57,7 +57,7 @@ footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted)}
 </style>
 </head>
 <body><a class="skip" href="#main">Skip to main content</a>
-<header><nav class="wrap" aria-label="Portfolio navigation"><a class="brand" href="./">ServiceNow Portfolio</a><div class="links"><a href="visual-evidence.html">Evidence gallery</a><a href="evidence-methodology.html">Publication policy</a><a href="index.html">Home</a></div></nav></header>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a class="brand" href="./">ServiceNow Portfolio</a><div class="links"><a href="visual-evidence.html">Evidence gallery</a><a href="screenshot-receipt-verifier.html">Verify exported PNG receipt</a><a href="evidence-methodology.html">Publication policy</a><a href="index.html">Home</a></div></nav></header>
 <main id="main">
 <section class="hero"><div class="wrap"><div class="eyebrow">Local evidence preparation / No upload</div><h1>Redact the pixels. Keep publication approval separate.</h1><p class="lead">A practical, browser-local preparation desk for Workbench captures. Draw permanent solid-black areas on a copy, inspect the result and download a newly rendered PNG. Nothing is sent to GitHub, ServiceNow or a server.</p>
 <div class="chips"><span class="chip">LOCAL-ONLY IMAGE PROCESSING</span><span class="chip">SOURCE-ONLY TOOL</span><span class="chip">NOT A PUBLICATION APPROVAL</span></div>
@@ -78,6 +78,7 @@ footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted)}
 <label class="confirm" for="reviewed"><input id="reviewed" type="checkbox" disabled><span>I visually inspected the redacted preview and understand that exporting does <strong>not</strong> authorise public publication.</span></label>
 <div class="actions"><button class="primary" id="export-png" disabled>Download flattened PNG</button><button id="export-receipt" disabled>Download SHA-256 review receipt</button></div>
 <p class="hint">Only after a PNG is exported does the desk compute SHA-256 of <strong>those exact PNG bytes</strong> and make a separate JSON receipt. The receipt excludes source filename, source image bytes and redaction geometry. It is not an approval or evidence of platform execution.</p>
+<p class="hint"><a href="screenshot-receipt-verifier.html">Independently verify a downloaded PNG and receipt</a> using a separate browser-local check. It keeps publication on HOLD.</p>
 <p class="hint"><strong>Exported PNG SHA-256:</strong> <code id="export-sha256" style="overflow-wrap:anywhere">Not generated</code></p>
 <p class="hint">Export requires an image, at least one solid area and manual-review acknowledgement. A new opaque PNG is rendered from scratch; original filename and source metadata are not carried into the export. Reopen the downloaded file and inspect it at full size.</p>
 <div id="status" role="status" aria-live="polite">No file loaded. Select an image to begin.</div>
