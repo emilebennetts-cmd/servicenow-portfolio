@@ -451,6 +451,48 @@ def check_screenshot_receipt_verifier(browser, width):
                 f"{width}px: verifier did not hash actual PNG bytes")
         require("HOLD" in page.locator("#publication-state").inner_text(),
                 f"{width}px: publication HOLD not displayed")
+        # A forged receipt can match altered image bytes: CRC must still catch corruption.
+        import struct
+        import zlib
+        corrupted=bytearray(data)
+        offset=8
+        while offset+12<=len(corrupted):
+            length=struct.unpack(">I",corrupted[offset:offset+4])[0]
+            if corrupted[offset+4:offset+8]==b"IDAT":
+                require(length>0, "synthetic fixture has no compressed image payload")
+                corrupted[offset+8]^=1
+                break
+            offset+=length+12
+        else:
+            raise AssertionError("synthetic fixture missing IDAT")
+        def load_image(blob):
+            page.locator("#png-file").set_input_files(
+                {"name":"local-synthetic.png","mimeType":"image/png","buffer":blob})
+        load_image(bytes(corrupted))
+        load_receipt({**receipt,"sha256":hashlib.sha256(corrupted).hexdigest()})
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="fail"
+                and "CRC mismatch" in page.locator("#explanation").inner_text(),
+                f"{width}px: CRC-invalid PNG passed with matching receipt hash")
+        # Inject a valid-CRC metadata chunk: must fail even with a matching digest.
+        metadata=b"source\\x00PRIVATE-DO-NOT-PUBLISH"
+        ancillary=(struct.pack(">I",len(metadata))+b"tEXt"+metadata+
+                   struct.pack(">I",zlib.crc32(b"tEXt"+metadata)))
+        with_metadata=data[:33]+ancillary+data[33:]
+        load_image(with_metadata)
+        load_receipt({**receipt,"sha256":hashlib.sha256(with_metadata).hexdigest()})
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="fail"
+                and "Unexpected PNG metadata" in page.locator("#explanation").inner_text(),
+                f"{width}px: embedded private metadata accepted")
+        load_image(data)
+        load_receipt(receipt)
+        page.locator("#verify").click()
+        page.wait_for_function("""() => document.getElementById('status').dataset.kind !== 'pending'""")
+        require(page.locator("#status").get_attribute("data-kind")=="match",
+                f"{width}px: restoring original PNG/receipt did not recover")
         forged={**receipt,"sha256":"0"*64}
         load_receipt(forged)
         require(page.locator("#actual-digest").inner_text()=="Not calculated",
@@ -473,7 +515,7 @@ def check_screenshot_receipt_verifier(browser, width):
         require(page.locator("#status").get_attribute("data-kind")=="fail",
                 f"{width}px: incorrect dimensions accepted")
         require(not remote, f"{width}px: verifier made external requests: {remote}")
-        print(f"PASS {width}px: local receipt SHA-256 match, mismatch, HOLD and dimensions")
+        print(f"PASS {width}px: local receipt CRC, safe chunks, SHA-256 binding, HOLD and dimensions")
     finally:
         page.close()
 
