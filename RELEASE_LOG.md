@@ -1,3 +1,11 @@
+## 12 November 2026 — Independent screenshot receipt verification
+
+- Added a public, browser-local receipt verifier that accepts a flattened PNG and its JSON receipt. It checks bounded PNG structure, metadata chunks, dimensions, explicit HOLD/zero-runtime-approval fields and a fresh SHA-256 computed over the selected PNG's actual bytes. Both files stay local; mismatches are rejected; stale comparisons are invalidated on input changes.
+- Linked the verifier into the redaction desk, homepage, held visual-evidence gallery and sitemap; added static privacy/security regression coverage. No real screenshots, customer material or private GitHub content were published.
+- **SOURCE-ONLY** implementation; **MOCK-ONLY** synthetic test inputs; **DEV-VERIFIED** historical/version-specific only; **PRODUCTION-VERIFIED** not established. A matching hash is neither independent authenticity nor image publication permission.
+- GitHub Actions and deployment results must be checked against this final source commit. Static website has **no ServiceNow licence** requirement; instance runtime needs feature/role/entitlement verification.
+- [Release and threat model](release-notes/2026-11-12-independent-receipt-verification.md).
+
 ## 12 November 2026 — Local SHA-256 receipt for redacted screenshots
 
 - Extended the existing browser-local redaction desk with a SHA-256 digest of **the exact exported PNG bytes** and an independently downloadable JSON review receipt. Records dimensions, area count and HOLD/no-approval/no-runtime-verification controls, but not the source filename, original pixels or mask coordinates. No remote upload or retained browser storage.
