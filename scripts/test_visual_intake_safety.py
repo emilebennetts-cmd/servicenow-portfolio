@@ -1,7 +1,7 @@
 """CI-discovered safety contract for the public visual-evidence intake.
 
 Run by Portfolio quality gate: python -m unittest discover -s scripts.
-The four inspected files are private; this HTML must contain summary metadata only.
+The six inspected files are private; this HTML must contain summary metadata only.
 """
 from html.parser import HTMLParser
 from pathlib import Path
@@ -46,7 +46,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("triage-title", self.tags.ids)
         self.assertIn("independent intake sample", self.html)
         self.assertIn("0</strong><span>Images approved", self.html)
-        self.assertIn("All four files remain on HOLD", self.html)
+        self.assertIn("All six files remain on HOLD", self.html)
 
     def test_source_document_and_synthetic_example_not_runtime_proof(self):
         self.assertIn("Overview document page, not a product screenshot", self.html)
@@ -63,14 +63,18 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("reviewed-captures", self.tags.ids)
         self.assertEqual(
             [("RV-01", "source-only"), ("RV-02", "source-only"),
-             ("RV-03", "mock-only"), ("RV-04", "source-document")],
+             ("RV-03", "mock-only"), ("RV-04", "source-document"),
+             ("RV-05", "mock-only"), ("RV-06", "mock-only")],
             self.tags.reviewed,
         )
-        self.assertEqual(4, len(set(x[0] for x in self.tags.reviewed)))
+        self.assertEqual(6, len(set(x[0] for x in self.tags.reviewed)))
         self.assertIn("not a screenshot", self.html)
-        self.assertIn("None of these four reviews is DEV-VERIFIED", self.html)
+        self.assertIn("MIM readiness example is explicitly labelled demo/synthetic", self.html)
+        self.assertIn("live Jira/Notion synchronisation", self.html)
+        self.assertIn("two sets can overlap", self.html)
+        self.assertIn("None of these six reviews is DEV-VERIFIED", self.html)
         self.assertIn("not a published screenshot gallery", self.html)
-        self.assertEqual(4, self.html.count('class="hold">HOLD'))
+        self.assertEqual(6, self.html.count('class="hold">HOLD'))
 
     def test_public_review_links_do_not_point_at_private_source(self):
         restricted = (
