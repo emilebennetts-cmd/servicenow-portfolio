@@ -45,3 +45,9 @@ Use ServiceNow's supported identification/reconciliation, data source and depend
 2. Complete ACL/negative, volume, null/freshness, rollback and acceptance evidence before a DEV-VERIFIED label.
 3. Obtain separate production authorisation before any production claims.
 4. Retain original Workbench screenshots privately until image-specific rights, sanitisation, reviewer approval and provenance checks are complete.
+
+## Verified CI receipt (final implementation head)
+
+- Implementation and release-log head c0c19eed3b137340e13562afa278f4910347cffc: [Portfolio quality gate](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43148825572) completed/success; [quality audit](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43148825556) completed/success; [GitHub Pages](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43148825553) completed/success.
+- Functional browser-test commit aa28f1f3df554739b3c919afe3a0c5a679c1b55a: [Chromium four-viewport run](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43148593813) completed/success including case switch reset, six review controls, blocked identity/authority conditions, receipt JSON export and viewport overflow checks. Later public commits only changed documentation and release notes.
+- Independent external HTTP reading of the GitHub Pages URL was not available via the web reader; this does not negate the successful GitHub deployment workflow. No ServiceNow DEV or production execution occurred.
