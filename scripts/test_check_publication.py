@@ -99,5 +99,29 @@ class PublicationTests(unittest.TestCase):
                 "<link rel='stylesheet' href='https://fonts.googleapis.com/css2'>", encoding="utf-8")
             self.assertEqual([], check(root, root / "missing.txt"))
 
+    def test_remote_css_background_is_blocked_without_blocking_web_fonts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "style.css").write_text(
+                "div{background-image:url('https://example.test/secret.png')}", encoding="utf-8")
+            self.assertTrue(any("remote CSS background image" in x for x in check(root, root / "missing.txt")))
+
+    def test_inline_svg_image_and_external_use_are_blocked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "index.html").write_text(
+                "<svg><image href='local-private.png'/><use href='https://example.test/icon'/></svg>",
+                encoding="utf-8")
+            findings = check(root, root / "missing.txt")
+            self.assertTrue(any("SVG image element" in x for x in findings))
+            self.assertTrue(any("remote SVG use reference" in x for x in findings))
+
+    def test_markdown_embedded_image_is_blocked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "release.md").write_text(
+                "![capture](data:image/png;base64,aGVsbG8=)", encoding="utf-8")
+            self.assertTrue(any("embedded image data URL" in x for x in check(root, root / "missing.txt")))
+
 if __name__ == "__main__":
     unittest.main()
