@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071723">
+<meta name="description" content="An interactive, entirely synthetic ServiceNow Diagnostic Workbench baseline-to-rescan decision lab: evidence comparability, safe interpretation and controlled handoff.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Diagnostic Baseline &amp; Rescan Decision Lab | ServiceNow Engineering</title>
+<style>
+:root{color-scheme:dark;--bg:#071722;--card:#102c3b;--panel:#0d2534;--border:#436474;--ink:#f0f9fb;--muted:#c3d8e0;--aqua:#82efda;--warn:#ffce95;--good:#b0f5ce}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(ellipse at 85% 0%,#1c5360 0,transparent 46%),var(--bg);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--aqua);text-underline-offset:4px}a:focus-visible,select:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:3px}.wrap{width:min(1140px,calc(100% - 36px));margin:auto}p,li{color:var(--muted)}h1,h2,h3{line-height:1.14;letter-spacing:-.03em}h1{font-size:clamp(2.5rem,7vw,5rem);max-width:960px;margin:15px 0 20px}h2{font-size:clamp(1.65rem,4vw,2.5rem);margin:0 0 18px}h3{font-size:1.16rem;margin:10px 0}.eyebrow{color:var(--aqua);font-size:.78rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}.skip{position:absolute;left:-900px;top:5px;background:white;color:#123;padding:12px;z-index:10}.skip:focus{left:12px}
+nav{display:flex;flex-wrap:wrap;gap:13px 24px;padding:20px 0;border-bottom:1px solid var(--border);font-weight:750;font-size:.88rem}.hero{padding:clamp(38px,7vw,78px) 0 52px}.lead{font-size:1.2rem;max-width:860px}.tags{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.tag{border:1px solid #6090a1;border-radius:30px;padding:6px 11px;color:#daedf2;font-size:.79rem;font-weight:800}.tag.warn{border-color:#c59d5e;color:#ffe4be}.notice{background:#2a2b2c;border-left:4px solid var(--warn);padding:17px 20px;border-radius:0 10px 10px 0;max-width:1020px}.notice p{color:#ffe1b7;margin:0}
+main section{padding:50px 0;border-bottom:1px solid #2e5261}.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{border:1px solid var(--border);border-radius:15px;background:linear-gradient(150deg,var(--card),var(--panel));padding:clamp(18px,3vw,26px);min-width:0}.card p:last-child{margin-bottom:0}.card strong{color:#e9ffff}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:24px 0}.step{padding:16px 12px;border:1px solid #537585;border-radius:10px;background:#102c3c;text-align:center;font-weight:800;color:#d9f7fa;font-size:.88rem}.step span{display:block;font-size:.74rem;color:var(--aqua);margin-bottom:5px}
+.lab{border:1px solid #507a89;border-radius:20px;background:#0e2534;padding:clamp(18px,3vw,32px);box-shadow:0 12px 45px #0003}.toolbar{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:14px;align-items:end;margin:22px 0}.toolbar>div{min-width:0}label{display:block;margin-bottom:7px;font-weight:800;color:#d3e6ee;font-size:.88rem}select,input[type=range],button{font:inherit}select{width:100%;min-height:47px;border:1px solid #9ab2bd;border-radius:8px;background:white;color:#0e2e3b;padding:10px}input[type=range]{width:100%;min-height:35px;accent-color:#82efda}button{min-height:47px;background:var(--aqua);border:0;border-radius:9px;color:#072e33;padding:10px 20px;font-weight:850;cursor:pointer}button.secondary{background:#193a4b;border:1px solid #7194a4;color:#e2f4f7}.status{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:#192e36;border:1px solid #7e785e;border-radius:12px;padding:16px 20px}.status strong{color:var(--warn);font-size:1.06rem}.status p{margin:0;flex:1;min-width:230px;color:#f0dfc5}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:19px 0}.metric{border:1px solid #486b7b;border-radius:12px;padding:17px;background:#102b3d;min-width:0}.metric h3{font-size:.96rem;margin:0 0 14px}.metric .values{display:flex;align-items:baseline;flex-wrap:wrap;gap:7px 12px}.metric .values strong{font-size:clamp(1.4rem,3vw,2.2rem);color:var(--aqua);font-variant-numeric:tabular-nums}.metric .values span{color:#c0d8e3;font-size:.82rem}.metric .delta{border-top:1px solid #436073;padding-top:10px;margin-top:14px;font-size:.84rem;font-weight:750;color:var(--warn)}.metric .delta.good{color:var(--good)}
+.detail{background:#071e2b;border:1px solid #3e6171;border-radius:13px;padding:20px;margin:15px 0}.detail h3{margin-top:0}.detail ul{padding-left:22px;margin:0}.detail li{margin:7px 0}.detail b{color:#f9f9e8}
+.decision-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.7fr);gap:17px}.decision-grid .card{background:#102939}.checklist{list-style:none;padding:0;margin:0;display:grid;gap:8px}.checklist li{border-bottom:1px solid #335767;padding:9px 0;font-size:.92rem}.checklist .tick{font-weight:850;margin-right:10px}.checklist .tick.yes{color:var(--good)}.checklist .tick.no{color:var(--warn)}.actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}.actions button{flex:0 1 auto}.small{font-size:.85rem;color:#b7cdd8}.refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:25px}code{color:#ddffeb;background:#153c46;padding:2px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}
+footer{padding:30px 0;color:#b0c9d5;font-size:.86rem}footer a{font-weight:800}
+@media(max-width:900px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.cols,.refs,.decision-grid,.toolbar{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.lab{padding:15px}.status p{min-width:0}.actions button{width:100%}}@media(max-width:420px){.wrap{width:calc(100% - 26px)}.flow{grid-template-columns:1fr}.metric .values strong{font-size:1.65rem}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:white;color:black}nav,.toolbar,.actions,.skip{display:none}.card,.lab,.metric,.detail,.status,.step{background:white;color:black;box-shadow:none;border-color:#777;break-inside:avoid}p,li,.status p,.detail b,.tag{color:#333}.status strong,.eyebrow,.metric .delta{color:#555}main section{padding:20px 0}}
+</style>
+</head>
+<body><a class="skip" href="#main">Skip to the lab</a>
+<div class="wrap"><nav aria-label="Portfolio navigation"><a href="./">← Portfolio home</a><a href="portfolio-explorer.html">Portfolio explorer</a><a href="diagnostic-case-study.html">Diagnostic case study</a><a href="native-assurance-coverage-atlas.html">Native assurance</a><a href="verification-ledger.html">Evidence register</a></nav></div>
+<header class="hero wrap"><div class="eyebrow">Diagnostic engineering / Evidence integrity lab</div><h1>A rescan is not proof of a fix.</h1><p class="lead">Compare synthetic ServiceNow CMDB diagnostic baselines with rescans, detect invalid comparisons, and prepare a defensible next-action decision. This is an executable browser demonstration of evidence governance—not a ServiceNow collector or installed application.</p><div class="tags"><span class="tag">SOURCE-ONLY architecture</span><span class="tag warn">MOCK-ONLY fixture data</span><span class="tag">No network calls</span><span class="tag warn">HOLD-only export</span></div><div class="notice"><p><strong>Release boundary:</strong> DEV-REPORTED historical results in the source repository do not validate this browser lab. No fresh DEV-VERIFIED or PRODUCTION-VERIFIED runtime result exists here. Never paste customer evidence into a public website. Genuine screenshots are withheld pending individual sanitisation and publication approval.</p></div></header>
+<main class="wrap" id="main">
+<section id="pain"><span class="eyebrow">01 / The client's pain &amp; history</span><h2>Improvement is easy to overclaim when the denominators move.</h2><div class="cols"><article class="card"><h3>Legacy bottleneck</h3><p>In a representative large CMDB, owners can dispute a remediation result because a new Discovery scan adds CIs, a collector changes version, or a scope becomes inaccessible. Comparing raw counts without checking source lineage creates false success reports.</p></article><article class="card"><h3>What triggered the design</h3><p>The Diagnostic Workbench source describes baseline/rescan, aggregate-only collectors, a validation ledger, findings, pack health and drafted solutions. Its engineering principle is explicit: absent evidence is <strong>Not assessed</strong>, never healthy. This illustrative scenario claims no named customer outcome.</p></article></div></section>
+<section id="solution"><span class="eyebrow">02 / The ServiceNow solution</span><h2>From trusted collection to an owned remediation decision.</h2><p>A real engagement should identify the source, collector and assessment scope; apply read-only validation; compare like-for-like evidence; retain negative or unavailable results; and require an authorised reviewer before a Delivery Workbench handoff.</p><div class="flow" aria-label="Conceptual diagnostic and delivery flow"><div class="step"><span>01</span>Authorised intake</div><div class="step"><span>02</span>Envelope validation</div><div class="step"><span>03</span>Comparable metrics</div><div class="step"><span>04</span>Human review</div><div class="step"><span>05</span>Governed delivery</div></div>
+<div class="lab" id="lab" aria-label="Synthetic diagnostic comparison">
+<div class="eyebrow">Interactive / Four synthetic fixtures</div><h3>Baseline-to-rescan decision explorer</h3><p>Switch between a nominal improvement, missing coverage, version drift and actual regression. The calculations use invented aggregate CI counts only; all fixtures are deliberately anonymous.</p>
+<div class="toolbar">
+<div><label for="scenario">Example scenario</label><select id="scenario"><option value="improve">01 · Comparable improvement</option><option value="missing">02 · Collector unavailable</option><option value="drift">03 · Collector version drift</option><option value="regress">04 · Measurable regression</option></select></div>
+<div><label for="threshold">Minimum improvement threshold: <output id="threshold-value">3</output> percentage points</label><input id="threshold" type="range" min="0" max="15" step="1" value="3"></div>
+<button id="reset" type="button" class="secondary">Reset example</button></div>
+<div class="status" role="status" aria-live="polite"><strong id="decision">HOLD / source demonstration</strong><p id="decision-description">Select a scenario to inspect the evidence gates.</p></div>
+<div class="metrics" id="metrics" aria-label="Baseline and rescan metrics"></div>
+<div class="decision-grid">
+<article class="card"><h3>Audit gate results</h3><ul class="checklist" id="gates"></ul></article>
+<article class="card"><h3>Reviewer interpretation</h3><p id="reviewer"></p><div class="detail"><h3>Evidence limitations</h3><ul id="limitations"></ul></div></article>
+</div>
+<div class="actions"><button id="download" type="button">Export synthetic HOLD receipt (.json)</button><button id="print" type="button" class="secondary">Print review</button></div><p class="small" id="export-message" role="status" aria-live="polite">All exports contain synthetic counters and remain NOT RUN / HOLD. They never certify DEV or Production.</p>
+</div></section>
+<section id="architecture"><span class="eyebrow">03 / Architectural best practices</span><h2>OOTB-first controls, least privilege, upgrade-safe evidence.</h2><div class="cols">
+<article class="card"><h3>Evidence identity before scoring</h3><p>Version-pin collector and target application; require compatible scope, definitions, read-only declaration, comparable denominator and freshness. Do not turn an inaccessible table into a zero defect rate. Re-run only with written client authorisation.</p></article>
+<article class="card"><h3>Separation of duties</h3><p>Collectors observe; rules propose; an engagement lead confirms or dismisses findings. A Delivery Workbench pattern recommendation is not approval to run a fix script, import an update set or change production.</p></article>
+<article class="card"><h3>Release &amp; replay discipline</h3><p>Prefer native CMDB Health, IRE, CMDB 360 and ITSM controls where licensed. Require unique evidence identifiers, reproducible calculations, ACL negative tests, valid rollback plans and current-version DEV/UAT before promotion.</p></article>
+<article class="card"><h3>Catalogue provenance</h3><p>Diagnostic Workbench 2 source describes <strong>20 collector module packs, 42 rules and four cross-module correlations</strong>. The separately deployed Knowledge Intelligence companion documents <strong>45 read-only collectors</strong>. These are distinct catalogues; their counts must not be added or presented as installed.</p></article></div>
+<h3>Source trail &amp; review pathways</h3><div class="refs"><article class="card"><h3>Private engineering basis (summarised only)</h3><p>Diagnostic Workbench 2 <code>README_BUILD.md</code>; Knowledge Intelligence <code>docs/VERIFY.md</code> and <code>docs/GOVERNANCE.md</code>; underlying build catalogue. No private source code is embedded or linked.</p></article><article class="card"><h3>Public verification route</h3><p><a href="diagnostic-coverage-explorer.html">Diagnostic collector coverage</a> · <a href="knowledge-intelligence-acceptance-matrix.html">Knowledge Intelligence acceptance</a> · <a href="finding-to-release-handoff.html">Controlled handoff</a> · <a href="visual-evidence.html">Screen publication HOLD register</a>.</p></article></div>
+<h3>Licensing &amp; entitlements</h3><p>This offline static lab requires <strong>no ServiceNow licence</strong>. A native scoped Workbench requires applicable App Engine/custom application and table rights, configured ACLs, least-privilege roles and authorised instance access. Native CMDB Health, ITOM Discovery, IntegrationHub, Performance Analytics, AI and external provider content require their respective subscription and data-use approvals where used. All actual entitlements must be checked against the target contract.</p>
+</section></main><footer class="wrap">Evidence-first ServiceNow engineering · The example data is synthetic. No customer identity, real collector output, original screenshot or runtime credential is used. <a href="portfolio-explorer.html">Find more case studies</a>.</footer>
+<script>
+(()=>{'use strict';
+const definitions=[
+{key:'owner',label:'CIs missing accountable owner',direction:'down',base:[120,500],rescan:[70,520]},
+{key:'duplicate',label:'Potential duplicate CI candidates',direction:'down',base:[55,500],rescan:[44,520]},
+{key:'stale',label:'CIs outside freshness policy',direction:'down',base:[130,500],rescan:[85,520]}
+];
+const scenarios={
+improve:{label:'Comparable improvement',baseline:'1.0.0',rescan:'1.0.0',collector:true,readOnly:true,scope:true,privacy:true,denominator:true,override:{}},
+missing:{label:'Collector unavailable',baseline:'1.0.0',rescan:'1.0.0',collector:false,readOnly:true,scope:true,privacy:true,denominator:false,override:{owner:null,duplicate:null,stale:null}},
+drift:{label:'Collector version drift',baseline:'1.0.0',rescan:'2.0.0',collector:true,readOnly:true,scope:true,privacy:true,denominator:true,override:{}},
+regress:{label:'Measurable regression',baseline:'1.0.0',rescan:'1.0.0',collector:true,readOnly:true,scope:true,privacy:true,denominator:true,override:{owner:[160,520],duplicate:[70,520],stale:[140,520]}}
+};
+const scenario=document.getElementById('scenario'),threshold=document.getElementById('threshold'),metrics=document.getElementById('metrics'),gates=document.getElementById('gates'),limits=document.getElementById('limitations');
+const d=document.getElementById('decision'),desc=document.getElementById('decision-description'),review=document.getElementById('reviewer'),thresholdValue=document.getElementById('threshold-value');
+let report=null;
+function elt(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n}
+function pct(num,den){if(!Number.isFinite(num)||!Number.isFinite(den)||den<=0||num<0||num>den)return null;return 100*num/den}
+function oneMetric(def,x,valid,t){
+ const baselineRate=pct(def.base[0],def.base[1]),rescanRate=x?pct(x[0],x[1]):null;
+ const comparable=valid&&rescanRate!==null;
+ const improvement=comparable?(baselineRate-rescanRate):null;
+ const result=!comparable?'NOT ASSESSED':improvement<0?'REGRESSION':improvement>=t?'IMPROVED':'INSUFFICIENT CHANGE';
+ return {id:def.key,label:def.label,baseline_count:def.base[0],baseline_population:def.base[1],rescan_count:x?x[0]:null,rescan_population:x?x[1]:null,baseline_pct:baselineRate,rescan_pct:rescanRate,improvement_pp:improvement,status:result};
+}
+function render(){
+ const cfg=scenarios[scenario.value],minimum=Number(threshold.value);thresholdValue.textContent=String(minimum);
+ const version=cfg.baseline===cfg.rescan,valid=version&&cfg.collector&&cfg.scope&&cfg.readOnly&&cfg.privacy&&cfg.denominator;
+ const rows=definitions.map(def=>oneMetric(def,Object.prototype.hasOwnProperty.call(cfg.override,def.key)?cfg.override[def.key]:def.rescan,valid,minimum));
+ const gateResults=[
+ ['Same collector and metric definition',version],
+ ['Collector output present at both points',cfg.collector],
+ ['Read-only and aggregate-only declaration',cfg.readOnly],
+ ['Same application/scope cohort',cfg.scope],
+ ['Privacy and completeness checks',cfg.privacy],
+ ['Comparable, non-zero denominators',cfg.denominator],
+ ['Independent DEV/UAT and reviewer sign-off',false]
+ ];
+ const regressions=rows.filter(x=>x.status==='REGRESSION').length;
+ const unassessed=rows.filter(x=>x.status==='NOT ASSESSED').length;
+ const improved=rows.filter(x=>x.status==='IMPROVED').length;
+ const summary=unassessed?'NOT ASSESSED / HOLD':regressions?'REGRESSION / HOLD':improved===rows.length?'IMPROVEMENT CANDIDATE / HOLD':'INCONCLUSIVE / HOLD';
+ const description=unassessed?'The two snapshots are not comparable; do not infer a healthy result.':regressions?'Deterioration is visible in synthetic comparable rates; reopen the investigation.':improved===rows.length?'Synthetic rates meet the threshold; an independent reviewer and authorised runtime tests are still required.':'Changes do not all meet the configured threshold; retain the baseline and review.';
+ d.textContent=summary;desc.textContent=description;metrics.replaceChildren();
+ rows.forEach(x=>{
+  const card=elt('article','metric');card.append(elt('h3','',x.label));
+  const values=elt('div','values');const left=elt('strong','',x.baseline_pct.toFixed(1)+'%');left.setAttribute('aria-label','Baseline '+x.baseline_pct.toFixed(1)+' percent');values.append(left,elt('span','','baseline →'));
+  const right=elt('strong','',x.rescan_pct===null?'N/A':x.rescan_pct.toFixed(1)+'%');right.setAttribute('aria-label','Rescan '+(x.rescan_pct===null?'not assessed':x.rescan_pct.toFixed(1)+' percent'));values.append(right);card.append(values);
+  const unit=elt('p','small',(x.baseline_count+'/'+x.baseline_population)+' → '+(x.rescan_count===null?'Unavailable':x.rescan_count+'/'+x.rescan_population)+' CIs');card.append(unit);
+  const delta=elt('div','delta'+(x.status==='IMPROVED'?' good':''),x.status+(x.improvement_pp===null?'':' · '+(x.improvement_pp>=0?'+':'')+x.improvement_pp.toFixed(1)+' pp improvement'));
+  card.append(delta);metrics.append(card);
+ });
+ gates.replaceChildren(...gateResults.map(([name,passed])=>{const item=elt('li');item.append(elt('span','tick '+(passed?'yes':'no'),passed?'PASS':'HOLD'),document.createTextNode(name));return item}));
+ review.textContent=(regressions?'Investigate the regression and repeat evidence collection under change control.':unassessed?'Restore comparable read-only evidence, or keep this scope explicitly unassessed.':'Prepare a draft improvement finding and seek owner review; do not auto-close it.')+' Every synthetic result remains NOT RUN / HOLD.';
+ limits.replaceChildren(...[
+   'These counters are invented examples, not imported collector evidence.',
+   'Collector release: baseline '+cfg.baseline+'; rescan '+cfg.rescan+'.',
+   'Independent DEV read-back and production validation are not performed.',
+   'A rescan never authorises remediation, production change or publication.'
+ ].map(t=>elt('li','',t)));
+ report={schema:'portfolio-rescan-decision/1.0',fixture:'SYNTHETIC',scenario:scenario.value,scenario_label:cfg.label,minimum_improvement_pp:minimum,baseline_collector_version:cfg.baseline,rescan_collector_version:cfg.rescan,gate_results:gateResults.map(([name,passed])=>({name,status:passed?'PASS':'HOLD'})),metrics:rows,decision:summary,interpretation:description,actual_collector_output:null,servicenow_dev_verified:false,production_verified:false,public_release_authorised:false,execution_status:'NOT RUN',approval_status:'HOLD'};
+ document.getElementById('export-message').textContent='Fixture: '+cfg.label+'. Export is synthetic and permanently NOT RUN / HOLD.';
+}
+scenario.addEventListener('change',render);threshold.addEventListener('input',render);
+document.getElementById('reset').addEventListener('click',()=>{scenario.value='improve';threshold.value='3';render();scenario.focus()});
+document.getElementById('print').addEventListener('click',()=>window.print());
+document.getElementById('download').addEventListener('click',()=>{
+ const blob=new Blob([JSON.stringify(report,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='synthetic-rescan-hold-'+scenario.value+'.json';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+ document.getElementById('export-message').textContent='Synthetic HOLD-only receipt prepared locally. No data transmitted or runtime acceptance recorded.';
+});
+render();
+})();
+</script></body></html>
