@@ -18,6 +18,9 @@ on:
       - 'workbench-acceptance-playbook.html'
       - 'pattern-library-audit-trail.html'
       - 'operational-readiness-runbook.html'
+      - 'incident-pack-native-pilot.html'
+      - 'evidence/public-verification-register.json'
+      - 'scripts/test_incident_pack_pilot.py'
       - 'scripts/test_operational_readiness_runbook.py'
       - 'scripts/test_pattern_library_audit_trail.py'
       - 'scripts/test_acceptance_worksheet.py'
@@ -48,5 +51,7 @@ jobs:
         run: python -m playwright install chromium --only-shell
       - name: Verify operational readiness publication contract
         run: python scripts/test_operational_readiness_runbook.py
+      - name: Verify Incident pack publication and provenance contract
+        run: python scripts/test_incident_pack_pilot.py
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py
