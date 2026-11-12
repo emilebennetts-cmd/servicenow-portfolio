@@ -646,6 +646,69 @@ def check_verification_ledger(browser, width):
         worker.join(timeout=3)
 
 
+
+def check_review_packet(browser, width):
+    """Exercise privacy-preserving owner-side handoff; every export stays HOLD."""
+    url = (Path(__file__).resolve().parents[1] / "screenshot-review-packet.html").as_uri()
+    page = browser.new_page(
+        viewport={"width": width, "height": 900},
+        accept_downloads=True,
+        reduced_motion="reduce",
+    )
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("#gate-count").inner_text() == "0 of 8 gates marked",
+                f"{width}px: handoff should start with no affirmative controls")
+        require("HOLD" in page.locator("#gate-status").inner_text(),
+                f"{width}px: handoff must begin on HOLD")
+        require(page.locator("img").count() == 0,
+                f"{width}px: review packet must not expose private imagery")
+        require(page.evaluate(
+            "() => document.documentElement.scrollWidth <= innerWidth + 2"
+        ), f"{width}px: review packet overflows viewport")
+        page.locator("#review-id").select_option("RV-05")
+        require("MOCK-ONLY" in page.locator("#review-class").inner_text(),
+                f"{width}px: synthetic screenshot context was not classified")
+        require(page.locator("#review-link").get_attribute("href").endswith("#review-rv-05"),
+                f"{width}px: public cross-reference broken")
+        gates = page.locator("input[data-gate]")
+        require(gates.count() == 8, f"{width}px: missing publication controls")
+        for i in range(8):
+            gates.nth(i).check()
+        require(page.locator("#gate-count").inner_text() == "8 of 8 gates marked",
+                f"{width}px: checklist progress is inaccurate")
+        require(page.locator("#gate-status").inner_text() == "REVIEW-READY · HOLD",
+                f"{width}px: completion must never mean approved")
+        preview = json.loads(page.locator("#packet-preview").inner_text())
+        require(preview["publication_status"] == "HOLD"
+                and preview["public_release_authorised"] is False
+                and preview["production_verified"] is False
+                and preview["service_now_dev_verified"] is False
+                and preview["public_review_id"] == "RV-05"
+                and preview["completed_gates"] == 8,
+                f"{width}px: review packet claims unsupported approval")
+        with page.expect_download() as transfer:
+            page.locator("#download-packet").click()
+        exported = json.loads(transfer.value.path().read_text(encoding="utf-8"))
+        require(exported["publication_status"] == "HOLD"
+                and exported["public_release_authorised"] is False
+                and exported["public_review_id"] == "RV-05",
+                f"{width}px: downloaded packet bypasses hold policy")
+        require(not any(k in exported for k in
+                ("reviewer_name", "private_url", "original_hash", "image_bytes")),
+                f"{width}px: downloaded packet contains private fields")
+        page.locator("#review-id").select_option("RV-06")
+        require(page.locator("#gate-count").inner_text() == "0 of 8 gates marked",
+                f"{width}px: changing candidate must clear all prior checks")
+        page.locator("input[data-gate=rights]").check()
+        page.locator("#reset-packet").click()
+        require(page.locator("#gate-count").inner_text() == "0 of 8 gates marked",
+                f"{width}px: reset fails to clear rights attestation")
+        print(f"PASS {width}px: review packet gates, HOLD-only export, candidate reset and privacy")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -654,6 +717,7 @@ def main():
                 check_viewport(browser, width)
                 check_reviewed_evidence_gallery(browser, width)
                 check_verification_ledger(browser, width)
+                check_review_packet(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
