@@ -12,6 +12,8 @@ on:
       - 'itsm-greenfield-build-sequencer.html'
       - 'screenshot-redaction-desk.html'
       - 'screenshot-receipt-verifier.html'
+      - 'diagnostic-coverage-explorer.html'
+      - 'knowledge-intelligence-acceptance-matrix.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
