@@ -1,3 +1,10 @@
+## 13 November 2026 — interactive eight-view Delivery Plan case study (SOURCE-ONLY / MOCK-ONLY)
+
+- Reworked [Universal Delivery Workbench case study](delivery-case-study.html#delivery-plan-lab) with eight selectable governance views, source-to-acceptance checkpoints, keyboard controls and illustrative Next Best Actions. Added 24 local narrative preview combinations (eight draft document families × Executive/Client/Technical), synthetic HOLD-only JSON export, homepage link and separate evidence-register entry.
+- Reconciled source 4.22.2 with version-bounded historical 4.20.0 DEV reporting and the controlled 30 September 2026 As-Built (4.6.1 source / 4.5.1 DEV). No independent current native DEV or Production acceptance is asserted. External provider sync is MOCK-ONLY; no customer data, private source or original screenshots are published (0 approvals; HOLD).
+- New source contract and four-viewport Chromium tests are committed and wired into responsive CI; test execution and Pages deployment must be confirmed against the final revision. [Release details](releases/2026-11-13-interactive-delivery-plan-case-study.md).
+- Static site requires no ServiceNow licence. Native Workbench deployment needs target-specific App Engine/custom table rights, roles, ACLs, ITSM/ITOM and feature-dependent IntegrationHub, analytics, AI and provider entitlements.
+
 ## 13 November 2026 — 70-page sitemap completeness and CI drift prevention (SOURCE-ONLY)
 
 - Reconciled the root public HTML inventory against `sitemap.xml`: **70 existing published pages**, **36 previously indexed**, **34 omitted**. Generated canonical index of all 70 without exposing any new asset or private source.
