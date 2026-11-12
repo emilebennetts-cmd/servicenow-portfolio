@@ -3,7 +3,7 @@
 - Added [Native Assurance Coverage Atlas](native-assurance-coverage-atlas.html): 29 Delivery Not run native test scenarios and 14 separate Diagnostic QA source requirements, with filtering, accessible layout and HOLD-only JSON export.
 - Conceptual 5-stage architecture is explicitly a schematic; no genuine Workbench captures or private source published. No independent DEV/Production verification, current acceptance or screenshot publication authority.
 - Added full navigation, sitemap and evidence ledger entry, static contract, and four-viewport Chromium smoke checks. [Release details](releases/2026-11-13-native-assurance-atlas.md).
-- Public page needs no ServiceNow licence. Native acceptance requires App Engine/custom tables, roles and product/provider entitlements as applicable. GitHub workflow outcomes and hosted HTTP access must be verified after commit.
+- Public page needs no ServiceNow licence. Native acceptance requires App Engine/custom tables, roles and product/provider entitlements as applicable. [Implementation CI verified](releases/2026-11-13-native-assurance-atlas.md): quality gate, audit, local links, four-width Chromium smoke, Pages deployment passed. Independent hosted HTTP availability remains unconfirmed.
 
 ## 13 November 2026 — evidence ledger CI growth regression resolved (SOURCE-ONLY)
 
