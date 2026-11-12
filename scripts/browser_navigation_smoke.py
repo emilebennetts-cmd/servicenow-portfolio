@@ -774,6 +774,76 @@ def check_cmdb_source_onboarding_lab(browser, width):
         page.close()
 
 
+
+def check_ki_acceptance_matrix(browser, width):
+    """Exercise 45 source module filters and strict synthetic HOLD-only export."""
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            accept_downloads=True, reduced_motion="reduce")
+    try:
+        page.goto((Path(__file__).resolve().parents[1] /
+                   "knowledge-intelligence-acceptance-matrix.html").as_uri(),
+                  wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: KI case study landmarks")
+        require(page.locator("tr.module").count() == 45,
+                f"{width}px: KI 45-module source count missing")
+        require(page.locator("#gate-list input").count() == 8,
+                f"{width}px: KI 8 gates missing")
+        require(page.evaluate(
+            "() => document.documentElement.scrollWidth <= innerWidth + 2"
+        ), f"{width}px: KI mobile layout overflows")
+        page.locator("#module-search").fill("Identification and reconciliation")
+        require(page.locator("tr.module:visible").count() == 1,
+                f"{width}px: KI text filter returned wrong result")
+        page.locator("#reset-filter").click()
+        page.locator("#pack-filter").select_option("CMDB & CSDM")
+        require(page.locator("tr.module:visible").count() == 3,
+                f"{width}px: KI CMDB modules should be 3")
+        page.locator("#reset-filter").click()
+        require(page.locator("tr.module:visible").count() == 45,
+                f"{width}px: KI filter reset retained hidden modules")
+
+        def receipt():
+            value = json.loads(page.locator("#readiness-receipt").inner_text())
+            require(value["evidence_class"] == "MOCK-ONLY"
+                    and value["source_taxonomy_class"] == "SOURCE-ONLY"
+                    and value["service_now_instance"] is None
+                    and value["approval_status"] == "HOLD"
+                    and value["public_release_authorised"] is False
+                    and value["dev_execution_verified"] is False
+                    and value["production_deployment_verified"] is False
+                    and value["collector_execution_verified"] is False,
+                    f"{width}px: KI receipt wrongly claims verification")
+            return value
+
+        require(receipt()["checks_marked"] == 0
+                and "HOLD" in page.locator("#readiness-status").inner_text(),
+                f"{width}px: KI initial fixture should be unreviewed")
+        page.locator('[data-fixture="access"]').click()
+        require(receipt()["pending_control_ids"] == ["access"]
+                and "HOLD" in page.locator("#readiness-status").inner_text(),
+                f"{width}px: KI missing access permission was accepted")
+        page.locator('[data-fixture="unavailable"]').click()
+        require("NOT ASSESSED" in receipt()["assessment_status"],
+                f"{width}px: KI missing product table became healthy")
+        page.locator('[data-fixture="draft"]').click()
+        require(receipt()["checks_marked"] == 8
+                and receipt()["assessment_status"] == "REVIEW-READY · HOLD",
+                f"{width}px: KI complete synthetic review promoted to approval")
+        page.locator('#gate-list input[data-gate="approval"]').uncheck()
+        require(receipt()["checks_marked"] == 7
+                and "HOLD" in receipt()["assessment_status"],
+                f"{width}px: KI manual edit did not invalidate review readiness")
+        with page.expect_download() as transfer:
+            page.locator("#download-packet").click()
+        exported = json.loads(transfer.value.path().read_text(encoding="utf-8"))
+        require(exported == receipt() and exported["approval_status"] == "HOLD",
+                f"{width}px: KI exported review packet differs from safe state")
+        print(f"PASS {width}px: KI 45-module source taxonomy and synthetic HOLD gates")
+    finally:
+        page.close()
+
+
 def check_diagnostic_coverage_explorer(browser, width):
     """Verify local-only source catalogue filtering and HOLD receipt."""
     page = browser.new_page(viewport={"width": width, "height": 900}, accept_downloads=True, reduced_motion="reduce")
@@ -820,6 +890,7 @@ def main():
                 check_review_packet(browser, width)
                 check_cmdb_source_onboarding_lab(browser, width)
                 check_diagnostic_coverage_explorer(browser, width)
+                check_ki_acceptance_matrix(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
