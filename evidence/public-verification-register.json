@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12",
+  "updated_utc": "2026-11-13",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -181,6 +181,15 @@
       "runtime_verification": "Public HTML search, cadence filters and failure reference are browser-local; no native ServiceNow execution. Historical 4.5.1 DEV observation is DEV-REPORTED, not newly independently read back. No production operational acceptance, recovery rehearsal or sign-off is claimed.",
       "public_screenshot_status": "No genuine screenshot pixels published. Six reviewed source-image records remain HOLD with zero images approved for public release.",
       "page": "operational-readiness-runbook.html"
+    },
+    {
+      "id": "INCIDENT-PACK-PILOT",
+      "title": "Governed Incident pack — historical synthetic native pilot",
+      "classification": "DEV-reported",
+      "basis": "Private controlled 21 October 2026 release report: a narrow additive installation, four pack-flow schemas, 83/83 authenticated metadata read-back checks; the synthetic admin journey created eight requirements, eight stories and 20 unrun test designs with zero remaining on replay",
+      "runtime_verification": "Historical DEV-REPORTED for a separate app generation; this public page does not independently reproduce a DEV read-back. Negative-access personas, concurrency, recovery, target-source parity, UAT and Production acceptance remain unverified. The interactive page is MOCK-ONLY presentation.",
+      "public_screenshot_status": "No original images or pixels published. Image-specific publication HOLD remains in force.",
+      "page": "incident-pack-native-pilot.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
