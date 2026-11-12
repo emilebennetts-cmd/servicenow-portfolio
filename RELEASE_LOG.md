@@ -1,3 +1,10 @@
+## 13 November 2026 — embedded media publication gate and complete security-test execution (SOURCE-ONLY)
+
+- Extended deny-by-default publication checks for active HTML embeds, SVG filter-image content, remote video posters and additional CSS image sources. Corrected a synthetic PNG test fixture and added five regressions.
+- Enforced the previously unrun top-level `tests/` suite inside the GitHub quality gate; retained existing scripts checks, link/provenance controls and the SHA-256 image approval requirement.
+- Improved the mobile-friendly [screenshot publication gate](screenshot-publication-gate.html) with an explicit explanation of both coverage and limits. No original screenshots were published; approvals remain 0 and HOLD. [Release note](releases/2026-11-13-embedded-media-ci-enforcement.md).
+- Static site and synthetic tests are SOURCE-ONLY/MOCK-ONLY. No new independently DEV-VERIFIED or PRODUCTION-VERIFIED claims. Native ServiceNow licence/role dependencies remain target-specific. Final workflow and live-site checks must be read against the exact release commit.
+
 ## 13 November 2026 — Risk-first native acceptance execution protocols (SOURCE-ONLY)
 
 - Extended [Native Assurance Coverage Atlas](native-assurance-coverage-atlas.html#execution-protocols) with nine source-derived native execution protocols spanning scope/entitlement identity, non-admin negative access, tenant isolation, replay, concurrency, interrupted-write recovery, diagnostic evidence safety, rescan comparability and unavailable entitlements.
