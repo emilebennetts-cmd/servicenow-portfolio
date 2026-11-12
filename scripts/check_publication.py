@@ -19,6 +19,27 @@ SENSITIVE = [
     ("GitHub fine-grained token", re.compile(r"\bgithub_pat_[A-Za-z0-9_]{30,}\b")),
     ("ServiceNow instance password assignment", re.compile(r"(?i)\b(?:password|passwd|client_secret)\s*[:=]\s*['\"][^'\"]{12,}['\"]")),
 ]
+
+# Fail closed on hidden image pixels in HTML/CSS/JS/JSON/SVG, even when no
+# standalone image file exists. Illustrative vector markup is allowed; it is
+# still subject to confidentiality review. This is a heuristic CI guard,
+# not pixel analysis or an authorisation mechanism.
+VISUAL_EMBED_PATTERNS = [
+    ("embedded image data URL", re.compile(r"(?i)\bdata\s*:\s*image\s*/")),
+    ("remote image element", re.compile(
+        r"(?is)<(?:img|source|image)\b[^>]*\b(?:src|srcset|href|xlink:href)\s*=\s*['\"]?\s*(?:https?:)?//"
+    )),
+    ("embedded foreignObject element", re.compile(r"(?i)<\s*foreignObject\b")),
+]
+SVG_UNSAFE_PATTERNS = [
+    ("SVG image element", re.compile(r"(?i)<\s*image\b")),
+    ("SVG executable script", re.compile(r"(?i)<\s*script\b")),
+    ("SVG remote reference", re.compile(
+        r"(?is)\b(?:href|xlink:href)\s*=\s*['\"]?\s*(?:https?:)?//"
+    )),
+    ("SVG CSS remote image", re.compile(r"(?is)\burl\s*\(\s*['\"]?\s*(?:https?:)?//")),
+]
+
 # Public image assets must be manually reviewed and recorded before publication.
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff"}
 MAX_PUBLIC_IMAGE_BYTES = 8 * 1024 * 1024  # guard against accidental raw exports
@@ -72,6 +93,11 @@ ALLOWLIST = ROOT / "evidence" / "approved-public-images.txt"
 
 def scan_text(text):
     return [label for label, pattern in SENSITIVE if pattern.search(text)]
+
+def scan_visual_embeds(text, suffix):
+    """Catch common unreviewed screenshot-pixel bypasses; return finding labels."""
+    checks = VISUAL_EMBED_PATTERNS + (SVG_UNSAFE_PATTERNS if suffix == ".svg" else [])
+    return [label for label, pattern in checks if pattern.search(text)]
 
 def check(root=ROOT, allowlist=ALLOWLIST):
     issues = []
@@ -129,6 +155,8 @@ def check(root=ROOT, allowlist=ALLOWLIST):
                 continue
             for label in scan_text(contents):
                 issues.append(f"{relative}: potential {label} in public asset")
+            for label in scan_visual_embeds(contents, path.suffix.lower()):
+                issues.append(f"{relative}: unapproved visual embed ({label})")
     for relative in approved:
         target = root / relative
         if (not target.is_file() or target.suffix.lower() not in IMAGE_EXTENSIONS
