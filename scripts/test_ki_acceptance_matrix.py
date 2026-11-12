@@ -78,8 +78,14 @@ class KIAcceptanceContract(unittest.TestCase):
         self.assertIn("@media(max-width:650px)", self.html)
 
     def test_conflict_and_license_boundary(self):
-        self.assertIn("16 tables", self.html)
-        self.assertIn("17", self.html)
+        self.assertIn("16 unique table objects", self.html)
+        self.assertIn("16 matching collection dictionary records", self.html)
+        self.assertIn("previously said 17", self.html)
+        self.assertEqual(self.html.count('data-schema-table="source-only"'), 16)
+        self.assertIn("source_template_tables:16", self.html)
+        self.assertIn("source_collection_dictionary_entries:16", self.html)
+        self.assertIn("target_schema_readback_verified:false", self.html)
+        self.assertIn("public_release_authorised:false", self.html)
         self.assertIn("30 September 2026", self.html)
         self.assertIn("no ServiceNow licence", self.html)
         self.assertIn("not additive", self.html)
