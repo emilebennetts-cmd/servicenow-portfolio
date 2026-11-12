@@ -1,3 +1,13 @@
+## 12 November 2026 — HOLD-only screenshot review handoff and evidence governance controls
+
+- Published `screenshot-review-packet.html`: a browser-local, responsive eight-gate reviewer handoff for the six privately inspected source observations, RV-01–RV-06. The selected image review class updates from the text-only source record; switching candidates resets every control.
+- The JSON export is *always* publication `HOLD` with `public_release_authorised: false` and no claim of DEV or production execution. Completion changes only local preparation status to **REVIEW-READY · HOLD**; an independent authorised approval remains essential.
+- Applied restrictive CSP; no image input, external network request, persistent storage, restricted source URI, original byte digest or reviewer identity is collected or exported.
+- Wired the new review route into the homepage directory, visual evidence review gallery, reviewer guide and sitemap, and reconciled the source-controlled manifest to **14 entries / four MOCK-ONLY / zero genuine screenshots published**.
+- Added offline contract assertions and four-viewport Chromium download/state tests. Initial checks identified a case-sensitive text assertion and the attempt to read collapsed preview with Playwright `inner_text()`; both test-harness defects were corrected. Final CI/Pages receipts must be verified against the release HEAD.
+- **Evidence boundaries:** utility SOURCE-ONLY; synthetic scenario content MOCK-ONLY; historical DEV-REPORTED not independently reverified; no PRODUCTION-VERIFIED results. Originals remain in private controls and on HOLD.
+- **Licensing:** no ServiceNow entitlement for public static review tools; live custom Workbenches and their ITSM/ITOM/IntegrationHub/analytics/AI integrations require contract-specific product and ACL review.
+
 ## 12 November 2026 — Unified source-controlled verification ledger and public evidence cross-links
 
 - Reconciled five missing capability claims (CMDB Trust Lab, MIM readiness lab, six inspected screenshot-review summaries, Redaction Desk and Receipt Verifier) into the public JSON evidence register. **13 claims / four MOCK-ONLY records / zero production-verified Workbench claims / zero screenshots approved**.
