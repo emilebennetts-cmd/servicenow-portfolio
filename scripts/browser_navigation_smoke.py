@@ -1006,6 +1006,54 @@ def check_native_acceptance_worksheet(browser, width):
         page.close()
 
 
+
+def check_pattern_library_audit_trail(browser, width):
+    """Source-only pattern provenance must remain filterable, downloadable and private."""
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce", accept_downloads=True)
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("http:", "https:")) else None)
+    try:
+        url = (Path(__file__).resolve().parents[1] /
+               "pattern-library-audit-trail.html").as_uri()
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1
+                and page.locator('[data-audit]').count() == 8,
+                f"{width}px: pattern audit inventory is incomplete")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: pattern audit has horizontal overflow")
+        require("8 of 8" in page.locator("#result-count").inner_text(),
+                f"{width}px: default audit summary count is wrong")
+        page.locator("#audit-search").fill("duplicate")
+        require(0 < page.locator('[data-audit]:visible').count() < 8,
+                f"{width}px: search is not filtering audit records")
+        page.locator("#audit-search").fill("")
+        page.locator('[data-filter="readiness"]').click()
+        require(page.locator('[data-audit]:visible').count() == 3
+                and page.locator('[data-filter="readiness"]').get_attribute("aria-pressed") == "true",
+                f"{width}px: readiness category filtering failed")
+        with page.expect_download() as dl:
+            page.locator("#export-csv").click()
+        raw = dl.value.path().read_text(encoding="utf-8-sig")
+        require(raw.count("SOURCE-ONLY") == 3
+                and raw.count("HOLD") == 3
+                and "AUD-06" in raw and "AUD-07" in raw and "AUD-08" in raw
+                and "AUD-01" not in raw,
+                f"{width}px: scoped CSV lost its evidence classification")
+        page.locator("#audit-search").fill("absent-topic")
+        require(page.locator('#export-csv').is_disabled(),
+                f"{width}px: empty filter allowed export")
+        page.locator("#clear").click()
+        require(page.locator('[data-audit]:visible').count() == 8
+                and page.locator('[data-filter="all"]').get_attribute("aria-pressed") == "true",
+                f"{width}px: reset failed")
+        require(not outbound, f"{width}px: source audit sent unexpected outbound requests")
+        print(f"PASS {width}px: pattern audit filters, HOLD export, reset and network isolation")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1020,6 +1068,7 @@ def main():
                 check_cmdb_source_onboarding_lab(browser, width)
                 check_diagnostic_coverage_explorer(browser, width)
                 check_ki_acceptance_matrix(browser, width)
+                check_pattern_library_audit_trail(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
