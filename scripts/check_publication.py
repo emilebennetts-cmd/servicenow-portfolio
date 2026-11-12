@@ -37,6 +37,21 @@ VISUAL_EMBED_PATTERNS = [
     ("remote CSS background image", re.compile(
         r"(?is)\b(?:background(?:-image)?|mask(?:-image)?)\s*:\s*[^;{}]{0,500}?\burl\s*\(\s*['\"]?\s*(?:https?:)?//"
     )),
+    # Inline SVG filters can display images without an <image> element.
+    ("SVG filter image element", re.compile(r"(?i)<\s*feImage\b")),
+    # An external video poster is an image even if no <img> exists.
+    ("remote video poster", re.compile(
+        r"(?is)<\s*video\b[^>]*\bposter\s*=\s*['\"]?\s*(?:https?:)?//"
+    )),
+    # CSS image-bearing properties other than background/mask can inject pixels.
+    ("remote CSS image property", re.compile(
+        r"(?is)\b(?:content|list-style-image|border-image-source|cursor)\s*:\s*[^;{}]{0,500}?\burl\s*\(\s*['\"]?\s*(?:https?:)?//"
+    )),
+]
+# Browsing-context embeds can render arbitrary unreviewed pages or screenshots.
+# They are not required by this static, offline-first public portfolio.
+ACTIVE_HTML_EMBED_PATTERNS = [
+    ("active HTML embed", re.compile(r"(?is)<\s*(?:iframe|object|embed)\b")),
 ]
 SVG_UNSAFE_PATTERNS = [
     ("SVG image element", re.compile(r"(?i)<\s*image\b")),
@@ -103,7 +118,9 @@ def scan_text(text):
 
 def scan_visual_embeds(text, suffix):
     """Catch common unreviewed screenshot-pixel bypasses; return finding labels."""
-    checks = VISUAL_EMBED_PATTERNS + (SVG_UNSAFE_PATTERNS if suffix == ".svg" else [])
+    checks = (VISUAL_EMBED_PATTERNS
+              + (ACTIVE_HTML_EMBED_PATTERNS if suffix in {".html", ".htm"} else [])
+              + (SVG_UNSAFE_PATTERNS if suffix == ".svg" else []))
     return [label for label, pattern in checks if pattern.search(text)]
 
 def check(root=ROOT, allowlist=ALLOWLIST):
