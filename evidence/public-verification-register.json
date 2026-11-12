@@ -172,6 +172,15 @@
       "runtime_verification": "No fresh independent DEV read-back, authorised pilot import, actual re-import test, client UAT or production validation for this library. Static public filters and CSV are browser-only.",
       "public_screenshot_status": "No genuine screenshot included. Original Workbench images remain on publication HOLD; zero approved public originals.",
       "page": "pattern-library-audit-trail.html"
+    },
+    {
+      "id": "OPERATIONS-READINESS",
+      "title": "Operational readiness, support cadence and release handover controls",
+      "classification": "source-only",
+      "basis": "Controlled Universal Delivery Workbench Architecture, Solution As-Built and User Guides/Training dated 30 September 2026: 12 operational checks by cadence, six fail-closed failure responses, and unresolved named handover gates. Public summarisation only; source release 4.6.1 is distinct from historical DEV 4.5.1.",
+      "runtime_verification": "Public HTML search, cadence filters and failure reference are browser-local; no native ServiceNow execution. Historical 4.5.1 DEV observation is DEV-REPORTED, not newly independently read back. No production operational acceptance, recovery rehearsal or sign-off is claimed.",
+      "public_screenshot_status": "No genuine screenshot pixels published. Six reviewed source-image records remain HOLD with zero images approved for public release.",
+      "page": "operational-readiness-runbook.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
