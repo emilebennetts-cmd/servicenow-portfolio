@@ -90,8 +90,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("'reviewq'", self.html)
         self.assertIn("workbench-inspected-review-register.csv", self.html)
         self.assertIn("'publication_decision'", self.html)
-        self.assertIn("No original images", self.html if "No original images" in self.html
-                      else "No original images, internal URLs, private file identifiers or source hashes.")
+        self.assertIn("no original images, internal URLs, private file identifiers or source hashes", self.html)
         # The original ten-candidate controls must remain independently operable.
         self.assertIn('id="candidate-search"', self.html)
         self.assertIn('id="export-candidates"', self.html)
