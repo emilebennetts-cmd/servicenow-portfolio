@@ -1,3 +1,10 @@
+## 12 November 2026 — Knowledge Intelligence source taxonomy and acceptance matrix
+
+- Published [Knowledge Intelligence Acceptance Matrix](knowledge-intelligence-acceptance-matrix.html): 45 generic source-defined module topics across 16 domains, representative table prompts, searchable/filterable mobile UI, eight synthetic acceptance controls, blocking absence of product data, and HOLD-only JSON review receipts. The 45 companion collectors are not added to the independent core Workbench 20-family catalogue.
+- A substantive source-document discrepancy was flagged: the companion README lists **16 tables** and the DEV checklist lists **17**. This is not resolved through assumptions; actual scope/dictionary read-back remains a required acceptance gate.
+- Repository reports 30 September 2026 DEV installation, 347 inserts and 45 lint passes; independent current DEV verification and production deployment are **not established**. Static and browser checks assess only the public simulation.
+- Added navigation, verification register entry, sitemap and regression coverage; no licensed knowledge data, private scripts, original screenshots or customer records copied. Image publication is still HOLD. Licensing: website none; runtime product tables, scoped application, knowledge source rights and plugin entitlements must be verified.
+
 ## 12 November 2026 — Diagnostic source coverage and evidence confidence explorer
 
 - Implemented [Diagnostic collector coverage](diagnostic-coverage-explorer.html): 20 source-summarised families across ten domains, search/filter, per-family native acceptance questions and four safe synthetic intake decisions. Source catalogue records 42 rules, four correlations and 67 runbooks; definitions do not imply runtime capability.
