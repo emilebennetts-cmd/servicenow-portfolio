@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12T20:18:00Z",
+  "updated_utc": "2026-11-12T22:25:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -226,6 +226,15 @@
       "runtime_verification": "Offline comparison calculations and gate display do not execute ServiceNow collectors, establish native DEV acceptance, prove remediation or independently verify production results. Every exported receipt is NOT RUN / HOLD.",
       "public_screenshot_status": "No private original images, customer evidence, secret values, real collector outputs or unapproved Workbench screenshots; publication remains HOLD",
       "page": "diagnostic-rescan-decision-lab.html"
+    },
+    {
+      "id": "DELIVERY-PLAN-PUBLIC-LAB",
+      "title": "Governed Delivery Plan public synthetic walkthrough and document previews",
+      "classification": "mock-only",
+      "basis": "Interactive HTML added 13 November 2026; source-derived eight-view planning and eight draft families at three audience depths, based on private Delivery 4.22.2 repository and controlled 30 September 2026 As-Built; public contents are authored synthetic examples, not copied screenshots or native generated documents",
+      "runtime_verification": "Browser-only illustrative interaction; static and responsive tests are not native ServiceNow acceptance. Historical DEV results apply to other dated releases, not this public demonstration. No independent current-version DEV-verified or production-verified evidence",
+      "public_screenshot_status": "No authentic Workbench image used; zero sanitised derivatives have individual publication approval. HOLD remains",
+      "page": "delivery-case-study.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
