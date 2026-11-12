@@ -1,3 +1,12 @@
+## 12 November 2026 — operational readiness and support handover (SOURCE-ONLY)
+
+- Implemented the [Operational Readiness & Support Runbook](operational-readiness-runbook.html): 12 source-backed controls by cadence, searchable local filtering, six safe failure containment responses and accessible print layout. The page is client-neutral and responsive.
+- Reconciled controlled Google Drive Architecture, As-Built and User Guides/Training documents dated 30 September 2026. Source 4.6.1 and historical DEV 4.5.1 must remain separate; no new native install or Production approval is inferred.
+- Linked homepage, assurance reviewer route and sitemap. Added an offline provenance/confidentiality contract and Chromium interactions at four responsive widths; CI trigger includes both.
+- Retained screenshot HOLD, no approved genuine image publication and zero newly verified DEV/Production behaviour. No secret, customer, private source or internal instance identifier was published.
+- Public static site needs no ServiceNow licence; native App Engine/custom tables, roles and optional ITSM, ITOM/Discovery, IntegrationHub, AI/analytics, document and provider entitlements require target-specific confirmation.
+- [Source/architecture release note](release-notes/2026-11-12-operational-readiness-runbook.md). Deployment and CI receipts must be confirmed separately.
+
 ## 12 November 2026 — source-audited pattern library provenance explorer (SOURCE-ONLY)
 
 - Added [Pattern Library Audit Trail](pattern-library-audit-trail.html) with a mobile-friendly audit lineage: 585 authored, 13 deduplicated, 572 accepted new, 96 mined baseline and 668 combined; 28 native patterns remain separate. The larger 11,000-issue/2,234-candidate catalogue is a distinct, non-additive collection.
