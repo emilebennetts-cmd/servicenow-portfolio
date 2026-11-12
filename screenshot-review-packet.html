@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Browser-local evidence handoff checklist for source-backed ServiceNow Workbench screenshots. Exports HOLD-only review drafts, never publication authority.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Screenshot Evidence Review Packet | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#07121c;--panel:#11283a;--panel2:#0d2132;--border:#42667a;--text:#f3f9fc;--muted:#bed2df;--mint:#8ff0d7;--amber:#ffd3a0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.62 system-ui,sans-serif}a{color:var(--mint);text-underline-offset:4px}button,select{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.skip{position:absolute;left:-10000px}.skip:focus{left:12px;top:12px;background:white;color:#07121c;padding:12px;z-index:3}
+.wrap{width:min(1140px,calc(100% - 40px));margin:auto}
+.top{border-bottom:1px solid var(--border);padding:19px 0}.top .wrap{display:flex;gap:18px;flex-wrap:wrap}
+.hero{background:radial-gradient(ellipse at 80% 20%,#1b5360,transparent 53%),var(--bg);padding:65px 0 44px;border-bottom:1px solid var(--border)}
+.kicker{color:var(--mint);font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:800}h1{font-size:clamp(2.45rem,6.5vw,5.15rem);line-height:1.04;letter-spacing:-.06em;max-width:950px;margin:16px 0 20px}h2{font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.22}h3{font-size:1.07rem;margin:.15em 0 .35em}p{color:var(--muted)}.lead{font-size:1.15rem;max-width:830px}main{padding:36px 0 80px}.warning{border-left:4px solid var(--amber);background:#272b30;border-radius:6px;padding:17px 22px;color:#ffe6c7}.warning strong{color:white}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.8fr);gap:22px;margin:24px 0}.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);padding:clamp(19px,3vw,30px);min-width:0}.panel h2{margin-top:0}
+label[for=review-id]{font-weight:800;display:block;margin:14px 0 9px}select{display:block;width:100%;max-width:100%;padding:13px;border:1px solid #7298ab;border-radius:10px;background:#091a29;color:#fff}.boundary{margin:18px 0;background:var(--panel2);border:1px solid var(--border);padding:16px;border-radius:12px}.boundary strong{color:var(--mint)}.boundary p{margin:.4em 0 0}
+.gates{border:0;padding:0;margin:20px 0}.gates legend{font-weight:800;font-size:1.13rem;padding:0 0 12px}.gate{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--border);cursor:pointer}.gate input{width:22px;height:22px;flex:0 0 22px;accent-color:#8ff0d7;margin:3px 0 0}.gate span{display:block;min-width:0}.gate strong{display:block;font-weight:750}.gate small{display:block;color:var(--muted);margin-top:4px;font-size:.86rem}
+.stat{display:inline-block;border:1px solid #bd9162;border-radius:50px;color:var(--amber);font-weight:800;font-size:.82rem;padding:5px 11px}.stat.ready{color:var(--mint);border-color:var(--mint)}.count{color:var(--mint);font-weight:800;font-size:1.07rem}.meter{width:100%;height:13px;accent-color:#8ff0d7}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.actions button{border:1px solid #7bb5b4;border-radius:10px;background:#80efd2;color:#09222b;padding:12px 16px;font-weight:800}.actions button.secondary{background:#143347;color:#f0fafb;border-color:#66889e}.actions button:hover{filter:brightness(1.08)}.fine{font-size:.84rem}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Consolas,monospace;background:#081a2a;color:#dbf5ed;border:1px solid #416475;border-radius:10px;padding:17px;max-height:370px;overflow:auto}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.step{border:1px solid var(--border);padding:20px;border-radius:13px;background:var(--panel2)}.step strong{color:var(--mint)}
+.footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted)}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
+@media(max-width:420px){.wrap{width:calc(100% - 28px)}.actions button{width:100%}.panel{padding:17px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;color:#111}.hero{background:white;color:#111;padding:18px 0}.warning,.panel,.step{background:white;color:#111;border-color:#888}p,.boundary p,.gate small{color:#333}.top,.actions,pre,.footer{display:none}.layout{display:block}.panel{margin-bottom:15px}.gate{break-inside:avoid}.stat{color:#111}.wrap{width:100%}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to review checklist</a>
+<nav class="top" aria-label="Portfolio and evidence tools"><div class="wrap"><a href="./">← Portfolio home</a><a href="visual-evidence.html#reviewed-captures">Six reviewed observations</a><a href="screenshot-redaction-desk.html">Local redaction</a><a href="screenshot-receipt-verifier.html">Integrity verification</a></div></nav>
+<header class="hero"><div class="wrap"><div class="kicker">Evidence governance / Owner-side preparation</div><h1>Turn a screenshot candidate into a reviewable handoff.</h1><p class="lead">A practical, offline-first checklist for the six inspected Workbench evidence records. Prepare a non-sensitive JSON review packet without uploading an image, disclosing private source references or granting publication permission.</p><div class="warning"><strong>Publication HOLD is enforced by design.</strong> This tool cannot confirm ownership, obtain legal consent, inspect a real image or approve its release. Completing every box only creates a handoff for an independent, authorised reviewer. Zero genuine Workbench screenshots are approved for this public portfolio.</div></div></header>
+<main id="main" class="wrap">
+<div class="layout">
+<section class="panel" aria-labelledby="checklist-title">
+<h2 id="checklist-title">01 / Candidate and publication controls</h2>
+<label for="review-id">Privately inspected evidence record</label>
+<select id="review-id">
+<option value="RV-01">RV-01 · Delivery plan and milestones</option>
+<option value="RV-02">RV-02 · Diagnostic report and export</option>
+<option value="RV-03">RV-03 · Major Incident demonstration</option>
+<option value="RV-04">RV-04 · Workbench overview document</option>
+<option value="RV-05">RV-05 · Diagnostic discovery and process packs</option>
+<option value="RV-06">RV-06 · Delivery scope and implementation context</option>
+</select>
+<div class="boundary" id="boundary" role="status" aria-live="polite"><strong id="review-class">SOURCE-ONLY · Interface observation</strong><p id="review-description">A genuine source capture has been privately inspected. The observed interface is not a new DEV acceptance result.</p><p><a id="review-link" href="visual-evidence.html#review-rv-01">Read public evidence boundary</a></p></div>
+<fieldset class="gates"><legend>Eight gates to document privately</legend>
+<label class="gate"><input type="checkbox" data-gate="provenance"><span><strong>Source provenance</strong><small>Original identity, origin, ownership, capture context and byte digest recorded privately.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="rights"><span><strong>Publication rights</strong><small>Rights holder or authorised delegate explicitly permits this specific derivative and its intended public use.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="runtime"><span><strong>Version and runtime boundary</strong><small>Application scope, version and environment reconciled, or absence of proof is made explicit in the caption.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="pixels"><span><strong>Full-resolution pixel inspection</strong><small>Original and final derivative checked for names, private URLs, badges, records, tooltips and customer context.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="sanitisation"><span><strong>Irreversible sanitisation</strong><small>Derivative flattened; metadata and hidden content removed; no CSS masks or reversible overlays.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="integrity"><span><strong>Independent byte verification</strong><small>Final image SHA-256 and PNG structure independently checked against the derivative and private register.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="editorial"><span><strong>Claim, caption and accessible description</strong><small>Reviewed text states precisely what is visible and avoids unsupported live integration or production claims.</small></span></label>
+<label class="gate"><input type="checkbox" data-gate="approval"><span><strong>Independent decision record</strong><small>Named, authorised reviewer, decision, evidence, date and permitted caption recorded in restricted controls.</small></span></label>
+</fieldset>
+</section>
+<aside class="panel" aria-labelledby="packet-title">
+<h2 id="packet-title">02 / Local review packet</h2>
+<p class="count" id="gate-count" role="status" aria-live="polite">0 of 8 gates marked</p><progress class="meter" id="gate-progress" max="8" value="0" aria-label="Checklist completion"></progress>
+<p><span class="stat" id="gate-status">DRAFT · HOLD</span></p>
+<p id="status-note">No evidence has been supplied to an independent reviewer. Checks are self-reported and cannot be independently validated by this page.</p>
+<div class="actions"><button id="download-packet" type="button">Download HOLD review packet (.json)</button><button class="secondary" type="button" id="reset-packet">Reset checklist</button></div>
+<p class="fine">The generated JSON contains only the public review ID, eight booleans, a timestamp and conservative evidence boundaries. No image bytes, names, source URLs, file hashes, private reviewer details or browser history are collected. The page sends no network requests and stores nothing between visits.</p>
+<details><summary>Inspect export preview</summary><pre id="packet-preview"></pre></details>
+</aside>
+</div>
+<section aria-labelledby="process-title"><h2 id="process-title">03 / Controlled progression, not automatic promotion</h2><div class="steps"><article class="step"><strong>Prepare privately</strong><p>Use the <a href="screenshot-redaction-desk.html">browser-local redaction desk</a> on a permitted copy. Retain the original and sanitised derivative only in authorised storage.</p></article><article class="step"><strong>Verify independently</strong><p>Use the <a href="screenshot-receipt-verifier.html">PNG and receipt verifier</a>. Hash agreement is byte-integrity evidence, not proof of ownership or instance execution.</p></article><article class="step"><strong>Approve outside this site</strong><p>An authorised reviewer records an explicit approval privately. Only then may a reviewed derivative and checksum be added to the public publication allowlist via the gated release process.</p></article></div></section>
+<section aria-labelledby="licence-title"><h2 id="licence-title">Licensing and technical boundaries</h2><p>The static checklist, redaction desk, receipt verifier and evidence gallery require <strong>no ServiceNow licence</strong>. Recreating or validating live Workbench screens may require App Engine/custom application rights, platform roles and ACLs, plus contract-specific ITSM/MIM, CMDB/ITOM, IntegrationHub, Performance Analytics, AI or third-party provider entitlements. A local browser test never establishes DEV-VERIFIED or PRODUCTION-VERIFIED status.</p></section>
+</main>
+<footer class="footer"><div class="wrap"><a href="visual-evidence.html">Evidence review register</a> · <a href="verification-ledger.html">Verification ledger</a> · <a href="evidence/SCREENSHOT_REVIEW_PROCEDURE.md">Review procedure</a><p>SOURCE-ONLY utility · all review packets are HOLD · no publication authorisation inferred</p></div></footer>
+<script>
+"use strict";
+const records=Object.freeze({
+"RV-01":{classification:"SOURCE-ONLY · Interface observation",description:"Delivery Plan and milestones are visible. Saved milestones, installed release and DEV or production acceptance remain unverified."},
+"RV-02":{classification:"SOURCE-ONLY · Interface observation",description:"Diagnostic report and export controls are visible. Successful document generation and runtime tests remain unverified."},
+"RV-03":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine interface observation contains explicitly synthetic Major Incident scenario content. No live MIM execution is established."},
+"RV-04":{classification:"SOURCE-ONLY · Document observation",description:"An overview document is not an application screenshot or a runtime acceptance record."},
+"RV-05":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine interface observation contains synthetic MIM discovery/process-pack content. Workshop acceptance is not established."},
+"RV-06":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine Delivery interface observation contains synthetic implementation context and demo-only provider indicators."}
+});
+const get=id=>document.getElementById(id);
+const controls=[...document.querySelectorAll("input[data-gate]")];
+function makePacket(){
+ const id=get("review-id").value;
+ const completed=controls.filter(c=>c.checked).length;
+ return {
+  schema_version:"1.0",
+  packet_type:"public-safe-screenshot-review-handoff",
+  generated_utc:new Date().toISOString(),
+  public_review_id:id,
+  claim_classification:records[id].classification.split(" · ")[0],
+  gates:Object.fromEntries(controls.map(c=>[c.dataset.gate,c.checked])),
+  completed_gates:completed,
+  handoff_readiness:completed===controls.length?"READY_FOR_INDEPENDENT_REVIEW":"DRAFT",
+  publication_status:"HOLD",
+  public_release_authorised:false,
+  service_now_dev_verified:false,
+  production_verified:false,
+  note:"Self-declared checklist only. Image rights, independent reviewer decision and final derivative digest must be verified in restricted controls before a separately authorised publication."
+ };
+}
+function render(){
+ const id=get("review-id").value;
+ const info=records[id];
+ get("review-class").textContent=info.classification;
+ get("review-description").textContent=info.description;
+ get("review-link").href="visual-evidence.html#review-"+id.toLowerCase();
+ const completed=controls.filter(c=>c.checked).length;
+ get("gate-count").textContent=completed+" of "+controls.length+" gates marked";
+ get("gate-progress").value=completed;
+ get("gate-status").textContent=completed===controls.length?"REVIEW-READY · HOLD":"DRAFT · HOLD";
+ get("gate-status").classList.toggle("ready",completed===controls.length);
+ get("status-note").textContent=completed===controls.length
+  ?"All gates marked locally. Private independent inspection and a signed authorisation are still mandatory; this packet cannot release an image."
+  :"Outstanding gates remain. Every checkbox is a self-reported preparation status; this page verifies none of the underlying evidence.";
+ get("packet-preview").textContent=JSON.stringify(makePacket(),null,2);
+}
+get("review-id").addEventListener("change",()=>{controls.forEach(c=>c.checked=false);render()});
+controls.forEach(c=>c.addEventListener("change",render));
+get("reset-packet").addEventListener("click",()=>{controls.forEach(c=>c.checked=false);render()});
+get("download-packet").addEventListener("click",()=>{
+ const packet=JSON.stringify(makePacket(),null,2)+"\n";
+ const url=URL.createObjectURL(new Blob([packet],{type:"application/json"}));
+ const link=document.createElement("a");
+ link.href=url;link.download="workbench-review-"+get("review-id").value.toLowerCase()+"-HOLD.json";
+ document.body.appendChild(link);link.click();link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+});
+render();
+</script>
+</body>
+</html>
