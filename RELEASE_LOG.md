@@ -1,3 +1,12 @@
+## 12 November 2026 — 90-second hiring-manager review journey (SOURCE-ONLY)
+
+- Rebuilt [Portfolio Review Guide](portfolio-review-guide.html) as a compact, mobile-first entry point with a visual four-stage diagnostic-to-delivery lifecycle, two Workbench case-study summaries, and three functional reviewer routes (Hiring manager / Technical architect / Assurance reviewer). Each route opens only existing public evidence and never contacts a ServiceNow or external endpoint.
+- Added public-safe textual previews for source observations RV-01, RV-02 and RV-05. No genuine screenshot pixels, source document identifiers or private repository paths were published. The six privately inspected captures remain publication **HOLD**, with **zero** images approved.
+- Reconciled the guide's historical source disclosure against the 19 October 2026 Universal Delivery Workbench As-Built evidence cutoff. Its 6 October historical DEV read-back does not prove the latest release or any production operation.
+- Added offline accessibility, confidential-information and navigation regression tests; extended four-viewport Chromium smoke tests to exercise real button interaction, ARIA pressed states, hidden panels and document-width overflow; configured changes to the guide to trigger responsive CI.
+- Classification: website and public narrative **SOURCE-ONLY**; interactive reviewer selector is a local editorial aid and any referenced synthetic demonstrations remain **MOCK-ONLY**. No new DEV read-back, customer acceptance, independent production test, or authorised screenshot publication occurred.
+- Entitlements: the static review guide requires none. Actual Workbench deployment may require App Engine/custom-app rights and feature-specific ITSM/MIM, ITOM/Discovery, IntegrationHub, analytics, AI and external-provider subscriptions.
+
 ## 12 November 2026 — Knowledge Intelligence 16-table schema reconciliation (SOURCE-ONLY)
 
 - Parsed the committed Knowledge Intelligence 0.1.0 update-set XML in the private Diagnostic Workbench source repository: **16 unique sys_db_object definitions** and **16 matching collection-level sys_dictionary entries**. No additional missing/17th table is declared in this template.
