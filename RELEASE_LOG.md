@@ -1,3 +1,10 @@
+## 12 November 2026 — Knowledge Intelligence 16-table schema reconciliation (SOURCE-ONLY)
+
+- Parsed the committed Knowledge Intelligence 0.1.0 update-set XML in the private Diagnostic Workbench source repository: **16 unique sys_db_object definitions** and **16 matching collection-level sys_dictionary entries**. No additional missing/17th table is declared in this template.
+- Corrected the stale 17-table statement in private PDI acceptance documentation to 16; added a deterministic offline schema-inventory regression assertion to the existing validator. This resolves a *source documentation* mismatch, not a ServiceNow installed-schema defect.
+- Updated the public [Knowledge Intelligence Acceptance Matrix](knowledge-intelligence-acceptance-matrix.html#schema-reconciliation) with a sanitised 16-entity breakdown, explicit source-only scope and an unchanged native DEV read-back gate. Synthetic receipt now distinguishes source-template reconciliation from target verification; approval remains HOLD.
+- No private scripts, customer records, credentials, KB articles or original screenshots published. Native DEV and production verification not performed; licensing and publication gates remain open.
+
 ## 12 November 2026 — Knowledge Intelligence source taxonomy and acceptance matrix
 
 - Published [Knowledge Intelligence Acceptance Matrix](knowledge-intelligence-acceptance-matrix.html): 45 generic source-defined module topics across 16 domains, representative table prompts, searchable/filterable mobile UI, eight synthetic acceptance controls, blocking absence of product data, and HOLD-only JSON review receipts. The 45 companion collectors are not added to the independent core Workbench 20-family catalogue.
