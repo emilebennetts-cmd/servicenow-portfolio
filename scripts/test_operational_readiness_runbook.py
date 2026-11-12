@@ -61,7 +61,8 @@ class OperationsContract(unittest.TestCase):
         self.assertEqual(sum(x == "true" for _, x in self.scan.filters), 1)
         self.assertTrue(
             {"main", "q", "count", "runbooks", "reset", "print",
-             "failure-select", "failure-output", "handover-rows",\n             "handover-status", "handover-export", "handover-reset"} <= self.scan.ids
+             "failure-select", "failure-output", "handover-rows",
+             "handover-status", "handover-export", "handover-reset"} <= self.scan.ids
         )
         self.assertIn('role="status" aria-live="polite"', self.html)
         self.assertIn('@media(max-width:760px)', self.html)
