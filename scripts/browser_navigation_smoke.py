@@ -916,6 +916,66 @@ def check_portfolio_review_guide(browser, width):
         page.close()
 
 
+
+def check_native_acceptance_worksheet(browser, width):
+    """Verify self-reported native test export remains HOLD, including all-pass state."""
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce", accept_downloads=True)
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("https:", "http:")) else None)
+    try:
+        url = (Path(__file__).resolve().parents[1] /
+               "workbench-acceptance-playbook.html").as_uri()
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: acceptance playbook landmarks missing")
+        require(page.evaluate(
+            "() => document.documentElement.scrollWidth <= innerWidth + 2"
+        ), f"{width}px: acceptance playbook horizontal overflow")
+        require(page.locator(".worksheet-case").count() == 6,
+                f"{width}px: expected six acceptance scenarios")
+        require("0 / 6" in page.locator("#worksheet-status").inner_text(),
+                f"{width}px: expected untested worksheet")
+        page.locator("#wb-component").select_option("diagnostic-workbench-2")
+        page.locator("#wb-environment").select_option("DEV")
+        page.locator("#wb-version").fill("1.0.0")
+        page.locator("#wb-sha").fill("a" * 40)
+        page.locator("#wb-instance").fill("LAB_DEV_01")
+        page.locator("#wb-date").fill("2026-11-12")
+        page.locator("#wb-role").select_option("independent-reviewer")
+        for num in range(1, 7):
+            code = f"A{num:02d}"
+            page.locator(f"#status-{code}").select_option("PASS")
+            page.locator(f"#receipt-{code}").fill(f"DEV_{code}_001")
+        require("6 / 6 self-reported passes" in page.locator("#worksheet-status").inner_text(),
+                f"{width}px: six passes not reflected")
+        with page.expect_download() as dl:
+            page.locator("#worksheet-export").click()
+        exported = json.loads(dl.value.path().read_text(encoding="utf-8"))
+        require(exported["publication_status"] == "HOLD"
+                and exported["verification_classification"] == "SOURCE-ONLY"
+                and exported["publication_authorised"] is False
+                and exported["dev_verified"] is False
+                and exported["production_verified"] is False
+                and exported["native_test_execution_by_this_tool"] is False
+                and len(exported["test_results"]) == 6
+                and not exported["review_gaps"],
+                f"{width}px: all-pass worksheet incorrectly promoted a runtime claim")
+        page.locator("#receipt-A01").fill("https://invalid.example")
+        page.locator("#worksheet-export").click()
+        require("Export blocked" in page.locator("#worksheet-status").inner_text(),
+                f"{width}px: disallowed URL made it into export")
+        page.locator("#worksheet-reset").click()
+        require(page.locator("#status-A01").input_value() == "NOT_RUN"
+                and page.locator("#wb-component").input_value() == "",
+                f"{width}px: reset left previous private inputs")
+        require(not outbound, f"{width}px: acceptance worksheet unexpectedly contacted remote hosts")
+        print(f"PASS {width}px: native acceptance manual ledger, HOLD export, invalid alias, reset")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -923,6 +983,7 @@ def main():
             for width in VIEWPORTS:
                 check_viewport(browser, width)
                 check_portfolio_review_guide(browser, width)
+                check_native_acceptance_worksheet(browser, width)
                 check_reviewed_evidence_gallery(browser, width)
                 check_verification_ledger(browser, width)
                 check_review_packet(browser, width)
