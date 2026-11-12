@@ -20,6 +20,8 @@ jobs:
         run: python -m py_compile tests/audit_public_site.py
       - name: Run auditor regression tests
         run: python -m unittest discover -s tests -p 'test_site_audit.py' -v
+      - name: Verify sitemap covers every published root HTML page
+        run: python scripts/generate_sitemap.py --check
       - name: Validate public sitemap targets and canonical URLs
         run: python tests/check_sitemap_integrity.py
       - name: Run site audit and capture findings
