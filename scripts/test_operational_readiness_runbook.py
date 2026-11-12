@@ -61,11 +61,16 @@ class OperationsContract(unittest.TestCase):
         self.assertEqual(sum(x == "true" for _, x in self.scan.filters), 1)
         self.assertTrue(
             {"main", "q", "count", "runbooks", "reset", "print",
-             "failure-select", "failure-output"} <= self.scan.ids
+             "failure-select", "failure-output", "handover-rows",\n             "handover-status", "handover-export", "handover-reset"} <= self.scan.ids
         )
         self.assertIn('role="status" aria-live="polite"', self.html)
         self.assertIn('@media(max-width:760px)', self.html)
         self.assertIn('@media print', self.html)
+        self.assertIn("button.filter[data-cadence]", self.html)
+        self.assertIn("const handoverGates=", self.html)
+        self.assertIn("operational-handover-review-v1", self.html)
+        self.assertIn("publication_authorised:false", self.html)
+        self.assertIn("native_runtime_test_executed:false", self.html)
 
     def test_evidence_boundaries_and_entitlement(self):
         for phrase in ("SOURCE-ONLY", "MOCK-ONLY", "DEV-REPORTED",
