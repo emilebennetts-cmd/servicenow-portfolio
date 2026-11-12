@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><meta name="description" content="A carefully scoped, source-backed incident implementation-pack pilot: from governed recommendation to native synthetic draft creation and evidence-bound acceptance.">
+<title>Incident Pack Pilot | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#07121e;--panel:#11283b;--panel2:#0d2031;--line:#35546a;--ink:#f1f7fb;--muted:#b9cedb;--mint:#85f0d9;--blue:#9bc8ff;--amber:#ffd497}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 70% 450px at 75% 0%,#1b526455,transparent),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--mint);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}button{font:inherit;cursor:pointer}
+.wrap{width:min(1160px,calc(100% - 42px));margin:auto}.skip{position:absolute;left:-10000px}.skip:focus{left:15px;top:10px;z-index:10;background:#fff;color:#091724;padding:12px}
+header nav{display:flex;flex-wrap:wrap;gap:14px 22px;padding:18px 0;border-bottom:1px solid var(--line);font-size:.85rem;font-weight:750}nav a{color:#cde3ed}
+.hero{padding:clamp(48px,8vw,105px) 0 58px}.kicker{font-size:.77rem;text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--mint)}
+h1,h2,h3{line-height:1.14;letter-spacing:-.045em}h1{font-size:clamp(2.6rem,6.8vw,5.7rem);max-width:980px;margin:18px 0 23px}h2{font-size:clamp(1.75rem,3.4vw,2.7rem);margin:0 0 17px}h3{font-size:1.15rem;margin:0 0 10px}
+p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}.line{border-top:1px solid var(--line)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}.cta{display:inline-block;padding:12px 20px;border-radius:10px;background:var(--mint);color:#09222b;font-weight:800;text-decoration:none}.cta.alt{background:transparent;color:var(--mint);border:1px solid var(--line)}
+.disclosure{margin-top:27px;background:#202b2f;border:1px solid #866b47;border-left:4px solid var(--amber);padding:17px 19px;border-radius:10px;color:#ffedd2;font-size:.88rem}
+.section{padding:clamp(55px,7vw,85px) 0}.section-intro{max-width:790px;margin-bottom:25px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:linear-gradient(145deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0}
+.card p:last-child{margin-bottom:0}.metric{font-size:clamp(1.85rem,4vw,2.8rem);font-weight:800;line-height:1.15;color:var(--mint);letter-spacing:-.055em}.metric-label{display:block;font-size:.84rem;color:#c8dce5;margin:6px 0 0}
+.story{display:grid;grid-template-columns:1fr 1fr;gap:18px}.story article{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+.timeline{display:grid;grid-template-columns:270px minmax(0,1fr);gap:26px;align-items:start}.steps{display:grid;gap:9px}.steps button{text-align:left;padding:13px 15px;border-radius:10px;background:#10283a;color:#d0e5ee;border:1px solid var(--line);font-weight:720}.steps button[aria-selected="true"]{background:var(--mint);color:#061e28;border-color:var(--mint)}
+.step-pane{background:linear-gradient(140deg,#142f40,#0d1e30);border:1px solid #40657a;padding:clamp(23px,4vw,38px);border-radius:20px;min-height:300px}
+.step-pane[hidden]{display:none}.step-pane .number{color:var(--mint);font-size:.77rem;text-transform:uppercase;letter-spacing:.12em;font-weight:850}.step-pane h3{font-size:clamp(1.4rem,3vw,2rem);margin:14px 0}.step-pane p{font-size:1.03rem}.trace{display:flex;gap:8px;flex-wrap:wrap;padding:15px 0;margin:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.trace span{font-size:.74rem;border-radius:99px;border:1px solid #52718a;color:#d8e7ee;padding:5px 10px}.trace .active{border-color:var(--mint);background:#143e42;color:#acffe9}
+.hint{margin:17px 0 0;font-size:.86rem;color:#e8d3aa}.gate{border-left:3px solid var(--amber);padding:12px 15px;background:#2b2a29;color:#f7e6d0;margin:20px 0 0;border-radius:0 8px 8px 0}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:25px 0}.controls button{background:#122c41;color:#d4e5ee;border:1px solid #54738a;padding:9px 15px;border-radius:99px;font-size:.84rem;font-weight:750}
+.controls button[aria-pressed="true"]{background:var(--mint);color:#06232c;border-color:var(--mint)}.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:13px}table{width:100%;border-collapse:collapse;min-width:670px}th,td{text-align:left;padding:15px;border-bottom:1px solid #304d60;vertical-align:top;font-size:.87rem}th{background:#183447;color:#e7f6f9}tbody tr:last-child td{border-bottom:0}tr[hidden]{display:none}.evidence-type{font-weight:800;font-size:.72rem;color:var(--mint);letter-spacing:.04em}.evidence-type.reported{color:var(--blue)}.evidence-type.pending{color:var(--amber)}.caption{font-size:.85rem;color:#c7d9e2}
+.footer{padding:36px 0 50px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.story{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{width:min(100% - 30px,1160px)}.cards,.steps{grid-template-columns:1fr}.card{padding:20px}.hero{padding-top:47px}.step-pane{min-height:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111}.step-pane[hidden]{display:block}.steps,.controls,.hero-actions,.disclosure{display:none}.section{padding:20px 0}.card,.step-pane,.story article{background:#fff;color:#111}.card p,p{color:#222}a{color:#111}}
+</style>
+</head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><nav class="wrap" aria-label="Portfolio navigation">
+<a href="./">Portfolio home</a><a href="portfolio-review-guide.html">90-second review</a><a href="delivery-case-study.html">Delivery Workbench</a><a href="workbench-acceptance-playbook.html">Acceptance playbook</a><a href="visual-evidence.html">Visual evidence</a></nav></header>
+<main id="main">
+<section class="hero wrap">
+<div class="kicker">ServiceNow Engineering / Implementation Pack Assurance</div>
+<h1>From a recommended pattern to a <span style="color:var(--mint)">traceable native pilot.</span></h1>
+<p class="lead">An Incident Management pack workflow that links selection, rationale, pinned version, source-defined draft artefacts and replay checks. Its strongest runtime evidence is a narrowly scoped historical synthetic DEV pilot — not a customer deployment.</p>
+<div class="hero-actions"><a class="cta" href="#journey">Explore the workflow</a><a class="cta alt" href="#proof">Audit the evidence</a></div>
+<div class="disclosure"><strong>Evidence boundary · 21 October 2026.</strong> The figures below are a sanitised summary of dated private release records. No customer engagement, production record or approved screenshot is shown. All page interactions are explanatory, not connected to ServiceNow.</div>
+</section>
+<section class="line section"><div class="wrap">
+<div class="kicker">01 / The client's pain &amp; history</div><h2>Drafts are easy. Governing reuse is harder.</h2>
+<p class="section-intro">In a representative greenfield ITSM delivery, requirements, implementation guides, story backlogs and test plans can grow independently. Copying an old pack risks stale scope assumptions, duplicated tasks and a mistaken claim that a drafted test has actually passed.</p>
+<div class="story">
+<article><h3>Disconnected lifecycle</h3><p>Scope decisions, candidate patterns and build artefacts are stored separately; the consultant must reconcile them by hand.</p></article>
+<article><h3>Weak provenance</h3><p>A pack version may be revised after attachment. Without a pinned source and a rationale, review and regeneration become ambiguous.</p></article>
+<article><h3>Unsafe automation</h3><p>Re-running a generator without stable identity can duplicate requirements, stories and test designs.</p></article>
+<article><h3>Premature acceptance</h3><p>A successful metadata install and a demo user journey do not prove ACL isolation, concurrency safety, client UAT or Production readiness.</p></article>
+</div></div></section>
+<section class="line section" id="journey"><div class="wrap">
+<div class="kicker">02 / The ServiceNow solution</div><h2>A controlled pack-to-draft journey</h2>
+<p class="section-intro">Inspect each step and its acceptance boundary. The flow is an interactive explanatory reconstruction of source and dated observation, <strong>not a genuine Workbench screenshot or native live session.</strong></p>
+<div class="timeline">
+<div class="steps" role="tablist" aria-label="Implementation pack stages">
+<button type="button" role="tab" id="tab-0" aria-controls="step-0" aria-selected="true" tabindex="0" data-step="0">01 · Confirm scope</button>
+<button type="button" role="tab" id="tab-1" aria-controls="step-1" aria-selected="false" tabindex="-1" data-step="1">02 · Recommend pack</button>
+<button type="button" role="tab" id="tab-2" aria-controls="step-2" aria-selected="false" tabindex="-1" data-step="2">03 · Attach version</button>
+<button type="button" role="tab" id="tab-3" aria-controls="step-3" aria-selected="false" tabindex="-1" data-step="3">04 · Generate drafts</button>
+<button type="button" role="tab" id="tab-4" aria-controls="step-4" aria-selected="false" tabindex="-1" data-step="4">05 · Replay safely</button>
+<button type="button" role="tab" id="tab-5" aria-controls="step-5" aria-selected="false" tabindex="-1" data-step="5">06 · Accept and release</button>
+</div>
+<div>
+<section class="step-pane" role="tabpanel" id="step-0" aria-labelledby="tab-0"><div class="number">Step 01 / Source-configured</div><h3>Confirm the delivery boundary</h3><p>The representative engagement selects Incident Management with an OOTB-first approach, zero-footprint discovery and explicit entitlement unknowns. Unconfirmed assumptions remain visible to the consultant.</p><div class="trace"><span class="active">Scope</span><span>Approach</span><span>Dependencies</span><span>Evidence</span></div><div class="gate">Gate: Scope confirmation is not evidence that the target is licensed or installed.</div></section>
+<section class="step-pane" role="tabpanel" id="step-1" aria-labelledby="tab-1" hidden><div class="number">Step 02 / Historical DEV-reported</div><h3>Recommend a candidate, not a certified solution</h3><p>In the dated pilot, the Workbench recommended a synthetic Incident pack. Recommendation is conditional on scope, suitability and source maturity; it is not a claim that all catalogued patterns are production ready.</p><div class="trace"><span>Match rationale</span><span class="active">Candidate</span><span>Review</span></div><div class="gate">Gate: The consultant reviews applicability, OOTB capability and entitlement before attachment.</div></section>
+<section class="step-pane" role="tabpanel" id="step-2" aria-labelledby="tab-2" hidden><div class="number">Step 03 / Historical DEV-reported</div><h3>Pin the version and preserve the reason</h3><p>The admin-led synthetic journey attached version 0.1.0-demo with a rationale. A pinned version provides a reference point for future comparison; approval remains distinct from attachment.</p><div class="trace"><span>Pack identity</span><span class="active">Pinned version</span><span>Rationale</span></div><div class="gate">Gate: A selected draft pack is not a signed design or deployable update set.</div></section>
+<section class="step-pane" role="tabpanel" id="step-3" aria-labelledby="tab-3" hidden><div class="number">Step 04 / Historical DEV-reported</div><h3>Create 36 linked draft records</h3><p>The pilot generated eight requirements, eight delivery stories and twenty <em>unrun</em> test designs. All 36 were linked to a synthetic engagement. No native test outcome or client approval is inferred.</p><div class="trace"><span class="active">8 requirements</span><span>8 stories</span><span>20 test designs</span></div><div class="gate">Gate: Draft creation is not build completion, test execution or customer acceptance.</div></section>
+<section class="step-pane" role="tabpanel" id="step-4" aria-labelledby="tab-4" hidden><div class="number">Step 05 / Historical DEV-reported</div><h3>Replay without multiplying drafts</h3><p>The following preview recognised 36 existing records and reported zero remaining to create. This supports an idempotency observation for one synthetic admin journey only.</p><div class="trace"><span>36 existing</span><span class="active">0 remaining</span><span>Review differences</span></div><div class="gate">Gate: Concurrent runs, version drift and recovery paths remain untested.</div></section>
+<section class="step-pane" role="tabpanel" id="step-5" aria-labelledby="tab-5" hidden><div class="number">Step 06 / Not verified</div><h3>Require separate native acceptance</h3><p>Validate negative-access personas, stale-version conflicts, recovery, performance, upgrade behaviour, supported transports and customer UAT. Release must use approved native Change and deployment controls.</p><div class="trace"><span>ACL tests</span><span>ATF / UAT</span><span class="active">Approval gate</span><span>Rollback</span></div><div class="gate">Gate: No Production verification or sign-off is established.</div></section>
+<p class="hint" id="step-announcement" aria-live="polite">Stage 1 of 6: Confirm scope.</p>
+</div></div></div></section>
+<section class="line section" id="proof"><div class="wrap">
+<div class="kicker">Evidence / release observations</div><h2>What the pilot actually demonstrated</h2>
+<div class="cards">
+<article class="card"><div class="metric">83 / 83</div><span class="metric-label">Historical authenticated metadata read-back checks</span></article>
+<article class="card"><div class="metric">4</div><span class="metric-label">Pack-flow table schemas in bounded package</span></article>
+<article class="card"><div class="metric">36</div><span class="metric-label">Synthetic linked draft records created in one pilot</span></article>
+<article class="card"><div class="metric">0</div><span class="metric-label">Remaining new drafts on replay preview</span></article>
+<article class="card"><div class="metric">29</div><span class="metric-label">Separate-source native acceptance cases still not run</span></article>
+<article class="card"><div class="metric">0</div><span class="metric-label">Genuine screenshots cleared for this public page</span></article>
+</div>
+<p class="caption">The reported 83/83 check is metadata read-back, not functional certification. A narrow additive SDK package reported no DELETE actions. The 29-case matrix concerns a separate source/scope generation and cannot be replaced by this synthetic pilot.</p>
+<div class="controls" role="group" aria-label="Filter the evidence register">
+<button type="button" data-filter="all" aria-pressed="true">All observations</button>
+<button type="button" data-filter="source" aria-pressed="false">SOURCE-ONLY</button>
+<button type="button" data-filter="reported" aria-pressed="false">DEV-REPORTED</button>
+<button type="button" data-filter="pending" aria-pressed="false">NOT VERIFIED</button>
+</div>
+<p class="caption" id="filter-count" aria-live="polite">Showing 6 of 6 evidence items.</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Record</th><th scope="col">Classification</th><th scope="col">Grounded observation</th><th scope="col">Boundary / next gate</th></tr></thead>
+<tbody>
+<tr data-class="source"><td>PK-01 · Lifecycle design</td><td><span class="evidence-type">SOURCE-ONLY</span></td><td>Scope-matched recommendation and pinned pack reference with linked draft mapping are represented in the source architecture.</td><td>Review target fit, contents, entitlements and supported transport.</td></tr>
+<tr data-class="reported"><td>PK-02 · Additive metadata</td><td><span class="evidence-type reported">DEV-REPORTED</span></td><td>21 Oct 2026 record: four new schemas, no DELETE operations and 83/83 authenticated metadata checks.</td><td>Metadata read-back does not prove persona access or end-to-end function.</td></tr>
+<tr data-class="reported"><td>PK-03 · Synthetic draft journey</td><td><span class="evidence-type reported">DEV-REPORTED</span></td><td>Eight requirements, eight stories and twenty unrun test designs created as 36 linked drafts.</td><td>Unrun tests remain unrun. No client approval.</td></tr>
+<tr data-class="reported"><td>PK-04 · Replay preview</td><td><span class="evidence-type reported">DEV-REPORTED</span></td><td>Follow-up preview reported 36 existing records and zero additional records to create.</td><td>One admin-led demo; concurrency and recovery not verified.</td></tr>
+<tr data-class="pending"><td>PK-05 · Independent acceptance</td><td><span class="evidence-type pending">NOT VERIFIED</span></td><td>Persona, negative-access, stale-version, concurrency, recovery and native test execution are open.</td><td>Perform current-target authorised DEV/TST acceptance.</td></tr>
+<tr data-class="pending"><td>PK-06 · Publication and Production</td><td><span class="evidence-type pending">NOT VERIFIED</span></td><td>No genuine approved screenshot and no Production verification.</td><td>Independent visual approval, change authority and production evidence required.</td></tr>
+</tbody></table></div>
+<p class="caption">The filters are browser-local presentation only. They do not change any release register or acceptance status.</p>
+</div></section>
+<section class="line section"><div class="wrap">
+<div class="kicker">03 / Architectural best practices</div><h2>OOTB-first, version-pinned and fail-closed</h2>
+<div class="cards">
+<article class="card"><h3>Keep the ServiceNow system of record</h3><p>Native Incident and Change remain authoritative; a custom Delivery Workbench manages its own governed delivery artefacts rather than replacing ITIL 4 process records.</p></article>
+<article class="card"><h3>Separate source generations</h3><p>A dated pilot deployed in a separate application generation does not verify the entire legacy source branch. Require version and scope alignment before comparing results.</p></article>
+<article class="card"><h3>Constrain generation</h3><p>Use stable IDs, explicit source revisions and safe replay; preserve human decisions and mark changed content for re-review.</p></article>
+<article class="card"><h3>Make acceptance independent</h3><p>Require native ACL/negative tests, update preview, ATF, recoverability, performance assurance and approved release evidence for each target.</p></article>
+<article class="card"><h3>Preserve the publication boundary</h3><p>Private evidence, source code, customer metadata and screenshots are not embedded. Illustrative UI remains labelled MOCK-ONLY.</p></article>
+<article class="card"><h3>Document entitlements</h3><p>Public HTML needs no ServiceNow licence. Native custom app/table rights, roles and ACLs must be checked; ITSM/MIM, IntegrationHub, analytics, AI and external providers are contract-dependent.</p></article>
+</div></div></section>
+<section class="line section"><div class="wrap">
+<div class="kicker">Additional evidence</div><h2>Continue the technical review</h2><p class="section-intro">The accompanying <a href="delivery-case-study.html">Delivery case study</a>, <a href="pattern-library-audit-trail.html">pattern governance audit</a>, <a href="workbench-acceptance-playbook.html">native acceptance worksheet</a> and <a href="verification-ledger.html">verification ledger</a> provide adjacent implementation and assurance context. The controlled source records remain private pending disclosure review.</p>
+<p>No new DEV verification was performed for this public case study. No browser schematic is a capture of an installed ServiceNow instance.</p></div></section>
+</main>
+<footer class="wrap footer"><span>© 2026 ServiceNow Professional Portfolio · Public-safe synthetic explanation</span><a href="./">Back to portfolio</a></footer>
+<script>
+(function(){
+"use strict";
+const tabs=Array.from(document.querySelectorAll("[data-step]"));
+const panes=Array.from(document.querySelectorAll(".step-pane"));
+const names=["Confirm scope","Recommend pack","Attach version","Generate drafts","Replay safely","Accept and release"];
+function select(n,focus){
+  tabs.forEach((tab,i)=>{tab.setAttribute("aria-selected",String(i===n));tab.tabIndex=i===n?0:-1;});
+  panes.forEach((pane,i)=>pane.hidden=i!==n);
+  document.getElementById("step-announcement").textContent="Stage "+(n+1)+" of 6: "+names[n]+".";
+  if(focus)tabs[n].focus();
+}
+tabs.forEach((tab,i)=>{
+  tab.addEventListener("click",()=>select(i,false));
+  tab.addEventListener("keydown",e=>{
+    if(!["ArrowDown","ArrowUp","ArrowRight","ArrowLeft","Home","End"].includes(e.key))return;
+    e.preventDefault();
+    const next=e.key==="Home"?0:e.key==="End"?tabs.length-1:(i+(e.key==="ArrowRight"||e.key==="ArrowDown"?1:-1)+tabs.length)%tabs.length;
+    select(next,true);
+  });
+});
+const rows=Array.from(document.querySelectorAll("tr[data-class]"));
+const filterButtons=Array.from(document.querySelectorAll("[data-filter]"));
+filterButtons.forEach(btn=>btn.addEventListener("click",()=>{
+  const value=btn.dataset.filter;
+  filterButtons.forEach(other=>other.setAttribute("aria-pressed",String(other===btn)));
+  let shown=0;rows.forEach(row=>{row.hidden=value!=="all"&&row.dataset.class!==value;if(!row.hidden)shown++;});
+  document.getElementById("filter-count").textContent="Showing "+shown+" of "+rows.length+" evidence items.";
+}));
+})();
+</script>
+</body></html>
