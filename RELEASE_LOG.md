@@ -1,3 +1,10 @@
+## 12 November 2026 — Searchable, exportable inspected Workbench evidence register (HOLD)
+
+- Turned six text-only private-source image reviews into an independently searchable, filterable and bookmarkable public reviewer registry with group-specific reviewed CSV export and print. The separate ten candidate placeholders and existing candidate workflow are retained. Review links resolve to the six stable `#review-rv-0x` anchors; collected fields include observed UI, what is not established, next gate, and an explicit publication **HOLD**. No private image, asset identifier, SHA-256 or customer material is included.
+- Added structural and four-viewport Chromium regression checks for review search, Diagnostic/MIM filtering, CSV boundary, print mode, deep-link restoration and responsive layout. Workflow success and Pages deployment require commit-specific checks; no new native ServiceNow execution is claimed.
+- **SOURCE-ONLY:** portfolio frontend and public source-review metadata; **MOCK-ONLY:** synthetic example content referenced in RV-03, RV-05 and RV-06; **DEV-VERIFIED:** historical/version-specific only; **PRODUCTION-VERIFIED:** not established. All six original reviewed files and ten candidates remain publication **HOLD**; zero approved genuine captures published.
+- No ServiceNow licence for static web; runtime Workbench and ITSM/ITOM/Discovery/App Engine/IntegrationHub/analytics/AI and provider capabilities remain ACL-/contract-/entitlement-dependent. [Release note](release-notes/2026-11-12-inspected-evidence-review-finder.md).
+
 ## 12 November 2026 — Two additional pixel-reviewed Workbench source captures entered into public evidence register (HOLD)
 
 - Extended the text-only [visual-evidence gallery](visual-evidence.html#reviewed-captures) from four to six privately pixel-inspected source summaries, adding Diagnostic discovery/process packs and Delivery scope/implementation context. The two images show explicit demo/synthetic MIM content, so their pictured workflow material is **MOCK-ONLY**, not native acceptance or live Jira/Notion integration evidence.
