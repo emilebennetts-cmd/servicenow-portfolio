@@ -585,6 +585,67 @@ def check_reviewed_evidence_gallery(browser, width):
         page.close()
 
 
+
+def check_verification_ledger(browser, width):
+    """Browser-test the JSON-driven ledger via loopback HTTP (file:// fetch is blocked)."""
+    from functools import partial
+    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+    from threading import Thread
+
+    root = Path(__file__).resolve().parents[1]
+
+    class QuietHandler(SimpleHTTPRequestHandler):
+        def log_message(self, *_args):
+            pass
+
+    server = ThreadingHTTPServer(
+        ("127.0.0.1", 0), partial(QuietHandler, directory=str(root))
+    )
+    worker = Thread(target=server.serve_forever, daemon=True)
+    worker.start()
+    page = browser.new_page(
+        viewport={"width": width, "height": 900},
+        reduced_motion="reduce",
+    )
+    try:
+        url = f"http://127.0.0.1:{server.server_address[1]}/verification-ledger.html"
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        page.wait_for_function(
+            "() => document.querySelectorAll('#records .card').length === 13",
+            timeout=12000,
+        )
+        require(page.locator("#count").inner_text() == "13 of 13 evidence claims shown",
+                f"{width}px: claim manifest did not hydrate")
+        require(page.locator("#total").inner_text() == "13",
+                f"{width}px: headline claim count out of sync")
+        require(page.locator("#mock").inner_text() == "4",
+                f"{width}px: synthetic classification count out of sync")
+        require(page.locator("#load-error").is_hidden(),
+                f"{width}px: ledger failed to load public JSON")
+        page.locator('[data-filter="mock-only"]').click()
+        require(page.locator("#count").inner_text() == "4 of 13 evidence claims shown",
+                f"{width}px: mock filter is incorrect")
+        page.locator("#reset").click()
+        page.locator("#search").fill("CRC-32")
+        require(page.locator("#count").inner_text() == "1 of 13 evidence claims shown",
+                f"{width}px: evidence search did not isolate receipt verifier")
+        require(page.locator("#claim-receipt-verifier").is_visible(),
+                f"{width}px: expected verifier claim is not visible")
+        page.locator("#reset").click()
+        require(page.locator("#count").inner_text() == "13 of 13 evidence claims shown",
+                f"{width}px: reset did not restore claims")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: evidence ledger overflows the viewport")
+        require(page.locator("img").count() == 0,
+                f"{width}px: unapproved screenshot/image embedded in ledger")
+        print(f"PASS {width}px: JSON evidence hydration, mock filter, search and privacy")
+    finally:
+        page.close()
+        server.shutdown()
+        server.server_close()
+        worker.join(timeout=3)
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -592,6 +653,7 @@ def main():
             for width in VIEWPORTS:
                 check_viewport(browser, width)
                 check_reviewed_evidence_gallery(browser, width)
+                check_verification_ledger(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
