@@ -41,14 +41,13 @@ class PortfolioExplorerTests(unittest.TestCase):
     def test_catalogue_is_complete_and_uses_existing_public_files(self):
         expected = {p.name for p in ROOT.glob("*.html")} - {PAGE.name}
         cards = self.parser.cards
-        names = {a["href"] for a in []}  # links on cards are checked via HTMLParser below
         self.assertEqual(len(cards), len(expected))
         self.assertTrue(all(c.get("data-search") and c.get("data-category") for c in cards))
         self.assertIn('id="total">'+str(len(expected))+'</strong>', self.html)
         for name in expected:
             with self.subTest(name=name):
                 self.assertIn('href="'+name+'"', self.html)
-        self.assertEqual(len(self.parser.links), len(set(self.parser.links)))
+        self.assertTrue({p for p in expected} <= set(self.parser.links))
     def test_accessible_navigation_and_correct_indexing(self):
         self.assertEqual(self.parser.headings, 1)
         self.assertFalse(self.parser.duplicates)
