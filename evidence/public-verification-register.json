@@ -163,6 +163,15 @@
       "runtime_verification": "SOURCE-ONLY table-definition reconciliation; no new independent DEV installation/dictionary read-back",
       "public_screenshot_status": "No original screenshots, licensed knowledge articles, private scripts, source file IDs or customer data embedded; publication HOLD remains.",
       "page": "knowledge-intelligence-acceptance-matrix.html"
+    },
+    {
+      "id": "PATTERN-LIBRARY-AUDIT",
+      "title": "Audited authored pattern library and quality lineage",
+      "classification": "source-only",
+      "basis": "Private 29 September 2026 source reports: 585 authored minus 13 duplicate rejections equals 572 accepted new candidates; 96 prior mined patterns yield 668 combined, separately excluding 28 native patterns. Offline report records 23/23 source checks; this does not equate to installed certification or the separate 2,234-candidate complete catalogue.",
+      "runtime_verification": "No fresh independent DEV read-back, authorised pilot import, actual re-import test, client UAT or production validation for this library. Static public filters and CSV are browser-only.",
+      "public_screenshot_status": "No genuine screenshot included. Original Workbench images remain on publication HOLD; zero approved public originals.",
+      "page": "pattern-library-audit-trail.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
