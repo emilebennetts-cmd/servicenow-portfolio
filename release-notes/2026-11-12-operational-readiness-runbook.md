@@ -26,3 +26,8 @@ No ServiceNow licence is required for this static public page. Native use must c
 
 ## Release verification
 Public source and test commits must be checked by GitHub CI and Pages. A passing browser smoke verifies only the public HTML tool; it is not a ServiceNow acceptance result. Host HTTP reachability and current installed runtime are separate evidence items.
+
+## Linked evidence and repository continuity
+- Public verification register now includes `OPERATIONS-READINESS` as the **19th source-classified claim**. Six separately classified synthetic/mock demonstrations remain MOCK-ONLY.
+- The Delivery Workbench repository's `docs/portfolio/governed-delivery-showcase.html` links to the public runbook, maintaining a direct source-to-portfolio navigation route.
+- Responsive browser expectations and the exact record count have been updated, but their hosted CI outcome was not independently confirmed during this release. No independent external HTTP check succeeded; treat the GitHub Pages URL as the configured publication destination until verified.
