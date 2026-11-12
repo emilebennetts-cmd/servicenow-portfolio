@@ -1,3 +1,10 @@
+## 13 November 2026 — Risk-first native acceptance execution protocols (SOURCE-ONLY)
+
+- Extended [Native Assurance Coverage Atlas](native-assurance-coverage-atlas.html#execution-protocols) with nine source-derived native execution protocols spanning scope/entitlement identity, non-admin negative access, tenant isolation, replay, concurrency, interrupted-write recovery, diagnostic evidence safety, rescan comparability and unavailable entitlements.
+- Each procedure now specifies role, isolated prerequisites, actions, expected result, evidence to retain and a safe stop. A browser-local JSON preparation ticket hardcodes **NOT RUN, HOLD, zero approvals and no DEV/Production verification**. These are instructions, not a native execution record.
+- Added static publication-contract tests and four-width Chromium regression for protocol selection and safe export. No customer data or source code is published, no native instance is contacted and no genuine screenshot is released. [Release note](releases/2026-11-13-native-risk-protocols.md).
+- Public site requires no ServiceNow licence. Native execution requires target-specific scoped-app/custom-table rights, roles/ACLs and applicable ITSM/ITOM/IntegrationHub/analytics/AI or provider entitlements. CI/Pages to be confirmed against exact commit rather than assumed.
+
 ## 13 November 2026 — Cross-Workbench native assurance coverage (SOURCE-ONLY)
 
 - Added [Native Assurance Coverage Atlas](native-assurance-coverage-atlas.html): 29 Delivery Not run native test scenarios and 14 separate Diagnostic QA source requirements, with filtering, accessible layout and HOLD-only JSON export.
