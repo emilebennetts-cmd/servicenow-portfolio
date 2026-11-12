@@ -774,6 +774,41 @@ def check_cmdb_source_onboarding_lab(browser, width):
         page.close()
 
 
+def check_diagnostic_coverage_explorer(browser, width):
+    """Verify local-only source catalogue filtering and HOLD receipt."""
+    page = browser.new_page(viewport={"width": width, "height": 900}, accept_downloads=True, reduced_motion="reduce")
+    try:
+        page.goto((Path(__file__).resolve().parents[1]/"diagnostic-coverage-explorer.html").as_uri(),
+                  wait_until="domcontentloaded", timeout=30000)
+        require(page.locator(".record").count() == 20, f"{width}px: coverage not 20")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: diagnostic page overflows")
+        page.locator("#search").fill("duplicate")
+        require(page.locator(".record:visible").count() >= 1, f"{width}px: no duplicate results")
+        page.locator("#reset").click()
+        page.locator("#domain").select_option("CMDB & CSDM")
+        require(page.locator(".record:visible").count() == 6, f"{width}px: wrong CMDB coverage count")
+        page.locator("#reset").click()
+        page.locator("#scenario").select_option("absent")
+        sample = json.loads(page.locator("#receipt").inner_text())
+        require(sample["decision"] == "NOT_ASSESSED" and sample["servicenow_dev_verified"] is False,
+                f"{width}px: missing metric claimed healthy")
+        page.locator("#scenario").select_option("sensitive")
+        require(page.locator("#decision").inner_text() == "REJECT_UNSAFE_PAYLOAD",
+                f"{width}px: unsafe case accepted")
+        with page.expect_download() as transfer:
+            page.locator("#download").click()
+        exported = json.loads(transfer.value.path().read_text(encoding="utf-8"))
+        require(exported["publication_status"] == "HOLD"
+                and exported["public_release_authorised"] is False
+                and exported["production_verified"] is False
+                and exported["classification"] == "MOCK-ONLY",
+                f"{width}px: unsupported acceptance in exported example")
+        print(f"PASS {width}px: diagnostic coverage/filter/unsafe-data/HOLD contract")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -784,6 +819,7 @@ def main():
                 check_verification_ledger(browser, width)
                 check_review_packet(browser, width)
                 check_cmdb_source_onboarding_lab(browser, width)
+                check_diagnostic_coverage_explorer(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)

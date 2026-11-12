@@ -1,3 +1,10 @@
+## 12 November 2026 — Diagnostic source coverage and evidence confidence explorer
+
+- Implemented [Diagnostic collector coverage](diagnostic-coverage-explorer.html): 20 source-summarised families across ten domains, search/filter, per-family native acceptance questions and four safe synthetic intake decisions. Source catalogue records 42 rules, four correlations and 67 runbooks; definitions do not imply runtime capability.
+- Missing product tables remain NOT_ASSESSED, truncated groupings HOLD_COMPLETENESS and sensitive content REJECT_UNSAFE_PAYLOAD. Exported synthetic JSON remains HOLD and explicitly denies DEV/production/publication verification.
+- Updated homepage, Diagnostic case study, sitemap, public verification register and static/Chromium test suites; [full note](release-notes/2026-11-12-diagnostic-coverage-explorer.md).
+- No original screenshots or private scripts published. New native DEV/production verification: none. Publication authority remains separate. The static website has no ServiceNow licence requirement; live collector product/role entitlements require individual confirmation.
+
 ## 12 November 2026 — CMDB source onboarding and IRE acceptance lab (SOURCE-ONLY / MOCK-ONLY)
 
 - Implemented [CMDB Source Onboarding Lab](cmdb-source-onboarding-lab.html): three synthetic identification/attribute-governance scenarios, six independent review controls, explicit unresolved-identity blocks, and a download-only JSON design receipt with no DEV/production/approval claim.
