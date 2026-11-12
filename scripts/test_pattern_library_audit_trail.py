@@ -61,7 +61,7 @@ class PatternAuditContract(unittest.TestCase):
                        "11,000", "23/23", "3,450", "670", "3,352", "2,897",
                        "179", "276", "SOURCE-ONLY", "DEV-REPORTED",
                        "DEV-VERIFIED", "PRODUCTION-VERIFIED", "MOCK-ONLY",
-                       "HOLD", "not additive", "no ServiceNow licence"):
+                       "HOLD", "NOT additive", "no ServiceNow licence"):
             self.assertIn(marker, self.html)
         self.assertEqual(585 - 13, 572)
         self.assertEqual(572 + 96, 668)
