@@ -1073,9 +1073,9 @@ def check_operational_readiness_runbook(browser, width):
                 f"{width}px: operations runbook overflows the viewport")
         require("12 of 12" in page.locator("#count").inner_text(),
                 f"{width}px: default operational count is wrong")
-        page.locator('[data-cadence="release"]').click()
+        page.locator('button.filter[data-cadence="release"]').click()
         require(page.locator("[data-code]:visible").count() == 3
-                and page.locator('[data-cadence="release"]').get_attribute("aria-pressed") == "true",
+                and page.locator('button.filter[data-cadence="release"]').get_attribute("aria-pressed") == "true",
                 f"{width}px: per-release filtering failed")
         page.locator("#q").fill("collisions")
         require(page.locator("[data-code]:visible").count() == 1
@@ -1083,7 +1083,7 @@ def check_operational_readiness_runbook(browser, width):
                 f"{width}px: runbook search failed")
         page.locator("#reset").click()
         require(page.locator("[data-code]:visible").count() == 12
-                and page.locator('[data-cadence="all"]').get_attribute("aria-pressed") == "true",
+                and page.locator('button.filter[data-cadence="all"]').get_attribute("aria-pressed") == "true",
                 f"{width}px: runbook reset failed")
         page.locator("#failure-select").select_option("consent")
         require("Disable the bounded client scan" in page.locator("#failure-output").inner_text(),
@@ -1091,6 +1091,33 @@ def check_operational_readiness_runbook(browser, width):
         page.locator("#failure-select").select_option("preview")
         require("re-previews" in page.locator("#failure-output").inner_text(),
                 f"{width}px: preview safety guidance missing")
+        require(page.locator("#handover-rows tr").count() == 6,
+                f"{width}px: handover gates missing")
+        page.locator("#handover-state-HR-01").select_option("SELF_REPORTED_COMPLETE")
+        require(page.locator("#handover-export").is_disabled(),
+                f"{width}px: evidence-free completion was exportable")
+        page.locator("#handover-alias-HR-01").fill("REL_A01")
+        require(page.locator("#handover-export").is_enabled(),
+                f"{width}px: anonymous evidence alias did not unblock HOLD receipt")
+        with page.expect_download() as receipt_download:
+            page.locator("#handover-export").click()
+        receipt = json.loads(receipt_download.value.path().read_text(encoding="utf-8"))
+        require(receipt["publication_status"] == "HOLD"
+                and receipt["evidence_class"] == "MOCK-ONLY"
+                and receipt["publication_authorised"] is False
+                and receipt["dev_verified"] is False
+                and receipt["production_verified"] is False
+                and receipt["native_runtime_test_executed"] is False
+                and receipt["self_reported_complete"] == 1
+                and len(receipt["gates"]) == 6,
+                f"{width}px: handover export trust boundary invalid")
+        page.locator("#handover-alias-HR-01").fill("https://unsafe.invalid")
+        require(page.locator("#handover-export").is_disabled(),
+                f"{width}px: unsafe evidence link permitted")
+        page.locator("#handover-reset").click()
+        require(page.locator("#handover-state-HR-01").input_value() == "NOT_REVIEWED"
+                and page.locator("#handover-alias-HR-01").input_value() == "",
+                f"{width}px: handover reset retained prior input")
         require(not outbound, f"{width}px: operations catalogue contacted external hosts")
         print(f"PASS {width}px: operations cadence, search, reset, failure safety, isolation")
     finally:
