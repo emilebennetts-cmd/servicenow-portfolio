@@ -17,6 +17,17 @@ fieldset{border:1px solid var(--line);border-radius:13px;padding:1rem;margin:1re
 .worksheet-note{font-size:.87rem}
 @media(max-width:700px){.worksheet-grid,.worksheet-cases{grid-template-columns:1fr}}
 @media print{.worksheet-controls{display:none}details:not([open]){display:none}.worksheet-case{break-inside:avoid}}
+
+/* Offline, untrusted receipt inspection. Text-only and never an approval action. */
+.receipt-import{background:#10283a;border:1px solid var(--line);border-radius:14px;padding:1.25rem;margin:1.5rem 0}
+.receipt-import input[type=file]{font:inherit;max-width:100%;color:var(--ink);padding:.65rem;border:1px dashed #9cc7d5;border-radius:9px}
+.receipt-import input[type=file]:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.receipt-import-output{margin:1rem 0;padding:1rem;border:1px solid #b59a6e;border-radius:9px;color:#ffe5b9}
+.receipt-import-scroll{width:100%;overflow-x:auto}
+.receipt-import table{width:100%;border-collapse:collapse;min-width:480px}
+.receipt-import th,.receipt-import td{padding:.65rem;text-align:left;border-bottom:1px solid var(--line)}
+.receipt-import th{color:var(--ink)}
+.receipt-import td{color:var(--sub)}
 </style></head>
 <body><a class="skip" href="#main">Skip to playbook</a><header><div class="wrap"><div class="eyebrow">ServiceNow · Technical assurance</div><h1>Workbench acceptance playbook</h1><p>How an architect would establish that a Workbench build is installed, configured and working — without confusing source artefacts, historical DEV records and actual runtime acceptance.</p><nav aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="workbench-evidence-ledger.html">Evidence ledger</a><a href="diagnostic-workbench-case-study.html">Diagnostic case study</a><a href="reusable-delivery-patterns-case-study.html">Delivery patterns</a><a href="#native-execution-ledger">Try the acceptance worksheet</a></nav></div></header>
 <main id="main" tabindex="-1" class="wrap">
@@ -54,6 +65,13 @@ fieldset{border:1px solid var(--line);border-radius:13px;padding:1rem;margin:1re
 </fieldset>
 <div class="worksheet-controls"><button type="button" id="worksheet-export">Download private review receipt (.json)</button><button type="reset" class="secondary" id="worksheet-reset">Clear worksheet</button></div>
 </form>
+<section class="receipt-import" id="acceptance-import" aria-labelledby="acceptance-import-heading">
+<h3 id="acceptance-import-heading">Inspect a saved worksheet receipt — locally</h3>
+<p>Choose a JSON receipt exported by this worksheet to compare it with the currently entered results. Files are read only in your browser, never uploaded, transmitted or saved. The comparison is not a ServiceNow verification, independent review or publication approval. Only safe aliases belong in receipts.</p>
+<div class="field"><label for="worksheet-import">Select local HOLD receipt (.json, maximum 32 KB)</label><input id="worksheet-import" type="file" accept=".json,application/json" aria-describedby="receipt-import-output"></div>
+<div id="receipt-import-output" class="receipt-import-output" role="status" aria-live="polite">No receipt selected. This tool does not import data into the active worksheet.</div>
+<div class="receipt-import-scroll"><table id="receipt-comparison" hidden><caption>Untrusted manual-result comparison. No runtime execution inferred.</caption><thead><tr><th>Test</th><th>Current worksheet</th><th>Imported claim</th><th>Private alias supplied?</th></tr></thead><tbody id="receipt-comparison-body"></tbody></table></div>
+</section>
 <p class="worksheet-note"><strong>Fail-safe rule:</strong> PASS means self-reported only. Even six passes with references cannot produce DEV-VERIFIED or PRODUCTION-VERIFIED classification in this tool. Independent signed execution evidence, build identity, ACL checks, approval and controlled promotion are mandatory outside the browser. Every export is <strong>HOLD / SOURCE-ONLY</strong>.</p>
 </section>
 <section><h2>Minimum acceptance receipt</h2><p>For every test record: <code>test_id · build_sha · app_version · instance_environment · scope · tester · execution_time · role · expected · actual · result · evidence_reference · defect_id · approver</code>. Use non-sensitive synthetic data in public examples; keep raw instance receipts private until reviewed.</p><p><strong>Evidence promotion rule:</strong> a test can be labelled DEV-VERIFIED only for the exact version and environment executed. A newer repository version resets the unverified delta. A screenshot without origin, permission and sanitisation is not publishable.</p></section>
@@ -100,6 +118,82 @@ a.href=url;a.download="workbench-acceptance-review-HOLD.json";document.body.appe
 update();
 });
 update();
+
+/* Read-only receipt review. Reject ambiguous, oversized and privileged payloads. */
+const importInput=document.getElementById("worksheet-import");
+const importOutput=document.getElementById("receipt-import-output");
+const comparison=document.getElementById("receipt-comparison");
+const comparisonBody=document.getElementById("receipt-comparison-body");
+function exactKeys(data,expected){
+return data&&typeof data==="object"&&!Array.isArray(data)&&
+Object.keys(data).length===expected.length&&expected.every(k=>Object.prototype.hasOwnProperty.call(data,k));
+}
+function inspectReceipt(data){
+const top=["schema","generated_at","capture_method","verification_classification","publication_status","publication_authorised","dev_verified","production_verified","native_test_execution_by_this_tool","independent_reviewer_approval","identity","test_results","review_gaps","review_required","notice"];
+if(!exactKeys(data,top)||data.schema!=="workbench-acceptance-review-v1"||
+data.capture_method!=="untrusted-manual-browser-input"||
+data.verification_classification!=="SOURCE-ONLY"||data.publication_status!=="HOLD"||
+data.publication_authorised!==false||data.dev_verified!==false||
+data.production_verified!==false||data.native_test_execution_by_this_tool!==false||
+data.independent_reviewer_approval!==false||data.review_required!==true){
+throw Error("Unsupported or privileged receipt; only unchanged HOLD / SOURCE-ONLY exports are accepted.");
+}
+if(typeof data.generated_at!=="string"||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z$/.test(data.generated_at)||
+typeof data.notice!=="string"||data.notice.length>600||
+!Array.isArray(data.review_gaps)||data.review_gaps.length>20||
+!data.review_gaps.every(x=>typeof x==="string"&&x.length<=160))throw Error("Invalid receipt metadata.");
+const fields=["component","environment","version","source_commit","instance_alias","execution_date","executor_role"];
+const identity=data.identity;
+if(!exactKeys(identity,fields)||!fields.every(k=>typeof identity[k]==="string"&&identity[k].length<=80)||
+(identity.component&&!["universal-delivery-workbench","diagnostic-workbench-2","knowledge-intelligence-companion"].includes(identity.component))||
+(identity.environment&&!["DEV","TEST","PROD"].includes(identity.environment))||
+(identity.executor_role&&!["technical-consultant","platform-owner","independent-reviewer"].includes(identity.executor_role))||
+(identity.version&&!/^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$/.test(identity.version))||
+(identity.source_commit&&!/^[0-9a-f]{7,64}$/i.test(identity.source_commit))||
+(identity.instance_alias&&!safeAlias(identity.instance_alias))||
+(identity.execution_date&&!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(identity.execution_date)))throw Error("Invalid or unsafe identity fields.");
+if(!Array.isArray(data.test_results)||data.test_results.length!==6)throw Error("Expected exactly six native test records.");
+const ids=new Set();
+for(const item of data.test_results){
+if(!exactKeys(item,["test_id","result","receipt_alias"])||
+!/^A0[1-6]$/.test(item.test_id)||ids.has(item.test_id)||
+!["NOT_RUN","PASS","FAIL","BLOCKED"].includes(item.result)||
+typeof item.receipt_alias!=="string"||
+(item.receipt_alias&&!safeAlias(item.receipt_alias))||
+(item.result==="PASS"&&!item.receipt_alias))throw Error("Duplicated, invalid or unsafe test record.");
+ids.add(item.test_id);
+}
+return data;
+}
+importInput.addEventListener("change",async()=>{
+comparison.hidden=true;
+comparisonBody.replaceChildren();
+const file=importInput.files&&importInput.files[0];
+if(!file){importOutput.textContent="No receipt selected.";return;}
+if(file.size>32768||file.size<2){importOutput.textContent="Receipt rejected: file must be a non-empty JSON document of at most 32 KB.";importInput.value="";return;}
+try{
+const raw=await file.text();
+const data=inspectReceipt(JSON.parse(raw));
+const current=read();
+const tests=new Map(data.test_results.map(t=>[t.test_id,t]));
+let different=0;
+for(const c of current.tests){
+const t=tests.get(c.test_id);
+if(c.result!==t.result||c.receipt_alias!==t.receipt_alias)different++;
+const row=document.createElement("tr");
+for(const cell of [c.test_id,c.result,t.result,t.receipt_alias?"Yes":"No"]){
+const td=document.createElement("td");td.textContent=cell;row.append(td);
+}
+comparisonBody.append(row);
+}
+const identityDiff=Object.keys(current.identity).filter(k=>current.identity[k]!==data.identity[k]).length;
+const passes=data.test_results.filter(t=>t.result==="PASS").length;
+importOutput.textContent="Untrusted HOLD receipt inspected: "+passes+" / 6 self-reported passes. "+different+" test entries and "+identityDiff+" identity fields differ from the active worksheet. No DEV/PROD verification or publication authority is inferred.";
+comparison.hidden=false;
+}catch(e){
+importOutput.textContent="Receipt rejected: "+(e instanceof SyntaxError?"invalid JSON.":e.message);
+}finally{importInput.value="";}
+});
 })();
 </script>
 </body></html>
