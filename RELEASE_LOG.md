@@ -1,3 +1,11 @@
+## 13 November 2026 — governed integration contract decision lab (SOURCE-ONLY / MOCK-ONLY)
+
+- Implemented [interactive external integration decision lab](integration-contract-lab.html) for Jira, Confluence and Notion authority, destination correlation, event replay, remote revision conflict, and protected approval fields. Five synthetic scenarios with a 7-gate native acceptance map are browser-local and deliberately never perform network requests or ServiceNow writes.
+- Added homepage and mobile entry, reviewer guide link, searchable Explorer listing, deterministic sitemap coverage, a separate MOCK-ONLY verification register entry (26 total), static safeguard assertions and four-viewport Chromium tests in the existing responsive workflow.
+- Source reviewed: Delivery Workbench 4.21.0/4.22.0 integration design and 4.22.2 README, Diagnostic source boundary and controlled Drive As-Built discovery. Live provider transport, credentials, durable atomic operation ledger, current DEV/UAT and production acceptance remain HOLD; mock green outcomes are not native evidence.
+- No new screenshots approved (0). No private source, tokens, customer data, remote provider identifiers or unapproved pixels were published. App Engine/custom-table and REST/IntegrationHub/spoke/provider rights require target-specific licensing review.
+- [Full release and acceptance note](releases/2026-11-13-integration-contract-decision-lab.md). CI/Pages status must be checked against the latest commit, not assumed from GitHub commit acceptance.
+
 ## 13 November 2026 — interactive eight-view Delivery Plan case study (SOURCE-ONLY / MOCK-ONLY)
 
 - Reworked [Universal Delivery Workbench case study](delivery-case-study.html#delivery-plan-lab) with eight selectable governance views, source-to-acceptance checkpoints, keyboard controls and illustrative Next Best Actions. Added 24 local narrative preview combinations (eight draft document families × Executive/Client/Technical), synthetic HOLD-only JSON export, homepage link and separate evidence-register entry.
