@@ -19,6 +19,8 @@ on:
       - 'pattern-library-audit-trail.html'
       - 'operational-readiness-runbook.html'
       - 'incident-pack-native-pilot.html'
+      - 'native-assurance-coverage-atlas.html'
+      - 'scripts/test_assurance_coverage_atlas.py'
       - 'evidence/public-verification-register.json'
       - 'scripts/test_incident_pack_pilot.py'
       - 'scripts/test_operational_readiness_runbook.py'

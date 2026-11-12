@@ -1219,6 +1219,49 @@ def check_source_target_compatibility(browser, width):
         page.close()
 
 
+def check_native_assurance_atlas(browser, width):
+    """Public-only filtering and permanently unverified export."""
+    url=(Path(__file__).resolve().parents[1] / "native-assurance-coverage-atlas.html").as_uri()
+    page=browser.new_page(viewport={"width":width,"height":900},reduced_motion="reduce",accept_downloads=True)
+    outbound=[]
+    page.on("request",lambda req: outbound.append(req.url) if req.url.startswith(("http:","https:")) else None)
+    try:
+        page.goto(url,wait_until="domcontentloaded",timeout=30000)
+        require(page.locator("h1").count()==1 and page.locator("main").count()==1,
+                f"{width}px: atlas landmarks")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: atlas overflow")
+        require(page.locator(".case").count()==43,f"{width}px: atlas total")
+        page.locator("#track").select_option("delivery")
+        require(page.locator(".case").count()==29,f"{width}px: delivery filter")
+        page.locator("#track").select_option("diagnostic")
+        require(page.locator(".case").count()==14,f"{width}px: diagnostic filter")
+        page.locator("#search").fill("rescan")
+        require(page.locator(".case").count()==1,f"{width}px: rescan search")
+        page.locator("#risk").select_option("high")
+        require(page.locator(".case").count()==0 and page.locator("#empty").is_visible(),
+                f"{width}px: empty state")
+        page.locator("#reset").click()
+        require(page.locator(".case").count()==43 and
+                "0 execution results" in page.locator("#count").inner_text(),
+                f"{width}px: filter reset")
+        with page.expect_download(timeout=12000) as transfer:
+            page.locator("#export").click()
+        receipt=json.loads(Path(transfer.value.path()).read_text(encoding="utf-8"))
+        require(receipt["publication_status"]=="HOLD" and
+                receipt["independent_dev_verified"] is False and
+                receipt["production_verified"] is False and
+                receipt["original_screenshots_approved"]==0 and
+                receipt["executed_cases"]==0 and
+                len(receipt["items"])==43 and
+                all(x["execution"]=="not_run" for x in receipt["items"]),
+                f"{width}px: atlas export falsely claims acceptance")
+        require(not outbound,f"{width}px: external request")
+        print(f"PASS {width}px: assurance atlas populations, search, HOLD export")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1237,6 +1280,7 @@ def main():
                 check_operational_readiness_runbook(browser, width)
                 check_incident_pack_native_pilot(browser, width)
                 check_source_target_compatibility(browser, width)
+                check_native_assurance_atlas(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)

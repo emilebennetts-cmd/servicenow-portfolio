@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12T15:21:00Z",
+  "updated_utc": "2026-11-12T17:22:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -199,6 +199,15 @@
       "runtime_verification": "Seven-gate interactive worksheet is MOCK-ONLY and browser-local; JSON export is an untrusted self-report with publication HOLD. The 29 source-lineage native cases are NOT RUN; no new independent target DEV/TST or Production verification.",
       "public_screenshot_status": "No original pixels or customer screenshots used. Existing image-specific publication HOLD remains in force.",
       "page": "source-target-compatibility.html"
+    },
+    {
+      "id": "NATIVE-ASSURANCE-ATLAS",
+      "title": "Native Delivery and Diagnostic assurance coverage atlas",
+      "classification": "source-only",
+      "basis": "Sanitised high-level source review of 29 Delivery native acceptance scenarios (all source statuses Not run) and 14 Diagnostic source QA requirements; no private source copied",
+      "runtime_verification": "Browser filtering and HOLD-only export are not ServiceNow runtime tests. No new independent DEV or Production verification.",
+      "public_screenshot_status": "HOLD; no original Workbench screenshot approved or published; conceptual diagram only",
+      "page": "native-assurance-coverage-atlas.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
