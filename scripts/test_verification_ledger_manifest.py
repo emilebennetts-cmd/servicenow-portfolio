@@ -15,7 +15,7 @@ REQUIRED = {
     "EXTERNAL-INTEGRATIONS", "HANDOFF", "CMDB-IRE-ASSURANCE",
     "ITSM-GREENFIELD", "CMDB-TRUST-LAB", "MIM-READINESS-LAB",
     "VISUAL-REVIEWS", "REDACTION-DESK", "RECEIPT-VERIFIER",
-    "REVIEW-PACKET",
+    "REVIEW-PACKET", "CMDB-SOURCE-ONBOARDING",
 }
 
 
@@ -33,7 +33,7 @@ class LedgerManifestTests(unittest.TestCase):
 
     def test_synthetic_labs_never_claim_native_service_now_acceptance(self):
         classes = {item["id"]: item["classification"] for item in REGISTER["items"]}
-        for key in ("ITSM-GREENFIELD", "CMDB-TRUST-LAB", "MIM-READINESS-LAB"):
+        for key in ("ITSM-GREENFIELD", "CMDB-TRUST-LAB", "MIM-READINESS-LAB", "CMDB-SOURCE-ONBOARDING"):
             self.assertEqual("mock-only", classes[key])
         self.assertEqual("source-only", classes["VISUAL-REVIEWS"])
         self.assertIn("HOLD", next(item["public_screenshot_status"] for item in REGISTER["items"]
