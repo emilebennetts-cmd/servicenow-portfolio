@@ -1,3 +1,9 @@
+## 13 November 2026 — evidence ledger CI growth regression resolved (SOURCE-ONLY)
+
+- Restored the previously failing quality gate after two legitimate evidence entries outgrew a fixed 19-claim test expectation. The ledger now preserves its reviewed minimum catalogue, rejects duplicates and enforces historical DEV-reported versus source-only classifications without rejecting future legitimate claims.
+- [Corrected quality gate passed](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43257533767) and [site audit passed](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43257533330) for source SHA `80305b99`; browser smoke and Pages publication must be evaluated independently for subsequent documentation commits.
+- No new ServiceNow runtime, current DEV, Production or screenshot publication evidence. Six inspected originals remain on HOLD; public CI is SOURCE-ONLY. Public site requires no licence; native deployment remains dependent on relevant App Engine/table rights, product entitlements and ACLs. [Release note](releases/2026-11-13-ledger-ci-growth-regression.md).
+
 ## 12 November 2026 — fail-closed operational handover receipt and CI fix (SOURCE-ONLY / MOCK-ONLY)
 
 - Enhanced [Operational Readiness Runbook](operational-readiness-runbook.html#handover-ledger) with a six-gate, mobile-friendly browser-local decision register and downloadable **HOLD-only** JSON review receipt. Missing/unsafe evidence aliases block export; all review statuses remain self-reported. No data is stored or uploaded, and no native DEV/Production claims are promoted.
