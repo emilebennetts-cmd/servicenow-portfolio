@@ -14,6 +14,7 @@ on:
       - 'screenshot-receipt-verifier.html'
       - 'diagnostic-coverage-explorer.html'
       - 'knowledge-intelligence-acceptance-matrix.html'
+      - 'portfolio-review-guide.html'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
   workflow_dispatch:
