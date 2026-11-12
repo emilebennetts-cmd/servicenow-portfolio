@@ -1,3 +1,12 @@
+## 12 November 2026 — browser-local Workbench native acceptance worksheet (SOURCE-ONLY)
+
+- Extended [Workbench Acceptance Playbook](workbench-acceptance-playbook.html#native-execution-ledger) with six manually recorded native test cases (A01–A06), anonymised build/environment identity and a downloadable, permanent **HOLD / SOURCE-ONLY** JSON review receipt. No remote requests or retained inputs.
+- All six self-reported PASS states remain unverified; failed/blocked cases and missing receipt references are retained. Invalid receipt aliases resembling URLs are rejected. Implemented structural confidentiality tests and four-viewport Chromium interaction/export/regression coverage; updated sitemap and responsive CI trigger.
+- Reconciled dated Delivery Architecture source: 4.22.2 DEV read-back was *reported* on 6 October 2026; 19 October read-back was limited to UI Page correction. No new independent DEV execution, customer UAT, Production verification or image approval in this release.
+- SOURCE-ONLY: static implementation and source architecture. MOCK-ONLY: automated synthetic browser test inputs. DEV-REPORTED: historical Architecture statement. DEV-VERIFIED/PRODUCTION-VERIFIED: no new evidence. Six genuine image reviews remain publication HOLD with zero approved public screenshots.
+- No licence for static worksheet. Actual target execution requires authorised scoped application roles and applicable App Engine, ITSM, ITOM, IntegrationHub, analytics, AI and third-party product entitlements.
+- See [release note](release-notes/2026-11-12-workbench-native-acceptance-worksheet.md) for implementation details, security boundaries and native acceptance blockers.
+
 ## 12 November 2026 — 90-second hiring-manager review journey (SOURCE-ONLY)
 
 - Rebuilt [Portfolio Review Guide](portfolio-review-guide.html) as a compact, mobile-first entry point with a visual four-stage diagnostic-to-delivery lifecycle, two Workbench case-study summaries, and three functional reviewer routes (Hiring manager / Technical architect / Assurance reviewer). Each route opens only existing public evidence and never contacts a ServiceNow or external endpoint.
