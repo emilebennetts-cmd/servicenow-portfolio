@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#091723">
+<meta name="description" content="Source-to-target ServiceNow compatibility: evidence-backed release identities, entitlement dependencies, seven review gates, and a non-certifying local decision worksheet.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Source-to-Target Compatibility | ServiceNow Engineering</title>
+<style>
+:root{color-scheme:dark;--bg:#07131e;--card:#10283b;--raised:#163246;--stroke:#35576b;--text:#eef8fa;--muted:#c0d3dc;--mint:#88efda;--amber:#ffdcaa;--red:#ffc6ae;--blue:#a6cdff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 72% 420px at 90% 0,#225c6460,transparent),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--mint);text-underline-offset:4px}button{font:inherit;cursor:pointer}a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{width:min(1100px,calc(100% - 38px));margin:auto}.skip{position:absolute;top:-100px;left:12px;background:#fff;color:#111;padding:12px;z-index:10}.skip:focus{top:12px}
+header{border-bottom:1px solid var(--stroke)}nav{display:flex;gap:14px 25px;flex-wrap:wrap;padding:17px 0;font-size:.86rem;font-weight:760}
+.hero{padding:clamp(48px,8vw,96px) 0 58px}.eyebrow{color:var(--mint);letter-spacing:.14em;text-transform:uppercase;font-size:.76rem;font-weight:850}
+h1,h2,h3{line-height:1.14;letter-spacing:-.035em}h1{font-size:clamp(2.55rem,6.8vw,5.7rem);margin:14px 0 24px;max-width:920px}h2{font-size:clamp(1.7rem,3.5vw,2.7rem);margin:12px 0 20px}h3{font-size:1.2rem;margin:5px 0 11px}
+p,li{color:var(--muted)}.lead{font-size:clamp(1.05rem,2vw,1.22rem);max-width:790px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{border:1px solid var(--stroke);border-radius:10px;padding:10px 16px;background:var(--mint);color:#06202b;font-weight:800;text-decoration:none}.btn.alt{background:transparent;color:var(--mint)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.alert{border:1px solid #8a7459;border-left:4px solid var(--amber);border-radius:10px;background:#2b2b2b;padding:16px 19px;margin-top:26px;color:#ffead0}
+section.band{padding:60px 0;border-top:1px solid var(--stroke)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.card{min-width:0;background:linear-gradient(135deg,var(--card),#0c1e2e);border:1px solid var(--stroke);border-radius:16px;padding:24px}.card p:last-child{margin-bottom:0}.caps{font-weight:800;letter-spacing:.12em;font-size:.72rem;text-transform:uppercase;color:var(--mint)}
+.tag{display:inline-block;border:1px solid var(--stroke);border-radius:99px;font-size:.75rem;font-weight:750;color:#e4f2f6;padding:4px 10px;margin:4px 5px 4px 0}.tag.warn{color:var(--amber);border-color:#876f51}
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:step}.chain article{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:18px}.chain article:before{counter-increment:step;content:"0" counter(step);color:var(--mint);font-size:.74rem;font-weight:900}.chain h3{margin:9px 0}.chain p{font-size:.89rem;margin-bottom:0}
+.sheet{display:grid;grid-template-columns:minmax(0,1fr) 315px;gap:24px;align-items:start}.checklist{display:grid;gap:11px}.gate{background:var(--card);border:1px solid var(--stroke);border-radius:13px;padding:20px}.gatehead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.gatehead span{color:var(--mint);font-size:.78rem;font-weight:900}.gate p{margin:8px 0 15px;font-size:.93rem}.gate select{background:#091b2a;border:1px solid #68869a;color:var(--text);border-radius:8px;padding:10px;width:100%;font:inherit;max-width:370px}
+.summary{background:#243039;border:1px solid #997956;border-radius:16px;padding:23px;position:sticky;top:14px}.status{color:var(--amber);font-weight:900;font-size:2rem;letter-spacing:-.035em}.summary strong{color:var(--text)}.summary button{margin-top:11px;width:100%}.tiny{font-size:.82rem}
+.rule{height:1px;background:var(--stroke);margin:17px 0}.tablewrap{overflow:auto;border:1px solid var(--stroke);border-radius:12px}table{width:100%;min-width:600px;border-collapse:collapse}th,td{padding:15px;text-align:left;border-bottom:1px solid var(--stroke);vertical-align:top;font-size:.9rem}th{background:#1a394d}tr:last-child td{border-bottom:0}
+footer{border-top:1px solid var(--stroke);padding:30px 0 45px;color:var(--muted);font-size:.86rem}
+@media(max-width:850px){.sheet{grid-template-columns:1fr}.summary{position:static}.chain{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.grid,.chain{grid-template-columns:1fr}.wrap{width:min(100% - 30px,1100px)}section.band{padding:42px 0}.card{padding:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff;color:#111}.card,.gate,.chain article,.summary{background:#fff;color:#111;border-color:#999}.btn,select,nav,.actions{display:none}p,li{color:#333}.status{color:#654321}section.band{padding:20px 0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a href="./">Portfolio</a><a href="portfolio-review-guide.html">90-second review</a><a href="incident-pack-native-pilot.html">Incident native pilot</a><a href="workbench-acceptance-playbook.html">Acceptance playbook</a><a href="verification-ledger.html">Evidence register</a></nav></header>
+<main id="main">
+<section class="hero wrap">
+<div class="eyebrow">ServiceNow architecture / native deployment assurance</div>
+<h1>Same product story.<br><span style="color:var(--mint)">Different application identity.</span></h1>
+<p class="lead">A source-backed compatibility firewall for consultants who must distinguish a historically demonstrated pack workflow from a separately versioned, scoped Delivery Workbench source. It prevents a successful demo from being silently promoted into an unsupported installation claim.</p>
+<div class="actions"><a class="btn" href="#compatibility">Review the source mismatch</a><a class="btn alt" href="#worksheet">Try the acceptance gate</a></div>
+<div class="alert"><strong>Historical mismatch is material.</strong> The 21 October 2026 synthetic pilot used a different application generation from the independently maintained Delivery Workbench source. That pilot's metadata read-back and draft replay do not establish scope compatibility, current source installation, native acceptance or Production approval.</div>
+</section>
+<section class="band" id="compatibility"><div class="wrap">
+<div class="eyebrow">01 / The client's pain &amp; history</div><h2>Two release lines can look deceptively alike.</h2>
+<p>A delivery team sees a working demonstration and a rich source library labelled “Universal Delivery Workbench.” But the app identities, update-set provenance and installed baselines differ. Promoting one cohort's test receipt to the other can hide missing tables, mismatched ACLs and unsupported upgrades.</p>
+<div class="grid">
+<article class="card"><div class="caps">Evidence cohort A</div><h3>Historical synthetic pack pilot</h3><span class="tag">DEV-REPORTED · 21 Oct 2026</span><span class="tag">Separate app generation</span><p>Private controlled records describe an additive pack-flow metadata installation, 83/83 authenticated read-back checks, 36 linked synthetic draft records and zero additional drafts on replay preview. These are bounded historical observations, not independently repeated here.</p><p><strong>Not proved:</strong> client UAT, cross-scope compatibility, negative persona access, concurrent replay, current-version parity or Production.</p></article>
+<article class="card"><div class="caps">Evidence cohort B</div><h3>Source-controlled Delivery Workbench</h3><span class="tag">SOURCE-ONLY · separate lineage</span><span class="tag warn">29 native acceptance cases NOT RUN</span><p>The separate source lineage carries its own application identity, versioned capabilities and native acceptance matrix. The historical pilot cannot certify that candidate. Its published technical designs remain source evidence until target-specific installation and acceptance are reproduced.</p><p><strong>Not proved:</strong> that the alternative app scope was installed in the pilot target, or that the 29 acceptance cases passed.</p></article>
+</div></div></section>
+<section class="band"><div class="wrap">
+<div class="eyebrow">02 / The ServiceNow solution</div><h2>Make installation identity a release prerequisite.</h2>
+<div class="chain">
+<article><h3>Identify</h3><p>Confirm target application and scope against the exact source lineage before installing or promoting metadata.</p></article>
+<article><h3>Reconcile</h3><p>Pin the candidate commit, pack version, dependency manifest and transport method; detect stale revisions.</p></article>
+<article><h3>Verify</h3><p>Test actual dictionary, scoped APIs, roles, ACL denials, negative personas and replay recovery in an authorised DEV/TST.</p></article>
+<article><h3>Approve</h3><p>Obtain ITSM owner, security, release and platform decisions before deployment or evidence publication.</p></article>
+</div></div></section>
+<section class="band" id="worksheet"><div class="wrap">
+<div class="eyebrow">Interactive architecture review / local demonstration</div><h2>Seven compatibility gates. No automatic promotion.</h2>
+<p>This worksheet is <strong>MOCK-ONLY</strong>: it is an offline, browser-local decision aid, not connected to ServiceNow. “Evidence supplied” is self-reported and cannot confer DEV-VERIFIED or PRODUCTION-VERIFIED status. It exports no customer identifiers or entered prose.</p>
+<div class="sheet"><div class="checklist" id="checks">
+<article class="gate" data-gate="G01"><div class="gatehead"><h3>Application &amp; scope identity</h3><span>G01 · Blocker</span></div><p>Does the authorised target contain the exact intended application identity? Separate demo and source generations fail this check by default.</p><label for="gate-G01">Review outcome</label><select id="gate-G01"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G02"><div class="gatehead"><h3>Pinned source &amp; transport</h3><span>G02</span></div><p>Is the commit, package version, update-set preview and source-to-target transport documented and non-destructive?</p><label for="gate-G02">Review outcome</label><select id="gate-G02"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G03"><div class="gatehead"><h3>Entitlement and plugin readiness</h3><span>G03</span></div><p>Are App Engine/custom application and table allowances, required ITSM features, integration rights and installed plugins confirmed?</p><label for="gate-G03">Review outcome</label><select id="gate-G03"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G04"><div class="gatehead"><h3>Roles, ACLs and negative personas</h3><span>G04</span></div><p>Have read, write, create, delete and cross-engagement denials been exercised using representative non-admin personas?</p><label for="gate-G04">Review outcome</label><select id="gate-G04"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G05"><div class="gatehead"><h3>Version drift and idempotency</h3><span>G05</span></div><p>Have stale-version rejection, concurrent generation, draft replay and duplicate prevention been tested on the same installed build?</p><label for="gate-G05">Review outcome</label><select id="gate-G05"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G06"><div class="gatehead"><h3>Recovery, upgrade and performance</h3><span>G06</span></div><p>Are rollback, interrupted execution, change collision, upgrade preview and reasonable load behaviour evidenced?</p><label for="gate-G06">Review outcome</label><select id="gate-G06"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+<article class="gate" data-gate="G07"><div class="gatehead"><h3>Business acceptance and release authority</h3><span>G07</span></div><p>Have source-specific native ATF/UAT, operational ownership, privacy and Change/release approval been independently reviewed?</p><label for="gate-G07">Review outcome</label><select id="gate-G07"><option value="not-run">Not reviewed</option><option value="evidence">Evidence supplied (self-reported)</option><option value="fail">Mismatch / failed</option></select></article>
+</div>
+<aside class="summary" aria-label="Worksheet summary"><div class="caps">Publication and deployment</div><div class="status" id="decision">HOLD</div><p id="counts" aria-live="polite">0 evidence supplied · 0 failed · 7 not reviewed</p><p><strong>Why held?</strong> This browser has no authority to authenticate DEV execution, waive a known historical scope mismatch or approve Production.</p><div class="rule"></div><p class="tiny">The historical mismatch is recorded as a source finding. Changing G01 to “Evidence supplied” does not erase it or claim that it has been corrected in an installed target.</p><button class="btn" id="export" type="button">Export HOLD JSON receipt</button><button class="btn alt" id="reset" type="button">Reset local review</button><p class="tiny" id="feedback" role="status" aria-live="polite">No upload, storage, network connection or telemetry.</p></aside></div>
+</div></section>
+<section class="band" id="architecture"><div class="wrap">
+<div class="eyebrow">03 / Architectural best practices</div><h2>OOTB first; evidence only when version-specific.</h2>
+<div class="tablewrap"><table><thead><tr><th>Engineering concern</th><th>Preferred approach</th><th>Still requires verification</th></tr></thead><tbody>
+<tr><td>Incident process</td><td>OOTB ITSM Incident/Change first; add scoped delivery orchestration only where needed.</td><td>Target subscriptions, process ownership and data model compatibility.</td></tr>
+<tr><td>Configuration promotion</td><td>Source-pinned additive packages, update-set preview, collision reporting and rollback.</td><td>Actual target app scope, dependencies and installed metadata.</td></tr>
+<tr><td>Access separation</td><td>Native ACLs, least privilege, non-admin personas and per-engagement boundaries.</td><td>Negative tests and security/privacy sign-off.</td></tr>
+<tr><td>Generated deliverables</td><td>Immutable pattern version references, idempotent drafts, separate approvals and test outcomes.</td><td>Concurrency, recovery, audit lineage and approval integrity.</td></tr>
+<tr><td>External integrations</td><td>Optional, governed connection aliases and native supported spokes/APIs.</td><td>IntegrationHub/spoke and external-service entitlements, credentials and retry behaviour.</td></tr>
+</tbody></table></div>
+<p class="tiny"><strong>Licensing:</strong> The public HTML tool requires no ServiceNow subscription. A real installation may require App Engine/custom-app and custom-table rights, relevant ITSM capabilities, appropriate ACL roles and optional IntegrationHub, AI, analytics and third-party entitlements, checked against the target contract. This page does not replace licensing review.</p>
+<p class="tiny"><strong>Evidence provenance:</strong> Sanitised synthesis of the private source repository's 13 November 2026 Incident pilot boundary, its separate 29-case validation position and controlled programme history, plus the historical 30 September 2026 Universal Delivery Workbench Solution As-Built. Original controlled documents, target identifiers and screenshots are not redistributed. See <a href="incident-pack-native-pilot.html#proof">bounded pilot evidence</a> and <a href="verification-ledger.html">public verification ledger</a>.</p>
+</div></section>
+</main>
+<footer><div class="wrap">ServiceNow Engineering Portfolio · SOURCE-ONLY architecture · DEV-REPORTED historical pilot · MOCK-ONLY worksheet · No current DEV or Production certification</div></footer>
+<script>
+(function(){
+"use strict";
+const ids=["G01","G02","G03","G04","G05","G06","G07"];
+const selectors=ids.map(id=>document.getElementById("gate-"+id));
+const counts=document.getElementById("counts");
+const feedback=document.getElementById("feedback");
+function render(){
+const values=selectors.map(el=>el.value);
+const supplied=values.filter(x=>x==="evidence").length;
+const failed=values.filter(x=>x==="fail").length;
+counts.textContent=supplied+" self-reported evidence supplied · "+failed+" failed · "+(7-supplied-failed)+" not reviewed. Publication: HOLD.";
+}
+selectors.forEach(el=>el.addEventListener("change",render));
+document.getElementById("reset").addEventListener("click",()=>{
+selectors.forEach(el=>el.value="not-run");render();feedback.textContent="Local worksheet reset. No data was retained.";
+});
+document.getElementById("export").addEventListener("click",()=>{
+const receipt={
+schema:"portfolio-source-target-compatibility-v1",
+source_classification:"SOURCE-ONLY",
+historical_pilot_classification:"DEV-REPORTED",
+worksheet_classification:"MOCK-ONLY",
+independent_dev_verified:false,
+production_verified:false,
+publication_status:"HOLD",
+scope_parity:"historically_mismatched_not_independently_rechecked",
+review_type:"untrusted_self_report",
+results:ids.map((id,i)=>({gate:id,outcome:selectors[i].value}))
+};
+const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+"\n"],{type:"application/json"}));
+const a=document.createElement("a");a.href=url;a.download="source-target-compatibility-HOLD.json";document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+feedback.textContent="HOLD JSON receipt prepared. This is not an authenticated acceptance record.";
+});
+render();
+})();
+</script>
+</body></html>
