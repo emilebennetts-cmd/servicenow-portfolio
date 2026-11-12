@@ -17,6 +17,8 @@ on:
       - 'portfolio-review-guide.html'
       - 'workbench-acceptance-playbook.html'
       - 'pattern-library-audit-trail.html'
+      - 'operational-readiness-runbook.html'
+      - 'scripts/test_operational_readiness_runbook.py'
       - 'scripts/test_pattern_library_audit_trail.py'
       - 'scripts/test_acceptance_worksheet.py'
       - 'scripts/browser_navigation_smoke.py'
@@ -44,5 +46,7 @@ jobs:
       # The test only launches the headless browser, not full Chrome.
       - name: Install Chromium headless shell (without apt downloads)
         run: python -m playwright install chromium --only-shell
+      - name: Verify operational readiness publication contract
+        run: python scripts/test_operational_readiness_runbook.py
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py
