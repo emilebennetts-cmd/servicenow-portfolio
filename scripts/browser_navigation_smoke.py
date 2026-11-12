@@ -1124,6 +1124,50 @@ def check_operational_readiness_runbook(browser, width):
         page.close()
 
 
+
+def check_incident_pack_native_pilot(browser, width):
+    """Exercise a public explanatory workflow, never the ServiceNow instance."""
+    url = (Path(__file__).resolve().parents[1] /
+           "incident-pack-native-pilot.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce")
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("http:", "https:")) else None)
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: Incident pack case study landmarks missing")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: Incident pack document has horizontal overflow")
+        require(page.locator('[role="tab"]').count() == 6,
+                f"{width}px: Incident pack journey is incomplete")
+        require(page.locator('[role="tabpanel"]:visible').count() == 1,
+                f"{width}px: Incident pack tabs do not hide inactive panels")
+        page.locator("#tab-3").click()
+        require(page.locator("#tab-3").get_attribute("aria-selected") == "true"
+                and "36 linked" in page.locator("#step-3").inner_text(),
+                f"{width}px: native draft scenario is not selected")
+        page.keyboard.press("ArrowRight")
+        require(page.locator("#tab-4").get_attribute("aria-selected") == "true"
+                and "0 remaining" in page.locator("#step-4").inner_text(),
+                f"{width}px: keyboard navigation or replay scenario failed")
+        page.locator('[data-filter="reported"]').click()
+        require(page.locator('tr[data-class]:visible').count() == 3
+                and "3 of 6" in page.locator("#filter-count").inner_text(),
+                f"{width}px: DEV-REPORTED evidence filtering failed")
+        page.locator('[data-filter="pending"]').click()
+        require(page.locator('tr[data-class]:visible').count() == 2,
+                f"{width}px: pending verification filtering failed")
+        page.locator('[data-filter="all"]').click()
+        require(page.locator('tr[data-class]:visible').count() == 6,
+                f"{width}px: evidence reset failed")
+        require(not outbound, f"{width}px: Incident pack case study contacted remote hosts")
+        print(f"PASS {width}px: Incident pack native pilot tabs, evidence gates and isolation")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1140,6 +1184,7 @@ def main():
                 check_ki_acceptance_matrix(browser, width)
                 check_pattern_library_audit_trail(browser, width)
                 check_operational_readiness_runbook(browser, width)
+                check_incident_pack_native_pilot(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
