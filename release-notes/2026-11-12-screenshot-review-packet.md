@@ -25,3 +25,11 @@ No private repository source, customer data, confidential image, original SHA-25
 ## Entitlements
 
 The public static handoff and browser tests need no ServiceNow licence. Actual ServiceNow scoped-app Workbench execution may require App Engine/custom application rights and roles/ACLs; ITSM/MIM, CMDB/ITOM/Discovery, IntegrationHub, Performance Analytics, AI and third-party integrations may require product, provider and/or transaction entitlements under the target contract. Publication rights are a separate legal and confidentiality decision.
+
+## Verified CI and deployment receipts
+
+- Four-viewport Chromium interaction suite: [run 43141271099](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43141271099) — **completed/success**, implementation/test commit `b6f1cd5aaafaae15c8573cf8a90015da0dcb2586`. It explicitly passed the new packet controls at 390, 768, 1024 and 1440 px.
+- [Portfolio quality gate 43141425021](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43141425021) — **completed/success** at release-log commit `f8d09ceaed79635e61336a32f3f5038c0a725a14`.
+- [Portfolio quality audit 43141425033](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43141425033) — **completed/success**, same commit.
+- [GitHub Pages build/deployment 43141424497](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43141424497) — **completed/success**, same commit.
+- Independent external HTTP loading of the hosted GitHub Pages URL could not be confirmed with the available browsing endpoint. A Pages success is a deployment receipt, not evidence of external reachability, nor ServiceNow runtime verification. This final receipt appendix is documentation-only.
