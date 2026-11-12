@@ -962,6 +962,36 @@ def check_native_acceptance_worksheet(browser, width):
                 and len(exported["test_results"]) == 6
                 and not exported["review_gaps"],
                 f"{width}px: all-pass worksheet incorrectly promoted a runtime claim")
+        # Import only a self-generated HOLD receipt, and never promote manual PASS to DEV proof.
+        receipt_bytes = json.dumps(exported).encode("utf-8")
+        inp = page.locator("#worksheet-import")
+        inp.set_input_files({"name": "review.json", "mimeType": "application/json", "buffer": receipt_bytes})
+        page.wait_for_function("() => document.querySelector('#receipt-import-output').textContent.includes('inspected:')")
+        require("0 test entries and 0 identity fields differ" in page.locator("#receipt-import-output").inner_text()
+                and page.locator("#receipt-comparison tbody tr").count() == 6,
+                f"{width}px: same-file comparison unexpectedly differs")
+        page.locator("#status-A02").select_option("BLOCKED")
+        inp.set_input_files({"name": "review.json", "mimeType": "application/json", "buffer": receipt_bytes})
+        page.wait_for_function("() => document.querySelector('#receipt-import-output').textContent.includes('1 test entries')")
+        require("1 test entries" in page.locator("#receipt-import-output").inner_text(),
+                f"{width}px: changed native case was not detected")
+        forged = dict(exported, publication_authorised=True)
+        inp.set_input_files({"name": "forged.json", "mimeType": "application/json",
+                             "buffer": json.dumps(forged).encode("utf-8")})
+        page.wait_for_function("() => document.querySelector('#receipt-import-output').textContent.includes('rejected:')")
+        require(page.locator("#receipt-comparison").is_hidden(),
+                f"{width}px: forged authorisation displayed as valid receipt")
+        unsafe = dict(exported, test_results=[dict(t) for t in exported["test_results"]])
+        unsafe["test_results"][0]["receipt_alias"] = "https://private.invalid"
+        inp.set_input_files({"name": "unsafe.json", "mimeType": "application/json",
+                             "buffer": json.dumps(unsafe).encode("utf-8")})
+        page.wait_for_function("() => document.querySelector('#receipt-import-output').textContent.includes('rejected:')")
+        require(page.locator("#receipt-comparison").is_hidden(),
+                f"{width}px: unsafe alias was accepted")
+        inp.set_input_files({"name": "oversize.json", "mimeType": "application/json",
+                             "buffer": b" " * 32769})
+        require("at most 32 KB" in page.locator("#receipt-import-output").inner_text(),
+                f"{width}px: oversized import was accepted")
         page.locator("#receipt-A01").fill("https://invalid.example")
         page.locator("#worksheet-export").click()
         require("Export blocked" in page.locator("#worksheet-status").inner_text(),
