@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071522">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="Explore a source-informed, synthetic CMDB data-source onboarding design, identification/reconciliation controls, and acceptance test matrix. No customer data or ServiceNow connection.">
+<title>CMDB Source Onboarding Lab | ServiceNow Technical Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071522;--panel:#10293a;--panel2:#173648;--border:#416477;--mint:#92f1d6;--amber:#ffda9c;--text:#f3fbfd;--muted:#c0d4df}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--mint);text-underline-offset:4px}button,select{font:inherit}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.skip{position:absolute;top:-100px;left:12px;z-index:5;background:#fff;color:#071522;padding:12px}.skip:focus{top:12px}
+.wrap{width:min(1120px,calc(100% - 34px));margin:auto}header{background:radial-gradient(ellipse at 85% 5%,#1d6175,transparent 54%),#0b2332;border-bottom:1px solid var(--border)}header .wrap{padding:60px 0 52px}
+.kicker{font-size:.77rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}h1{font-size:clamp(2.2rem,6vw,4.9rem);line-height:1.07;letter-spacing:-.045em;max-width:900px;margin:14px 0 22px}h2{font-size:clamp(1.55rem,3vw,2.35rem);line-height:1.2}h3{font-size:1.11rem;margin:0 0 8px}p,li,dd{color:var(--muted)}.lead{max-width:840px;font-size:1.14rem}.nav,.action-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.nav a{border:1px solid var(--border);border-radius:100px;padding:7px 14px;text-decoration:none}
+.statuses{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.status-tag{padding:5px 10px;border-radius:100px;border:1px solid var(--border);font-size:.74rem;font-weight:800}.status-tag.live{border-color:#64bba5;color:var(--mint)}.status-tag.warn{color:var(--amber);border-color:#b3976b}
+main{padding:18px 0 75px}section{padding:40px 0;border-bottom:1px solid #2c4858}.intro{max-width:860px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{border:1px solid var(--border);border-radius:15px;background:var(--panel);padding:22px;min-width:0}.card p:last-child{margin-bottom:0}.mini{color:var(--mint);font-size:.77rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:24px 0}.flow-item{position:relative;border:1px solid #57818e;background:#16384a;border-radius:12px;padding:16px;font-size:.89rem;font-weight:750}.flow-item:not(:last-child):after{content:"→";position:absolute;right:-11px;top:35%;z-index:1;color:var(--mint);font-size:1.4rem}
+.notice{border-left:4px solid var(--amber);background:#332c24;border-radius:4px 12px 12px 4px;padding:18px 22px;margin:18px 0}.notice p{color:#f1dcbc;margin:0}
+.lab{border:1px solid #65818f;border-radius:18px;background:linear-gradient(140deg,#132f43,#0d2535);padding:clamp(18px,3vw,32px)}.toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,340px);align-items:end;gap:18px}.toolbar label{font-weight:750;display:block;margin-bottom:7px}select{width:100%;border-radius:9px;background:#fff;color:#102837;border:2px solid #b7d2d7;padding:12px}button{cursor:pointer;background:var(--mint);color:#08242b;border:1px solid var(--mint);font-weight:800;border-radius:9px;padding:11px 17px}button.secondary{background:#244456;color:#eff8fa;border-color:#638397}button:hover{filter:brightness(1.08)}
+.scenario{border-top:1px solid var(--border);margin-top:22px;padding-top:20px}.scenario h3{font-size:1.4rem}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}.fact{background:#0b2231;border:1px solid #3a6070;padding:12px 14px;border-radius:9px}.fact dt{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);font-weight:750}.fact dd{margin:4px 0 0;font-size:.95rem}
+.gates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.gate{display:flex;align-items:flex-start;gap:12px;background:#0a2434;border:1px solid #456778;border-radius:10px;padding:16px;cursor:pointer}.gate input{width:22px;height:22px;accent-color:#64cfb1;flex:none;margin-top:3px}.gate strong{color:#f3fbfd;display:block}.gate small{display:block;color:var(--muted);line-height:1.5}
+.output{border:1px solid #558d89;border-radius:14px;padding:22px;margin-top:22px;background:#0a2433}.output-head{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:baseline}.output h3{font-size:1.25rem}.outcome{color:var(--amber);font-weight:850;letter-spacing:.02em}.outcome.ready{color:var(--mint)}.counter{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.88rem}.grid-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.outlist{padding-left:21px;margin-bottom:0}.outlist li{margin:5px 0}
+.jsonbox{font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#061721;border:1px solid #355668;border-radius:10px;padding:16px;color:#d5f6ef;max-height:340px;overflow:auto}
+.table-scroll{overflow:auto;border:1px solid var(--border);border-radius:13px}table{border-collapse:collapse;width:100%;min-width:700px;text-align:left}th,td{padding:14px;border-bottom:1px solid #315264;vertical-align:top}th{background:#184153;color:#baf9e6}td{color:var(--muted)}tbody tr:last-child td{border-bottom:0}
+footer{padding:26px 0;color:var(--muted);font-size:.9rem}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr 1fr}.flow-item:after{display:none}}
+@media(max-width:630px){header .wrap{padding:40px 0}.grid,.grid-two,.gates,.facts,.toolbar,.flow{grid-template-columns:1fr}.card{padding:19px}section{padding:30px 0}.lab{padding:16px}.output{padding:16px}.flow-item{padding:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111}.card,.lab,.output{background:#fff;color:#111}p,dd,li{color:#222}button,.nav,.action-row{display:none}.outcome{color:#111}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header><div class="wrap"><div class="kicker">Technical case study / CMDB · IRE · Data governance</div>
+<h1>Onboard a new CI data source without creating a new CMDB problem.</h1>
+<p class="lead">A consultant-facing design and acceptance laboratory. Explore three synthetic source-ingestion scenarios, document six mandatory control reviews and export a non-sensitive handoff receipt. This is <strong>not the native Identification and Reconciliation Engine</strong>.</p>
+<nav class="nav" aria-label="Page navigation"><a href="./">Portfolio home</a><a href="cmdb-ire-assurance.html">CMDB engineering case study</a><a href="cmdb-diagnostic-trust-lab.html">Diagnostic trust lab</a><a href="#lab">Interactive lab</a><a href="#acceptance">Native acceptance</a></nav>
+<div class="statuses"><span class="status-tag live">SOURCE-ONLY / design logic</span><span class="status-tag warn">MOCK-ONLY / synthetic cases</span><span class="status-tag">DEV-VERIFIED / not tested</span><span class="status-tag">PRODUCTION-VERIFIED / not established</span></div></div></header>
+<main id="main" class="wrap" tabindex="-1">
+<section><div class="kicker">01 / The client's pain &amp; history</div><h2>Three imports, three different versions of the same server</h2>
+<p class="intro">A representative enterprise accumulates cloud inventory, endpoint-management records and network discovery. Names collide, source identifiers disappear in mappings and low-confidence updates overwrite higher-quality attributes. Teams are left triaging duplicate CIs, unknown owners and unexplained reconciliation outcomes. This is an <strong>illustrative operating scenario</strong>, not a measured customer incident.</p>
+<div class="grid">
+<article class="card"><div class="mini">Identity</div><h3>Name is not enough</h3><p>Hostnames, IP addresses and short-lived instances are poor universal identifiers. Class-specific rules and dependent relationships need deliberate design.</p></article>
+<article class="card"><div class="mini">Authority</div><h3>Source precedence drifts</h3><p>Without attribute-specific reconciliation and freshness rules, competing connectors can overwrite one another.</p></article>
+<article class="card"><div class="mini">Assurance</div><h3>Green dashboards can mislead</h3><p>A successful import count does not prove IRE matches, completeness, correct relationships or business ownership.</p></article>
+</div></section>
+<section><div class="kicker">02 / The ServiceNow solution</div><h2>A controlled ingestion path, not a direct table write</h2>
+<div class="flow" aria-label="Conceptual ingestion flow"><div class="flow-item">01 · Authorised source &amp; connector</div><div class="flow-item">02 · Mapping &amp; transformation</div><div class="flow-item">03 · Identification rules / IRE</div><div class="flow-item">04 · Reconciliation &amp; class policy</div><div class="flow-item">05 · CMDB Health &amp; acceptance</div></div>
+<p class="intro">In a target ServiceNow environment, use the supported IRE ingestion route, validate identifiers and dependent CIs, test data-source insertion restrictions, then configure attribute authority and refresh behaviour. A source-specific test payload should be run through <strong>Identification Simulation</strong> or the supported no-commit <code>/now/identifyreconcile/query</code> endpoint before approved integration changes are enabled.</p>
+<div class="notice"><p><strong>Boundary:</strong> The browser below models design readiness only. It never calls ServiceNow, does not calculate real IRE matching decisions and does not infer installed plugins or licences. Synthetic fixtures contain no real hostnames, users, sys_ids or asset serials.</p></div>
+<div class="lab" id="lab">
+<div class="kicker">Interactive build review · entirely browser local</div>
+<div class="toolbar"><div><h3 style="font-size:1.5rem;margin:9px 0">Source onboarding review</h3><p>Pick a sample data-quality situation. Controls start unchecked each time you change the case.</p></div><div><label for="scenario-select">Synthetic scenario</label><select id="scenario-select"><option value="stable">Stable server identifier</option><option value="collision">Reused hostname, missing native identity</option><option value="attributes">Identified endpoint with conflicting attributes</option></select></div></div>
+<div class="scenario" id="scenario-facts">
+<h3 id="scenario-title">Stable server identifier</h3><p id="scenario-description"></p>
+<dl class="facts"><div class="fact"><dt>CI class</dt><dd id="ci-class"></dd></div><div class="fact"><dt>Identifier situation</dt><dd id="identifier"></dd></div><div class="fact"><dt>Authority situation</dt><dd id="authority"></dd></div><div class="fact"><dt>Design disposition</dt><dd id="disposition"></dd></div></dl>
+</div>
+<fieldset style="border:0;padding:0;margin:22px 0 0"><legend style="font-weight:800;font-size:1.1rem">Six required design reviews (illustrative)</legend>
+<div class="gates">
+<label class="gate"><input data-gate="class" type="checkbox"><span><strong>Class and scope</strong><small>Correct CI class, inheritance, mapping and CSDM context reviewed.</small></span></label>
+<label class="gate"><input data-gate="identity" type="checkbox"><span><strong>Identification</strong><small>Native identity keys, source-native IDs and dependency rules documented.</small></span></label>
+<label class="gate"><input data-gate="authority" type="checkbox"><span><strong>Reconciliation</strong><small>Attribute authority, source precedence, freshness and null policy reviewed.</small></span></label>
+<label class="gate"><input data-gate="access" type="checkbox"><span><strong>Security and ingestion</strong><small>Connector rights, ACLs, insert restrictions and data minimisation designed.</small></span></label>
+<label class="gate"><input data-gate="tests" type="checkbox"><span><strong>Positive and negative tests</strong><small>Identification Simulation, conflict and denied-write cases defined.</small></span></label>
+<label class="gate"><input data-gate="governance" type="checkbox"><span><strong>Operational ownership</strong><small>Owner, health metrics, exception queue, monitoring and rollback assigned.</small></span></label>
+</div></fieldset>
+<div class="output" aria-live="polite">
+<div class="output-head"><h3>Design gate result</h3><span class="counter" id="gate-count">0 of 6 reviews marked</span></div>
+<div class="outcome" id="gate-status" role="status">HOLD · assessment incomplete</div>
+<p id="gate-explanation">Review the synthetic source condition and record the required controls.</p>
+<div class="grid-two"><div><h3>Outstanding design reviews</h3><ul class="outlist" id="missing-controls"><li>Six controls have not been marked.</li></ul></div><div><h3>Target-instance tests still required</h3><ul class="outlist"><li>Native IRE simulation output and logs.</li><li>Positive, duplicate and missing-ID payloads.</li><li>Source precedence and stale/null override checks.</li><li>Role-based denied-write test and post-load CMDB Health.</li></ul></div></div>
+<div class="action-row"><button id="download-receipt" type="button">Export design receipt (.json)</button><button id="reset-review" type="button" class="secondary">Reset checks</button></div>
+<details style="margin-top:22px"><summary>Inspect receipt preview</summary><pre id="receipt-preview" class="jsonbox"></pre></details>
+</div>
+</div>
+</section>
+<section id="acceptance"><div class="kicker">03 / Architectural best practices</div><h2>The minimum target validation matrix</h2>
+<div class="table-scroll"><table><thead><tr><th>Test</th><th>Expected proof from a real ServiceNow environment</th><th>Failure condition</th></tr></thead><tbody>
+<tr><td>Known CI update</td><td>Identification Simulation matches the expected class/record with a complete permitted payload; record IDs stay private.</td><td>Unexpected insertion, skipped dependency or ambiguous identifier.</td></tr>
+<tr><td>Missing strong identifier</td><td>Missing key produces an explicit incomplete/rejected/partial outcome as determined by native IRE and configured rules.</td><td>Automatically accepting a duplicate solely from the sample browser model.</td></tr>
+<tr><td>Competing source attribute</td><td>Reconciliation Rule Preview and a controlled no-commit test demonstrate actual authority and priority for each field.</td><td>Lower-authority source replaces protected value unexpectedly.</td></tr>
+<tr><td>Freshness and null</td><td>Target data refresh and null-update controls act according to configured class/attribute rules.</td><td>Unreviewed null overwrite or unjustified stale record claim.</td></tr>
+<tr><td>Security and scale</td><td>Connector ACLs, insert restrictions, batching, data classification and throughput measured in an authorised test instance.</td><td>Unauthorised write, PII leakage or unbounded expensive collector.</td></tr>
+<tr><td>Operational acceptance</td><td>CMDB Health baseline, duplicate-task routing, ownership and rollout/backout evidence recorded and approved.</td><td>Import success mistaken for CMDB completeness or production sign-off.</td></tr>
+</tbody></table></div>
+<p>Use OOTB Identification/Reconciliation definitions, IRE data-source rules, dependent-identification rules, CMDB Health and a governed connector path before considering custom write logic. Reconciliation is attribute-scoped and may combine static, dynamic and data-refresh conditions; this page does not attempt to reproduce that engine.</p>
+<h3>Official product references (Australia release)</h3>
+<p><a href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/configuring-ire.html">Configure identification and reconciliation rules</a> · <a href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/create-reconciliation-rule.html">Reconciliation priority and null behaviour</a> · <a href="https://www.servicenow.com/docs/r/api-reference/rest-apis/c_IdentifyReconcileAPI.html">IRE API and no-commit query</a></p>
+</section>
+<section><div class="kicker">Evidence &amp; licensing boundary</div><h2>Demonstration does not equal deployment</h2>
+<p><strong>SOURCE-ONLY:</strong> This self-contained design/assessment implementation and the public <a href="cmdb-ire-assurance.html">source-reviewed CMDB engineering narrative</a>. <strong>MOCK-ONLY:</strong> All three cases, review selections and export receipts. <strong>DEV-VERIFIED:</strong> No new native execution or acceptance. <strong>PRODUCTION-VERIFIED:</strong> None. No genuine Workbench screenshot is embedded; all inspected source captures remain on publication HOLD pending specific rights and sanitisation approval.</p>
+<p><strong>Entitlements:</strong> This static lab requires no ServiceNow subscription. Target CMDB/IRE usage depends on the platform release, role access and the contracted capabilities. Discovery, Service Graph Connectors, CMDB 360, ITOM Visibility, IntegrationHub spokes, analytics and other provider feeds can have separate licence, subscription, plugin or API dependencies; confirm in the target subscription and release. The source repository's presence does not grant runtime rights.</p>
+<p><a href="verification-ledger.html">Public verification ledger</a> · <a href="visual-evidence.html">Workbenches' reviewed evidence register</a></p>
+</section>
+</main>
+<footer class="wrap">ServiceNow Professional Portfolio · Public-safe, synthetic controls demonstration · No customer records or native test results</footer>
+<script>
+(function(){
+'use strict';
+var cases={
+stable:{title:'Stable server identifier',description:'Synthetic infrastructure feed provides a stable source-native key and a supported server class. This is a plausible candidate for no-commit IRE validation, not proof of a successful match.',ci:'Server (illustrative child class)',identifier:'Stable source-native key available',authority:'Owner and attribute precedence still require review',disposition:'Candidate for native simulation',fundamentalBlock:false},
+collision:{title:'Reused hostname, missing native identity',description:'Two synthetic infrastructure feeds submit the same short hostname without a trustworthy source-native key or full dependent identity. A name collision is not an IRE match result.',ci:'Virtual machine (illustrative child class)',identifier:'Hostname only; reliable native key missing',authority:'Two feeds disagree on class and source identity',disposition:'BLOCK: repair identity and mapping',fundamentalBlock:true},
+attributes:{title:'Identified endpoint with conflicting attributes',description:'Synthetic endpoint identity is present, but owner and cost-centre values conflict across feeds. Stable identity does not establish field-level update authority.',ci:'Computer (illustrative child class)',identifier:'Stable native key available',authority:'Attribute precedence and null/freshness policy unresolved',disposition:'BLOCK: agree attribute reconciliation',fundamentalBlock:true}
+};
+var controls={class:'Class and scope',identity:'Identification',authority:'Reconciliation',access:'Security and ingestion',tests:'Positive and negative tests',governance:'Operational ownership'};
+var selector=document.getElementById('scenario-select');
+var checks=Array.from(document.querySelectorAll('input[data-gate]'));
+function byId(id){return document.getElementById(id);}
+function receipt(){
+var key=selector.value,item=cases[key],selected=checks.filter(function(x){return x.checked;}).map(function(x){return x.dataset.gate;});
+var missing=Object.keys(controls).filter(function(x){return !selected.includes(x);});
+var state=item.fundamentalBlock?'BLOCKED_DESIGN_INPUT':missing.length?'HOLD_INCOMPLETE_REVIEW':'READY_FOR_NATIVE_SIMULATION_NOT_APPROVED';
+return {schema_version:'1.0',lab:'public-cmdb-source-onboarding',case_id:key,assessment_classification:'MOCK-ONLY',source_design_classification:'SOURCE-ONLY',decision:state,marked_design_controls:selected,missing_design_controls:missing,synthetic_input_blocked:item.fundamentalBlock,requires_target_ire_simulation:true,servicenow_dev_verified:false,production_verified:false,approval_granted:false,publication_status:'NOT_APPLICABLE_SYNTHETIC',actual_ire_response:null};
+}
+function render(){
+var item=cases[selector.value],r=receipt(),count=r.marked_design_controls.length;
+byId('scenario-title').textContent=item.title;
+byId('scenario-description').textContent=item.description;
+byId('ci-class').textContent=item.ci;byId('identifier').textContent=item.identifier;
+byId('authority').textContent=item.authority;byId('disposition').textContent=item.disposition;
+byId('gate-count').textContent=count+' of 6 reviews marked';
+byId('gate-status').className='outcome'+(r.decision==='READY_FOR_NATIVE_SIMULATION_NOT_APPROVED'?' ready':'');
+var labels={BLOCKED_DESIGN_INPUT:'BLOCK · source defect unresolved',HOLD_INCOMPLETE_REVIEW:'HOLD · assessment incomplete',READY_FOR_NATIVE_SIMULATION_NOT_APPROVED:'DESIGN-READY · native simulation required'};
+byId('gate-status').textContent=labels[r.decision];
+byId('gate-explanation').textContent=item.fundamentalBlock?'Source identity/attribute risk cannot be accepted by ticking the controls. Repair input and validate with native IRE.':count===6?'All six design reviews are marked. This is not a native IRE result, deployment approval or production acceptance.':'Mark the remaining design reviews before proposing a target-instance test.';
+var list=byId('missing-controls');list.replaceChildren();
+if(!r.missing_design_controls.length){var done=document.createElement('li');done.textContent='No outstanding checklist marks; native tests and approvals remain mandatory.';list.appendChild(done);}
+else r.missing_design_controls.forEach(function(k){var li=document.createElement('li');li.textContent=controls[k];list.appendChild(li);});
+byId('receipt-preview').textContent=JSON.stringify(r,null,2);
+}
+selector.addEventListener('change',function(){checks.forEach(function(c){c.checked=false;});render();});
+checks.forEach(function(c){c.addEventListener('change',render);});
+byId('reset-review').addEventListener('click',function(){checks.forEach(function(c){c.checked=false;});render();});
+byId('download-receipt').addEventListener('click',function(){
+var bytes=JSON.stringify(receipt(),null,2)+'\n',blob=new Blob([bytes],{type:'application/json'});
+var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='cmdb-source-design-review.json';a.click();URL.revokeObjectURL(url);
+});
+render();
+})();
+</script>
+</body>
+</html>
