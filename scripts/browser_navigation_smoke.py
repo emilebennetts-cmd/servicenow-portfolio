@@ -543,6 +543,43 @@ def check_reviewed_evidence_gallery(browser, width):
         require(page.evaluate(
             "() => document.documentElement.scrollWidth <= window.innerWidth + 2"
         ), f"{width}px: evidence gallery overflows screen")
+        # The inspected sample is a separate, usable review registry, not an image gallery.
+        require(page.locator("#review-count").inner_text() == "6 of 6 inspected reviews shown",
+                f"{width}px: reviewed sample initial count incorrect")
+        page.locator('[data-review-filter="diagnostic"]').click()
+        require(page.locator("#review-count").inner_text() == "2 of 6 inspected reviews shown",
+                f"{width}px: Diagnostic filter incorrect")
+        page.locator("#review-search").fill("MIM")
+        require(page.locator("#review-count").inner_text() == "1 of 6 inspected reviews shown",
+                f"{width}px: Diagnostic/MIM search incorrect")
+        require(page.locator('article[data-review-id="RV-05"]').is_visible(),
+                f"{width}px: inspected Diagnostic MIM record missing")
+        require(not page.locator('article[data-review-id="RV-06"]').is_visible(),
+                f"{width}px: Delivery review incorrectly returned in Diagnostic filter")
+        with page.expect_download() as transfer:
+            page.locator("#export-reviewed").click()
+        csv = transfer.value.path().read_text(encoding="utf-8-sig")
+        require("RV-05" in csv and "RV-06" not in csv and "publication_decision" in csv
+                and "HOLD" in csv and "not_established" in csv,
+                f"{width}px: exported reviewed register ignores filter or loses HOLD")
+        require("drive.google.com" not in csv and "servicenow-portfolio-control" not in csv,
+                f"{width}px: restricted material leaked into exported review CSV")
+        page.evaluate("() => { window.print = () => { window.__reviewPrintMarked = document.body.classList.contains('review-print') } }")
+        page.locator("#print-reviewed").click()
+        require(page.evaluate("() => window.__reviewPrintMarked === true"),
+                f"{width}px: reviewed print mode not activated")
+        page.evaluate("() => window.dispatchEvent(new Event('afterprint'))")
+        require(not page.locator("body").evaluate("(el) => el.classList.contains('review-print')"),
+                f"{width}px: print-only state was not cleared")
+        page.locator("#clear-reviews").click()
+        require(page.locator("#review-count").inner_text() == "6 of 6 inspected reviews shown",
+                f"{width}px: reviewed reset failed")
+        page.goto(url + "?reviewGroup=delivery&reviewq=scope", wait_until="domcontentloaded")
+        require(page.locator("#review-count").inner_text() == "1 of 6 inspected reviews shown"
+                and page.locator('article[data-review-id="RV-06"]').is_visible(),
+                f"{width}px: bookmarked reviewed search not restored")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: reviewed filter controls create horizontal overflow")
         print(f"PASS {width}px: six evidence reviews, strict HOLD, no image publication")
     finally:
         page.close()
