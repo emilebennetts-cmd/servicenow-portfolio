@@ -76,6 +76,26 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("not a published screenshot gallery", self.html)
         self.assertEqual(6, self.html.count('class="hold">HOLD'))
 
+
+    def test_inspected_review_controls_are_independent_and_safe(self):
+        self.assertEqual(6, self.html.count('data-review-group='))
+        for review_id in ("RV-01", "RV-02", "RV-03", "RV-04", "RV-05", "RV-06"):
+            self.assertIn('id="review-' + review_id.lower() + '"', self.html)
+        for identifier in ("review-search", "review-count", "review-empty", "clear-reviews",
+                           "export-reviewed", "print-reviewed"):
+            self.assertIn('id="' + identifier + '"', self.html)
+        for group in ("all", "delivery", "diagnostic", "document"):
+            self.assertIn('data-review-filter="' + group + '"', self.html)
+        self.assertIn("'reviewGroup'", self.html)
+        self.assertIn("'reviewq'", self.html)
+        self.assertIn("workbench-inspected-review-register.csv", self.html)
+        self.assertIn("'publication_decision'", self.html)
+        self.assertIn("No original images", self.html if "No original images" in self.html
+                      else "No original images, internal URLs, private file identifiers or source hashes.")
+        # The original ten-candidate controls must remain independently operable.
+        self.assertIn('id="candidate-search"', self.html)
+        self.assertIn('id="export-candidates"', self.html)
+
     def test_public_review_links_do_not_point_at_private_source(self):
         restricted = (
             "/emilebennetts-cmd/Diagnostic-Workbench2",
