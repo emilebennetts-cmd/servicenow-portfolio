@@ -593,6 +593,9 @@ def check_verification_ledger(browser, width):
     from threading import Thread
 
     root = Path(__file__).resolve().parents[1]
+    items = json.loads((root / "evidence/public-verification-register.json").read_text(encoding="utf-8"))["items"]
+    expected_count = len(items)
+    expected_mock = sum(item["classification"] == "mock-only" for item in items)
 
     class QuietHandler(SimpleHTTPRequestHandler):
         def log_message(self, *_args):
@@ -611,28 +614,28 @@ def check_verification_ledger(browser, width):
         url = f"http://127.0.0.1:{server.server_address[1]}/verification-ledger.html"
         page.goto(url, wait_until="domcontentloaded", timeout=30000)
         page.wait_for_function(
-            "() => document.querySelectorAll('#records .card').length === 20",
+            f"() => document.querySelectorAll('#records .card').length === {expected_count}",
             timeout=12000,
         )
-        require(page.locator("#count").inner_text() == "20 of 20 evidence claims shown",
+        require(page.locator("#count").inner_text() == f"{expected_count} of {expected_count} evidence claims shown",
                 f"{width}px: claim manifest did not hydrate")
-        require(page.locator("#total").inner_text() == "20",
+        require(page.locator("#total").inner_text() == str(expected_count),
                 f"{width}px: headline claim count out of sync")
-        require(page.locator("#mock").inner_text() == "6",
+        require(page.locator("#mock").inner_text() == str(expected_mock),
                 f"{width}px: synthetic classification count out of sync")
         require(page.locator("#load-error").is_hidden(),
                 f"{width}px: ledger failed to load public JSON")
         page.locator('[data-filter="mock-only"]').click()
-        require(page.locator("#count").inner_text() == "6 of 20 evidence claims shown",
+        require(page.locator("#count").inner_text() == f"{expected_mock} of {expected_count} evidence claims shown",
                 f"{width}px: mock filter is incorrect")
         page.locator("#reset").click()
         page.locator("#search").fill("CRC-32")
-        require(page.locator("#count").inner_text() == "1 of 20 evidence claims shown",
+        require(page.locator("#count").inner_text() == f"1 of {expected_count} evidence claims shown",
                 f"{width}px: evidence search did not isolate receipt verifier")
         require(page.locator("#claim-receipt-verifier").is_visible(),
                 f"{width}px: expected verifier claim is not visible")
         page.locator("#reset").click()
-        require(page.locator("#count").inner_text() == "20 of 20 evidence claims shown",
+        require(page.locator("#count").inner_text() == f"{expected_count} of {expected_count} evidence claims shown",
                 f"{width}px: reset did not restore claims")
         require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
                 f"{width}px: evidence ledger overflows the viewport")
@@ -1168,6 +1171,54 @@ def check_incident_pack_native_pilot(browser, width):
         page.close()
 
 
+def check_source_target_compatibility(browser, width):
+    """A self-reported seven-gate decision must never grant native or publication approval."""
+    url = (Path(__file__).resolve().parents[1] /
+           "source-target-compatibility.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce", accept_downloads=True)
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("http:", "https:")) else None)
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: compatibility page landmarks absent")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: compatibility page horizontal overflow")
+        require(page.locator(".gate select").count() == 7,
+                f"{width}px: expected seven source-to-target gates")
+        require(page.locator("#decision").inner_text() == "HOLD",
+                f"{width}px: initial decision is not HOLD")
+        for i in range(1, 8):
+            page.locator(f"#gate-G{i:02d}").select_option("evidence")
+        require("7 self-reported evidence supplied" in page.locator("#counts").inner_text()
+                and page.locator("#decision").inner_text() == "HOLD",
+                f"{width}px: all self-reported results elevated publication status")
+        with page.expect_download(timeout=12000) as transfer:
+            page.locator("#export").click()
+        download = transfer.value
+        receipt = json.loads(Path(download.path()).read_text(encoding="utf-8"))
+        require(receipt["publication_status"] == "HOLD"
+                and receipt["independent_dev_verified"] is False
+                and receipt["production_verified"] is False
+                and receipt["scope_parity"] == "historically_mismatched_not_independently_rechecked"
+                and len(receipt["results"]) == 7,
+                f"{width}px: compatibility receipt falsely certifies runtime")
+        page.locator("#gate-G04").select_option("fail")
+        require("1 failed" in page.locator("#counts").inner_text()
+                and page.locator("#decision").inner_text() == "HOLD",
+                f"{width}px: negative-access failure changed approval state")
+        page.locator("#reset").click()
+        require("7 not reviewed" in page.locator("#counts").inner_text()
+                and page.locator("#gate-G01").input_value() == "not-run",
+                f"{width}px: compatibility worksheet reset failed")
+        require(not outbound, f"{width}px: compatibility review contacted remote hosts")
+        print(f"PASS {width}px: scope compatibility HOLD receipt, failure and reset")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1185,6 +1236,7 @@ def main():
                 check_pattern_library_audit_trail(browser, width)
                 check_operational_readiness_runbook(browser, width)
                 check_incident_pack_native_pilot(browser, width)
+                check_source_target_compatibility(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
