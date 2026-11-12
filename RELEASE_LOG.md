@@ -1,3 +1,9 @@
+## 13 November 2026 — self-contained searchable portfolio explorer (SOURCE-ONLY / MOCK-ONLY)
+
+- Published [Portfolio Explorer](portfolio-explorer.html), a browser-local searchable catalogue of 68 existing HTML pages, compiled from the actual public repository directory. Four focused review routes, topic filtering and paginated initial display improve recruiter/mobile navigation without sending queries or data anywhere.
+- Exposed the explorer from the homepage mobile directory, the 90-second reviewer navigation and sitemap. Added a reproducible offline catalogue contract test and a separate release note at [releases/2026-11-13-portfolio-explorer.md](releases/2026-11-13-portfolio-explorer.md).
+- Catalogue links are navigation, not functional acceptance. SOURCE-ONLY public implementation, MOCK-ONLY browsing interactions. Historical DEV reports remain historical; current independently DEV-VERIFIED and PRODUCTION-VERIFIED evidence not established. Original Workbench screenshot publication approvals remain zero, HOLD. No ServiceNow licensing needed for the static index; native products/permissions are target-specific.
+
 ## 13 November 2026 — embedded media publication gate and complete security-test execution (SOURCE-ONLY)
 
 - Extended deny-by-default publication checks for active HTML embeds, SVG filter-image content, remote video posters and additional CSS image sources. Corrected a synthetic PNG test fixture and added five regressions.
