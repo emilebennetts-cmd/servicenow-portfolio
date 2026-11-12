@@ -1,3 +1,10 @@
+## 13 November 2026 — 70-page sitemap completeness and CI drift prevention (SOURCE-ONLY)
+
+- Reconciled the root public HTML inventory against `sitemap.xml`: **70 existing published pages**, **36 previously indexed**, **34 omitted**. Generated canonical index of all 70 without exposing any new asset or private source.
+- Added offline `scripts/generate_sitemap.py` (`--write` and `--check`) and regression tests for deterministic coverage, missing homepage and symlink exclusion. Both GitHub quality and publication audit workflows now fail on stale or incomplete sitemap inventory.
+- Release documentation: [complete sitemap coverage](releases/2026-11-13-complete-sitemap-coverage.md). Search-engine discoverability is not guaranteed by XML inclusion; deployment and external HTTP reachability require separate checks.
+- This is SOURCE-ONLY static website maintenance; no native ServiceNow execution, DEV/production promotion, change to private repository visibility or image publication. Original screenshots remain at zero individually approved (HOLD). GitHub Pages needs no ServiceNow licence; custom Workbench deployments require target-specific licensing and ACLs.
+
 ## 13 November 2026 — self-contained searchable portfolio explorer (SOURCE-ONLY / MOCK-ONLY)
 
 - Published [Portfolio Explorer](portfolio-explorer.html), a browser-local searchable catalogue of 68 existing HTML pages, compiled from the actual public repository directory. Four focused review routes, topic filtering and paginated initial display improve recruiter/mobile navigation without sending queries or data anywhere.
