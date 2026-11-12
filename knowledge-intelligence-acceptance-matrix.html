@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="45-module, source-informed Knowledge Intelligence companion acceptance matrix. Search taxonomy and test synthetic governance gates without ServiceNow access or private data.">
+<meta name="theme-color" content="#091724">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Knowledge Intelligence Acceptance Matrix — ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#081725;--panel:#102a3c;--line:#456a7a;--text:#f0fafb;--sub:#c7dce6;--mint:#8df5d7;--amber:#ffdc9c}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto}a{color:var(--mint);text-underline-offset:4px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.skip{position:absolute;left:10px;top:-100px;padding:10px;background:white;color:black}.skip:focus{top:10px}
+header{background:radial-gradient(circle at 85% 12%,#1f6a70,transparent 55%),#0c2233;border-bottom:1px solid var(--line)}
+header .wrap{padding:50px 0 45px}nav{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:34px}nav a{font-weight:700;font-size:.86rem}
+.eyebrow{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--mint)}
+h1{font-size:clamp(2.25rem,5.7vw,4.4rem);letter-spacing:-.055em;line-height:1.1;max-width:900px;margin:16px 0}
+h2{font-size:clamp(1.5rem,3.3vw,2.5rem);line-height:1.18}h3{line-height:1.3}
+p,li{color:var(--sub)}.lead{font-size:1.13rem;max-width:850px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}.tag{border:1px solid #6f98a2;border-radius:40px;padding:6px 12px;font-size:.73rem;font-weight:800}
+section{padding:43px 0;border-bottom:1px solid #2e4c5d}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:18px}
+.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.stat strong{color:var(--mint);font-size:2rem;display:block;line-height:1.15}.stat span{color:var(--sub);font-size:.76rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card h3{margin-top:0}
+.callout{background:#30291f;border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:17px 22px;margin:22px 0}
+.callout strong{color:var(--amber)}.controls{display:grid;grid-template-columns:2fr 1fr auto;gap:12px;align-items:end;margin:22px 0}
+label{font-weight:730;display:block;margin-bottom:7px}input[type="search"],select{width:100%;background:#fff;color:#112c3a;border:2px solid #b9d8dc;border-radius:8px;padding:12px;font:inherit}
+button{font:inherit;cursor:pointer;background:var(--mint);color:#072932;border:1px solid var(--mint);padding:12px 17px;border-radius:9px;font-weight:800}
+button.secondary{background:transparent;color:var(--mint);border-color:#66b09f}
+.table-scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:650px}th,td{text-align:left;vertical-align:top;padding:12px 15px;border-bottom:1px solid #315162}th{color:var(--mint);font-size:.8rem;text-transform:uppercase}
+td small{display:block;color:var(--sub);font-size:.74rem}td strong{color:#fff}code{color:var(--amber);overflow-wrap:anywhere}
+.module[hidden]{display:none}#module-count{min-height:1.6em}
+.flow{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0}.flow span{padding:11px 14px;background:#163b4f;border:1px solid #5c8791;border-radius:9px;font-size:.83rem;font-weight:700}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gate{display:flex;align-items:start;gap:10px;background:#173348;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:.9rem;margin:0;cursor:pointer}
+.gate input{width:20px;height:20px;flex:0 0 auto;accent-color:var(--mint);margin-top:3px}
+.preset{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.outcome{border:1px solid #be9d63;background:#30291f;border-radius:12px;padding:18px 22px}
+#readiness-status{font-size:1.12rem;font-weight:900;color:var(--amber)}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Consolas,monospace;padding:16px;background:#03131c;border:1px solid var(--line);border-radius:9px;max-height:390px;overflow:auto}
+footer{padding:26px 0;color:var(--sub);font-size:.84rem}
+@media(max-width:850px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+@media(max-width:650px){header .wrap{padding:34px 0}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.controls,.checklist{grid-template-columns:1fr}section{padding:30px 0}button{width:100%}.preset button{width:auto;flex:1 1 180px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;color:black}.stat,.card,.table-scroll{background:white;color:black}p,li,td small{color:#333}nav,.controls,.preset,button,.checklist{display:none}}
+</style></head><body><a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap"><nav aria-label="Related technical work"><a href="./">Portfolio home</a><a href="knowledge-intelligence.html">Knowledge Intelligence architecture</a><a href="diagnostic-coverage-explorer.html">Core Diagnostic catalogue</a><a href="verification-ledger.html">Evidence ledger</a></nav>
+<div class="eyebrow">Diagnostic Workbench 2 · Companion architecture</div>
+<h1>Knowledge Intelligence: from 45 source modules to credible runtime acceptance.</h1>
+<p class="lead">Explore a sanitised source-defined taxonomy and test a hypothetical installation's readiness controls. The interactive checklist is a <strong>MOCK-ONLY</strong> review aid — it does not connect to, inspect or certify any ServiceNow instance.</p>
+<div class="tags"><span class="tag">SOURCE-ONLY · taxonomy and architecture</span><span class="tag">DEV-REPORTED · September historical source account</span><span class="tag">MOCK-ONLY · gate examples</span><span class="tag">DEV-VERIFIED · no fresh execution</span><span class="tag">PRODUCTION-VERIFIED · none</span></div>
+</div></header><main class="wrap" id="main">
+<section><div class="eyebrow">01 · The client's pain &amp; history</div><h2>A knowledge catalogue is not an operational diagnosis.</h2>
+<p>In a representative enterprise, a support team inherits questions, partial queries and scattered troubleshooting notes across many licensed ServiceNow products. Finding a plausible rule in a catalogue does not mean its table exists, the operator has access, its results are complete or a recommendation is approved.</p>
+<div class="callout"><strong>Source discrepancy caught in review:</strong> the companion README lists 16 tables in its update-set template, while its PDI verification checklist calls for 17. The exact installed schema and record count must be reconciled in the target instance. Neither document is treated as an authoritative runtime read-back.</div>
+</section>
+<section><div class="eyebrow">02 · The ServiceNow solution</div><h2>Separate content coverage, safe collection and accountable findings.</h2>
+<div class="flow" aria-label="Knowledge Intelligence processing flow"><span>Licensed source</span><span>Question &amp; scope</span><span>Read-only collector</span><span>Evidence/metric</span><span>Rule &amp; finding</span><span>Human review</span><span>Governed pattern</span></div>
+<div class="stats"><div class="stat"><strong>16</strong><span>Source-defined packs</span></div><div class="stat"><strong>45</strong><span>Source-defined modules / collectors</span></div><div class="stat"><strong>81</strong><span>Declared metrics</span></div><div class="stat"><strong>65</strong><span>Declared rules</span></div><div class="stat"><strong>38</strong><span>Declared solution patterns</span></div></div>
+<p>These inventory counts belong to the separately deployed Knowledge Intelligence companion version 0.1.0. They are <strong>not additive</strong> to the core Workbench's separate 20-collector-family / 42-rule catalogue. Counts are seed definitions, not executed tests, remediated issues or production outcomes.</p>
+<div class="grid"><article class="card"><h3>Source implementation evidence</h3><p>The repository documents an installed DEV package on 30 September 2026, 347 retrieved update-set inserts, idempotent seed loading and 45 live lint checks. That is a historical <strong>DEV-REPORTED</strong> claim, not independently reproduced here. The broader collector execution and permissions acceptance checklist remains open.</p></article><article class="card"><h3>Client-facing engineering boundary</h3><p>Use explicit <code>table_unavailable</code> / <code>field_unavailable</code> states rather than interpreting zero as healthy. Findings start in an awaiting-review state; knowledge article imports require licensed source rights. Companion Classic modules are not claimed to be wired into the primary Workbench UI.</p></article></div>
+</section>
+<section id="taxonomy"><div class="eyebrow">Source-reviewed taxonomy</div><h2>Find a capability — then verify the target.</h2>
+<p>Only generic module identifiers, domain descriptions and representative table names are shown. These are source catalogue declarations, not live data or approved, executable collector scripts.</p>
+<div class="controls"><div><label for="module-search">Search by capability, code or table</label><input type="search" id="module-search" placeholder="e.g. CMDB, vulnerability, incident" autocomplete="off"></div><div><label for="pack-filter">Product domain</label><select id="pack-filter"><option value="">All domains</option><option value="Platform">Platform</option>
+<option value="ITSM">ITSM</option>
+<option value="CMDB &amp; CSDM">CMDB &amp; CSDM</option>
+<option value="ITOM &amp; Discovery">ITOM &amp; Discovery</option>
+<option value="Security Operations">Security Operations</option>
+<option value="IRM &amp; Risk">IRM &amp; Risk</option>
+<option value="Customer Service">Customer Service</option>
+<option value="HR Service Delivery">HR Service Delivery</option>
+<option value="Asset Management">Asset Management</option>
+<option value="Integrations">Integrations</option>
+<option value="Portal &amp; Knowledge">Portal &amp; Knowledge</option>
+<option value="AI &amp; Automation">AI &amp; Automation</option>
+<option value="Strategic Portfolio">Strategic Portfolio</option>
+<option value="Workplace &amp; Legal">Workplace &amp; Legal</option>
+<option value="Operational Technology">Operational Technology</option>
+<option value="App Engine &amp; Custom Apps">App Engine &amp; Custom Apps</option></select></div><button type="button" class="secondary" id="reset-filter">Reset</button></div>
+<p id="module-count" aria-live="polite">45 of 45 source-defined modules shown</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Source-defined module table — scroll horizontally if needed"><table><thead><tr><th>Module / domain</th><th>Coverage topic</th><th>Representative source table</th></tr></thead><tbody>
+<tr class="module" data-code="PLAT.APPDEV" data-pack="Platform"><td><strong>PLAT.APPDEV</strong><small>Platform</small></td><td>Application development and customisation</td><td><code>sys_script</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.SEC" data-pack="Platform"><td><strong>PLAT.SEC</strong><small>Platform</small></td><td>Security, ACL and access</td><td><code>sys_user_has_role</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.PERF" data-pack="Platform"><td><strong>PLAT.PERF</strong><small>Platform</small></td><td>Performance and scalability</td><td><code>syslog</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.UPG" data-pack="Platform"><td><strong>PLAT.UPG</strong><small>Platform</small></td><td>Upgrade, release and technical debt</td><td><code>sys_upgrade_history_log</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.UI" data-pack="Platform"><td><strong>PLAT.UI</strong><small>Platform</small></td><td>UI, workspaces and forms</td><td><code>sys_ux_page_registry</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.RPT" data-pack="Platform"><td><strong>PLAT.RPT</strong><small>Platform</small></td><td>Reporting and Performance Analytics</td><td><code>pa_indicators</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.ADOPT" data-pack="Platform"><td><strong>PLAT.ADOPT</strong><small>Platform</small></td><td>Adoption and operating model</td><td><code>sys_user</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PLAT.EMAIL" data-pack="Platform"><td><strong>PLAT.EMAIL</strong><small>Platform</small></td><td>Notifications and email</td><td><code>sys_email</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.INC" data-pack="ITSM"><td><strong>ITSM.INC</strong><small>ITSM</small></td><td>Incident Management</td><td><code>incident</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.MIM" data-pack="ITSM"><td><strong>ITSM.MIM</strong><small>ITSM</small></td><td>Major Incident Management</td><td><code>incident</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.PRB" data-pack="ITSM"><td><strong>ITSM.PRB</strong><small>ITSM</small></td><td>Problem Management</td><td><code>problem</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.CHG" data-pack="ITSM"><td><strong>ITSM.CHG</strong><small>ITSM</small></td><td>Change Management</td><td><code>change_request</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.REQ" data-pack="ITSM"><td><strong>ITSM.REQ</strong><small>ITSM</small></td><td>Request and Service Catalogue</td><td><code>sc_req_item</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.SLA" data-pack="ITSM"><td><strong>ITSM.SLA</strong><small>ITSM</small></td><td>Service Level Management</td><td><code>task_sla</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITSM.SOW" data-pack="ITSM"><td><strong>ITSM.SOW</strong><small>ITSM</small></td><td>Service Operations Workspace</td><td><code>sys_ux_page_registry</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="CMDB.DATA" data-pack="CMDB &amp; CSDM"><td><strong>CMDB.DATA</strong><small>CMDB &amp; CSDM</small></td><td>CMDB data quality</td><td><code>cmdb_ci</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="CMDB.IRE" data-pack="CMDB &amp; CSDM"><td><strong>CMDB.IRE</strong><small>CMDB &amp; CSDM</small></td><td>Identification and reconciliation</td><td><code>cmdb_ci</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="CMDB.CSDM" data-pack="CMDB &amp; CSDM"><td><strong>CMDB.CSDM</strong><small>CMDB &amp; CSDM</small></td><td>CSDM and service model</td><td><code>cmdb_ci_service_business</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITOM.DISC" data-pack="ITOM &amp; Discovery"><td><strong>ITOM.DISC</strong><small>ITOM &amp; Discovery</small></td><td>Discovery and MID Servers</td><td><code>ecc_agent</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITOM.SM" data-pack="ITOM &amp; Discovery"><td><strong>ITOM.SM</strong><small>ITOM &amp; Discovery</small></td><td>Service Mapping</td><td><code>cmdb_ci_service_discovered</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITOM.EM" data-pack="ITOM &amp; Discovery"><td><strong>ITOM.EM</strong><small>ITOM &amp; Discovery</small></td><td>Event Management and AIOps</td><td><code>em_event</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITOM.CLOUD" data-pack="ITOM &amp; Discovery"><td><strong>ITOM.CLOUD</strong><small>ITOM &amp; Discovery</small></td><td>Cloud discovery and management</td><td><code>cmdb_ci_vm_instance</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="SECOPS.SIR" data-pack="Security Operations"><td><strong>SECOPS.SIR</strong><small>Security Operations</small></td><td>Security Incident Response</td><td><code>sn_si_incident</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="SECOPS.VR" data-pack="Security Operations"><td><strong>SECOPS.VR</strong><small>Security Operations</small></td><td>Vulnerability Response</td><td><code>sn_vul_vulnerable_item</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="IRM.GRC" data-pack="IRM &amp; Risk"><td><strong>IRM.GRC</strong><small>IRM &amp; Risk</small></td><td>Policy, compliance and controls</td><td><code>sn_compliance_control</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="IRM.RISK" data-pack="IRM &amp; Risk"><td><strong>IRM.RISK</strong><small>IRM &amp; Risk</small></td><td>Risk and issue management</td><td><code>sn_grc_issue</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="CSM.CASE" data-pack="Customer Service"><td><strong>CSM.CASE</strong><small>Customer Service</small></td><td>Customer case management</td><td><code>sn_customerservice_case</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="CSM.FSM" data-pack="Customer Service"><td><strong>CSM.FSM</strong><small>Customer Service</small></td><td>Field Service Management</td><td><code>wm_task</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="HR.CASE" data-pack="HR Service Delivery"><td><strong>HR.CASE</strong><small>HR Service Delivery</small></td><td>HR case and knowledge management</td><td><code>sn_hr_core_case</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="HR.LE" data-pack="HR Service Delivery"><td><strong>HR.LE</strong><small>HR Service Delivery</small></td><td>Lifecycle events and journeys</td><td><code>sn_hr_le_case</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITAM.HAM" data-pack="Asset Management"><td><strong>ITAM.HAM</strong><small>Asset Management</small></td><td>Hardware Asset Management</td><td><code>alm_hardware</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="ITAM.SAM" data-pack="Asset Management"><td><strong>ITAM.SAM</strong><small>Asset Management</small></td><td>Software Asset Management</td><td><code>cmdb_sam_sw_install</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="INT.IH" data-pack="Integrations"><td><strong>INT.IH</strong><small>Integrations</small></td><td>IntegrationHub and Flow Designer</td><td><code>sys_flow_context</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="INT.API" data-pack="Integrations"><td><strong>INT.API</strong><small>Integrations</small></td><td>REST, SOAP, import sets and MID integration</td><td><code>sys_import_set_run</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PORTAL.SP" data-pack="Portal &amp; Knowledge"><td><strong>PORTAL.SP</strong><small>Portal &amp; Knowledge</small></td><td>Service Portal and Employee Center</td><td><code>sp_portal</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="PORTAL.KM" data-pack="Portal &amp; Knowledge"><td><strong>PORTAL.KM</strong><small>Portal &amp; Knowledge</small></td><td>Knowledge Management</td><td><code>kb_knowledge</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="AI.VA" data-pack="AI &amp; Automation"><td><strong>AI.VA</strong><small>AI &amp; Automation</small></td><td>Virtual Agent and conversational</td><td><code>sys_cs_topic</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="AI.PI" data-pack="AI &amp; Automation"><td><strong>AI.PI</strong><small>AI &amp; Automation</small></td><td>Predictive Intelligence and Now Assist</td><td><code>ml_solution</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="AI.PM" data-pack="AI &amp; Automation"><td><strong>AI.PM</strong><small>AI &amp; Automation</small></td><td>Process Mining and automation</td><td><code>promin_project</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="SPM.PPM" data-pack="Strategic Portfolio"><td><strong>SPM.PPM</strong><small>Strategic Portfolio</small></td><td>Project and portfolio management</td><td><code>pm_project</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="SPM.DEM" data-pack="Strategic Portfolio"><td><strong>SPM.DEM</strong><small>Strategic Portfolio</small></td><td>Demand and agile delivery</td><td><code>dmn_demand</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="WSD.WSD" data-pack="Workplace &amp; Legal"><td><strong>WSD.WSD</strong><small>Workplace &amp; Legal</small></td><td>Workplace Service Delivery</td><td><code>sn_wsd_core_space</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="WSD.LEGAL" data-pack="Workplace &amp; Legal"><td><strong>WSD.LEGAL</strong><small>Workplace &amp; Legal</small></td><td>Legal Service Delivery</td><td><code>sn_lg_ops_request</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="OT.OTM" data-pack="Operational Technology"><td><strong>OT.OTM</strong><small>Operational Technology</small></td><td>OT asset and vulnerability management</td><td><code>cmdb_ci_ot</code><small>Example source table; verify in target</small></td></tr>
+<tr class="module" data-code="APPENG.GOV" data-pack="App Engine &amp; Custom Apps"><td><strong>APPENG.GOV</strong><small>App Engine &amp; Custom Apps</small></td><td>App Engine governance and custom applications</td><td><code>sys_app</code><small>Example source table; verify in target</small></td></tr>
+</tbody></table></div><p id="module-empty" hidden>No matching module. Adjust the search or product domain.</p>
+</section>
+<section id="acceptance"><div class="eyebrow">03 · Architectural best practices</div><h2>Interactive acceptance decision — synthetic only.</h2>
+<p>The eight checks below model the minimum questions an architect should resolve, but checking a box is <strong>not evidence the action happened</strong>. Fixtures demonstrate blocking outcomes and export only a HOLD review packet. No form input is persisted or transmitted.</p>
+<div class="checklist" id="gate-list"><label class="gate"><input data-gate="identity" type="checkbox"><span>Application identity, scope, release and installed package read-back reconciled</span></label>
+<label class="gate"><input data-gate="schema" type="checkbox"><span>Dictionary/table count reconciled against installed package, not assumed from docs</span></label>
+<label class="gate"><input data-gate="access" type="checkbox"><span>ACL matrix tested with ki_admin, ki_user and an unauthorised role</span></label>
+<label class="gate"><input data-gate="collection" type="checkbox"><span>Collector lint AND authorised non-production execution observed</span></label>
+<label class="gate"><input data-gate="coverage" type="checkbox"><span>Tables, fields, plugins and sample completeness checked in target release</span></label>
+<label class="gate"><input data-gate="lineage" type="checkbox"><span>Evidence → metric → rule → finding → pattern linkage independently checked</span></label>
+<label class="gate"><input data-gate="content" type="checkbox"><span>Knowledge source licence, redistribution permission and content rights verified</span></label>
+<label class="gate"><input data-gate="approval" type="checkbox"><span>Human finding review and separate release/change sign-off captured</span></label></div>
+<div class="preset" aria-label="Select a synthetic verification scenario">
+<button type="button" class="secondary" data-fixture="unreviewed" aria-pressed="true">Unreviewed baseline</button>
+<button type="button" class="secondary" data-fixture="access">Access gap</button>
+<button type="button" class="secondary" data-fixture="unavailable">Product table absent</button>
+<button type="button" class="secondary" data-fixture="draft">Review-ready example</button></div>
+<div class="outcome"><div id="readiness-status" role="status" aria-live="polite">HOLD — REQUIRED CHECKS OPEN</div><p id="readiness-explanation">A source catalogue and historical DEV statement are insufficient for acceptance.</p></div>
+<h3>Source-safe JSON review packet</h3><pre id="readiness-receipt" aria-label="Synthetic review JSON"></pre>
+<button id="download-packet" type="button">Download synthetic HOLD packet</button>
+<div class="callout"><strong>Release boundary:</strong> even a fully checked fixture is only REVIEW-READY · HOLD. Client acceptance, DEV verification and production authorisation require independent, dated evidence and authorised sign-off. No original Workbench screenshots, credentials, customer data or private source scripts are embedded.</div>
+</section>
+<section><h2>Licensing and entitlement dependencies</h2><p>The static website and synthetic checklist require <strong>no ServiceNow licence</strong>. Native implementation requires authorised custom application/scope and ACL rights; each collector additionally requires access to its underlying product tables. ITSM, ITOM/Discovery, SecOps, IRM, CSM, HRSD, ITAM, SPM, WSD, App Engine, AI/Virtual Agent and IntegrationHub functionality may require separate licences or installed plugins, depending on the contracted instance. Knowledge-import rights and external API/provider terms require independent confirmation.</p>
+<p>Acceptance should follow least privilege, OOTB-first platform decisions, upgrade-safe metadata and ITIL-aligned controlled change. Source evidence and the September DEV report do not establish production verification or permission to publish screenshot originals.</p></section>
+</main><footer><div class="wrap">Client-neutral technical demonstration · No ServiceNow network requests · <a href="knowledge-intelligence.html">Review companion architecture</a></div></footer>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const search=$('module-search'),filter=$('pack-filter'),rows=[...document.querySelectorAll('.module')];
+function updateFilter(){const q=search.value.trim().toLowerCase(),pack=filter.value;let n=0;for(const r of rows){const visible=(!pack||r.dataset.pack===pack)&&(!q||r.textContent.toLowerCase().includes(q));r.hidden=!visible;if(visible)n++;}$('module-count').textContent=n+' of '+rows.length+' source-defined modules shown';$('module-empty').hidden=n!==0;}
+search.addEventListener('input',updateFilter);filter.addEventListener('change',updateFilter);$('reset-filter').addEventListener('click',()=>{search.value='';filter.value='';updateFilter();search.focus();});
+const gates=[...document.querySelectorAll('[data-gate]')],buttons=[...document.querySelectorAll('[data-fixture]')];
+let fixture='unreviewed';
+function redraw(){const done=gates.filter(x=>x.checked).length;
+const absent=fixture==='unavailable';let status='HOLD — REQUIRED CHECKS OPEN',explanation=(8-done)+' architectural verification gates remain unsubstantiated by runtime receipts.';
+if(absent){status='NOT ASSESSED — TABLE UNAVAILABLE';explanation='A missing product table cannot become a zero finding or a passing health score. Record feature dependency or lack of entitlement.';}
+else if(done===8){status='REVIEW-READY · HOLD';explanation='All synthetic checklist marks are present; no actual execution, independent approval or release authority has been established.';}
+$('readiness-status').textContent=status;$('readiness-explanation').textContent=explanation;
+const receipt={schema:'portfolio-ki-review/1.0',fixture,source_catalogue:'knowledge-intelligence/0.1.0',source_module_count:45,source_pack_count:16,checks_marked:done,checks_total:gates.length,pending_control_ids:gates.filter(x=>!x.checked).map(x=>x.dataset.gate),assessment_status:status,evidence_class:'MOCK-ONLY',source_taxonomy_class:'SOURCE-ONLY',historical_dev_status:'DEV-REPORTED / not independently reproduced',service_now_instance:null,collector_execution_verified:false,dev_execution_verified:false,production_deployment_verified:false,public_release_authorised:false,approval_status:'HOLD',schema_table_count_conflict:'16 vs 17 documented; target read-back required'};
+$('readiness-receipt').textContent=JSON.stringify(receipt,null,2);}
+const presets={unreviewed:[],access:['identity','schema','collection','coverage','lineage','content','approval'],unavailable:['identity','schema','access','collection','lineage','content','approval'],draft:['identity','schema','access','collection','coverage','lineage','content','approval']};
+function setFixture(key){fixture=key;const values=presets[key];gates.forEach(x=>x.checked=values.includes(x.dataset.gate));buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fixture===key)));redraw();}
+buttons.forEach(b=>b.addEventListener('click',()=>setFixture(b.dataset.fixture)));
+gates.forEach(g=>g.addEventListener('change',()=>{fixture='manual';buttons.forEach(b=>b.setAttribute('aria-pressed','false'));redraw();}));
+$('download-packet').addEventListener('click',()=>{const blob=new Blob([$('readiness-receipt').textContent+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='knowledge-intelligence-review-HOLD.json';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);});
+setFixture('unreviewed');
+})();
+</script></body></html>
