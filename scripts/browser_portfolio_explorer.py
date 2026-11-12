@@ -22,7 +22,7 @@ def verify(browser, width):
         count = page.locator(".result:visible").count()
         assert count >= 2, f"{width}px CMDB search returned {count}"
         assert all("cmdb" in x.lower() for x in page.locator(".result:visible").all_text_contents())
-        page.locator("#category").select_option(label="Architecture")
+        page.locator("#category").select_option(label="Labs & patterns")
         assert page.locator(".result:visible").count() >= 1
         page.locator("#reset").click()
         assert page.locator("#search").input_value() == ""
