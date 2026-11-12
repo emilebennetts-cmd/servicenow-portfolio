@@ -16,6 +16,8 @@ on:
       - 'knowledge-intelligence-acceptance-matrix.html'
       - 'portfolio-review-guide.html'
       - 'workbench-acceptance-playbook.html'
+      - 'pattern-library-audit-trail.html'
+      - 'scripts/test_pattern_library_audit_trail.py'
       - 'scripts/test_acceptance_worksheet.py'
       - 'scripts/browser_navigation_smoke.py'
       - '.github/workflows/portfolio-responsive-smoke.yml'
