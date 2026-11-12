@@ -879,12 +879,50 @@ def check_diagnostic_coverage_explorer(browser, width):
         page.close()
 
 
+
+def check_portfolio_review_guide(browser, width):
+    """Exercise three source-backed review routes; do not request external assets."""
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("http:", "https:")) else None)
+    try:
+        url = (Path(__file__).resolve().parents[1] / "portfolio-review-guide.html").as_uri()
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1 and page.locator("main").count() == 1,
+                f"{width}px: guide landmarks missing")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: guide has horizontal overflow")
+        require(page.locator('[data-route="recruiter"]').get_attribute("aria-pressed") == "true",
+                f"{width}px: default review route incorrect")
+        require(page.locator("#route-recruiter").is_visible()
+                and not page.locator("#route-architect").is_visible(),
+                f"{width}px: default route panel visibility incorrect")
+        for route in ("architect", "assurance", "recruiter"):
+            page.locator(f'[data-route="{route}"]').click()
+            require(page.locator(f'[data-route="{route}"]').get_attribute("aria-pressed") == "true",
+                    f"{width}px: selected review route lacks accessible state")
+            require(page.locator(f"#route-{route}").is_visible(),
+                    f"{width}px: selected route hidden")
+            require(sum(1 for r in ("recruiter", "architect", "assurance")
+                        if page.locator(f"#route-{r}").is_visible()) == 1,
+                    f"{width}px: route panels overlap")
+        require(page.locator(".sample").count() == 3
+                and "HOLD" in page.locator("#source-observations").inner_text(),
+                f"{width}px: withheld screenshot descriptions lost")
+        require(not outbound, f"{width}px: reviewer guide unexpectedly contacted remote hosts")
+        print(f"PASS {width}px: reviewer routes, accessible state, bounds and publication HOLD")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         try:
             for width in VIEWPORTS:
                 check_viewport(browser, width)
+                check_portfolio_review_guide(browser, width)
                 check_reviewed_evidence_gallery(browser, width)
                 check_verification_ledger(browser, width)
                 check_review_packet(browser, width)
