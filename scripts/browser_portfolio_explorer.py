@@ -21,7 +21,8 @@ def verify(browser, width):
         page.locator("#search").fill("CMDB")
         count = page.locator(".result:visible").count()
         assert count >= 2, f"{width}px CMDB search returned {count}"
-        assert all("cmdb" in x.lower() for x in page.locator(".result:visible").all_text_contents())
+        assert all("cmdb" in (x.get_attribute("data-search") or "").lower()
+                   for x in page.locator(".result:visible").all())
         page.locator("#category").select_option(label="Labs & patterns")
         assert page.locator(".result:visible").count() >= 1
         page.locator("#reset").click()
