@@ -679,7 +679,7 @@ def check_review_packet(browser, width):
                 f"{width}px: checklist progress is inaccurate")
         require(page.locator("#gate-status").inner_text() == "REVIEW-READY · HOLD",
                 f"{width}px: completion must never mean approved")
-        preview = json.loads(page.locator("#packet-preview").inner_text())
+        preview = json.loads(page.locator("#packet-preview").text_content())
         require(preview["publication_status"] == "HOLD"
                 and preview["public_release_authorised"] is False
                 and preview["production_verified"] is False
