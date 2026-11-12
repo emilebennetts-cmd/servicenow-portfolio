@@ -78,8 +78,8 @@ class PilotContract(unittest.TestCase):
                       "2ca59f29718f","8cdc45578377",
                       "Epicon","DemoDev3","Bearer ","password="):
             self.assertNotIn(token,self.html)
-        self.assertNotRegex(self.html,r"(?i)(?:https?://|data:image|<script\\s+src=|<link\\s+rel=[\"']stylesheet)")
-        self.assertNotRegex(self.html,r"\\b(?:fetch|XMLHttpRequest|localStorage|sendBeacon)\\s*\\(")
+        self.assertNotRegex(self.html,r"(?i)(?:https?://|data:image|<script\s+src=|<link\s+rel=[\"']stylesheet)")
+        self.assertNotRegex(self.html,r"\b(?:fetch|XMLHttpRequest|localStorage|sendBeacon)\s*\(")
 
     def test_page_links_and_manifest(self):
         for path in ("index.html","portfolio-review-guide.html","sitemap.xml"):
