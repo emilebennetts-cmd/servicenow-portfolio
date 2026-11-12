@@ -17,13 +17,22 @@ REQUIRED = {
     "VISUAL-REVIEWS", "REDACTION-DESK", "RECEIPT-VERIFIER",
     "REVIEW-PACKET", "CMDB-SOURCE-ONBOARDING", "DIAGNOSTIC-COVERAGE",
     "KI-ACCEPTANCE-MATRIX", "PATTERN-LIBRARY-AUDIT", "OPERATIONS-READINESS",
+    "INCIDENT-PACK-PILOT", "SCOPE-COMPATIBILITY",
 }
 
 
 class LedgerManifestTests(unittest.TestCase):
     def test_complete_catalogue_has_public_pages(self):
         items = REGISTER["items"]
-        self.assertEqual(REQUIRED, {item["id"] for item in items})
+        ids = [item["id"] for item in items]
+        self.assertEqual(len(ids), len(set(ids)), "Duplicate evidence claim IDs must fail closed")
+        self.assertTrue(REQUIRED.issubset(set(ids)),
+                        f"Missing baseline claims: {sorted(REQUIRED - set(ids))}")
+        # The ledger is append-only. New claims must be validated, not rejected
+        # merely for extending the catalogue (CI regression 2026-11-13).
+        classifications = {item["id"]: item["classification"] for item in items}
+        for key in ("INCIDENT-PACK-PILOT", "SCOPE-COMPATIBILITY"):
+            self.assertEqual("source-only", classifications[key])
         for item in items:
             with self.subTest(item=item["id"]):
                 self.assertTrue((ROOT / item["page"]).is_file())
