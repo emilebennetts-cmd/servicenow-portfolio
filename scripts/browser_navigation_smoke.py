@@ -1054,6 +1054,49 @@ def check_pattern_library_audit_trail(browser, width):
         page.close()
 
 
+
+def check_operational_readiness_runbook(browser, width):
+    """Source-backed cadence filtering and fail-closed operational guidance."""
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce")
+    outbound = []
+    page.on("request", lambda req: outbound.append(req.url)
+            if req.url.startswith(("http:", "https:")) else None)
+    try:
+        url = (Path(__file__).resolve().parents[1] /
+               "operational-readiness-runbook.html").as_uri()
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("h1").count() == 1
+                and page.locator("[data-code]").count() == 12,
+                f"{width}px: operational catalogue is incomplete")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: operations runbook overflows the viewport")
+        require("12 of 12" in page.locator("#count").inner_text(),
+                f"{width}px: default operational count is wrong")
+        page.locator('[data-cadence="release"]').click()
+        require(page.locator("[data-code]:visible").count() == 3
+                and page.locator('[data-cadence="release"]').get_attribute("aria-pressed") == "true",
+                f"{width}px: per-release filtering failed")
+        page.locator("#q").fill("preview")
+        require(page.locator("[data-code]:visible").count() == 1
+                and page.locator("[data-code]:visible").get_attribute("data-code") == "OPS-07",
+                f"{width}px: runbook search failed")
+        page.locator("#reset").click()
+        require(page.locator("[data-code]:visible").count() == 12
+                and page.locator('[data-cadence="all"]').get_attribute("aria-pressed") == "true",
+                f"{width}px: runbook reset failed")
+        page.locator("#failure-select").select_option("consent")
+        require("Disable the bounded client scan" in page.locator("#failure-output").inner_text(),
+                f"{width}px: consent containment missing")
+        page.locator("#failure-select").select_option("preview")
+        require("re-previews" in page.locator("#failure-output").inner_text(),
+                f"{width}px: preview safety guidance missing")
+        require(not outbound, f"{width}px: operations catalogue contacted external hosts")
+        print(f"PASS {width}px: operations cadence, search, reset, failure safety, isolation")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1069,6 +1112,7 @@ def main():
                 check_diagnostic_coverage_explorer(browser, width)
                 check_ki_acceptance_matrix(browser, width)
                 check_pattern_library_audit_trail(browser, width)
+                check_operational_readiness_runbook(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
