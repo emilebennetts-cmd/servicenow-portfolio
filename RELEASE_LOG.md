@@ -1,3 +1,11 @@
+## 12 November 2026 — fail-closed operational handover receipt and CI fix (SOURCE-ONLY / MOCK-ONLY)
+
+- Enhanced [Operational Readiness Runbook](operational-readiness-runbook.html#handover-ledger) with a six-gate, mobile-friendly browser-local decision register and downloadable **HOLD-only** JSON review receipt. Missing/unsafe evidence aliases block export; all review statuses remain self-reported. No data is stored or uploaded, and no native DEV/Production claims are promoted.
+- Repaired a cadence selector collision between buttons and operational cards, plus corresponding Chromium locator ambiguity. Added positive/negative receipt tests at 390/768/1024/1440px and static publication controls; corrected one generated Python test syntax issue.
+- [Quality gate](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43216860002), [site audit](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43216859770) and [Chromium test](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43216859850) passed on implementation SHA `96ded81f`. GitHub Pages/HTTP publication is a distinct check.
+- Evidence: website **SOURCE-ONLY**; self-recorded receipt **MOCK-ONLY**; historical Delivery DEV baseline **DEV-REPORTED**; no new **DEV-VERIFIED** or **PRODUCTION-VERIFIED** evidence. All six image reviews remain private on HOLD with zero publication approvals.
+- Public UI requires no ServiceNow licence; native functionality requires validated App Engine/custom-table rights, ACLs and actual product-specific ITSM, ITOM, IntegrationHub, AI/analytics or provider entitlements as applicable. [Detailed release note](release-notes/2026-11-12-operational-handover-receipt.md).
+
 ## 12 November 2026 — operational readiness and support handover (SOURCE-ONLY)
 
 - Implemented the [Operational Readiness & Support Runbook](operational-readiness-runbook.html): 12 source-backed controls by cadence, searchable local filtering, six safe failure containment responses and accessible print layout. The page is client-neutral and responsive.
