@@ -1262,6 +1262,51 @@ def check_native_assurance_atlas(browser, width):
         page.close()
 
 
+
+def check_native_execution_protocol(browser, width):
+    """Verify source-derived protocol steps and non-certifying HOLD export in Chromium."""
+    url = (Path(__file__).resolve().parents[1] / "native-assurance-coverage-atlas.html").as_uri()
+    page = browser.new_page(viewport={"width": width, "height": 900},
+                            reduced_motion="reduce", accept_downloads=True)
+    outbound = []
+    page.on("request", lambda request: outbound.append(request.url)
+            if request.url.startswith(("http:", "https:")) else None)
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("#protocol-select option").count() == 9,
+                f"{width}px: expected nine native assurance protocols")
+        require(page.locator("#protocol-detail article").count() == 6,
+                f"{width}px: protocol has incomplete steps or evidence")
+        page.locator("#protocol-select").select_option("DX-14")
+        require("DX-14" in page.locator("#protocol-status").inner_text()
+                and "NOT RUN" in page.locator("#protocol-status").inner_text(),
+                f"{width}px: Diagnostic protocol was not selected or was falsely executed")
+        require("entitlement" in page.locator("#protocol-detail").inner_text().lower(),
+                f"{width}px: missing entitlement blocking criteria")
+        with page.expect_download(timeout=12000) as transfer:
+            page.locator("#protocol-export").click()
+        ticket = json.loads(Path(transfer.value.path()).read_text(encoding="utf-8"))
+        require(ticket["id"] == "DX-14"
+                and ticket["execution_status"] == "NOT RUN"
+                and ticket["publication_status"] == "HOLD"
+                and ticket["independent_dev_verified"] is False
+                and ticket["production_verified"] is False
+                and ticket["screenshot_publication_approved"] is False
+                and ticket["approval"] == "NOT GRANTED"
+                and len(ticket["steps"]) >= 3,
+                f"{width}px: exported protocol falsely grants acceptance")
+        page.locator("#protocol-select").select_option("NV-021")
+        require("NV-021" in page.locator("#protocol-status").inner_text()
+                and "disposable" in page.locator("#protocol-detail").inner_text().lower(),
+                f"{width}px: recovery fault boundary absent")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: protocol has horizontal overflow")
+        require(not outbound, f"{width}px: protocol generated an external request")
+        print(f"PASS {width}px: native protocol selector, source steps, HOLD ticket and isolation")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -1281,6 +1326,7 @@ def main():
                 check_incident_pack_native_pilot(browser, width)
                 check_source_target_compatibility(browser, width)
                 check_native_assurance_atlas(browser, width)
+                check_native_execution_protocol(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
