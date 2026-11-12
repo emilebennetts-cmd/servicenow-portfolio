@@ -154,6 +154,15 @@
       "runtime_verification": "Source inspection as of 2026-11-12; no new authorised collector execution, independent DEV read-back or production testing. Historical DEV reports remain version-specific.",
       "public_screenshot_status": "No genuine screenshots, private script source or customer data included; all original screenshot candidates remain HOLD.",
       "page": "diagnostic-coverage-explorer.html"
+    },
+    {
+      "id": "KI-ACCEPTANCE-MATRIX",
+      "title": "Knowledge Intelligence source coverage and synthetic acceptance matrix",
+      "classification": "mock-only",
+      "basis": "Source-reviewed companion 0.1.0 taxonomy: 16 packs, 45 modules/collectors, 81 metrics, 65 rules and 38 patterns. Interactive eight-gate decisions are original, synthetic browser demonstrations. 16 vs 17 table count is an unresolved source-document discrepancy.",
+      "runtime_verification": "Historical 30 September 2026 installation and 45 lint passes are repository-reported, not independently reproduced. No actual runtime collection, schema reconciliation, DEV acceptance or production assurance executed by the portfolio.",
+      "public_screenshot_status": "No original screenshots, licensed knowledge articles, private scripts, source file IDs or customer data embedded; publication HOLD remains.",
+      "page": "knowledge-intelligence-acceptance-matrix.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
