@@ -20,6 +20,9 @@ on:
       - 'operational-readiness-runbook.html'
       - 'incident-pack-native-pilot.html'
       - 'native-assurance-coverage-atlas.html'
+      - 'portfolio-explorer.html'
+      - 'scripts/test_portfolio_explorer.py'
+      - 'scripts/browser_portfolio_explorer.py'
       - 'scripts/test_assurance_coverage_atlas.py'
       - 'evidence/public-verification-register.json'
       - 'scripts/test_incident_pack_pilot.py'
@@ -55,5 +58,9 @@ jobs:
         run: python scripts/test_operational_readiness_runbook.py
       - name: Verify Incident pack publication and provenance contract
         run: python scripts/test_incident_pack_pilot.py
+      - name: Verify searchable explorer publication contract
+        run: python scripts/test_portfolio_explorer.py
+      - name: Exercise local search and navigation at four viewport widths
+        run: python scripts/browser_portfolio_explorer.py
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py
