@@ -1,3 +1,12 @@
+## 12 November 2026 — CMDB source onboarding and IRE acceptance lab (SOURCE-ONLY / MOCK-ONLY)
+
+- Implemented [CMDB Source Onboarding Lab](cmdb-source-onboarding-lab.html): three synthetic identification/attribute-governance scenarios, six independent review controls, explicit unresolved-identity blocks, and a download-only JSON design receipt with no DEV/production/approval claim.
+- Added responsive Chromium coverage at 390/768/1024/1440 px, unit safety contract, CMDB case study and homepage links, sitemap route, and MOCK-ONLY evidence manifest item CMDB-SOURCE-ONBOARDING.
+- Representative data and diagrams are explanatory, not screenshots or native IRE responses. ServiceNow Identification Simulation, attribute reconciliation preview and negative-access tests require target-instance evidence before acceptance.
+- Original six inspected Workbench captures remain privately held on HOLD; no publication rights were granted, no real screenshots embedded, no private source exposed, and repository visibilities were unchanged.
+- See [full release note](release-notes/2026-11-12-cmdb-source-onboarding-lab.md). Target CI outcome must be inspected against the final commit; offline and browser tests do not imply ServiceNow DEV execution or production verification.
+- Licence boundary: public site needs none; actual IRE/CMDB, Discovery/Service Graph, ITOM, IntegrationHub, CMDB 360 and external feeds depend on authorised roles, installed release and contractual entitlements.
+
 ## 12 November 2026 — HOLD-only screenshot review handoff and evidence governance controls
 
 - Published `screenshot-review-packet.html`: a browser-local, responsive eight-gate reviewer handoff for the six privately inspected source observations, RV-01–RV-06. The selected image review class updates from the text-only source record; switching candidates resets every control.
