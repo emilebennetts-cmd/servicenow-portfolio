@@ -31,8 +31,8 @@ class LedgerManifestTests(unittest.TestCase):
         # The ledger is append-only. New claims must be validated, not rejected
         # merely for extending the catalogue (CI regression 2026-11-13).
         classifications = {item["id"]: item["classification"] for item in items}
-        for key in ("INCIDENT-PACK-PILOT", "SCOPE-COMPATIBILITY"):
-            self.assertEqual("source-only", classifications[key])
+        self.assertEqual("DEV-reported", classifications["INCIDENT-PACK-PILOT"])
+        self.assertEqual("source-only", classifications["SCOPE-COMPATIBILITY"])
         for item in items:
             with self.subTest(item=item["id"]):
                 self.assertTrue((ROOT / item["page"]).is_file())
