@@ -24,6 +24,7 @@ a.inline{font-weight:800}footer{border-top:1px solid var(--line);padding:32px 0 
 @media(max-width:760px){.grid{grid-template-columns:1fr}.cols,.runbooks{grid-template-columns:1fr}.eyebrow{margin-top:50px}.failure dl{grid-template-columns:1fr}.failure dt{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:white;color:#111}header{background:white;color:#111}p,li,td,.note{color:#333}.box,.item,.failure,.warning{background:white;color:#111;border-color:#aaa;break-inside:avoid}.filter,.toolbar,.actions,.skip{display:none}.runbooks{display:block}.item{margin-bottom:12px}.item[hidden]{display:block!important}.tag,.item .meta,.kicker{color:#123}.item .evidence{color:#111;background:white}.wrap{width:100%}}
+.handover-rows select,.handover-rows input{background:#0d2333;color:#f1f9fc;border:1px solid #7893a0;border-radius:8px;padding:9px;width:100%;min-height:42px;font:inherit}.handover-rows select{min-width:180px}.handover-rows input{min-width:170px}.handover-rows label{display:block;font-size:.8rem;font-weight:800;margin-bottom:5px}.handover-rows th{min-width:170px}.handover-status{border-left:4px solid var(--gold);background:#26323b;padding:15px 18px;border-radius:8px;color:#f5e1bc}.handover-help{font-size:.85rem;color:var(--sub)}@media print{#handover-ledger .actions,#handover-ledger input,#handover-ledger select{display:none}#handover-ledger{break-before:page}}
 </style></head><body>
 <a class="skip" href="#main">Skip to main content</a>
 <header><div class="wrap">
@@ -69,6 +70,14 @@ a.inline{font-weight:800}footer{border-top:1px solid var(--line);padding:32px 0 
 </select>
 <div class="failure" id="failure-output" aria-live="polite"></div>
 </section>
+<section class="section" id="handover-ledger" aria-labelledby="gate-title"><p class="kicker">Operational assurance / browser-local worksheet</p><h2 id="gate-title">Handover evidence decision register</h2>
+<p>Use this controlled checklist to record what still needs independent sign-off. The six gates below correspond to the release/operations acceptance conditions in the source-backed As-Built. These entries are <strong>self-reported browser inputs</strong>, not ServiceNow DEV tests, signatures, approval records or production evidence.</p>
+<div class="warning"><strong>Safety boundary:</strong> Do not enter client names, customer data, sys_ids, instance URLs, email addresses, credentials or private file paths. Use anonymous references such as <code>REL_A01</code>. This worksheet never saves data or sends requests to a remote service. Every export remains publication <strong>HOLD</strong>.</div>
+<div class="table-scroll"><table><thead><tr><th scope="col">Acceptance gate</th><th scope="col">Local review status</th><th scope="col">Anonymous evidence alias</th></tr></thead><tbody id="handover-rows" class="handover-rows"></tbody></table></div>
+<p id="handover-status" class="handover-status" role="status" aria-live="polite">HOLD — NOT ASSESSED</p>
+<div class="actions"><button type="button" id="handover-export" class="btn">Export HOLD review receipt (JSON)</button><button type="button" id="handover-reset" class="btn secondary">Clear handover inputs</button></div>
+<p class="handover-help">An alias is required for any self-reported complete control. Use letters, digits, underscores, hyphens or dots only, up to 64 characters. Review completion does not imply an accepted release or tested recovery.</p>
+</section>
 <section class="section" aria-labelledby="architect"><p class="kicker">03 / Architectural best practices</p><h2 id="architect">Handover is an acceptance contract</h2>
 <p>ServiceNow OOTB capabilities—ACLs, update-set previews, application logs, platform notifications, incidents, changes, and scheduled executions—should be used before building bespoke orchestration. The controlled As-Built treats the following as unresolved until appropriate authorities sign off.</p>
 <div class="table-scroll"><table><thead><tr><th>Gate</th><th>Current documented boundary</th><th>Closure evidence</th></tr></thead><tbody>
@@ -85,7 +94,7 @@ a.inline{font-weight:800}footer{border-top:1px solid var(--line);padding:32px 0 
 <footer><div class="wrap">© 2026 ServiceNow Engineering Portfolio · SOURCE-ONLY · <a href="./">Home</a> · <a href="portfolio-review-guide.html">90-second review</a> · <a href="verification-ledger.html">Verification matrix</a></div></footer>
 <script>
 (()=>{'use strict';
-const cards=Array.from(document.querySelectorAll('[data-code]'));const query=document.getElementById('q'),count=document.getElementById('count');const filters=Array.from(document.querySelectorAll('[data-cadence]'));let cadence='all';
+const cards=Array.from(document.querySelectorAll('[data-code]'));const query=document.getElementById('q'),count=document.getElementById('count');const filters=Array.from(document.querySelectorAll('button.filter[data-cadence]'));let cadence='all';
 function update(){const q=query.value.trim().toLowerCase();let n=0;cards.forEach(c=>{const ok=(cadence==='all'||c.dataset.cadence===cadence)&&(!q||c.textContent.toLowerCase().includes(q)||c.dataset.code.toLowerCase().includes(q));c.hidden=!ok;if(ok)n++});count.textContent=n+' of '+cards.length+' operational controls shown'}
 filters.forEach(btn=>btn.addEventListener('click',()=>{cadence=btn.dataset.cadence;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));update()}));
 query.addEventListener('input',update);
@@ -102,5 +111,32 @@ recovery:['Platform unavailable: follow approved continuity','Do not bypass the 
 const output=document.getElementById('failure-output'),select=document.getElementById('failure-select');
 function renderFailure(){const [name,contain,recover]=outcomes[select.value];output.replaceChildren();const h=document.createElement('h3');h.textContent=name;const dl=document.createElement('dl');[['Containment',contain],['Owner / recovery',recover],['Verification','Guidance from controlled source; no current native DEV/production execution or automated ServiceNow action.']].forEach(([k,v])=>{const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=v;dl.append(dt,dd)});output.append(h,dl)}
 select.addEventListener('change',renderFailure);renderFailure();update();
+const handoverGates=[
+['HR-01','Release identity','Exact source SHA, package identity and target are reconciled'],
+['HR-02','Clean deployment preview','Update-set / application preview and dependencies are clear'],
+['HR-03','Current DEV read-back','Installed version, ACLs and functional negative tests are independently witnessed'],
+['HR-04','Security and privacy','Threat, permission, consent and retention owners reviewed the evidence'],
+['HR-05','Operational ownership','Monitoring, runbooks, escalation and RACI are assigned'],
+['HR-06','Recovery and performance','Approved RTO/RPO, capacity and restore rehearsal are evidenced']
+];
+const handoverBody=document.getElementById('handover-rows'),handoverStatus=document.getElementById('handover-status');
+for(const [id,name,description] of handoverGates){
+ const tr=document.createElement('tr');const th=document.createElement('th');th.scope='row';
+ const label=document.createElement('strong');label.textContent=id+' · '+name;
+ const detail=document.createElement('div');detail.className='handover-help';detail.textContent=description;th.append(label,detail);
+ const stateCell=document.createElement('td'),state=document.createElement('select');state.id='handover-state-'+id;state.setAttribute('aria-label',id+' review status');
+ for(const [value,title] of [['NOT_REVIEWED','Not reviewed'],['REVIEW_REQUIRED','Evidence required'],['SELF_REPORTED_COMPLETE','Self-reported complete']]){const opt=document.createElement('option');opt.value=value;opt.textContent=title;state.append(opt)}stateCell.append(state);
+ const aliasCell=document.createElement('td'),alias=document.createElement('input');alias.type='text';alias.maxLength=64;alias.autocomplete='off';alias.id='handover-alias-'+id;alias.placeholder='e.g. REL_A01';alias.setAttribute('aria-label',id+' anonymous evidence alias');aliasCell.append(alias);
+ tr.append(th,stateCell,aliasCell);handoverBody.append(tr);
+ state.addEventListener('change',updateHandover);alias.addEventListener('input',updateHandover);
+}
+const safeAlias=/^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$/;
+function collectHandover(){return handoverGates.map(([id,name])=>({id,name,status:document.getElementById('handover-state-'+id).value,evidence_alias:document.getElementById('handover-alias-'+id).value.trim()}))}
+function validateHandover(rows){const errors=[];for(const row of rows){if(row.evidence_alias&&!safeAlias.test(row.evidence_alias))errors.push(row.id+' has an invalid alias');if(row.status==='SELF_REPORTED_COMPLETE'&&!row.evidence_alias)errors.push(row.id+' needs an alias')}return errors}
+function updateHandover(){const rows=collectHandover(),done=rows.filter(r=>r.status==='SELF_REPORTED_COMPLETE').length,pending=rows.filter(r=>r.status==='REVIEW_REQUIRED').length;const errors=validateHandover(rows);handoverStatus.textContent=errors.length?'HOLD — EXPORT BLOCKED: '+errors.join('; '):'HOLD — '+done+' of 6 self-reported complete; '+pending+' require evidence. No DEV or production acceptance is established.';document.getElementById('handover-export').disabled=errors.length>0}
+document.getElementById('handover-reset').addEventListener('click',()=>{for(const [id] of handoverGates){document.getElementById('handover-state-'+id).value='NOT_REVIEWED';document.getElementById('handover-alias-'+id).value=''}updateHandover();document.getElementById('handover-state-HR-01').focus()});
+document.getElementById('handover-export').addEventListener('click',()=>{const rows=collectHandover();if(validateHandover(rows).length)return;const receipt={schema:'operational-handover-review-v1',evidence_class:'MOCK-ONLY',source_document_class:'SOURCE-ONLY',publication_status:'HOLD',publication_authorised:false,native_runtime_test_executed:false,dev_verified:false,production_verified:false,independent_acceptance:false,source_release_example:'4.6.1 source / historical 4.5.1 DEV reported',self_reported_complete:rows.filter(r=>r.status==='SELF_REPORTED_COMPLETE').length,gates:rows};const blob=new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='operational-handover-HOLD.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+updateHandover();
+
 })();
 </script></body></html>
