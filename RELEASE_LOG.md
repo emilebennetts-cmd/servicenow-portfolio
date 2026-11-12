@@ -1,3 +1,10 @@
+## 12 November 2026 — source-audited pattern library provenance explorer (SOURCE-ONLY)
+
+- Added [Pattern Library Audit Trail](pattern-library-audit-trail.html) with a mobile-friendly audit lineage: 585 authored, 13 deduplicated, 572 accepted new, 96 mined baseline and 668 combined; 28 native patterns remain separate. The larger 11,000-issue/2,234-candidate catalogue is a distinct, non-additive collection.
+- Reported historical source checks and design mix (23/23 offline controls, 3,352 components, 3,450 test definitions) without claiming an independent rerun or installed application. Eight client-neutral observations can be searched and filtered, and exported as local-only CSV carrying SOURCE-ONLY/HOLD.
+- Updated the homepage, pattern case study, reviewer route, sitemap, public verification register, offline contract test and four-viewport Chromium checks. See [full release note](release-notes/2026-11-12-pattern-library-audit-trail.md).
+- No private pattern JSON, customer details, instance hosts, original screenshot pixels or credentials published. Screenshot publication remains HOLD, no new DEV verification and no Production verification. Static site needs no ServiceNow licence; target scoped app, custom tables, product and integration entitlements must be validated.
+
 ## 12 November 2026 — untrusted native acceptance receipt inspection (SOURCE-ONLY)
 
 - Added a local-only, 32 KiB bounded JSON inspector to [Workbench Acceptance Playbook](workbench-acceptance-playbook.html#acceptance-import). Compares six manually recorded test outcomes and identity fields with the active worksheet; never imports, stores or uploads them. Strict HOLD/SOURCE-ONLY schema, unique IDs and safe aliases prevent forged approval/verification flags from being accepted.
