@@ -51,7 +51,7 @@ class LedgerManifestTests(unittest.TestCase):
 
     def test_default_evidence_posture_is_explicit(self):
         for wording in ("No production verification", "zero", "0", "SOURCE-ONLY",
-                        "MOCK-ONLY", "HOLD", "requires no ServiceNow licence"):
+                        "MOCK-ONLY", "HOLD", "require no ServiceNow licence"):
             self.assertIn(wording.lower(), HTML.lower())
 
 
