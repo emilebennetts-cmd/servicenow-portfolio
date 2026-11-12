@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12T19:25:59.425Z",
+  "updated_utc": "2026-11-12T20:18:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -217,6 +217,15 @@
       "runtime_verification": "Source quality and CI execution only; no native ServiceNow session, original capture pixel review, or publication consent proven",
       "public_screenshot_status": "Original Workbench captures remain HOLD; zero genuine images approved",
       "page": "screenshot-publication-gate.html"
+    },
+    {
+      "id": "DIAGNOSTIC-RESCAN-LAB",
+      "title": "Diagnostic baseline-to-rescan evidence comparability decision lab",
+      "classification": "mock-only",
+      "basis": "Public browser-local implementation with four entirely synthetic aggregate CMDB fixtures; design informed by source-reported Diagnostic Workbench 2 baseline/rescan, aggregate-only collection, evidence validation ledger and governed finding review",
+      "runtime_verification": "Offline comparison calculations and gate display do not execute ServiceNow collectors, establish native DEV acceptance, prove remediation or independently verify production results. Every exported receipt is NOT RUN / HOLD.",
+      "public_screenshot_status": "No private original images, customer evidence, secret values, real collector outputs or unapproved Workbench screenshots; publication remains HOLD",
+      "page": "diagnostic-rescan-decision-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
