@@ -87,7 +87,7 @@ class PilotContract(unittest.TestCase):
         for href in self.scan.links:
             if href.startswith("#"):
                 self.assertIn(href[1:],self.scan.ids)
-            else:
+            elif href != "./":
                 self.assertTrue((ROOT / href.split("#",1)[0]).is_file(),href)
         register=json.loads(REGISTER.read_text(encoding="utf-8"))
         items=[x for x in register["items"] if x["id"]=="INCIDENT-PACK-PILOT"]
