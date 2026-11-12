@@ -1,3 +1,12 @@
+## 12 November 2026 — Unified source-controlled verification ledger and public evidence cross-links
+
+- Reconciled five missing capability claims (CMDB Trust Lab, MIM readiness lab, six inspected screenshot-review summaries, Redaction Desk and Receipt Verifier) into the public JSON evidence register. **13 claims / four MOCK-ONLY records / zero production-verified Workbench claims / zero screenshots approved**.
+- Rebuilt the verification-ledger web page to load its claims directly from the JSON source of truth, with keyboard-operable search/filters, responsive cards, explicit runtime and publication boundaries, safe text-node rendering, and a failure state that never implies verification.
+- Linked both flagship Workbench case studies and the visual evidence gallery to the ledger. Replaced JavaScript-generated fragment links with statically resolvable page links after local-link CI detected missing target IDs.
+- Added static regression assertions and four-viewport Chromium tests for JSON hydration, search, mock filtering, reset, image absence and layout overflow. The source implementation passed browser testing at commit `9787a479`; subsequent link and release documentation changes require final-SHA CI and Pages checks.
+- **SOURCE-ONLY:** published frontend, manifest and review summaries. **MOCK-ONLY:** synthetic scenario data; historical **DEV-REPORTED** is not newly DEV-VERIFIED. **PRODUCTION-VERIFIED:** none. All original Workbench screenshots remain private and on HOLD; no publication rights inferred.
+- Public static web/tools: no ServiceNow licence. Live scoped apps and optional ITSM, ITOM/Discovery, IntegrationHub, App Engine, analytics, AI and provider features require entitlements, ACLs and authorised instance acceptance. [Release note](release-notes/2026-11-12-evidence-ledger-manifest-reconciliation.md).
+
 ## 12 November 2026 — Searchable, exportable inspected Workbench evidence register (HOLD)
 
 - Turned six text-only private-source image reviews into an independently searchable, filterable and bookmarkable public reviewer registry with group-specific reviewed CSV export and print. The separate ten candidate placeholders and existing candidate workflow are retained. Review links resolve to the six stable `#review-rv-0x` anchors; collected fields include observed UI, what is not established, next gate, and an explicit publication **HOLD**. No private image, asset identifier, SHA-256 or customer material is included.
