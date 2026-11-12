@@ -77,6 +77,23 @@ class AcceptanceWorksheetTests(unittest.TestCase):
         self.assertNotIn("servicenow-portfolio-control", self.html)
         self.assertNotRegex(self.html, r"<img\b")
 
+    def test_import_is_untrusted_and_fail_closed(self):
+        for token in (
+            'id="worksheet-import"', 'id="receipt-import-output"',
+            'id="receipt-comparison"', 'accept=".json,application/json"',
+            'file.size>32768', 'inspectReceipt(JSON.parse(raw))',
+            'exactKeys(data,top)', 'data.publication_authorised!==false',
+            'data.dev_verified!==false', 'data.production_verified!==false',
+            'data.native_test_execution_by_this_tool!==false',
+            'data.independent_reviewer_approval!==false',
+            'ids.has(item.test_id)', 'safeAlias(item.receipt_alias)',
+            'comparisonBody.replaceChildren()', 'td.textContent=cell',
+            'comparison.hidden=true', 'importInput.value=""',
+        ):
+            self.assertIn(token, self.html)
+        self.assertNotIn('innerHTML=', self.html)
+        self.assertNotIn('eval(', self.html)
+
     def test_public_navigation(self):
         for href in self.page.links:
             if href.startswith(("https:", "mailto:", "#")):
