@@ -10,7 +10,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-WEB_EXTENSIONS = {".html", ".htm", ".js", ".css", ".json", ".svg"}
+WEB_EXTENSIONS = {".html", ".htm", ".js", ".css", ".json", ".svg", ".md", ".markdown"}
 SKIP_DIRS = {".git", ".github", "__pycache__", "node_modules"}
 SENSITIVE = [
     ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")),
@@ -30,6 +30,13 @@ VISUAL_EMBED_PATTERNS = [
         r"(?is)<(?:img|source|image)\b[^>]*\b(?:src|srcset|href|xlink:href)\s*=\s*['\"]?\s*(?:https?:)?//"
     )),
     ("embedded foreignObject element", re.compile(r"(?i)<\s*foreignObject\b")),
+    ("SVG image element", re.compile(r"(?i)<\s*image\b")),
+    ("remote SVG use reference", re.compile(
+        r"(?is)<\s*use\b[^>]*\b(?:href|xlink:href)\s*=\s*['\"]?\s*(?:https?:)?//"
+    )),
+    ("remote CSS background image", re.compile(
+        r"(?is)\b(?:background(?:-image)?|mask(?:-image)?)\s*:\s*[^;{}]{0,500}?\burl\s*\(\s*['\"]?\s*(?:https?:)?//"
+    )),
 ]
 SVG_UNSAFE_PATTERNS = [
     ("SVG image element", re.compile(r"(?i)<\s*image\b")),
