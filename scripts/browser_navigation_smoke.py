@@ -611,28 +611,28 @@ def check_verification_ledger(browser, width):
         url = f"http://127.0.0.1:{server.server_address[1]}/verification-ledger.html"
         page.goto(url, wait_until="domcontentloaded", timeout=30000)
         page.wait_for_function(
-            "() => document.querySelectorAll('#records .card').length === 14",
+            "() => document.querySelectorAll('#records .card').length === 15",
             timeout=12000,
         )
-        require(page.locator("#count").inner_text() == "14 of 14 evidence claims shown",
+        require(page.locator("#count").inner_text() == "15 of 15 evidence claims shown",
                 f"{width}px: claim manifest did not hydrate")
-        require(page.locator("#total").inner_text() == "14",
+        require(page.locator("#total").inner_text() == "15",
                 f"{width}px: headline claim count out of sync")
-        require(page.locator("#mock").inner_text() == "4",
+        require(page.locator("#mock").inner_text() == "5",
                 f"{width}px: synthetic classification count out of sync")
         require(page.locator("#load-error").is_hidden(),
                 f"{width}px: ledger failed to load public JSON")
         page.locator('[data-filter="mock-only"]').click()
-        require(page.locator("#count").inner_text() == "4 of 14 evidence claims shown",
+        require(page.locator("#count").inner_text() == "5 of 15 evidence claims shown",
                 f"{width}px: mock filter is incorrect")
         page.locator("#reset").click()
         page.locator("#search").fill("CRC-32")
-        require(page.locator("#count").inner_text() == "1 of 14 evidence claims shown",
+        require(page.locator("#count").inner_text() == "1 of 15 evidence claims shown",
                 f"{width}px: evidence search did not isolate receipt verifier")
         require(page.locator("#claim-receipt-verifier").is_visible(),
                 f"{width}px: expected verifier claim is not visible")
         page.locator("#reset").click()
-        require(page.locator("#count").inner_text() == "14 of 14 evidence claims shown",
+        require(page.locator("#count").inner_text() == "15 of 15 evidence claims shown",
                 f"{width}px: reset did not restore claims")
         require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
                 f"{width}px: evidence ledger overflows the viewport")
