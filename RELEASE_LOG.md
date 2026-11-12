@@ -1,3 +1,10 @@
+## 12 November 2026 — untrusted native acceptance receipt inspection (SOURCE-ONLY)
+
+- Added a local-only, 32 KiB bounded JSON inspector to [Workbench Acceptance Playbook](workbench-acceptance-playbook.html#acceptance-import). Compares six manually recorded test outcomes and identity fields with the active worksheet; never imports, stores or uploads them. Strict HOLD/SOURCE-ONLY schema, unique IDs and safe aliases prevent forged approval/verification flags from being accepted.
+- Connected the assurance reviewer path to the new inspector. Added static and responsive browser regression covering same/different receipts, forged publication authority, URL-like aliases, oversized files and no external requests.
+- Reviewed Delivery Architecture (19 October 2026 cutoff) and older As-Built (30 September) with their distinct source/DEV versions; historical DEV statements remain **DEV-REPORTED**, not fresh runtime evidence. All browser fixtures remain **MOCK-ONLY**; current website is **SOURCE-ONLY**; no new independent DEV or production testing and no approved screenshots.
+- Static site requires no ServiceNow licence; native app, ITSM/ITOM/Discovery, IntegrationHub, AI and provider entitlements are target-dependent. See [release note](release-notes/2026-11-12-offline-native-receipt-inspection.md).
+
 ## 12 November 2026 — browser-local Workbench native acceptance worksheet (SOURCE-ONLY)
 
 - Extended [Workbench Acceptance Playbook](workbench-acceptance-playbook.html#native-execution-ledger) with six manually recorded native test cases (A01–A06), anonymised build/environment identity and a downloadable, permanent **HOLD / SOURCE-ONLY** JSON review receipt. No remote requests or retained inputs.
