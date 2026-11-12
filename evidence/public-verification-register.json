@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12T17:22:00Z",
+  "updated_utc": "2026-11-12T19:25:59.425Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -208,6 +208,15 @@
       "runtime_verification": "Browser filtering and HOLD-only export are not ServiceNow runtime tests. No new independent DEV or Production verification.",
       "public_screenshot_status": "HOLD; no original Workbench screenshot approved or published; conceptual diagram only",
       "page": "native-assurance-coverage-atlas.html"
+    },
+    {
+      "id": "MEDIA-PUBLICATION-CI",
+      "title": "Automated screenshot publication and embedded-media safety checks",
+      "classification": "source-only",
+      "basis": "Public source controls for image-byte SHA-256 approval, metadata markers, active HTML embeds, SVG filter images, remote video posters, and CSS image properties, supported by synthetic Python regression tests",
+      "runtime_verification": "Source quality and CI execution only; no native ServiceNow session, original capture pixel review, or publication consent proven",
+      "public_screenshot_status": "Original Workbench captures remain HOLD; zero genuine images approved",
+      "page": "screenshot-publication-gate.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
