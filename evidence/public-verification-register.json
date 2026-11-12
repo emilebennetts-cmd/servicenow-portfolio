@@ -82,7 +82,52 @@
       "runtime_verification": "Browser interaction and responsive tests verify only the static site's synthetic decision model. No ServiceNow DEV ATF, package read-back, customer acceptance or production execution.",
       "public_screenshot_status": "No original Workbench screenshot published; existing candidate review and image-specific publication gate remain HOLD",
       "page": "itsm-greenfield-build-sequencer.html"
+    },
+    {
+      "id": "CMDB-TRUST-LAB",
+      "title": "CMDB Diagnostic Trust Lab",
+      "classification": "mock-only",
+      "basis": "Public synthetic fixtures for complete, partial, not-assessed and review-required diagnostic confidence",
+      "runtime_verification": "Browser simulation only; no CMDB query, collector execution, DEV read-back or customer instance evidence",
+      "public_screenshot_status": "Synthetic interface; no Workbench capture or client data",
+      "page": "cmdb-diagnostic-trust-lab.html"
+    },
+    {
+      "id": "MIM-READINESS-LAB",
+      "title": "Major Incident implementation governance lab",
+      "classification": "mock-only",
+      "basis": "Public nine-gate synthetic workshop and readiness decision model, source-informed but not native MIM execution",
+      "runtime_verification": "Browser tests assess demonstration logic only; no ServiceNow MIM setup, live integrations or approvals tested",
+      "public_screenshot_status": "Synthetic decision model; no authorised Workbench screenshot published",
+      "page": "major-incident-implementation-lab.html"
+    },
+    {
+      "id": "VISUAL-REVIEWS",
+      "title": "Privately inspected Workbench screenshot observations",
+      "classification": "source-only",
+      "basis": "Six public textual observations of privately inspected source files; separate ten-candidate inventory may overlap",
+      "runtime_verification": "Visible UI pixels were inspected privately; no application version, current DEV transaction or production behaviour independently certified",
+      "public_screenshot_status": "Six originals on publication HOLD; zero genuine captures approved or embedded",
+      "page": "visual-evidence.html"
+    },
+    {
+      "id": "REDACTION-DESK",
+      "title": "Browser-local screenshot redaction and SHA-256 receipt",
+      "classification": "source-only",
+      "basis": "Public static HTML/JavaScript implementation and synthetic browser regression fixtures",
+      "runtime_verification": "Browser-local rasterisation and evidence receipt functionality are not ServiceNow runtime verification or publication approval",
+      "public_screenshot_status": "User-supplied images remain local; exports retain HOLD until independently reviewed and authorised",
+      "page": "screenshot-redaction-desk.html"
+    },
+    {
+      "id": "RECEIPT-VERIFIER",
+      "title": "Independent PNG evidence receipt verifier",
+      "classification": "source-only",
+      "basis": "Public browser-local SHA-256, PNG structure and CRC-32 verification implementation with synthetic tests",
+      "runtime_verification": "A matching digest and PNG structure establish byte integrity, not capture authenticity, confidentiality clearance or instance execution",
+      "public_screenshot_status": "No public Workbench asset approved by the verifier; publication remains gated",
+      "page": "screenshot-receipt-verifier.html"
     }
   ],
-  "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Production-verified claims require separate affirmative evidence."
+  "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
 }
