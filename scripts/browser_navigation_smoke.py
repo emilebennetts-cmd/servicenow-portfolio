@@ -1077,7 +1077,7 @@ def check_operational_readiness_runbook(browser, width):
         require(page.locator("[data-code]:visible").count() == 3
                 and page.locator('[data-cadence="release"]').get_attribute("aria-pressed") == "true",
                 f"{width}px: per-release filtering failed")
-        page.locator("#q").fill("preview")
+        page.locator("#q").fill("collisions")
         require(page.locator("[data-code]:visible").count() == 1
                 and page.locator("[data-code]:visible").get_attribute("data-code") == "OPS-07",
                 f"{width}px: runbook search failed")
