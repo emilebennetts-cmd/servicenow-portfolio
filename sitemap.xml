@@ -1,39 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/engineering-proof.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/delivery-case-study.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-case-study.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-experience.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-library-experience.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/finding-to-delivery.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/architecture-atlas.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/technical-evidence-register.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/architecture-boundaries.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/capability-explorer.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-methodology.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/visual-evidence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/capability-traceability.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/ci-job-evidence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-diagnostic-trust-lab.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-ire-assurance.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-source-onboarding-lab.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/delivery-architecture.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/delivery-case-study.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/delivery-release-evolution.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/deployment-assurance.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/deployment-identity-gates.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-architecture.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-case-study.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-coverage-explorer.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-engineering.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-evidence-lifecycle.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-rescan-decision-lab.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-to-delivery-journey.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-workbench-case-study.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostics-to-delivery.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/engineering-case-studies.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/engineering-evidence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/engineering-proof.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-led-delivery.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-methodology.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-standards.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-to-delivery.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-to-release-journey.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence-verification.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/evidence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/finding-to-delivery.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/finding-to-release-handoff.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/portfolio-review-guide.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-architecture-gallery.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-ire-assurance.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-diagnostic-trust-lab.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/major-incident-implementation-lab.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/itsm-greenfield-build-sequencer.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-redaction-desk.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-receipt-verifier.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-review-packet.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-source-onboarding-lab.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-coverage-explorer.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/knowledge-intelligence-acceptance-matrix.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-acceptance-playbook.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-library-audit-trail.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/operational-readiness-runbook.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/governed-handoff-contract.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/implementation-boundaries.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/incident-pack-native-pilot.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/source-target-compatibility.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/itsm-greenfield-build-sequencer.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/knowledge-intelligence-acceptance-matrix.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/knowledge-intelligence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/major-incident-implementation-lab.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/native-assurance-coverage-atlas.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/operational-readiness-runbook.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-library-audit-trail.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-library-experience.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-library.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-lifecycle.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/pattern-readiness.html</loc></url>
   <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/portfolio-explorer.html</loc></url>
-  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/diagnostic-rescan-decision-lab.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/portfolio-review-guide.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/publication-quality.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/reusable-delivery-patterns-case-study.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/reusable-delivery-patterns.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-publication-gate.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-receipt-verifier.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-redaction-desk.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/screenshot-review-packet.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/source-target-compatibility.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/technical-evidence-register.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/technical-reviewer-walkthrough.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/verification-ledger.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/verification-playbook.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/visual-evidence-intake.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/visual-evidence.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-acceptance-playbook.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-architecture-gallery.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-architecture.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-evidence-ledger.html</loc></url>
+  <url><loc>https://emilebennetts-cmd.github.io/servicenow-portfolio/workbench-experience.html</loc></url>
 </urlset>
