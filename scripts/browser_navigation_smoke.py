@@ -709,6 +709,71 @@ def check_review_packet(browser, width):
         page.close()
 
 
+
+def check_cmdb_source_onboarding_lab(browser, width):
+    """Prove the synthetic CMDB ingestion design gate cannot assert native acceptance."""
+    url = (Path(__file__).resolve().parents[1] / "cmdb-source-onboarding-lab.html").as_uri()
+    page = browser.new_page(
+        viewport={"width": width, "height": 900},
+        accept_downloads=True,
+        reduced_motion="reduce",
+    )
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        require(page.locator("#gate-count").inner_text() == "0 of 6 reviews marked",
+                f"{width}px: source review starts with a positive attestation")
+        require("HOLD" in page.locator("#gate-status").inner_text(),
+                f"{width}px: synthetic review starts as approved")
+        require(page.locator("img").count() == 0,
+                f"{width}px: unapproved Workbench capture published")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: onboarding lab overflows viewport")
+
+        checks = page.locator("input[data-gate]")
+        require(checks.count() == 6, f"{width}px: six design controls not available")
+        for i in range(6):
+            checks.nth(i).check()
+        require(page.locator("#gate-count").inner_text() == "6 of 6 reviews marked",
+                f"{width}px: checklist count wrong")
+        require("native simulation required" in page.locator("#gate-status").inner_text(),
+                f"{width}px: design completion implies native acceptance")
+        data = json.loads(page.locator("#receipt-preview").text_content())
+        require(data["decision"] == "READY_FOR_NATIVE_SIMULATION_NOT_APPROVED"
+                and data["approval_granted"] is False
+                and data["servicenow_dev_verified"] is False
+                and data["production_verified"] is False
+                and data["actual_ire_response"] is None,
+                f"{width}px: optimistic receipt claims unsupported execution")
+
+        with page.expect_download() as transfer:
+            page.locator("#download-receipt").click()
+        exported = json.loads(transfer.value.path().read_text(encoding="utf-8"))
+        require(exported == data and exported["assessment_classification"] == "MOCK-ONLY",
+                f"{width}px: exported receipt diverges from safe preview")
+
+        page.locator("#scenario-select").select_option("collision")
+        require(page.locator("#gate-count").inner_text() == "0 of 6 reviews marked",
+                f"{width}px: scenario change retained prior approvals")
+        for i in range(6):
+            checks.nth(i).check()
+        require("BLOCK" in page.locator("#gate-status").inner_text()
+                and json.loads(page.locator("#receipt-preview").text_content())["decision"]
+                    == "BLOCKED_DESIGN_INPUT",
+                f"{width}px: bad identity became accepted by checkbox completion")
+        page.locator("#scenario-select").select_option("attributes")
+        require(page.locator("#gate-count").inner_text() == "0 of 6 reviews marked",
+                f"{width}px: attribute conflict inherited previous checks")
+        page.locator("#reset-review").click()
+        require("HOLD" not in page.locator("#gate-status").inner_text()
+                or "BLOCK" in page.locator("#gate-status").inner_text(),
+                f"{width}px: conflict scenario incorrectly promoted after reset")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
+                f"{width}px: scenario cards overflow mobile viewport")
+        print(f"PASS {width}px: safe synthetic IRE readiness, conflict blocks, JSON receipt")
+    finally:
+        page.close()
+
+
 def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -718,6 +783,7 @@ def main():
                 check_reviewed_evidence_gallery(browser, width)
                 check_verification_ledger(browser, width)
                 check_review_packet(browser, width)
+                check_cmdb_source_onboarding_lab(browser, width)
                 for filename, anchor in CASE_STUDIES:
                     check_case_study(browser, filename, anchor, width)
                 check_cmdb_trust_lab(browser, width)
