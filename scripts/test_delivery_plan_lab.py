@@ -46,7 +46,7 @@ class DeliveryPlanContract(unittest.TestCase):
     def test_synthetic_data_contract(self):
         views=re.search(r"const views=\[(.*?)\];\s*let current",self.html,re.S)
         self.assertIsNotNone(views)
-        self.assertEqual(views.group(1).count('"],'),8)
+        self.assertEqual(views.group(1).count('["'),8)
         docs=re.search(r"const types=\[(.*?)\];",self.html,re.S)
         self.assertIsNotNone(docs)
         self.assertEqual(docs.group(1).count('","')+1,8)
