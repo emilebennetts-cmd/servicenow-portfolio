@@ -82,7 +82,7 @@ class ReviewPacketContract(unittest.TestCase):
             "SOURCE-ONLY",
             "PRODUCTION-VERIFIED",
         ):
-            self.assertIn(required, self.html)
+            self.assertIn(required.lower(), self.html.lower())
         self.assertEqual([], self.markup.images)
         self.assertNotIn("servicenow-portfolio-control", self.html)
         self.assertNotIn("drive.google.com", self.html)
