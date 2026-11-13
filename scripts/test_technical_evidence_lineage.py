@@ -65,7 +65,7 @@ class SourceLineageTests(unittest.TestCase):
         for target in ("workbench-architecture-gallery.html",
                        "delivery-release-evolution.html",
                        "knowledge-intelligence-acceptance-matrix.html"):
-            self.assertIn(target, self.parser.links)
+            self.assertTrue(any(link.split("#", 1)[0] == target for link in self.parser.links), target)
             self.assertTrue((ROOT / target).exists(), target)
 
 if __name__ == "__main__":
