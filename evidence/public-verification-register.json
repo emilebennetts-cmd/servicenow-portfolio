@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T09:17:00Z",
+  "updated_utc": "2026-11-13T12:16:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -739,6 +739,15 @@
       "runtime_verification": "No real CI mutation, current DEV execution, service impact read-back or Production verification.",
       "public_screenshot_status": "Synthetic HTML only; no original screenshot pixels.",
       "page": "cmdb-remediation-decision-lab.html"
+    },
+    {
+      "id": "HANDOFF-DECISION-DESK-MOCK-20261113",
+      "title": "Offline cross-workbench handoff decision sandbox",
+      "classification": "mock-only",
+      "basis": "Fixed synthetic scenarios in handoff-contract-engine.js show proposed contract gating, precedence and replay handling; no private source or instance data copied.",
+      "runtime_verification": "Browser-local illustrative evaluation only; no real review attestation, role checks, native write or DEV/Production transaction.",
+      "public_screenshot_status": "HOLD — no original image pixels or real screenshot publication.",
+      "page": "governed-handoff-contract.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
