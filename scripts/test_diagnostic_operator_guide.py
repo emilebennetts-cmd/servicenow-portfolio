@@ -41,7 +41,7 @@ class DiagnosticGuideContract(unittest.TestCase):
                                        "operator","reviewer","approver","architect"})
         for x in self.reader.steps:
             self.assertTrue(set(x["data-roles"].split()) <= role_options-{"all","core","ki"})
-        self.assertIn("card.hidden=!(matchLane&&matchRole)",GUIDE)
+        self.assertIn("card.hidden=!(matchLane&&matchRole)",PAGE)
         self.assertIn("lane.addEventListener('change',render)",PAGE)
         self.assertIn("role.addEventListener('change',render)",PAGE)
 
@@ -68,7 +68,7 @@ class DiagnosticGuideContract(unittest.TestCase):
         for token in ("1 September 2026","30 September 2026","v0.0.1",
                       "KI 0.1.0","Knowledge Intelligence","separately deployed",
                       "Classic KI pages","read-only","Not assessed",
-                      "historical","no original screenshots"):
+                      "historical","original screenshots are claimed"):
             self.assertIn(token.lower(),GUIDE.lower())
         for prohibited in ("drive.google.com","docs.google.com",
                            "servicenow-portfolio-control","dev438211",
