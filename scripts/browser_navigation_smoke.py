@@ -533,10 +533,11 @@ def check_reviewed_evidence_gallery(browser, width):
                 f"{width}px: ten separate candidate placeholders altered")
         require(page.locator("img").count() == 0,
                 f"{width}px: private or unapproved image embedded")
-        for record in ("RV-05", "RV-06", "RV-07", "RV-08"):
+        for record, expected_class in (("RV-05", "mock-only"), ("RV-06", "mock-only"),
+                                       ("RV-07", "source-only"), ("RV-08", "source-document")):
             card = page.locator(f'article[data-review-id="{record}"]')
-            require(card.get_attribute("data-source-class") == "mock-only",
-                    f"{width}px: {record} missing synthetic boundary")
+            require(card.get_attribute("data-source-class") == expected_class,
+                    f"{width}px: {record} incorrect evidence classification")
             require("HOLD" in card.inner_text()
                     and "Not established" in card.inner_text(),
                     f"{width}px: {record} missing review and publication boundary")
@@ -544,7 +545,7 @@ def check_reviewed_evidence_gallery(browser, width):
             "() => document.documentElement.scrollWidth <= window.innerWidth + 2"
         ), f"{width}px: evidence gallery overflows screen")
         # The inspected sample is a separate, usable review registry, not an image gallery.
-        require(page.locator("#review-count").inner_text() == "6 of 8 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "8 of 8 inspected reviews shown",
                 f"{width}px: reviewed sample initial count incorrect")
         page.locator('[data-review-filter="diagnostic"]').click()
         require(page.locator("#review-count").inner_text() == "3 of 8 inspected reviews shown",
@@ -572,7 +573,7 @@ def check_reviewed_evidence_gallery(browser, width):
         require(not page.locator("body").evaluate("(el) => el.classList.contains('review-print')"),
                 f"{width}px: print-only state was not cleared")
         page.locator("#clear-reviews").click()
-        require(page.locator("#review-count").inner_text() == "6 of 8 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "8 of 8 inspected reviews shown",
                 f"{width}px: reviewed reset failed")
         page.goto(url + "?reviewGroup=delivery&reviewq=scope", wait_until="domcontentloaded")
         require(page.locator("#review-count").inner_text() == "1 of 8 inspected reviews shown"
