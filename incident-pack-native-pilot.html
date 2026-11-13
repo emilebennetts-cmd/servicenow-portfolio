@@ -63,6 +63,12 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 .observation-workbook .obs-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:21px 0}
 .observation-workbook button{font:inherit;border:1px solid #82cbb7;background:#8ff0d8;color:#0a2428;border-radius:9px;padding:11px 19px;font-weight:850;cursor:pointer}
 .observation-workbook button.secondary{background:transparent;color:#d4f9ee}
+.observation-workbook .obs-import-panel{border:1px solid #567c89;border-radius:13px;background:#112e3e;padding:18px 20px;margin:22px 0}
+.observation-workbook .obs-import-panel h3{margin:0 0 8px}
+.observation-workbook .obs-import-panel p{margin:7px 0 12px}
+.observation-workbook .obs-import-panel input[type=file]{max-width:470px;background:#0d2331;color:#e8f5f8}
+.observation-workbook .obs-import-result{font-size:.86rem;color:#a5f1dc;overflow-wrap:anywhere}
+.observation-workbook .obs-import-result[data-error=true]{color:#ffd3b2}
 .observation-workbook .obs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:25px}
 .observation-workbook .obs-card{min-width:0;background:#102637;border:1px solid #426679;border-radius:13px;padding:18px}
 .observation-workbook .obs-card h3{font-size:1.05rem;margin:8px 0}.observation-workbook .obs-card p{font-size:.86rem;margin:6px 0 14px}
@@ -205,6 +211,13 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 <span><strong id="obs-notrun">29</strong> not run</span><span><strong id="obs-pass">0</strong> observed pass</span><span><strong id="obs-fail">0</strong> observed fail</span><span><strong id="obs-blocked">0</strong> blocked</span><span><strong id="obs-missing">0</strong> unsupported observations</span>
 </div>
 <div class="obs-actions"><button id="obs-export" type="button">Export UNREVIEWED evidence packet (JSON)</button><button id="obs-reset" class="secondary" type="button">Clear local observations</button></div>
+<div class="obs-import-panel" aria-labelledby="obs-import-heading">
+<h3 id="obs-import-heading">Resume an offline evidence candidate</h3>
+<p>Choose a JSON packet previously exported by this workbook. A valid import <strong>replaces</strong> the current 29 local notes and anonymous context; an invalid packet leaves everything unchanged. Files are inspected only in this browser session, never transmitted or stored. Imported PASS remains self-reported, not DEV-VERIFIED.</p>
+<label for="obs-import-file">Select an UNREVIEWED / HOLD candidate (JSON)
+<input type="file" id="obs-import-file" accept=".json,application/json" aria-describedby="obs-import-status"></label>
+<p id="obs-import-status" class="obs-import-result" role="status" aria-live="polite">No file selected. Only schema 1.0, 29-case HOLD candidates are supported (maximum 128 KiB).</p>
+</div>
 <p id="obs-alert" class="obs-foot" role="status" aria-live="polite">29 prepared test cases. No observations have been recorded. No native verification is established.</p>
 <div class="obs-grid" id="obs-cases" aria-label="Offline candidate execution notes"></div>
 <p class="obs-foot">Evidence aliases are intentionally short tokens such as <code>EV-NV-001</code>; never paste ServiceNow record data, sensitive URLs or screenshots. A missing/invalid alias is flagged. Exported candidate packets require separate evidence inspection, attributable test execution, permission checks, version reconciliation and independent approval before any evidence class can change.</p>
@@ -356,6 +369,87 @@ document.getElementById("obs-reset").addEventListener("click",()=>{
   card.querySelector(".obs-warning").textContent="";card.dataset.status="NOT RUN";
  });
  Object.values(aliases).forEach(input=>input.value="");count();
+});
+// Restoring a local candidate is deliberately stricter than reading a normal JSON file.
+// Never import purported verification, approval, external URLs, or unknown case data.
+function readCandidate(packet){
+ const fail=()=>{throw new Error("Invalid, unsafe or incompatible candidate packet.");};
+ if(!packet||typeof packet!=="object"||Array.isArray(packet))fail();
+ const topKeys=["schema_version","kind","classification","observation_classification","native_verification_status","release_authorised","independent_review_approved","publication_status","evidence_origin","context","planned_cases","observations","missing_evidence_aliases","instructions"];
+ if(Object.keys(packet).length!==topKeys.length||Object.keys(packet).some(k=>!topKeys.includes(k)))fail();
+ if(packet.schema_version!=="1.0"||packet.kind!=="service-now-native-observation-candidate"||
+    packet.classification!=="source-only"||packet.observation_classification!=="SELF-REPORTED / UNREVIEWED"||
+    packet.native_verification_status!=="NOT VERIFIED"||packet.publication_status!=="HOLD"||
+    packet.release_authorised!==false||packet.independent_review_approved!==false||
+    packet.evidence_origin!=="browser-local-candidate"||packet.planned_cases!==29||
+    typeof packet.instructions!=="string"||packet.instructions.length>512)fail();
+ const context=packet.context;
+ const keys=["environment_alias","installed_version","application_scope","source_commit_sha"];
+ if(!context||typeof context!=="object"||Array.isArray(context)||
+    Object.keys(context).length!==4||Object.keys(context).some(k=>!keys.includes(k)))fail();
+ const validators={
+    environment_alias:/^[A-Z0-9][A-Z0-9_-]{2,39}$/,
+    installed_version:/^[A-Za-z0-9][A-Za-z0-9._+-]{0,39}$/,
+    application_scope:/^(global|x_[a-z0-9_]{3,60})$/,
+    source_commit_sha:/^[0-9a-f]{40}$/
+ };
+ keys.forEach(k=>{if(context[k]!==null&&(typeof context[k]!=="string"||!validators[k].test(context[k])))fail();});
+ if(!Array.isArray(packet.observations)||packet.observations.length!==29||
+    !Array.isArray(packet.missing_evidence_aliases))fail();
+ const allowed=["case_id","workstream","persona","planned_control","status","evidence_alias","evidence_missing","independent_review_approved","dev_verified","production_verified"];
+ const expectedMissing=[];
+ const rows=new Map();
+ packet.observations.forEach((row,i)=>{
+   const node=source[i],id=node.dataset.nativeCase;
+   if(!row||typeof row!=="object"||Array.isArray(row)||
+      Object.keys(row).length!==allowed.length||Object.keys(row).some(k=>!allowed.includes(k))||
+      row.case_id!==id||row.workstream!==node.dataset.nativeGroup||
+      row.persona!==node.dataset.nativePersona||row.planned_control!==node.querySelector("h3").textContent||
+      !statuses.includes(row.status)||row.independent_review_approved!==false||
+      row.dev_verified!==false||row.production_verified!==false)fail();
+   if(row.evidence_alias!==null&&(typeof row.evidence_alias!=="string"||!validAlias(row.evidence_alias)))fail();
+   const missing=row.status!=="NOT RUN"&&!validAlias(row.evidence_alias||"");
+   if(row.evidence_missing!==missing)fail();
+   if(missing)expectedMissing.push(id);
+   rows.set(id,{status:row.status,alias:row.evidence_alias||""});
+ });
+ if(packet.missing_evidence_aliases.length!==expectedMissing.length||
+   !packet.missing_evidence_aliases.every((id,i)=>id===expectedMissing[i]))fail();
+ return {context,rows};
+}
+function applyCandidate(parsed){
+ observations.clear();
+ parsed.rows.forEach((value,id)=>observations.set(id,value));
+ const context=parsed.context;
+ aliases.environment.value=context.environment_alias||"";
+ aliases.version.value=context.installed_version||"";
+ aliases.scope.value=context.application_scope||"";
+ aliases.commit.value=context.source_commit_sha||"";
+ host.querySelectorAll(".obs-card").forEach(card=>{
+  const item=current(card.dataset.caseId),select=card.querySelector("select"),input=card.querySelector("input");
+  select.value=item.status;input.value=item.alias;card.dataset.status=item.status;
+  const bad=item.status!=="NOT RUN"&&!validAlias(item.alias);
+  input.setAttribute("aria-invalid",String(bad));
+  card.querySelector(".obs-warning").textContent=bad?"Private evidence alias required (3–80 safe token characters, no spaces).":"";
+ });
+ count();
+}
+document.getElementById("obs-import-file").addEventListener("change",async event=>{
+ const field=event.currentTarget,file=field.files&&field.files[0];
+ if(!file)return;
+ const output=document.getElementById("obs-import-status");
+ try{
+   if(file.size>131072||file.size===0)throw new Error("Candidate must be a non-empty JSON file no larger than 128 KiB.");
+   const parsed=readCandidate(JSON.parse(await file.text()));
+   applyCandidate(parsed);
+   output.dataset.error="false";
+   output.textContent="Restored 29 candidate notes locally. Verification NOT VERIFIED, independent approval false and publication HOLD.";
+ }catch(error){
+   output.dataset.error="true";
+   output.textContent=error instanceof SyntaxError?
+     "Import rejected: malformed JSON. Current entries unchanged.":
+     "Import rejected: invalid, incompatible or unsafe candidate (maximum 128 KiB). Current entries unchanged.";
+ }finally{field.value="";}
 });
 document.getElementById("obs-export").addEventListener("click",()=>{
  const rows=source.map(node=>{
