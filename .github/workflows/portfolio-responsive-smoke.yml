@@ -24,6 +24,9 @@ on:
       - 'diagnostic-rescan-decision-lab.html'
       - 'delivery-case-study.html'
       - 'integration-contract-lab.html'
+      - 'diagnostic-gate-closure-lab.html'
+      - 'scripts/test_diagnostic_gate_closure_lab.py'
+      - 'scripts/browser_diagnostic_gate_closure_lab.py'
       - 'scripts/test_integration_contract_lab.py'
       - 'scripts/browser_integration_contract_lab.py'
       - 'scripts/test_delivery_plan_lab.py'
@@ -79,6 +82,10 @@ jobs:
         run: python scripts/test_integration_contract_lab.py
       - name: Exercise integration outcomes at four viewport widths
         run: python scripts/browser_integration_contract_lab.py
+      - name: Verify gate-closure publication and immutable HOLD contract
+        run: python scripts/test_diagnostic_gate_closure_lab.py
+      - name: Exercise gate-closure lab at four viewport widths
+        run: python scripts/browser_diagnostic_gate_closure_lab.py
       - name: Verify searchable explorer publication contract
         run: python scripts/test_portfolio_explorer.py
       - name: Exercise local search and navigation at four viewport widths
