@@ -1,4 +1,11 @@
 ## 13 November 2026 — governed integration contract decision lab (SOURCE-ONLY / MOCK-ONLY)
+## 13 November 2026 — Diagnostic Gate Closure Lab (SOURCE-ONLY / MOCK-ONLY)
+
+- Built [Diagnostic Gate Closure Lab](diagnostic-gate-closure-lab.html): seven navigable G0–G6 gates, eleven source-informed D1–D11 evidence work units, four synthetic starting scenarios and a downstream preparation queue. The public experience teaches finding-to-delivery reconciliation, licensing and RAID closure, tests, UAT, non-production release and handover.
+- The browser-local JSON preparation ticket is permanently **NOT RUN / HOLD**, with no user-controlled approval, native certification, Production deployment, publication authority, or ServiceNow connection. Preparation is not acceptance. [Release details](releases/2026-11-13-diagnostic-gate-closure-lab.md).
+- Homepage, searchable explorer, review guide, sitemap, verification register, offline integrity tests and responsive browser CI updated. Historical source/DEV generations remain distinct and all genuine screenshots remain on HOLD (zero new approval).
+- Public UI needs no ServiceNow licence; native App Engine/custom-table, ACL/role, ITSM/ITOM/IntegrationHub and provider entitlements remain target-specific. Test/deployment status requires separate confirmation on the exact commit.
+
 
 - Implemented [interactive external integration decision lab](integration-contract-lab.html) for Jira, Confluence and Notion authority, destination correlation, event replay, remote revision conflict, and protected approval fields. Five synthetic scenarios with a 7-gate native acceptance map are browser-local and deliberately never perform network requests or ServiceNow writes.
 - Added homepage and mobile entry, reviewer guide link, searchable Explorer listing, deterministic sitemap coverage, a separate MOCK-ONLY verification register entry (26 total), static safeguard assertions and four-viewport Chromium tests in the existing responsive workflow.
