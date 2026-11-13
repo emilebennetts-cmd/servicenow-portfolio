@@ -1,3 +1,10 @@
+## 14 November 2026 — source-pinned Incident Pack native acceptance navigator (SOURCE-ONLY + historical DEV-REPORTED)
+
+- Enhanced the [Incident Pack pilot](incident-pack-native-pilot.html#native-matrix) with **29 non-sensitive, traceable acceptance cards** and workstream/persona filters. The local CSV export is permanently **NOT RUN**, with runtime and release-authorisation flags false; no native ServiceNow action is performed.
+- Reconciled the 21 October controlled source matrix and blank execution record with the distinct historical synthetic pilot, retaining **29/29 unexecuted** acceptance cases. Registered a source-only claim separately from the dated DEV-reported pilot and changed the public Explorer to **MIXED CLAIMS** (84 claims total).
+- Added offline structural/publication tests and responsive Chromium checks at 390, 768, 1024 and 1440 pixels, plus private provenance receipt. Real capture publication remains **HOLD (0 approved)**, and no DEV-VERIFIED / PRODUCTION-VERIFIED promotion occurred.
+- Public website/CSV requires no ServiceNow licence. Native App Engine/custom-table, roles/ACLs, ITSM/ITOM, IntegrationHub, analytics, AI and external API entitlements are target-specific. See [release notes](releases/2026-11-14-native-pack-acceptance-matrix.md).
+
 ## 14 November 2026 — Diagnostic operator rehearsal and source-verified control boundaries (SOURCE-ONLY)
 
 - Added [a 10-step role/lane-filterable Diagnostic operator walkthrough](diagnostic-workbench-case-study.html#diagnostic-operator), covering separately documented core local-first Workbench and KI companion controls. Browser read marks and local text export always remain **NOT RUN | HOLD**; no ServiceNow instance access or approval.
