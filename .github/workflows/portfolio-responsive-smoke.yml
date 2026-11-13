@@ -59,6 +59,8 @@ on:
       - 'scripts/test_incident_pack_pilot.py'
       - 'scripts/test_native_pack_acceptance_matrix.py'
       - 'scripts/browser_native_pack_acceptance_matrix.py'
+      - 'scripts/test_native_observation_workbook.py'
+      - 'scripts/browser_native_observation_workbook.py'
       - 'scripts/test_operational_readiness_runbook.py'
       - 'scripts/test_entitlement_decision_desk.py'
       - 'scripts/browser_entitlement_decision_desk.py'
@@ -105,6 +107,10 @@ jobs:
         run: python scripts/test_native_pack_acceptance_matrix.py
       - name: Exercise the native acceptance matrix and safe CSV at four widths
         run: python scripts/browser_native_pack_acceptance_matrix.py
+      - name: Verify local observation candidate cannot become native acceptance
+        run: python scripts/test_native_observation_workbook.py
+      - name: Exercise 29-case observation capture and HOLD packet at four viewport widths
+        run: python scripts/browser_native_observation_workbook.py
       - name: Verify closure control desk keeps native approval and document issue on HOLD
         run: python scripts/test_closure_assurance.py
       - name: Exercise closure control desk at four browser widths
