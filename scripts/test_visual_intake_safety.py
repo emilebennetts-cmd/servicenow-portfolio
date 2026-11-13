@@ -1,7 +1,7 @@
 """CI-discovered safety contract for the public visual-evidence intake.
 
 Run by Portfolio quality gate: python -m unittest discover -s scripts.
-The six inspected files are private; this HTML must contain summary metadata only.
+The eight inspected files are private; this HTML must contain summary metadata only.
 """
 from html.parser import HTMLParser
 from pathlib import Path
@@ -46,7 +46,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("triage-title", self.tags.ids)
         self.assertIn("independent intake sample", self.html)
         self.assertIn("0</strong><span>Images approved", self.html)
-        self.assertIn("All six files remain on HOLD", self.html)
+        self.assertIn("All eight files remain on HOLD", self.html)
 
     def test_source_document_and_synthetic_example_not_runtime_proof(self):
         self.assertIn("Overview document page, not a product screenshot", self.html)
@@ -64,22 +64,25 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertEqual(
             [("RV-01", "source-only"), ("RV-02", "source-only"),
              ("RV-03", "mock-only"), ("RV-04", "source-document"),
-             ("RV-05", "mock-only"), ("RV-06", "mock-only")],
+             ("RV-05", "mock-only"), ("RV-06", "mock-only"),
+             ("RV-07", "source-only"), ("RV-08", "source-document")],
             self.tags.reviewed,
         )
-        self.assertEqual(6, len(set(x[0] for x in self.tags.reviewed)))
+        self.assertEqual(8, len(set(x[0] for x in self.tags.reviewed)))
         self.assertIn("not a screenshot", self.html)
+        self.assertIn("update-set metadata", self.html.lower())
+        self.assertIn("requirements, not embedded runtime evidence", self.html)
         self.assertIn("MIM readiness example is explicitly labelled demo/synthetic", self.html)
         self.assertIn("live Jira/Notion synchronisation", self.html)
         self.assertIn("two sets can overlap", self.html)
-        self.assertIn("None of these six reviews is DEV-VERIFIED", self.html)
+        self.assertIn("None of these eight reviews is DEV-VERIFIED", self.html)
         self.assertIn("not a published screenshot gallery", self.html)
-        self.assertEqual(6, self.html.count('class="hold">HOLD'))
+        self.assertEqual(8, self.html.count('class="hold">HOLD'))
 
 
     def test_inspected_review_controls_are_independent_and_safe(self):
-        self.assertEqual(6, self.html.count('data-review-group='))
-        for review_id in ("RV-01", "RV-02", "RV-03", "RV-04", "RV-05", "RV-06"):
+        self.assertEqual(8, self.html.count('data-review-group='))
+        for review_id in ("RV-01", "RV-02", "RV-03", "RV-04", "RV-05", "RV-06", "RV-07", "RV-08"):
             self.assertIn('id="review-' + review_id.lower() + '"', self.html)
         for identifier in ("review-search", "review-count", "review-empty", "clear-reviews",
                            "export-reviewed", "print-reviewed"):
