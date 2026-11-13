@@ -1,3 +1,10 @@
+## 13 November 2026 — Pattern catalogue provenance reconciliation (SOURCE-ONLY)
+
+- Upgraded [Pattern Library Engineering](pattern-library.html#catalogue-lineage) with a mobile-friendly, accessible three-snapshot comparison: the 28 September 96-pattern/4,595-item read-only export; the 3 October 11,000-issue/2,234-candidate catalogue; and the later Delivery 4.22.2 source declaration.
+- Identified 7,600 archetype-generated entries out of 11,000 issue definitions (69.1%) as **source variants requiring semantic review**, not independent live platform defects or certified implementation coverage. Retained historical 4.15.0/0.2.0 and 4.20.0 DEV reports as version-specific DEV-REPORTED statements.
+- Added five Python regression tests under `scripts/test_pattern_catalogue_lineage.py` for dated lineage labels, keyboard-accessible filter controls, correct numeric composition, public provenance links and no private assets/network calls. Existing quality workflow discovers the test automatically.
+- No new DEV-VERIFIED/PRODUCTION-VERIFIED claims, real screenshots, original Drive assets, customer data or private repository exposure. [Technical release record](releases/2026-11-13-pattern-library-provenance-reconciliation.md). Public website needs no ServiceNow licence; native App Engine/custom table and product-specific entitlements require target verification.
+
 ## 13 November 2026 — CMDB Remediation Decision Lab (SOURCE-ONLY + MOCK-ONLY)
 
 - Published a client-neutral, accessible, four-fixture CMDB remediation decision desk translating read-only duplicate, relationship, stale lifecycle and IRE diagnostics into an advisory investigation/change-control sequence. Users vary evidence completeness, source ownership, change/rollback readiness and impact review; evidence gaps and conflicting source authority fail closed. The local JSON receipt is permanently HOLD, NOT RUN, with no native verification or approval.
