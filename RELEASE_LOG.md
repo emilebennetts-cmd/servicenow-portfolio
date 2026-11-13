@@ -1,3 +1,11 @@
+## 14 November 2026 — entitlement and OOTB decision desk (SOURCE-ONLY / MOCK-ONLY)
+
+- Extended [Operational Readiness](operational-readiness-runbook.html#entitlement-gate) with ten OOTB-first, contract-sensitive capability categories, unresolved/add-on filters, self-reported local decisions, anonymous evidence-alias validation and downloadable HOLD-only JSON. The ten educational categories are not the 20 detailed licensing requirements in the controlled fictional Diagnostic completion runbook.
+- Every export denies contract proof, licence purchase, independent approval, native DEV/Production verification and detailed requirement reconciliation. Browser-local inputs stay client-neutral and are never transmitted or persisted.
+- Added regression and four-viewport Chromium browser checks to the responsive workflow, updated the existing `OPERATIONS-READINESS` evidence claim without increasing the 84-claim register, and reconciled the separate private visual-review inventory to 0 authorised screenshot pixels.
+- Grounding: controlled Delivery As-Built, fictional Diagnostic runbook, source READMEs and current ServiceNow custom-table/Integration Hub guidance; no restricted source or customer assets published. [Technical release](releases/2026-11-14-entitlement-decision-desk.md).
+- Static site requires no ServiceNow licence. Native implementation may need App Engine/custom-table rights, ITSM/ITOM/Discovery, IntegrationHub/spokes, HAM/SAM, HRSD/CSM, analytics, AI and provider/document rights according to target scope. Consult final-commit GitHub Actions rather than treating this release note as successful CI/DEV evidence.
+
 ## 14 November 2026 — version-pinned architecture gallery evidence boundary (SOURCE-ONLY)
 
 - Repaired the Workbench Architecture Gallery's stale `DEV-VERIFIED` description and dated 11 November website assurance statement. Three responsive evidence cards now separate the 30 September 4.6.1 source / 4.5.1 DEV-REPORTED boundary, October 4.22.2 source and 21 October 4.22.8 distinct-scope synthetic demo. The separate 29 native acceptance cases remain NOT RUN.
