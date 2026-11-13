@@ -18,7 +18,7 @@ The gallery retained an older September 2026 architecture paragraph and a status
 - Added the **application identity firewall**: an observed demo in a distinct application scope does not certify a separate source-generation baseline.
 - Corrected the DEV-REPORTED and DEV-VERIFIED definitions in the gallery.
 - Replaced obsolete site-deployment assurance with durable links to public quality and acceptance evidence; no current CI success is asserted in advance.
-- Added accessible responsive layout, offline regression tests, and an anchor in the page's own navigation.
+- Added accessible responsive layout, offline regression tests, a four-viewport Chromium smoke test (390/768/1024/1440px), and an anchor in the page's own navigation.
 
 ## 3. Architecture and evidence sources
 
@@ -28,7 +28,7 @@ The public page is now a clearer architecture diagram, **not an authenticated Se
 
 ## 4. Verification and entitlements
 
-`python -m unittest scripts.test_architecture_gallery_claim_boundaries -v` checks snapshot separation, accessible layout, restricted-data containment and the non-verified status. The repository's quality and publication workflows must be consulted after this commit; this release document does not assert their eventual success.
+`python -m unittest scripts.test_architecture_gallery_claim_boundaries -v` checks snapshot separation, accessible layout, restricted-data containment and the non-verified status. The repository's quality and publication workflows, including the responsive Chromium workflow, must be consulted after the final commit; this release document does not assert their eventual success. The browser script exercises three visible version snapshots, navigation, non-promoted assurance statuses and mobile overflow.
 
 Static HTML/CSS and the offline tests require **no ServiceNow licence**. Native Workbench and implementation-pack execution depend on App Engine/custom-table rights, roles/ACLs and any applicable ITSM, ITOM/Discovery, IntegrationHub/spokes, analytics, AI-provider or other third-party entitlements, confirmed against each target contract.
 
