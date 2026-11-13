@@ -527,13 +527,13 @@ def check_reviewed_evidence_gallery(browser, width):
     page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
     try:
         page.goto(url, wait_until="domcontentloaded", timeout=30000)
-        require(page.locator('article[data-review-id]').count() == 6,
-                f"{width}px: six inspected evidence records not visible")
+        require(page.locator('article[data-review-id]').count() == 8,
+                f"{width}px: eight inspected evidence records not visible")
         require(page.locator('article[data-evidence-id]').count() == 10,
                 f"{width}px: ten separate candidate placeholders altered")
         require(page.locator("img").count() == 0,
                 f"{width}px: private or unapproved image embedded")
-        for record in ("RV-05", "RV-06"):
+        for record in ("RV-05", "RV-06", "RV-07", "RV-08"):
             card = page.locator(f'article[data-review-id="{record}"]')
             require(card.get_attribute("data-source-class") == "mock-only",
                     f"{width}px: {record} missing synthetic boundary")
@@ -544,13 +544,13 @@ def check_reviewed_evidence_gallery(browser, width):
             "() => document.documentElement.scrollWidth <= window.innerWidth + 2"
         ), f"{width}px: evidence gallery overflows screen")
         # The inspected sample is a separate, usable review registry, not an image gallery.
-        require(page.locator("#review-count").inner_text() == "6 of 6 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "6 of 8 inspected reviews shown",
                 f"{width}px: reviewed sample initial count incorrect")
         page.locator('[data-review-filter="diagnostic"]').click()
-        require(page.locator("#review-count").inner_text() == "2 of 6 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "3 of 8 inspected reviews shown",
                 f"{width}px: Diagnostic filter incorrect")
         page.locator("#review-search").fill("MIM")
-        require(page.locator("#review-count").inner_text() == "1 of 6 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "1 of 8 inspected reviews shown",
                 f"{width}px: Diagnostic/MIM search incorrect")
         require(page.locator('article[data-review-id="RV-05"]').is_visible(),
                 f"{width}px: inspected Diagnostic MIM record missing")
@@ -572,15 +572,15 @@ def check_reviewed_evidence_gallery(browser, width):
         require(not page.locator("body").evaluate("(el) => el.classList.contains('review-print')"),
                 f"{width}px: print-only state was not cleared")
         page.locator("#clear-reviews").click()
-        require(page.locator("#review-count").inner_text() == "6 of 6 inspected reviews shown",
+        require(page.locator("#review-count").inner_text() == "6 of 8 inspected reviews shown",
                 f"{width}px: reviewed reset failed")
         page.goto(url + "?reviewGroup=delivery&reviewq=scope", wait_until="domcontentloaded")
-        require(page.locator("#review-count").inner_text() == "1 of 6 inspected reviews shown"
+        require(page.locator("#review-count").inner_text() == "1 of 8 inspected reviews shown"
                 and page.locator('article[data-review-id="RV-06"]').is_visible(),
                 f"{width}px: bookmarked reviewed search not restored")
         require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),
                 f"{width}px: reviewed filter controls create horizontal overflow")
-        print(f"PASS {width}px: six evidence reviews, strict HOLD, no image publication")
+        print(f"PASS {width}px: eight evidence reviews, strict HOLD, no image publication")
     finally:
         page.close()
 
