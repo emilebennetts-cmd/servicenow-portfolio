@@ -1,3 +1,11 @@
+## 14 November 2026 — handover and closure control desk (SOURCE-ONLY / MOCK-ONLY)
+
+- Extended [Universal Delivery Workbench case study](delivery-case-study.html#closure-assurance) with a nine-control, seven-scenario, fail-closed closure preparation experience: three owner decisions, three issued close artefacts, transition/hypercare, objective assurance and an independent reviewer. The browser-local exercise shows named blockers and exports a HOLD-only JSON receipt.
+- Fully prepared means **eligible to request independent review**, not approved. The export states native NOT RUN, publication HOLD and false for actual document issue, owner acceptance, closure request, independent approval, DEV verification and Production verification. Original screenshots remain 0 approved.
+- Reviewed the controlled 30 September 2026 Delivery As-Built and Training, Delivery source 4.2.0 governance and 4.14.0 actionable handover records, later 4.22.2 source boundaries, and Diagnostic handoff runbook. No private source or customer data published.
+- Added regression and 390/768/1024/1440px Chromium browser tests and responsive CI wiring. New evidence item DELIVERY-CLOSURE-CONTROL-20261114 increases the register to 85 claims. The final commit's CI/Pages runs are separate from native ServiceNow verification.
+- [Full technical release](releases/2026-11-14-handover-closure-control-desk.md). Static site licensing: none. Native entitlement checks: scoped apps/App Engine/custom tables, least-privilege roles, ITSM/ITOM, IntegrationHub, analytics, AI, document and external provider subscriptions according to actual usage.
+
 ## 14 November 2026 — entitlement and OOTB decision desk (SOURCE-ONLY / MOCK-ONLY)
 
 - Extended [Operational Readiness](operational-readiness-runbook.html#entitlement-gate) with ten OOTB-first, contract-sensitive capability categories, unresolved/add-on filters, self-reported local decisions, anonymous evidence-alias validation and downloadable HOLD-only JSON. The ten educational categories are not the 20 detailed licensing requirements in the controlled fictional Diagnostic completion runbook.
