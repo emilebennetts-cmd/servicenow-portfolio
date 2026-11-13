@@ -1,3 +1,10 @@
+## 14 November 2026 — searchable complete public evidence claims (SOURCE-ONLY / mixed registered claims)
+
+- Added [complete public claim catalogue](technical-evidence-register.html#claim-catalogue) to the Technical Evidence Register: same-origin public JSON reading, keyword and classification search, accessible status, 12-at-a-time pagination and links to public-safe source pages. No private content or image pixels are fetched or exposed.
+- The underlying register remains at **86 claims**: 53 SOURCE-ONLY, 4 historical DEV-REPORTED, 20 MOCK-ONLY, 9 PROPOSED; zero independently DEV-VERIFIED or PRODUCTION-VERIFIED claims. Existing six dated lineage cards remain unchanged.
+- New static schema/accessibility checks and extended real-HTTP, four-width Chromium tests reject malformed/malicious claim data and check browser filtering, pagination, layout and no JS errors. Screenshot publication remains **HOLD / zero genuine approvals**.
+- [Release, architecture and entitlement record](releases/2026-11-14-public-evidence-claim-catalogue.md). Static website requires no ServiceNow licence; native App Engine/custom-table, ITSM, ITOM/Discovery, IntegrationHub, analytics, AI and external rights require contract-specific confirmation. The CI and Pages states must be confirmed on the final commit.
+
 ## 14 November 2026 — Workbench source-to-DEV evidence lineage (SOURCE-ONLY / historical DEV-REPORTED)
 
 - Corrected the public [Technical Evidence Register](technical-evidence-register.html#source-lineage) to state current Delivery source **4.22.2** separately from historical 4.20.0 DEV read-back (5 October), controlled 4.6.1 As-Built source and reported 4.5.1 DEV baseline (30 September). Added six accessible, filterable source/runtime cards, including separate Diagnostic SDK and Knowledge Intelligence 0.1.0 records.
