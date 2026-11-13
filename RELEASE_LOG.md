@@ -1,3 +1,9 @@
+## 13 November 2026 — evidence-aware Portfolio Explorer and claim-drift CI (SOURCE-ONLY)
+
+- Published a new evidence-status filter and deterministic badges on all **71 catalogue entries**, sourced from the public verification register: 13 SOURCE-ONLY, 9 MOCK-ONLY, 3 DEV-REPORTED, 1 MIXED CLAIMS and 45 NOT REGISTERED. Unregistered means no dedicated claim, not verified or unsafe; mixed claims are never promoted automatically. Existing page content is unchanged.
+- Added offline `scripts/reconcile_explorer_evidence.py --check/--write`, five negative-case tests, four-width Chromium browser filtering checks, and blocking reconciliation in both quality/audit workflows. Registered the source-only Explorer implementation as the 28th public claim. All four repository quality/browser/local-link workflows and GitHub Pages deployment passed on implementation commit `b54e1a5275b40da0ca34b7c00153d927d4691c35`.
+- Original pixels and private source are excluded; zero genuine screenshots approved, independent current DEV/Production acceptance remains open. [Explorer](portfolio-explorer.html) · [Release detail](releases/2026-11-13-evidence-aware-portfolio-explorer.md). The public website requires no ServiceNow licence; native App Engine/ITSM/ITOM/IntegrationHub/analytics/AI and third-party entitlements remain target-specific.
+
 ## 13 November 2026 — review packet covers all eight evidence records (SOURCE-ONLY)
 
 - Reconciled the screenshot handoff utility with all eight inspected visual-evidence records, including RV-07 update-set metadata and RV-08 training-guide pages. RV-04/RV-08 are explicitly document-only and cannot qualify as runtime-screen gallery entries.
