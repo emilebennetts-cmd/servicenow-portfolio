@@ -1,3 +1,10 @@
+## 14 November 2026 — version-pinned architecture gallery evidence boundary (SOURCE-ONLY)
+
+- Repaired the Workbench Architecture Gallery's stale `DEV-VERIFIED` description and dated 11 November website assurance statement. Three responsive evidence cards now separate the 30 September 4.6.1 source / 4.5.1 DEV-REPORTED boundary, October 4.22.2 source and 21 October 4.22.8 distinct-scope synthetic demo. The separate 29 native acceptance cases remain NOT RUN.
+- Preserved existing `source-only` and `proposed` register classifications (84 total) and updated their descriptions without adding a verified or approved image claim. Added `scripts/test_architecture_gallery_claim_boundaries.py` to the portfolio quality suite.
+- Evidence: controlled Delivery As-Built and Architecture PDFs, Delivery and Diagnostic repository READMEs, and private dated native-demo receipt; no private identifiers, source files or genuine screenshot pixels published. [Public release record](releases/2026-11-14-architecture-gallery-evidence-boundaries.md).
+- Licensing: static website none; native App Engine/custom tables, ACLs, ITSM/ITOM, IntegrationHub, analytics, AI and provider entitlements require target-specific confirmation. CI and Pages status must be checked against this run's final commit.
+
 ## 14 November 2026 — source-pinned Incident Pack native acceptance navigator (SOURCE-ONLY + historical DEV-REPORTED)
 
 - Enhanced the [Incident Pack pilot](incident-pack-native-pilot.html#native-matrix) with **29 non-sensitive, traceable acceptance cards** and workstream/persona filters. The local CSV export is permanently **NOT RUN**, with runtime and release-authorisation flags false; no native ServiceNow action is performed.
