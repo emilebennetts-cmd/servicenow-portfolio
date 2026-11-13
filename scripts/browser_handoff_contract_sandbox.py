@@ -14,6 +14,7 @@ def check(browser,width):
         page.goto(URL,wait_until="domcontentloaded")
         assert "DRAFT ELIGIBLE (SIMULATED)" in page.locator("#hc-status").inner_text()
         assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"), width
+        page.locator("#handoff-decision-desk summary").click()
         for key,expected in (
             ("review","HOLD"),("version","REJECT"),("evidence","HOLD"),
             ("role","REJECT"),("scope","MANUAL"),("conflict","HOLD"),
@@ -21,7 +22,7 @@ def check(browser,width):
         ):
             page.locator("#hc-scenario").select_option(key)
             assert expected in page.locator("#hc-status").inner_text(),(width,key)
-            payload=page.locator("#hc-output").inner_text()
+            payload=page.locator("#hc-output").text_content()
             assert '"native_execution": "NOT RUN"' in payload
             assert '"publication_decision": "HOLD"' in payload
         page.locator("#hc-scenario").select_option("replay")
