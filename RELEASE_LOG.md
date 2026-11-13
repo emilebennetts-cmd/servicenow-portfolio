@@ -1,3 +1,9 @@
+## 14 November 2026 — Diagnostic operator rehearsal and source-verified control boundaries (SOURCE-ONLY)
+
+- Added [a 10-step role/lane-filterable Diagnostic operator walkthrough](diagnostic-workbench-case-study.html#diagnostic-operator), covering separately documented core local-first Workbench and KI companion controls. Browser read marks and local text export always remain **NOT RUN | HOLD**; no ServiceNow instance access or approval.
+- Added offline regression and four-width Chromium tests, updated the existing source-only verification-register claim, and stored a restricted source receipt without publishing private source/Drive URLs or screenshot pixels. Core 1 September and KI 30 September 2026 DEV observations remain historical DEV-REPORTED, never fresh DEV-VERIFIED.
+- Licensing: public static page none; native App Engine/custom app/roles/ACLs, approved collector access and optional ITSM/ITOM, IntegrationHub, AI and content rights require target-specific verification. Screenshot publication stays HOLD. See [release notes](releases/2026-11-14-diagnostic-operator-rehearsal.md).
+
 ## 14 November 2026 — source-traced Delivery operator guide (SOURCE-ONLY + existing MOCK-ONLY)
 
 - Added a twelve-procedure, nine-role, keyboard-friendly operating guide to [the Delivery case study](delivery-case-study.html#persona-operations), distilled from the controlled 19 October 2026 4.22.2 training pack. The page filters read-only procedures, tracks **read** marks and exports a local rehearsal checklist always labelled **NOT RUN / HOLD**. No native records, approvals or credentials are accessed.
