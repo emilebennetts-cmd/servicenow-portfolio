@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#091722">
+<meta name="description" content="Source-backed, synthetic ServiceNow diagnostic gate-closure case study. Explore cross-workbench evidence, release prerequisites and fail-closed acceptance controls.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Diagnostic Gate Closure Lab | ServiceNow Engineering Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#091722;--panel:#112b3c;--panel2:#173b4d;--edge:#3b5f70;--ink:#f2fbfc;--muted:#c1d7e1;--mint:#8cf3d5;--amber:#ffe0a3;--coral:#ffd1b7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 70% 450px at 80% 0,#27536f66,transparent),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:4px}.wrap{width:min(1160px,calc(100% - 32px));margin:auto}.skip{position:absolute;left:12px;top:-100px;background:#fff;color:#000;padding:10px;z-index:100}.skip:focus{top:10px}header{border-bottom:1px solid var(--edge)}nav{display:flex;flex-wrap:wrap;gap:14px 26px;padding:18px 0;font-size:.87rem;font-weight:780}main section{border-bottom:1px solid #304e5e;padding:clamp(40px,6vw,74px) 0}.hero{padding:clamp(55px,8vw,104px) 0 66px}.kicker{color:var(--mint);text-transform:uppercase;font-size:.75rem;letter-spacing:.18em;font-weight:850}h1,h2,h3{letter-spacing:-.04em;line-height:1.16}h1{font-size:clamp(2.75rem,7vw,5.8rem);margin:14px 0 21px;max-width:940px}h2{font-size:clamp(1.7rem,3.4vw,2.75rem);margin:0 0 16px}h3{font-size:1.18rem;margin:0 0 12px}p,li{color:var(--muted)}.lead{font-size:1.2rem;max-width:840px}.pills{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0}.pill{display:inline-block;padding:5px 12px;border:1px solid #6d929f;border-radius:999px;font-size:.76rem;font-weight:800}.warn{border-color:#b89762;color:var(--amber)}.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:clamp(19px,3vw,30px);min-width:0}.card p:last-child{margin-bottom:0}.diagram{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0}.diagram div{border:1px solid #517d8b;border-top:4px solid var(--mint);border-radius:13px;padding:21px;background:#143344}.diagram strong{display:block;color:white;margin-bottom:6px}.diagram small{color:var(--muted)}.notice{border:1px solid #9c8154;border-left:5px solid var(--amber);background:#30291e;border-radius:12px;padding:17px 22px;color:#ffecd0}.notice p{color:#ffecd0;margin:0}.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:24px 0;padding:20px;background:var(--panel);border-radius:14px;border:1px solid var(--edge)}.toolbar label{display:grid;gap:7px;min-width:220px;flex:1;font-size:.83rem;font-weight:800}.toolbar select{border:1px solid #9cb6bf;background:#f0fafa;color:#123342;border-radius:9px;padding:12px;font:inherit;max-width:100%;min-height:49px}.button{font:inherit;cursor:pointer;font-weight:850;border:1px solid #8bced3;border-radius:9px;padding:12px 18px;min-height:49px;background:var(--mint);color:#092e35}.button.secondary{background:#1b4354;color:#efffff}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{border:1px solid var(--edge);background:var(--panel);border-radius:12px;padding:16px}.stat b{display:block;font-size:2rem;color:var(--mint)}.stat span{font-size:.83rem;color:var(--muted)}.lab{display:grid;grid-template-columns:minmax(230px,330px) minmax(0,1fr);gap:18px;align-items:start}.gate-list{display:grid;gap:9px}.gate{width:100%;text-align:left;color:var(--ink);font:inherit;background:#193748;border:1px solid #497184;border-radius:12px;padding:15px;cursor:pointer}.gate[aria-pressed=true]{border-color:var(--mint);background:#225268;box-shadow:inset 4px 0 var(--mint)}.gate strong{display:block}.gate small{display:block;color:#cfe1e8;margin-top:4px}.gate-state{font-size:.7rem;font-weight:850;color:var(--amber);letter-spacing:.04em}.detail{background:#102b3d;border:1px solid var(--edge);border-radius:18px;padding:clamp(18px,3vw,30px);min-height:450px}.detail .overline{font-size:.75rem;font-weight:850;color:var(--mint);letter-spacing:.12em;text-transform:uppercase}.evidence-tasks{display:grid;gap:11px;margin-top:20px}.task{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;background:#1a3a4d;border:1px solid #537989;padding:16px;border-radius:11px;cursor:pointer}.task input{width:21px;height:21px;margin-top:4px;accent-color:#4eb99e}.task strong{display:block}.task small{display:block;color:#c3dce6;line-height:1.55}.task:focus-within{outline:2px solid var(--mint);outline-offset:2px}.section-sub{margin-top:18px;color:var(--amber);font-weight:760}.queue{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:9px}.queue li{border-left:3px solid var(--mint);background:#183749;padding:12px 16px}.queue b{color:#fff}.footer{padding:30px 0;color:var(--muted);font-size:.86rem}.footer a{font-weight:800}.small{font-size:.86rem}code{overflow-wrap:anywhere;color:#bafbe9}#ticket-status{color:var(--amber);font-weight:800;min-height:27px}@media(max-width:760px){.lab,.intro-grid{grid-template-columns:1fr}.diagram{grid-template-columns:1fr}.gate-list{grid-template-columns:repeat(2,minmax(0,1fr))}.gate{height:100%}}@media(max-width:500px){.gate-list,.stats{grid-template-columns:1fr}.toolbar{padding:15px}.toolbar label,.toolbar select,.toolbar button{width:100%}.detail{padding:17px}.task{padding:13px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav class="wrap" aria-label="Site navigation"><a href="index.html">Portfolio home</a><a href="diagnostic-workbench-case-study.html">Diagnostic Workbench case study</a><a href="delivery-case-study.html">Delivery case study</a><a href="native-assurance-coverage-atlas.html">Native acceptance</a><a href="portfolio-explorer.html">Search portfolio</a></nav></header>
+<main id="main">
+<div class="wrap hero"><div class="kicker">Cross-workbench assurance / Case study</div><h1>A release gate is a decision. <span style="color:var(--mint)">Not a green card.</span></h1>
+<p class="lead">Explore an evidence-driven route from a diagnostic finding to a governed Delivery Workbench record, test result, controlled non-production release and support handover.</p>
+<div class="pills"><span class="pill">SOURCE-ONLY design</span><span class="pill">MOCK-ONLY interaction</span><span class="pill warn">NOT RUN / HOLD</span><span class="pill">No original screenshots</span></div>
+<div class="notice"><p><strong>Evidence disclosure:</strong> All displayed scenario inputs, decisions and preparation checkmarks are synthetic and browser-local. The controlled 30 September 2026 non-production runbook is historical DEV-REPORTED context only. This tool cannot approve G0–G6, certify DEV, or represent actual Production.</p></div></div>
+<section><div class="wrap"><div class="kicker">01 / The client's pain &amp; history</div><h2>Two workbenches can tell different readiness stories.</h2>
+<div class="intro-grid"><article class="card"><h3>Operational friction</h3><p>A representative enterprise programme accumulates high diagnostic findings, product-entitlement questions, open red RAID items, unreviewed components and incomplete SIT/UAT tests. A dashboard percentage can improve while the underlying evidence chain remains incomplete.</p><p>Without a cross-workbench link, teams can close an assurance card without fixing the corresponding requirement, component, test or risk.</p></article><article class="card"><h3>The historical trigger</h3><p>A controlled September 2026 fictional showcase runbook described distinct diagnostic and delivery readiness measures and an ordered G0–G6 closure path. It warned specifically against inventing Production/change approvals in a DEV environment.</p><p>Its figures and environment identities are intentionally excluded from this public demonstration. They do not establish a current runtime state.</p></article></div></div></section>
+<section><div class="wrap"><div class="kicker">02 / The ServiceNow solution</div><h2>Link each finding to the governed work that resolves it.</h2><div class="diagram" aria-label="Conceptual architecture"><div><strong>01 · Diagnostic lens</strong><small>Capture the failing control, source evidence and accountable owner. Unassessed remains unassessed.</small></div><div><strong>02 · Delivery spine</strong><small>Map it to an owned requirement, RAID, component, test or decision. Preserve independent approval.</small></div><div><strong>03 · Release authority</strong><small>Verify scope, licensing, test, change and handover evidence before an actual authorising decision.</small></div></div><p>This is an explanatory schematic, not an installed cross-instance sync. The model is inspired by the controlled Diagnostic completion runbook and Delivery architecture/user guide, not a claim that a native automation was executed.</p></div></section>
+<section id="lab"><div class="wrap"><div class="kicker">Interactive scenario / Browser-local mock</div><h2>Gate closure preparation lab</h2><p>Select a synthetic scenario, inspect the seven gates, and mark which evidence *would be prepared*. Even a complete checklist is not a ServiceNow approval, CAB outcome, actual deployment or verification.</p>
+<div class="toolbar"><label for="scenario">Synthetic starting scenario<select id="scenario"><option value="baseline">01 · Historical baseline, G2 blocked</option><option value="entitlement">02 · Entitlement unresolved</option><option value="review">03 · Evidence prepared through design</option><option value="complete">04 · All documents prepared (still HOLD)</option></select></label><button type="button" class="button secondary" id="reset">Reset scenario</button><button type="button" class="button" id="export">Export HOLD-only prep ticket</button></div>
+<div class="stats"><div class="stat"><b id="prepared">0 / 11</b><span>Evidence work units self-marked prepared</span></div><div class="stat"><b id="next">G2</b><span>First gate still needing native authority</span></div><div class="stat"><b id="decision">HOLD</b><span>Immutable release and publication decision</span></div></div>
+<div class="lab"><div class="gate-list" id="gates" role="group" aria-label="Choose a gate to inspect"></div><div class="detail" id="detail"><div class="overline" id="gate-label">G2 / Design readiness</div><h3 id="gate-title">Design and licensing</h3><p id="gate-summary"></p><p id="gate-outcome" class="section-sub" role="status" aria-live="polite"></p><div class="evidence-tasks" id="tasks"></div><div class="notice" style="margin-top:22px"><p><strong>Independence barrier:</strong> Checkmarks are a self-reported preparation simulation. The native record, persona, approval identity, evidence references and audit history require separate authorised read-back. The public model never transitions to Approved.</p></div></div></div>
+<h3 style="margin-top:36px">Evidence-to-release dependency queue</h3><p>These are proposed next actions, not completed execution. All candidate handoffs retain the missing native control or reviewer decision.</p><ol class="queue" id="queue" aria-live="polite"></ol><p id="ticket-status" role="status" aria-live="polite"></p></div></section>
+<section><div class="wrap"><div class="kicker">03 / Architectural best practices</div><h2>Protect the integrity of the release chain.</h2><div class="intro-grid"><article class="card"><h3>OOTB-first controls</h3><p>Use existing ServiceNow roles/ACLs, approvals, Change Management, update-set preview/commit, ATF, test results and knowledge/operational acceptance where licensed and in scope. Keep custom evidence correlation minimal, versioned, permission-aware and independently auditable.</p><p>Every finding should map to a governed Delivery record with owner, decision, evidence reference, test result and release identity.</p></article><article class="card"><h3>Safe failure and reversibility</h3><p>Do not rename a DEV environment as Production, invent CAB evidence or bypass review to turn a gate green. A non-production rehearsal must be explicitly labelled <strong>DEMO PROD-SIM — NOT PRODUCTION</strong> and blocked from actual production-only gates without a separately reviewed rule.</p><p>Native acceptance must cover negative-role tests, independent design and UAT approvals, package manifest, PVT, rollback/recovery and operations handover.</p></article></div>
+<p class="small">Licensing / entitlements: this static site needs <strong>no ServiceNow licence</strong>. Native Workbench deployment requires approved App Engine/custom application and table rights, roles/ACLs and platform approvals; CMDB/ITOM Discovery, ITSM Change/ATF, IntegrationHub/spokes, Jira/Notion provider APIs and optional analytics/AI entitlements depend on the actual target and module scope.</p>
+<p class="small">Evidence classes: SOURCE-ONLY public code/architecture; MOCK-ONLY simulated work units; DEV-REPORTED historical, dated non-production notes; <strong>no new DEV-VERIFIED or PRODUCTION-VERIFIED functionality</strong>. Original screenshot pixels and private Drive/repository source remain withheld pending individual sanitisation and publication approval.</p><p><a href="workbench-acceptance-playbook.html">Native acceptance playbook</a> · <a href="screenshot-publication-gate.html">Screenshot publication gate</a> · <a href="integration-contract-lab.html">Integration replay decision lab</a></p></div></section>
+</main>
+<footer class="footer"><div class="wrap">Case-study demonstration only · No network access, storage, customer records or native writes. <a href="index.html">Return to portfolio</a>.</div></footer>
+<script>
+"use strict";
+const TASKS=[
+{id:"D1",gate:2,title:"Reconcile diagnostic findings",owner:"Delivery lead",proof:"Finding → requirement/RAID/build/test mapping; owner and dated source evidence."},
+{id:"D2",gate:2,title:"Resolve product entitlements",owner:"Platform and commercial owners",proof:"Must/Should licensing decisions or approved supported fallbacks."},
+{id:"D3",gate:2,title:"Treat red risks and decisions",owner:"Risk/decision owner",proof:"Mitigation or explicit risk acceptance with independent approval reference."},
+{id:"D4",gate:3,title:"Peer-review built components",owner:"Independent technical reviewer",proof:"Scope-matched component review, result and linked audit reference."},
+{id:"D5",gate:3,title:"Prove external integration contracts",owner:"Integration and security leads",proof:"Authorised alias, correlation, replay, forbidden-field, reconciliation and failure tests."},
+{id:"D6",gate:3,title:"Close SIT, ATF and PVT gaps",owner:"Test and technical leads",proof:"Passed results, test-to-requirement coverage and no untreated critical defects."},
+{id:"D7",gate:4,title:"Obtain independent UAT acceptance",owner:"Business/UAT approver",proof:"Must-coverage, deviation decision and dated signoff."},
+{id:"D8",gate:5,title:"Rehearse governed non-production release",owner:"Release/change manager",proof:"Package manifest, clean preview, change and explicit non-production approval."},
+{id:"D9",gate:5,title:"Read back PVT, rollback and reconciliation",owner:"Deployment assurance lead",proof:"Smokes, verification, rollback proof and post-release reconciliation."},
+{id:"D10",gate:6,title:"Prepare support ownership and hypercare",owner:"Operations owner",proof:"Runbook, training, on-call, monitoring, knowledge and known-error records."},
+{id:"D11",gate:6,title:"Re-evaluate closure gates and retain audit",owner:"Independent gate reviewer",proof:"Final gate read-back, source-to-release lineage and conditional closure decisions."}
+];
+const GATES=[
+{id:0,title:"Qualified intake",summary:"Identity, sponsorship, scope and the expressly non-production boundary must be evidenced. The source runbook records a dated historical approval, not approval of this simulation."},
+{id:1,title:"Requirements baseline",summary:"Owned atomic requirements, prioritisation and acceptance criteria must be reviewed. The historical approval is neither migrated nor recreated here."},
+{id:2,title:"Design, licensing and RAID",summary:"Gate G2 is blocked if any mandatory entitlement decision, untreated red risk or unlinked diagnostic finding remains."},
+{id:3,title:"Build and technical tests",summary:"Peer review, passed SIT/ATF/PVT and proven integration controls are required. Prepared evidence is not passed tests."},
+{id:4,title:"Business UAT",summary:"Independent UAT authority and coverage of Must requirements are required before release consideration."},
+{id:5,title:"Release and post-validation",summary:"A strictly non-production demonstration may rehearse release and PVT but cannot substitute for a Production change or deployment."},
+{id:6,title:"Operational acceptance",summary:"Runbooks, support ownership, monitoring, hypercare, training and explicit close-out decisions must be retained."}
+];
+const PRESETS={baseline:[],entitlement:["D1","D3"],review:["D1","D2","D3"],complete:TASKS.map(t=>t.id)};
+const $=id=>document.getElementById(id);
+let selected=2,prepared=new Set();
+function outcome(gate){
+ if(gate<2)return "Historical DEV-REPORTED baseline only · NOT reverified";
+ const these=TASKS.filter(t=>t.gate===gate),done=these.filter(t=>prepared.has(t.id)).length;
+ if(done===these.length)return "Evidence preparation complete · NATIVE REVIEW REQUIRED / HOLD";
+ return done+"/"+these.length+" preparation units · EVIDENCE GAP / HOLD";
+}
+function make(tag,text,cls){
+ const node=document.createElement(tag);
+ if(text!==undefined)node.textContent=text;
+ if(cls)node.className=cls;
+ return node;
+}
+function render(){
+ const list=$("gates");list.replaceChildren();
+ for(const g of GATES){
+ const button=make("button",undefined,"gate");button.type="button";button.dataset.gate=String(g.id);button.setAttribute("aria-pressed",String(g.id===selected));
+ button.append(make("strong","G"+g.id+" · "+g.title),make("small",outcome(g.id)));
+ button.addEventListener("click",()=>{selected=g.id;render()});list.append(button);
+ }
+ const gate=GATES[selected];$("gate-label").textContent="G"+selected+" / Evidence control";$("gate-title").textContent=gate.title;
+ $("gate-summary").textContent=gate.summary;$("gate-outcome").textContent=outcome(selected);
+ const taskroot=$("tasks");taskroot.replaceChildren();
+ if(selected<2)taskroot.append(make("p","Historic baseline assumption only; this model does not provide an approval control."));
+ for(const task of TASKS.filter(t=>t.gate===selected)){
+ const label=make("label",undefined,"task");const tick=document.createElement("input");tick.type="checkbox";tick.checked=prepared.has(task.id);tick.dataset.task=task.id;
+ tick.setAttribute("aria-label","Illustratively prepare "+task.id+" "+task.title);
+ tick.addEventListener("change",()=>{if(tick.checked)prepared.add(task.id);else prepared.delete(task.id);render()});
+ const body=make("span");body.append(make("strong",task.id+" · "+task.title),make("small","Owner: "+task.owner),make("small","Required proof: "+task.proof));
+ label.append(tick,body);taskroot.append(label);
+ }
+ $("prepared").textContent=prepared.size+" / "+TASKS.length;$("next").textContent="G2";$("decision").textContent="HOLD";
+ const queue=$("queue");queue.replaceChildren();
+ for(const t of TASKS.filter(t=>!prepared.has(t.id)).slice(0,5)){const li=make("li");li.append(make("b",t.id+" · "+t.title),make("span"," — "+t.owner));queue.append(li)}
+ if(prepared.size===TASKS.length)queue.append(make("li","All eleven work units self-marked as prepared. Independent native review, approvals and version-pinned evidence remain NOT RUN / HOLD."));
+ $("ticket-status").textContent="Scenario prepared in browser only · zero native approvals";
+}
+function preset(){prepared=new Set(PRESETS[$("scenario").value]);selected=2;render()}
+$("scenario").addEventListener("change",preset);$("reset").addEventListener("click",preset);
+$("export").addEventListener("click",()=>{
+ const packet={schema:"portfolio.gate-preparation.v1",scenario:$("scenario").value,prepared_ids:TASKS.filter(t=>prepared.has(t.id)).map(t=>t.id),
+ gates:GATES.map(g=>({id:"G"+g.id,preparation:outcome(g.id),native_status:"NOT RUN",approval:false,release:"HOLD"})),
+ evidence_classification:"MOCK-ONLY",source_classification:"SOURCE-ONLY",dev_verified:false,production_verified:false,publication_approved:false,release_decision:"HOLD",advisory_only:true};
+ const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json"});
+ const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="gate-closure-preparation-HOLD.json";link.click();URL.revokeObjectURL(url);
+ $("ticket-status").textContent="Synthetic NOT RUN / HOLD ticket generated locally. No native approval or service call.";
+});
+preset();
+</script></body></html>
