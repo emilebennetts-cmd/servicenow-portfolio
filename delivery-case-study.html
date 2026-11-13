@@ -78,6 +78,106 @@ select.addEventListener("change",render);depth.addEventListener("change",render)
 document.getElementById("doc-export").addEventListener("click",()=>{const payload={schema:"portfolio-synthetic-preview/1",evidence:"MOCK-ONLY",native_test_status:"NOT RUN",publication:"HOLD",client_approved:false,production_verified:false,original_screenshots_approved:0,document_type:types[Number(select.value)],audience:depth.value,description:document.getElementById("doc-text").textContent};const blob=new Blob([JSON.stringify(payload,null,2)+"\n"],{type:"application/json"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="delivery-plan-synthetic-preview.json";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 })();
 </script>
+
+<section id="persona-operations" class="persona-guide" aria-labelledby="persona-operations-title">
+<style>
+.persona-guide{background:#f7fbff;border:1px solid #a9c7df}.persona-guide .persona-intro{color:#314c66;max-width:75ch}
+.persona-guide .source-stamp{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 1.25rem}
+.persona-guide .source-stamp span{font-size:.79rem;font-weight:750;border:1px solid #b4ccdc;border-radius:100px;padding:.25rem .72rem;background:#fff;color:#214765}
+.persona-guide .persona-boundary{background:#fff3db;color:#583c15;border-left:5px solid #bd8531;padding:.95rem 1.1rem;border-radius:0 9px 9px 0}
+.persona-guide .persona-controls{display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin:1.5rem 0}
+.persona-guide .persona-controls label{font-weight:750;flex:1 1 250px}
+.persona-guide .persona-controls select{display:block;width:100%;background:#fff;border:1px solid #7299b8;color:#193958;font:inherit;padding:.65rem .9rem;border-radius:8px;margin-top:.35rem;min-height:44px}
+.persona-guide button{border:0;border-radius:8px;padding:.75rem 1rem;min-height:44px;font:700 .92rem system-ui;background:#183e63;color:white;cursor:pointer}
+.persona-guide button:focus-visible,.persona-guide select:focus-visible,.persona-guide input:focus-visible{outline:3px solid #b87713;outline-offset:3px}
+.persona-guide .persona-count{color:#365774;font-weight:650;margin:.25rem 0 1.25rem}
+.persona-guide .persona-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.persona-guide .persona-card{padding:1.1rem;background:#fff;border:1px solid #d4e1ed;border-radius:12px;min-width:0}
+.persona-guide .persona-card[hidden]{display:none}
+.persona-guide .persona-card .procedure{font-size:.78rem;font-weight:850;letter-spacing:.09em;color:#30638a}
+.persona-guide .persona-card h3{margin:.3rem 0 .55rem;line-height:1.25;font-size:1.13rem}
+.persona-guide .persona-card p{color:#2f4860;margin:.45rem 0}
+.persona-guide .persona-card .caution{border-left:3px solid #d19a49;padding-left:.75rem;color:#644915}
+.persona-guide .persona-card label{display:flex;align-items:start;gap:.65rem;padding-top:.7rem;margin-top:.7rem;border-top:1px solid #e0e9f1;color:#214464;cursor:pointer;font-size:.85rem;font-weight:700}
+.persona-guide .persona-card input{width:20px;height:20px;flex:0 0 20px;accent-color:#1a5579;margin-top:.1rem}
+.persona-guide .persona-links{margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:1rem}
+@media(max-width:720px){.persona-guide .persona-cards{grid-template-columns:1fr}.persona-guide .persona-controls{align-items:stretch}.persona-guide .persona-controls button{flex:1 1 210px}}
+@media print{.persona-guide .persona-card[hidden]{display:block}.persona-guide button,.persona-guide select{display:none}.persona-guide .persona-cards{grid-template-columns:1fr 1fr}}
+</style>
+<p class="tag">SOURCE-ONLY · CONTROLLED TRAINING PROCEDURES</p>
+<h2 id="persona-operations-title">Practice the real operating model — without claiming live execution</h2>
+<p class="persona-intro">This <strong>read-only procedure navigator</strong> distils twelve tasks from the controlled Universal Delivery Workbench 4.22.2 User Guide. Select a role, inspect prerequisites and expected records, and mark procedures as <em>read</em>. It does not simulate an instance, produce real approvals or run ServiceNow actions.</p>
+<div class="source-stamp" aria-label="Dated source evidence"><span>Source document cut-off: 19 October 2026</span><span>Source-described version: 4.22.2</span><span>Historical DEV report: 6 October 2026</span><span>Current DEV acceptance: NOT RUN</span></div>
+<p class="persona-boundary"><strong>Evidence boundary:</strong> the 6 October report is dated, version-bound DEV-REPORTED evidence, not independent verification of today's installation. The training pack explicitly requires fresh target read-back and genuine screen review before a live demonstration. No original screenshots have publication approval (HOLD).</p>
+<div class="persona-controls">
+<label for="persona-role">Show procedures for a practitioner role<select id="persona-role"><option value="all">All roles and procedures</option><option value="presales">Presales / account lead</option><option value="delivery">Delivery lead</option><option value="architect">Architect / consultant</option><option value="developer">Developer / tester</option><option value="approver">Independent approver</option><option value="scanner">Scanner</option><option value="ai">AI / integration user</option><option value="deployer">Deployer / release manager</option><option value="operations">Operations owner</option></select></label>
+<button type="button" id="persona-export">Download read-only rehearsal checklist</button>
+<button type="button" id="persona-reset">Clear reviewed marks</button>
+</div>
+<p id="persona-count" class="persona-count" role="status" aria-live="polite">12 source-described procedures. Review marks are local to this open page only.</p>
+<ol class="persona-cards" id="persona-cards">
+<li class="persona-card" data-roles="presales delivery" data-procedure="4.1"><span class="procedure">USER GUIDE §4.1 · START</span><h3>Initialise an engagement</h3><p><strong>Prerequisites:</strong> appropriate presales role, approved context and authorised non-Production target.</p><p><strong>Expected records:</strong> engagement, members, generated journey, audit history.</p><p class="caution"><strong>Control:</strong> confirm role <em>and</em> engagement membership; leave AI processing undecided without authority.</p><label><input type="checkbox" data-reviewed="4.1"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="presales delivery architect" data-procedure="4.2"><span class="procedure">USER GUIDE §4.2 · SCOPE</span><h3>Capture outcomes, requirements and scope</h3><p><strong>Prerequisites:</strong> sponsor input and engagement membership.</p><p><strong>Expected records:</strong> linked outcomes, decisions, scope objects, estimates and baselines.</p><p class="caution"><strong>Control:</strong> unresolved parameters stay open; deferred scope requires authority and does not become delivered scope.</p><label><input type="checkbox" data-reviewed="4.2"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="delivery architect" data-procedure="4.3"><span class="procedure">USER GUIDE §4.3 · JOURNEY</span><h3>Inspect journey blockers</h3><p><strong>Prerequisites:</strong> an initialised engagement and active membership.</p><p><strong>Expected records:</strong> journey readiness, linked evidence, decisions and waivers.</p><p class="caution"><strong>Control:</strong> resolve blockers with evidence; never simply advance a status or bypass a gate.</p><label><input type="checkbox" data-reviewed="4.3"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="delivery architect" data-procedure="4.4"><span class="procedure">USER GUIDE §4.4 · DISCOVERY</span><h3>Run a controlled workshop</h3><p><strong>Prerequisites:</strong> documented purpose, participants and scope.</p><p><strong>Expected records:</strong> workshop, attendance, parameter decisions and linked actions.</p><p class="caution"><strong>Control:</strong> unresolved assumptions and RAID items remain explicit, not hidden in notes.</p><label><input type="checkbox" data-reviewed="4.4"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="architect developer" data-procedure="4.5"><span class="procedure">USER GUIDE §4.5 · DESIGN</span><h3>Approve a build specification</h3><p><strong>Prerequisites:</strong> approved requirements, resolved design and valid target components.</p><p><strong>Expected records:</strong> linked build specification, validation result and approver decision.</p><p class="caution"><strong>Control:</strong> invalid tables and missing entitlements block execution; avoid self-approval.</p><label><input type="checkbox" data-reviewed="4.5"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="developer architect" data-procedure="4.6"><span class="procedure">USER GUIDE §4.6 · IMPLEMENT</span><h3>Build, test and preserve evidence</h3><p><strong>Prerequisites:</strong> approved non-deferred build and authorised target.</p><p><strong>Expected records:</strong> change/update-set reference, test result, defect and retest proof.</p><p class="caution"><strong>Control:</strong> describe observed results; a design or test case is not a test pass.</p><label><input type="checkbox" data-reviewed="4.6"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="delivery approver" data-procedure="4.7"><span class="procedure">USER GUIDE §4.7 · DECISION</span><h3>Review approval or waiver</h3><p><strong>Prerequisites:</strong> named, independent authority and supporting evidence.</p><p><strong>Expected records:</strong> approver, rationale, date, evidence, expiry if waived.</p><p class="caution"><strong>Control:</strong> no response is not approval; waivers need expiry and remediation.</p><label><input type="checkbox" data-reviewed="4.7"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="presales delivery architect" data-procedure="4.8"><span class="procedure">USER GUIDE §4.8 · DOCUMENT</span><h3>Generate an approved-source artefact</h3><p><strong>Prerequisites:</strong> approved template and complete bound source records.</p><p><strong>Expected records:</strong> versioned draft, source/template references and document review.</p><p class="caution"><strong>Control:</strong> generated DOCX is not automatically approved; PDF output is feature-dependent.</p><label><input type="checkbox" data-reviewed="4.8"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="scanner delivery" data-procedure="4.9"><span class="procedure">USER GUIDE §4.9 · DIAGNOSTIC</span><h3>Prepare a bounded read-only scan</h3><p><strong>Prerequisites:</strong> current consent, read-only credential alias, allow-list and bounded scope.</p><p><strong>Expected records:</strong> scan run, limits, findings and calibrated review decisions.</p><p class="caution"><strong>Control:</strong> stop on permission, consent or schema errors; do not broaden scope to force success.</p><label><input type="checkbox" data-reviewed="4.9"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="ai architect" data-procedure="4.10"><span class="procedure">USER GUIDE §4.10 · AI</span><h3>Review AI-assisted design</h3><p><strong>Prerequisites:</strong> explicit AI decision, approved bridge, alias and active kill-switch permission.</p><p><strong>Expected records:</strong> task, minimum disclosed context, proposal and human review.</p><p class="caution"><strong>Control:</strong> no secrets or unapproved endpoints; AI output never self-approves.</p><label><input type="checkbox" data-reviewed="4.10"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="deployer delivery developer" data-procedure="4.11"><span class="procedure">USER GUIDE §4.11 · RELEASE</span><h3>Prepare a governed non-Production release</h3><p><strong>Prerequisites:</strong> approved build/tests, pinned commit and dedicated update set.</p><p><strong>Expected records:</strong> manifest, preview, installation result, version read-back, tests and approval.</p><p class="caution"><strong>Control:</strong> unresolved preview errors are STOP; Production needs separate authorisation.</p><label><input type="checkbox" data-reviewed="4.11"> Procedure read — not executed</label></li>
+<li class="persona-card" data-roles="delivery operations" data-procedure="4.12"><span class="procedure">USER GUIDE §4.12 · HANDOVER</span><h3>Seek operational acceptance</h3><p><strong>Prerequisites:</strong> completed tests, approved as-built, support model and runbooks.</p><p><strong>Expected records:</strong> distinct business, technical, privacy and operations decisions.</p><p class="caution"><strong>Control:</strong> record conditional or rejected acceptance; document creation does not close gates.</p><label><input type="checkbox" data-reviewed="4.12"> Procedure read — not executed</label></li>
+</ol>
+<div class="persona-links"><a href="workbench-acceptance-playbook.html">Native acceptance requirements</a><a href="evidence-methodology.html">Evidence classification policy</a></div>
+<script>
+(function(){
+"use strict";
+const section=document.getElementById("persona-operations");
+const role=section.querySelector("#persona-role");
+const cards=Array.from(section.querySelectorAll(".persona-card"));
+const status=section.querySelector("#persona-count");
+function render(){
+ const chosen=role.value;
+ let visible=0;
+ cards.forEach(card=>{
+  const matches=chosen==="all"||card.dataset.roles.split(" ").includes(chosen);
+  card.hidden=!matches;
+  if(matches)visible++;
+ });
+ const reviewed=cards.filter(card=>card.querySelector("input").checked).length;
+ status.textContent=visible+" of "+cards.length+" source-described procedures shown; "+reviewed+" read. Reviewed means read only, NOT RUN / HOLD.";
+}
+role.addEventListener("change",render);
+cards.forEach(c=>c.querySelector("input").addEventListener("change",render));
+section.querySelector("#persona-reset").addEventListener("click",()=>{
+ cards.forEach(c=>c.querySelector("input").checked=false);
+ render();
+});
+section.querySelector("#persona-export").addEventListener("click",()=>{
+ const lines=[
+ "UNIVERSAL DELIVERY WORKBENCH | SOURCE-ONLY REHEARSAL",
+ "Document cut-off: 2026-10-19 | Source description: 4.22.2",
+ "Historical DEV read-back reported 2026-10-06; not current native acceptance.",
+ "NOT RUN | HOLD | production_verified=false | screenshot_approved=false",
+ "These checks show what was read, never completed native work.",
+ "Role view: "+role.options[role.selectedIndex].text,
+ ""
+ ];
+ for(const card of cards){
+  const check=card.querySelector("input");
+  lines.push((check.checked?"[x]":"[ ]")+" Guide §"+card.dataset.procedure+" "+card.querySelector("h3").textContent+" | REVIEWED ONLY");
+ }
+ const blob=new Blob([lines.join("\n")+"\n"],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="delivery-workbench-rehearsal-hold.txt";document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+render();
+})();
+</script>
+</section>
+
 <section aria-labelledby="architecture"><h2 id="architecture">3. Architectural best practices</h2><div class="grid"><div class="card"><h3>OOTB-first</h3><p>Preserve native ServiceNow approvals, ITIL-aligned Change authority and upgrade-safe scoped design.</p></div><div class="card"><h3>Evidence-driven gates</h3><p>Separate source code, synthetic demo, historic DEV read-back and approved runtime acceptance.</p></div><div class="card"><h3>Controlled generation</h3><p>Draft documents link back to their source; generation does not grant approval or deployment authority.</p></div></div><h3>Verification register</h3><div class="scroll"><table><thead><tr><th>Capability</th><th>Classification</th><th>Limitation</th></tr></thead><tbody><tr><td>Delivery Plan and narrative document architecture</td><td>SOURCE-ONLY</td><td>Not independently browser-tested in this publication</td></tr><tr><td>Issue/pattern catalogue</td><td>SOURCE-ONLY</td><td>Candidate records require semantic review</td></tr><tr><td>External collaboration adapters</td><td>MOCK-ONLY</td><td>No authenticated provider sync claimed</td></tr><tr><td>Prior DEV installation reports</td><td>HISTORICAL DEV-REPORTED</td><td>Not fresh DEV-VERIFIED evidence</td></tr><tr><td>Production operation</td><td>NOT VERIFIED</td><td>No production acceptance evidence supplied</td></tr><tr><td>Real screenshots</td><td>WITHHELD</td><td>Awaiting sanitisation and publication approval</td></tr></tbody></table></div></section>
 <section aria-labelledby="evidence"><h2 id="evidence">Evidence &amp; publication boundary</h2><p>This page deliberately contains no customer records, private control-source content, unapproved screenshots or instance URLs. Public-safe summaries of source documentation and dated release claims are available to independent visitors; the original engineering repositories are access-restricted.</p><p><a href="reusable-delivery-patterns-case-study.html">Public governed-delivery case study</a> · <a href="delivery-release-evolution.html">Public release evolution summary</a> · <a href="pattern-library.html">Public catalogue overview</a> · <a href="diagnostic-workbench-case-study.html">Related Diagnostic case study</a></p></section>
 <section aria-labelledby="licensing"><h2 id="licensing">Licensing &amp; entitlements</h2><p>This static page needs no ServiceNow licence. Actual scoped application deployment requires authorised instance access and applicable custom-application rights. ITSM/ITOM, IntegrationHub spokes, Performance Analytics, AI and external-provider subscriptions must be assessed per target contract. Source availability does not establish entitlement.</p></section>
