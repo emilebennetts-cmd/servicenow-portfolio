@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T05:23:00Z",
+  "updated_utc": "2026-11-13T06:21:11Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -487,6 +487,240 @@
       "runtime_verification": "Unimplemented reference design; no end-to-end runtime integration or native verification.",
       "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
       "page": "finding-to-release-handoff.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-IMPLEMENTATION_BOUNDARIES",
+      "title": "Implementation boundary review",
+      "classification": "source-only",
+      "basis": "Source-led comparison of the Delivery and Diagnostic Workbench repositories and version-specific limits; no live integration, current DEV or production verification.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "implementation-boundaries.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-INDEX-1",
+      "title": "Portfolio homepage and synthetic links",
+      "classification": "source-only",
+      "basis": "Public website navigation, source-labelled workbench summaries and evidence disclosures; website source, not native ServiceNow runtime.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "index.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-INDEX-2",
+      "title": "Portfolio homepage and synthetic links",
+      "classification": "mock-only",
+      "basis": "Homepage highlights explicitly synthetic lab walkthroughs and illustrative interface previews rather than authenticated ServiceNow screens.",
+      "runtime_verification": "Synthetic website behaviour only; no ServiceNow session or instance acceptance.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "index.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PATTERN_LIBRARY_EXPERIENCE",
+      "title": "Pattern lifecycle interactive walkthrough",
+      "classification": "mock-only",
+      "basis": "Browser-only five-stage MIM foundation example with invented engagement context; selector performs no native ServiceNow writes or deployment.",
+      "runtime_verification": "Synthetic website behaviour only; no ServiceNow session or instance acceptance.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "pattern-library-experience.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PATTERN_LIBRARY-1",
+      "title": "Historical pattern library review and proposed architecture",
+      "classification": "source-only",
+      "basis": "Historical read-only 28 September 2026 export analysis of 96 patterns and 4,595 linked items; not a new runtime audit or certified implementations.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "pattern-library.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PATTERN_LIBRARY-2",
+      "title": "Historical pattern library review and proposed architecture",
+      "classification": "proposed",
+      "basis": "Future linked-pattern-item consumption and upgraded library architecture are design recommendations, not a deployed or accepted implementation.",
+      "runtime_verification": "Design or test preparation only; no installation, execution or approval.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "pattern-library.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PATTERN_LIFECYCLE",
+      "title": "Reusable pattern lifecycle architecture",
+      "classification": "source-only",
+      "basis": "Repository-described selection, preview, reconciliation and governance sequence; source catalogue totals are unverified repository statements.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "pattern-lifecycle.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PATTERN_READINESS",
+      "title": "Illustrative pattern readiness calculator",
+      "classification": "mock-only",
+      "basis": "Twelve-control local browser rubric and printable outcome use illustrative responses, not an official ServiceNow certification or audit of the historical pattern export.",
+      "runtime_verification": "Synthetic website behaviour only; no ServiceNow session or instance acceptance.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "pattern-readiness.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PORTFOLIO_REVIEW_GUIDE",
+      "title": "90-second review navigation",
+      "classification": "source-only",
+      "basis": "Reviewer navigation, source-bounded capabilities and historical-evidence explanations; representative pains are not named-client outcomes.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "portfolio-review-guide.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-PUBLICATION_QUALITY",
+      "title": "Historical portfolio CI inspection",
+      "classification": "source-only",
+      "basis": "Public GitHub Actions status snapshots inspected 8 November 2026 concern website publication checks only, never native ServiceNow acceptance.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "publication-quality.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-REUSABLE_DELIVERY_PATTERNS_CASE_STUDY",
+      "title": "Reusable patterns technical case study",
+      "classification": "source-only",
+      "basis": "Source-documented pattern governance, requirements traceability and OOTB-first delivery approach; no customer outcome measurement or native current-release acceptance.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "reusable-delivery-patterns-case-study.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-REUSABLE_DELIVERY_PATTERNS",
+      "title": "Reusable delivery patterns source walkthrough",
+      "classification": "source-only",
+      "basis": "Repository-supported context-aware selection and draft reconciliation descriptions; historical catalogue counts and mock adapters are not independently runtime-verified.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "reusable-delivery-patterns.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-TECHNICAL_EVIDENCE_REGISTER",
+      "title": "Public technical evidence register",
+      "classification": "source-only",
+      "basis": "Curated public pointers to SDK/source documentation and bounded historical DEV assertions; this page does not independently execute the Workbenches.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "technical-evidence-register.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-TECHNICAL_REVIEWER_WALKTHROUGH",
+      "title": "Technical reviewer evidence route",
+      "classification": "source-only",
+      "basis": "Source-traced reviewer sequence and explicit proof still required for Diagnostic and Delivery; no current native test or production sign-off.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "technical-reviewer-walkthrough.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-VERIFICATION_LEDGER",
+      "title": "Public verification ledger interface",
+      "classification": "source-only",
+      "basis": "Public browser fetch of repository-controlled verification JSON and reviewer filters; the manifest is claim metadata, not an execution certificate.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "verification-ledger.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-VERIFICATION_PLAYBOOK",
+      "title": "Native verification test protocol",
+      "classification": "proposed",
+      "basis": "Documented non-executed checks for version, ACL, collector read-only behaviour and Delivery reconciliation; proposed test protocol is not completed native acceptance.",
+      "runtime_verification": "Design or test preparation only; no installation, execution or approval.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "verification-playbook.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-VISUAL_EVIDENCE_INTAKE",
+      "title": "Visual evidence intake controls",
+      "classification": "source-only",
+      "basis": "Public provenance, redaction and approval requirements for candidate Workbench captures; no original screen pixels or publication approval.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "visual-evidence-intake.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ACCEPTANCE_PLAYBOOK-1",
+      "title": "Workbench acceptance protocol and worksheet",
+      "classification": "source-only",
+      "basis": "Documented acceptance scenarios for scope identity, permissions, idempotency and handover; source-backed instructions do not record test execution.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-acceptance-playbook.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ACCEPTANCE_PLAYBOOK-2",
+      "title": "Workbench acceptance protocol and worksheet",
+      "classification": "mock-only",
+      "basis": "Browser-local acceptance worksheet and example statuses are illustrative preparation, not dated native DEV read-back or authorisation.",
+      "runtime_verification": "Synthetic website behaviour only; no ServiceNow session or instance acceptance.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-acceptance-playbook.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE_GALLERY-1",
+      "title": "Architecture gallery and conceptual handoff",
+      "classification": "source-only",
+      "basis": "Client-neutral diagrams of source-described Diagnostic and Delivery boundaries; diagrams are not authenticated instance screenshots.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-architecture-gallery.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE_GALLERY-2",
+      "title": "Architecture gallery and conceptual handoff",
+      "classification": "proposed",
+      "basis": "Cross-Workbench evidence-to-delivery connection is an architectural sequence, not an independently verified live connector.",
+      "runtime_verification": "Design or test preparation only; no installation, execution or approval.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-architecture-gallery.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE-1",
+      "title": "Cross-Workbench source architecture",
+      "classification": "source-only",
+      "basis": "Version-bounded source description of separate Diagnostic evidence ownership and Delivery lifecycle records.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-architecture.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE-2",
+      "title": "Cross-Workbench source architecture",
+      "classification": "proposed",
+      "basis": "Governed end-to-end finding-to-build handoff remains a source-informed target integration model, not a demonstrated deployed connection.",
+      "runtime_verification": "Design or test preparation only; no installation, execution or approval.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-architecture.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_EVIDENCE_LEDGER",
+      "title": "Workbench evidence review ledger",
+      "classification": "source-only",
+      "basis": "Repository source versions and historical DEV statements are separated; documentary ledger is not new live-instance verification.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-evidence-ledger.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_EXPERIENCE-1",
+      "title": "Illustrative Workbench experience and source context",
+      "classification": "mock-only",
+      "basis": "All browser dashboards, record values and interface compositions are synthetic and not captured native ServiceNow screens.",
+      "runtime_verification": "Synthetic website behaviour only; no ServiceNow session or instance acceptance.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-experience.html"
+    },
+    {
+      "id": "COVERAGE2-20261113-WORKBENCH_EXPERIENCE-2",
+      "title": "Illustrative Workbench experience and source context",
+      "classification": "source-only",
+      "basis": "Surrounding Delivery/Diagnostic design descriptions are source-backed; conceptual user journey is not proof of installation.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
+      "page": "workbench-experience.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
