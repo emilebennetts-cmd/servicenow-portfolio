@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T18:16:44Z",
+  "updated_utc": "2026-11-13T19:26:14Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -762,9 +762,9 @@
       "id": "INCIDENT-PACK-NATIVE-MATRIX-20261114",
       "title": "Prepared 29-case Native Acceptance Matrix — source-only rehearsal",
       "classification": "source-only",
-      "basis": "Controlled 21 October 2026 Delivery native-validation test matrix; 29 unique NV-001 through NV-029 planned cases paraphrased into public-safe workstream/persona cards, with isolated source-candidate boundaries preserved.",
-      "runtime_verification": "All 29 cases remain NOT RUN in the controlled execution record. Browser filtering and CSV export test only the static portfolio; no native DEV/TST execution, authorisation, UAT, change, installation or Production assurance is established.",
-      "public_screenshot_status": "No original screenshot pixels or instance evidence published. Image-specific review remains HOLD.",
+      "basis": "Controlled 21 October 2026 Delivery native-validation test matrix; 29 unique NV-001 through NV-029 planned cases paraphrased into public-safe workstream/persona cards, with isolated source-candidate boundaries preserved. The 14 November browser-local Observation Workbook retains all 29 planned IDs and records only self-reported, unreviewed candidate observations using anonymised evidence aliases.",
+      "runtime_verification": "All 29 cases remain NOT RUN in the controlled execution record. Browser filtering and CSV export test only the static portfolio; no native DEV/TST execution, authorisation, UAT, change, installation or Production assurance is established. The new in-memory worksheet and JSON packet do not execute tests, certify a PASS, establish DEV/Production verification or authorise a release; exported review state is always HOLD/UNREVIEWED/NOT VERIFIED.",
+      "public_screenshot_status": "No original screenshot pixels or instance evidence published. Image-specific review remains HOLD. The worksheet contains no original screenshot pixels and accepts no image uploads.",
       "page": "incident-pack-native-pilot.html"
     },
     {
