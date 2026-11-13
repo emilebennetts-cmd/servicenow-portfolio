@@ -22,6 +22,9 @@ class ExplorerEvidenceTests(unittest.TestCase):
         self.assertIn('evidence.value="All"', source)
         self.assertIn('row.dataset.evidence===proof', source)
         self.assertIn("NOT REGISTERED", source)
+        self.assertIn('<option value="proposed">PROPOSED</option>', source)
+        self.assertIn('id="registered-pages"', source)
+        self.assertIn('results.filter(row=>row.dataset.evidence!=="unregistered").length', source)
         self.assertNotIn("fetch(", source)
 
     def test_unregistered_claim_cannot_be_promoted(self):
@@ -30,6 +33,15 @@ class ExplorerEvidenceTests(unittest.TestCase):
         self.assertIn('data-evidence="unregistered"', rendered)
         self.assertIn("NOT REGISTERED", rendered)
         self.assertEqual(rendered, module.annotate(rendered, {"items": []}))
+
+    def test_reference_design_classification_remains_proposed(self):
+        page = '<li class="result"><a href="design.html">Design</a><span class="locator">design.html</span></li>'
+        data = {"items": [{"page": "design.html", "classification": "proposed"}]}
+        output = module.annotate(page, data)
+        self.assertIn('data-evidence="proposed"', output)
+        self.assertIn("PROPOSED", output)
+        self.assertNotIn('data-evidence="dev-verified"', output)
+        self.assertEqual(output, module.annotate(output, data))
 
     def test_mixed_claims_are_not_auto_promoted_to_verified(self):
         page = '<li class="result" data-category="Assurance"><a href="test.html">Test</a><span class="locator">test.html</span></li>'
