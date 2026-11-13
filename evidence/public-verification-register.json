@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T17:29:57Z",
+  "updated_utc": "2026-11-13T18:16:44Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -766,6 +766,15 @@
       "runtime_verification": "All 29 cases remain NOT RUN in the controlled execution record. Browser filtering and CSV export test only the static portfolio; no native DEV/TST execution, authorisation, UAT, change, installation or Production assurance is established.",
       "public_screenshot_status": "No original screenshot pixels or instance evidence published. Image-specific review remains HOLD.",
       "page": "incident-pack-native-pilot.html"
+    },
+    {
+      "id": "DELIVERY-CLOSURE-CONTROL-20261114",
+      "title": "Governed handover and closure request preparation — source-backed synthetic decision desk",
+      "classification": "mock-only",
+      "basis": "Universal Delivery Workbench source 4.2.0 lifecycle controls and 4.14.0 actionable handover define three mandatory close artefacts, three operational owner decisions, transition/hypercare, objective assurance and separate independent closure approval. Controlled 30 September 2026 As-Built and User Guides support the evidence boundary. The nine-control browser exercise is authored synthetic demonstration content.",
+      "runtime_verification": "Nine local checkboxes, seven synthetic scenarios and a downloaded JSON receipt demonstrate fail-closed preparation logic only. Every result is NOT RUN / HOLD; no issued documents, owner acceptance, closure request, independent approval, DEV validation or production completion is claimed. Later 4.22.2 source remains distinct from historical DEV-reported releases.",
+      "public_screenshot_status": "No original ServiceNow images or screen pixels used; authentic Workbench captures remain withheld and individually unapproved (zero approved).",
+      "page": "delivery-case-study.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
