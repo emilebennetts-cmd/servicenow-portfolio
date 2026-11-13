@@ -1,3 +1,9 @@
+## 13 November 2026 — 25-page evidence coverage reconciliation and proposed-design filter (SOURCE-ONLY)
+
+- Manually reviewed 25 public portfolio pages with controlled source/document context. Registered 25 narrowly scoped classifications in the public verification register: **18 SOURCE-ONLY, 2 MOCK-ONLY, 1 DEV-REPORTED and 4 PROPOSED**. Register now holds **53 claims across 51 of 71 indexed pages**; **20 remain NOT REGISTERED**. No new native DEV/Production verification.
+- Extended the responsive Portfolio Explorer with an explicit **PROPOSED** filter, distinct badge styling and a browser-computed count of registered pages. Retained MIXED CLAIMS when multiple classifications coexist. Added regression assertions for proposed status, dynamic count and filter behaviour.
+- Cross-checked the 30 September controlled As-Built/Architecture/Training snapshot (**source 4.6.1**) against later Delivery repository **4.22.2** source narrative; historical source/DEV versions are not interchangeable. Original screenshots remain on HOLD; no private source or customer data published. [Explorer](portfolio-explorer.html) · [Release detail](releases/2026-11-13-evidence-register-coverage-wave-1.md). Static website has no ServiceNow licence dependency; native rights and spokes remain target-specific.
+
 ## 13 November 2026 — evidence-aware Portfolio Explorer and claim-drift CI (SOURCE-ONLY)
 
 - Published a new evidence-status filter and deterministic badges on all **71 catalogue entries**, sourced from the public verification register: 13 SOURCE-ONLY, 9 MOCK-ONLY, 3 DEV-REPORTED, 1 MIXED CLAIMS and 45 NOT REGISTERED. Unregistered means no dedicated claim, not verified or unsafe; mixed claims are never promoted automatically. Existing page content is unchanged.
