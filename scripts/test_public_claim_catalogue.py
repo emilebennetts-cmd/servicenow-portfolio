@@ -54,7 +54,7 @@ class PublicClaimCatalogueContract(unittest.TestCase):
         self.assertFalse(any(c["classification"] in {"DEV-verified", "production-verified"} for c in items))
         for claim in items:
             with self.subTest(claim=claim["id"]):
-                self.assertRegex(claim["page"], r"^[a-z0-9-]+\\.html$")
+                self.assertRegex(claim["page"], r"^[a-z0-9-]+\.html$")
                 self.assertTrue((ROOT / claim["page"]).is_file())
 
 if __name__ == "__main__":
