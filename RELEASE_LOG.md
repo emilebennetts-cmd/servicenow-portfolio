@@ -1,3 +1,10 @@
+## 13 November 2026 — self-checking 71-page portfolio catalogue (SOURCE-ONLY)
+
+- Corrected the Portfolio Explorer heading from 69 to **71 indexed pages** (72 root HTML pages including the Explorer itself). Added `scripts/reconcile_portfolio_explorer.py` with strict `--check`, safe `--write` reconciliation and five offline drift/security regression tests.
+- Integrated the fail-closed catalogue completeness check into both quality and publication audit workflows. Verified both workflows passed on source revision `dffa8da6`; later documentation revisions require separate CI verification.
+- Existing curated entries, all private source, image assets and original screenshot HOLD restrictions remain unchanged. No new native DEV/Production acceptance. [Release note](releases/2026-11-13-explorer-catalogue-drift-guard.md).
+- Static site requires no ServiceNow licence; native App Engine/custom tables, ACLs and feature-dependent ITSM/ITOM/IntegrationHub/analytics/AI/provider entitlements remain subject to target approval.
+
 ## 13 November 2026 — governed integration contract decision lab (SOURCE-ONLY / MOCK-ONLY)
 ## 13 November 2026 — Diagnostic Gate Closure Lab (SOURCE-ONLY / MOCK-ONLY)
 
