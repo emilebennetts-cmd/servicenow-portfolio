@@ -52,6 +52,37 @@ def validate(data, root=ROOT):
                     errors.append(f"{key}: verification reference must be an HTTPS evidence URL")
             if entry.get("classification") == "production-verified" and not entry.get("production_authorisation"):
                 errors.append(f"{key}: production verification requires authorisation record")
+            # These checks validate the *metadata contract*, never the truth of
+            # a reviewer statement. A passing manifest is not native acceptance.
+            import re
+            commit = entry.get("source_commit_sha")
+            if not isinstance(commit, str) or not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", commit):
+                errors.append(f"{key}: verified claim requires a full lowercase source commit SHA")
+            version = entry.get("installed_version")
+            if not isinstance(version, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,39}", version):
+                errors.append(f"{key}: verified claim requires installed application version")
+            scope = entry.get("application_scope")
+            if not isinstance(scope, str) or not re.fullmatch(r"(?:global|x_[a-z0-9_]{3,60})", scope):
+                errors.append(f"{key}: verified claim requires valid ServiceNow application scope")
+            environment = entry.get("execution_environment")
+            expected = "PROD" if entry.get("classification") == "production-verified" else "DEV"
+            if environment != expected:
+                errors.append(f"{key}: verified claim requires execution_environment {expected}")
+            alias = entry.get("environment_alias")
+            if not isinstance(alias, str) or not re.fullmatch(r"[A-Z0-9][A-Z0-9_-]{2,39}", alias):
+                errors.append(f"{key}: verified claim requires safe anonymised environment alias")
+            cases = entry.get("executed_test_ids")
+            if not isinstance(cases, list) or not 1 <= len(cases) <= 40 or any(
+                not isinstance(case, str) or not re.fullmatch(r"[A-Z][A-Z0-9_-]{1,39}", case)
+                for case in cases
+            ) or len(set(cases)) != len(cases):
+                errors.append(f"{key}: verified claim requires unique executed test IDs")
+            receipt = entry.get("evidence_receipt_alias")
+            if not isinstance(receipt, str) or not re.fullmatch(r"[A-Z0-9][A-Z0-9_.-]{2,79}", receipt) or ".." in receipt:
+                errors.append(f"{key}: verified claim requires safe private evidence receipt alias")
+            if entry.get("independent_review_approved") is not True:
+                errors.append(f"{key}: verified claim requires independent review approval metadata")
+
     if not ids:
         errors.append("Register contains no claims")
     return errors
