@@ -57,6 +57,8 @@ on:
       - 'scripts/test_native_pack_acceptance_matrix.py'
       - 'scripts/browser_native_pack_acceptance_matrix.py'
       - 'scripts/test_operational_readiness_runbook.py'
+      - 'scripts/test_entitlement_decision_desk.py'
+      - 'scripts/browser_entitlement_decision_desk.py'
       - 'scripts/test_pattern_library_audit_trail.py'
       - 'scripts/test_acceptance_worksheet.py'
       - 'scripts/browser_navigation_smoke.py'
@@ -90,6 +92,10 @@ jobs:
         run: python scripts/browser_architecture_gallery_boundaries.py
       - name: Verify operational readiness publication contract
         run: python scripts/test_operational_readiness_runbook.py
+      - name: Verify offline entitlement decisions remain HOLD-only
+        run: python scripts/test_entitlement_decision_desk.py
+      - name: Exercise entitlement desk at four viewport widths
+        run: python scripts/browser_entitlement_decision_desk.py
       - name: Verify Incident pack publication and provenance contract
         run: python scripts/test_incident_pack_pilot.py
       - name: Verify source-pinned 29-case NOT RUN acceptance contract
