@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T16:21:48Z",
+  "updated_utc": "2026-11-13T17:29:57Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -175,11 +175,11 @@
     },
     {
       "id": "OPERATIONS-READINESS",
-      "title": "Operational readiness, support cadence and release handover controls",
+      "title": "Operational readiness, entitlement decisions and release handover controls",
       "classification": "source-only",
-      "basis": "Controlled Universal Delivery Workbench Architecture, Solution As-Built and User Guides/Training dated 30 September 2026: 12 operational checks by cadence, six fail-closed failure responses, and unresolved named handover gates. Public summarisation only; source release 4.6.1 is distinct from historical DEV 4.5.1.",
-      "runtime_verification": "Public HTML search, cadence filters and failure reference are browser-local; no native ServiceNow execution. Historical 4.5.1 DEV observation is DEV-REPORTED, not newly independently read back. No production operational acceptance, recovery rehearsal or sign-off is claimed.",
-      "public_screenshot_status": "No genuine screenshot pixels published. Six reviewed source-image records remain HOLD with zero images approved for public release.",
+      "basis": "Controlled Universal Delivery Workbench Architecture, Solution As-Built and User Guides/Training, and fictional Diagnostic completion runbook: 12 operational checks, six fail-closed failure responses, six handover controls and ten client-neutral entitlement review categories. The ten categories are not the runbook's 20 requirements. SOURCE-ONLY; source 4.6.1 remains distinct from historical DEV 4.5.1.",
+      "runtime_verification": "Search, filters, readiness draft and entitlement decisions/JSON are local browser demonstrations (MOCK-ONLY inputs); no contractual entitlement, actual 20-requirement reconciliation, approved G2 decision, native ServiceNow test, production operational acceptance or signed handover is established. Historical DEV 4.5.1 remains DEV-REPORTED.",
+      "public_screenshot_status": "No original Workbench screenshot pixels are approved or published. Eight source observations and the separate ten-candidate inventory are private-review evidence, not approval; originals remain HOLD.",
       "page": "operational-readiness-runbook.html"
     },
     {
