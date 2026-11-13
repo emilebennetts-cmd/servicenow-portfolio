@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-12T23:23:00Z",
+  "updated_utc": "2026-11-13T00:17:53Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -244,6 +244,15 @@
       "runtime_verification": "Synthetic decision branches and public Chromium regressions do not constitute authenticated provider transactions or ServiceNow runtime testing. Missing connection aliases, live provider access, atomic operation ledger and independent DEV/UAT acceptance remain HOLD. No current DEV-VERIFIED or PRODUCTION-VERIFIED assertion.",
       "public_screenshot_status": "No genuine Workbench screenshot, customer data or original pixels published; individual approval gate remains HOLD.",
       "page": "integration-contract-lab.html"
+    },
+    {
+      "id": "DIAGNOSTIC-GATE-CLOSURE",
+      "title": "Diagnostic Gate Closure Lab",
+      "classification": "mock-only",
+      "basis": "Separately authored public browser-local preparation model informed by 30 September 2026 controlled fictional Diagnostic completion runbook, Delivery Architecture and User Guides; original private sources withheld",
+      "runtime_verification": "Seven G0-G6 illustrative stages and 11 preparation work units are mock-only; native approvals, current DEV acceptance, signed change records and Production execution NOT RUN",
+      "public_screenshot_status": "Illustrative text only; no original Workbench pixels published, approvals remain zero and HOLD",
+      "page": "diagnostic-gate-closure-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
