@@ -1,3 +1,9 @@
+## 14 November 2026 — Workbench source-to-DEV evidence lineage (SOURCE-ONLY / historical DEV-REPORTED)
+
+- Corrected the public [Technical Evidence Register](technical-evidence-register.html#source-lineage) to state current Delivery source **4.22.2** separately from historical 4.20.0 DEV read-back (5 October), controlled 4.6.1 As-Built source and reported 4.5.1 DEV baseline (30 September). Added six accessible, filterable source/runtime cards, including separate Diagnostic SDK and Knowledge Intelligence 0.1.0 records.
+- Added static and four-width Chromium regression tests, plus dedicated path-scoped CI workflow. The six records are source statements, not newly authenticated native execution. Public verification claims remain 86; **zero new DEV-VERIFIED, zero PRODUCTION-VERIFIED and zero authorised screenshots**.
+- [Technical release and entitlement boundary](releases/2026-11-14-source-dev-lineage-evidence-matrix.md). Static GitHub Pages needs no ServiceNow licence; native App Engine/custom tables, scoped ACLs and product-specific ITSM/ITOM/IntegrationHub/PA/AI rights remain target-contract dependent. CI and deployment require independent status inspection.
+
 ## 14 November 2026 — offline resume for native observation candidates (SOURCE-ONLY / SELF-REPORTED)
 
 - Added a **local-only JSON restore panel** to [Incident Pack Native Observation Workbook](incident-pack-native-pilot.html#native-observation-log): 29 case statuses, safe private evidence aliases and anonymised source/environment context can be resumed from the previously exported 1.0 candidate packet, without uploading or persisting data.
