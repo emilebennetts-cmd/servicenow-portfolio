@@ -1,42 +1,107 @@
 #!/usr/bin/env python3
-"""Responsive browser check for the dated source-vs-runtime evidence matrix."""
+"""Same-origin Chromium checks for dated lineage and full public claim catalogue."""
+import json
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from threading import Thread
+
 from playwright.sync_api import sync_playwright
 
-PAGE = (Path(__file__).resolve().parents[1] / "technical-evidence-register.html").as_uri()
+ROOT = Path(__file__).resolve().parents[1]
+REGISTER = json.loads((ROOT / "evidence/public-verification-register.json").read_text(encoding="utf-8"))
+CLASS_COUNTS = {
+    name: sum(item["classification"] == name for item in REGISTER["items"])
+    for name in ("source-only", "DEV-reported", "mock-only", "proposed")
+}
 
-def check(browser, width):
+class QuietHandler(SimpleHTTPRequestHandler):
+    def log_message(self, *_args):
+        pass
+
+def check(browser, width, base):
     page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     try:
-        page.goto(PAGE, wait_until="domcontentloaded")
+        page.goto(base + "/technical-evidence-register.html", wait_until="domcontentloaded")
         assert page.locator(".lineage-card").count() == 6
         assert page.locator(".lineage-card:visible").count() == 6
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), width
-        page.get_by_role("button", name="Source-only").click()
+        page.get_by_role("button", name="Source-only", exact=True).click()
         assert page.locator(".lineage-card:visible").count() == 3
         assert page.locator(".lineage-card[data-class='SOURCE-ONLY']:visible").count() == 3
         assert page.locator("#lineage-count").inner_text().startswith("Showing 3 of 6")
-        assert page.get_by_role("button", name="Source-only").get_attribute("aria-pressed") == "true"
+        page.get_by_role("button", name="Source-only", exact=True).get_attribute("aria-pressed") == "true"
         page.get_by_role("button", name="Historical DEV-reported").click()
         assert page.locator(".lineage-card:visible").count() == 3
         assert page.locator(".lineage-card[data-class='DEV-REPORTED']:visible").count() == 3
-        assert page.get_by_role("button", name="Source-only").get_attribute("aria-pressed") == "false"
         page.get_by_role("button", name="All records").click()
         assert page.locator(".lineage-card:visible").count() == 6
-        assert "newly verified" in page.locator("#lineage-count").inner_text()
+
+        # Full catalogue is rendered from the current checked-in JSON, not a duplicated snapshot.
+        page.locator("#claim-count").get_by_text("registered", exact=False).wait_for(timeout=10000)
+        assert f"({len(REGISTER['items'])} registered)" in page.locator("#claim-count").inner_text()
+        assert page.locator(".catalogue-entry").count() == 12
+        page.locator("#claim-more").click()
+        assert page.locator(".catalogue-entry").count() == 24
+        page.locator("#claim-classification").select_option("DEV-reported")
+        assert page.locator(".catalogue-entry").count() == CLASS_COUNTS["DEV-reported"]
+        assert all(c == "DEV-reported" for c in page.locator(".catalogue-entry").evaluate_all(
+            "(els) => els.map(e => e.dataset.class)"))
+        page.locator("#claim-classification").select_option("all")
+        page.locator("#claim-search").fill("COVERAGE2-20261113-TECHNICAL_EVIDENCE_REGISTER")
+        assert page.locator(".catalogue-entry").count() == 1
+        assert "Public technical evidence register" in page.locator(".catalogue-entry h3").inner_text()
+        page.locator(".catalogue-entry summary").click()
+        assert page.locator(".catalogue-entry dt").count() == 3
+        page.locator("#claim-search").fill("NO-SUCH-PUBLIC-CLAIM-XXXXXXXXXXXXXXXXXX")
+        assert page.locator(".catalogue-entry").count() == 0
+        assert "Showing 0 of 0 matching" in page.locator("#claim-count").inner_text()
+        page.locator("#claim-search").fill("")
+        page.locator("#claim-classification").select_option("source-only")
+        assert page.locator(".catalogue-entry").count() == 12
+        assert "of " + str(CLASS_COUNTS["source-only"]) in page.locator("#claim-count").inner_text()
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), width
         assert not errors, errors
-        print(f"PASS lineage {width}px: 6 records, three filters, no overflow / JS errors")
+        print(f"PASS evidence {width}px: lineage filters, {len(REGISTER['items'])} claims, query, pagination, safe rendering")
+    finally:
+        page.close()
+
+def reject_bad_register(browser, base):
+    page = browser.new_page()
+    try:
+        def poisoned(route):
+            route.fulfill(status=200, content_type="application/json", body=json.dumps({
+                "schema_version": "1.0",
+                "items": [{"id": "BAD", "title": "<script>attack</script>",
+                           "classification": "production-verified", "page": "javascript:alert(1)"}]
+            }))
+        page.route("**/evidence/public-verification-register.json", poisoned)
+        page.goto(base + "/technical-evidence-register.html", wait_until="domcontentloaded")
+        assert "unavailable" in page.locator("#claim-count").inner_text().lower()
+        assert page.locator("#claim-fallback").is_visible()
+        assert page.locator(".catalogue-entry").count() == 0
+        assert page.locator("script[src='javascript:alert(1)']").count() == 0
+        print("PASS evidence schema rejection: malicious record cannot render")
     finally:
         page.close()
 
 if __name__ == "__main__":
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        try:
-            for width in (390, 768, 1024, 1440):
-                check(browser, width)
-        finally:
-            browser.close()
+    handler = partial(QuietHandler, directory=str(ROOT))
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        base = "http://127.0.0.1:" + str(server.server_port)
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            try:
+                for width in (390, 768, 1024, 1440):
+                    check(browser, width, base)
+                reject_bad_register(browser, base)
+            finally:
+                browser.close()
+    finally:
+        server.shutdown()
+        server.server_close()
