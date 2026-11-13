@@ -24,7 +24,7 @@ def verify(browser, width):
         for ident in range(1, 9):
             record = f"RV-{ident:02d}"
             page.locator("#review-id").select_option(record)
-            packet = json.loads(page.locator("#packet-preview").inner_text())
+            packet = json.loads(page.locator("#packet-preview").text_content())
             assert packet["public_review_id"] == record
             assert packet["publication_status"] == "HOLD"
             assert packet["public_release_authorised"] is False
@@ -39,7 +39,7 @@ def verify(browser, width):
             assert ("DOCUMENT EXCERPT ONLY" in page.locator("#review-treatment").inner_text()) == is_document
         for box in page.locator("input[data-gate]").all():
             box.check()
-        packet = json.loads(page.locator("#packet-preview").inner_text())
+        packet = json.loads(page.locator("#packet-preview").text_content())
         assert packet["completed_gates"] == 8
         assert packet["handoff_readiness"] == "READY_FOR_INDEPENDENT_REVIEW"
         assert packet["publication_status"] == "HOLD" and not packet["public_release_authorised"]
