@@ -1,3 +1,10 @@
+## 13 November 2026 — complete 71-page evidence classification and fail-closed metadata CI (SOURCE-ONLY)
+
+- Reviewed all **20 remaining unregistered** public catalogue pages against source boundaries, adding **26 claim-specific entries**. Public manifest now contains **79 claims across 72 root HTML pages** (the 71 Explorer entries plus the Explorer itself). Explorer classification: **42 SOURCE-ONLY, 13 MOCK-ONLY, 4 DEV-REPORTED, 5 PROPOSED, 7 MIXED, 0 NOT REGISTERED**. This is metadata coverage, **not** DEV or Production verification.
+- The evidence reconciler `--check` now rejects a newly indexed page without a reviewed public claim. Added negative and mixed-claim regression coverage plus four-viewport Chromium checks for the zero-results state, and corrected old six-record navigation text to reflect the eight inspected evidence summaries.
+- Retained controlled historical Delivery 4.6.1 source / 4.5.1 DEV versus current 4.22.2 source separation, unchanged Diagnostic source status, and screenshot **HOLD (0 approved)**. Public source changes only; no private file, source code, credentials, customer material or screenshot pixels published.
+- [Explorer](portfolio-explorer.html) · [Release evidence](releases/2026-11-13-evidence-register-coverage-wave-2.md). Static site requires no ServiceNow licence; native App Engine/custom tables, roles/ACLs, ITSM/ITOM, IntegrationHub, analytics, AI and provider entitlements remain target-specific. Check GitHub Actions and Pages against the final commit.
+
 ## 13 November 2026 — 25-page evidence coverage reconciliation and proposed-design filter (SOURCE-ONLY)
 
 - Manually reviewed 25 public portfolio pages with controlled source/document context. Registered 25 narrowly scoped classifications in the public verification register: **18 SOURCE-ONLY, 2 MOCK-ONLY, 1 DEV-REPORTED and 4 PROPOSED**. Register now holds **53 claims across 51 of 71 indexed pages**; **20 remain NOT REGISTERED**. No new native DEV/Production verification.
