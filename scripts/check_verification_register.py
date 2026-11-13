@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate public verification claims without requiring third-party packages."""
 import json
+import re
 from datetime import date
 from urllib.parse import urlparse
 from pathlib import Path
@@ -54,7 +55,6 @@ def validate(data, root=ROOT):
                 errors.append(f"{key}: production verification requires authorisation record")
             # These checks validate the *metadata contract*, never the truth of
             # a reviewer statement. A passing manifest is not native acceptance.
-            import re
             commit = entry.get("source_commit_sha")
             if not isinstance(commit, str) or not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", commit):
                 errors.append(f"{key}: verified claim requires a full lowercase source commit SHA")
