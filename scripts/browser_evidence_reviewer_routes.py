@@ -40,7 +40,7 @@ def check(browser,width):
         body=Path(download.path()).read_text(encoding="utf-8")
         assert "SOURCE-ONLY" in body and "HOLD" in body
         assert "finding-to-release-handoff.html" in body
-        assert "production acceptance is not established" in body
+        assert "DEV/production acceptance is not established" in body
         assert "not an acceptance receipt" in page.locator("#route-feedback").inner_text()
         assert not external,f"External network request: {external}"
         assert not errors,errors
