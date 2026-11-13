@@ -1264,8 +1264,7 @@ def check_native_assurance_atlas(browser, width):
 
 
 
-def check_native_execution_protocol(browser, width)
-                check_diagnostic_operator_rehearsal(browser, width):
+def check_native_execution_protocol(browser, width):
     """Verify source-derived protocol steps and non-certifying HOLD export in Chromium."""
     url = (Path(__file__).resolve().parents[1] / "native-assurance-coverage-atlas.html").as_uri()
     page = browser.new_page(viewport={"width": width, "height": 900},
