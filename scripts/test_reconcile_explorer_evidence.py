@@ -27,6 +27,25 @@ class ExplorerEvidenceTests(unittest.TestCase):
         self.assertIn('results.filter(row=>row.dataset.evidence!=="unregistered").length', source)
         self.assertNotIn("fetch(", source)
 
+    def test_every_indexed_page_has_a_reviewed_claim(self):
+        source = (ROOT / "portfolio-explorer.html").read_text(encoding="utf-8")
+        register = json.loads((ROOT / "evidence/public-verification-register.json").read_text(encoding="utf-8"))
+        self.assertEqual(module.unregistered_pages(source, register), [])
+        self.assertNotIn('data-evidence="unregistered"', source)
+
+    def test_new_unregistered_page_is_detected_before_publication(self):
+        source = '<li class="result"><a href="new-page.html">New</a><span class="locator">new-page.html</span></li>'
+        register = {"items": []}
+        self.assertEqual(module.unregistered_pages(source, register), ["new-page.html"])
+        preview = module.annotate(source, register)
+        self.assertIn('data-evidence="unregistered"', preview)
+
+    def test_mixed_pages_remain_mixed_not_promoted(self):
+        source = (ROOT / "portfolio-explorer.html").read_text(encoding="utf-8")
+        for page in ("index.html", "workbench-experience.html", "workbench-architecture.html"):
+            with self.subTest(page=page):
+                self.assertRegex(source, r'href="' + page + r'".*?<span class="proof">MIXED CLAIMS</span>')
+
     def test_unregistered_claim_cannot_be_promoted(self):
         source = '<li class="result" data-category="Start here" data-search="none"><span class="type">Start here</span><a href="unknown.html">A</a><span class="locator">unknown.html</span></li>'
         rendered = module.annotate(source, {"items": []})
