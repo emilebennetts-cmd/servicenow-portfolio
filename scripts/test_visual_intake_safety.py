@@ -49,7 +49,7 @@ class VisualIntakeSafetyTests(unittest.TestCase):
         self.assertIn("All eight files remain on HOLD", self.html)
 
     def test_source_document_and_synthetic_example_not_runtime_proof(self):
-        self.assertIn("Overview document page, not a product screenshot", self.html)
+        self.assertIn("Source-document page images, not product screenshots", self.html)
         self.assertIn("MOCK-ONLY content", self.html)
         self.assertIn("installed release and execution unverified", self.html)
 
