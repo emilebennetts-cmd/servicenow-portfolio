@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071823">
+<meta name="description" content="An evidence-first, client-neutral ServiceNow CMDB remediation decision lab. Compare synthetic duplicates, relationship, IRE and lifecycle findings against ownership, completeness and change-control gates.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CMDB Remediation Decision Lab | ServiceNow Engineering Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071823;--surface:#102b3b;--high:#173d4d;--line:#426477;--ink:#eff9fc;--muted:#c3dce4;--mint:#89f0d5;--amber:#ffe0a0;--danger:#ffb7a9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--mint);text-underline-offset:4px}p,li{color:var(--muted)}h1,h2,h3{line-height:1.13;letter-spacing:-.035em}h1{font-size:clamp(2.6rem,6.7vw,5rem);margin:14px 0 20px;max-width:900px}h2{font-size:clamp(1.65rem,3.7vw,2.55rem)}h3{font-size:1.15rem}button,select{font:inherit;min-height:48px}button{cursor:pointer}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{width:min(1130px,calc(100% - 36px));margin-inline:auto}.skip{position:absolute;top:-100px;left:12px;background:white;color:#071823;padding:10px;z-index:99}.skip:focus{top:10px}
+header{background:radial-gradient(ellipse at 84% 24%,#22657d88,transparent 56%),linear-gradient(140deg,#0b293d,#101d2b);border-bottom:1px solid var(--line)}
+nav{display:flex;gap:18px;flex-wrap:wrap;padding:20px 0;font-size:.88rem;font-weight:800}nav a{padding:6px 0}
+.hero{padding:62px 0 72px}.eyebrow{color:var(--mint);font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;font-weight:900}.lead{font-size:1.17rem;max-width:810px}.tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.tag{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.75rem;font-weight:800;color:var(--muted)}.tag.mock{color:var(--amber);border-color:#a98555}.tag.source{color:var(--mint);border-color:#65a994}
+section{padding:58px 0;border-bottom:1px solid #29495a}.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:25px;min-width:0}.panel h3{margin-top:0}.panel p:last-child{margin-bottom:0}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}.step{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px}.step b{display:block;color:var(--mint);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}.step span{display:block;margin-top:5px;font-size:.9rem}
+.lab{background:linear-gradient(170deg,#102f42,#092333);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,4vw,32px);margin-top:23px}
+.fixture{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0 26px}.fixture button{background:#15384b;color:var(--ink);border:1px solid #527589;border-radius:12px;text-align:left;padding:13px;min-width:0;font-weight:800;font-size:.87rem}.fixture button small{display:block;color:var(--mint);font-size:.73rem;letter-spacing:.06em;font-weight:900;margin-bottom:5px}.fixture button[aria-pressed="true"]{background:#24526a;border-color:var(--mint);box-shadow:inset 0 0 0 1px var(--mint)}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field label{display:block;font-weight:800;color:var(--ink);margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:.8rem;margin-top:5px}.field select{width:100%;padding:9px 12px;color:#092333;background:#f1f8fa;border:1px solid white;border-radius:9px}
+.readout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:17px;margin:20px 0}.decision{background:#072332;border:1px solid #54768a;border-radius:15px;padding:22px}.decision .kicker{color:var(--mint);text-transform:uppercase;font-size:.76rem;letter-spacing:.12em;font-weight:900}.decision strong{display:block;font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;color:var(--amber);margin:9px 0 12px}.decision strong.review{color:var(--mint)}.decision p{margin:0}.status{border:1px solid #a98555;color:var(--amber);padding:4px 10px;border-radius:99px;font-size:.77rem;font-weight:850;display:inline-block}
+.notes{background:#102a3a;border:1px solid var(--line);border-radius:15px;padding:22px}.notes h3{margin:0 0 10px}.notes ul{padding-left:22px;margin:0}.notes li{margin:7px 0}
+.trace{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:20px 0}.trace div{background:#0a2636;border-left:4px solid #cc9861;border-radius:7px;padding:13px;font-size:.86rem}.trace strong{display:block;color:var(--ink)}.trace span{display:block;color:var(--muted)}
+.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:23px}.actions button{background:var(--mint);color:#062724;border:none;border-radius:999px;padding:10px 20px;font-weight:900}.actions button.secondary{background:transparent;color:var(--mint);border:1px solid #6ccbb5}.fine{font-size:.85rem;color:var(--muted);max-width:860px}
+table{width:100%;border-collapse:collapse;min-width:680px}th,td{text-align:left;vertical-align:top;padding:14px;border-bottom:1px solid var(--line)}th{color:var(--mint);font-size:.86rem;background:#18394a}td{color:var(--muted)}.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:13px}.callout{border-left:4px solid var(--amber);padding:18px 20px;background:#332c20;border-radius:0 11px 11px 0}.callout p{color:#fbe4bd;margin:0}footer{padding:36px 0;color:var(--muted);font-size:.86rem}
+@media(max-width:850px){.three,.steps,.fixture,.trace{grid-template-columns:repeat(2,minmax(0,1fr))}.readout{grid-template-columns:1fr}}
+@media(max-width:580px){.hero{padding:42px 0 48px}.cols,.three,.controls,.steps,.fixture,.trace{grid-template-columns:1fr}.panel{padding:20px}.fixture button{min-height:60px}.readout{grid-template-columns:1fr}section{padding:39px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap">
+<nav aria-label="Portfolio navigation"><a href="index.html">Home</a><a href="engineering-case-studies.html">Case studies</a><a href="cmdb-ire-assurance.html">CMDB / IRE source review</a><a href="portfolio-explorer.html">Portfolio Explorer</a></nav>
+<div class="hero"><div class="eyebrow">CMDB engineering / evidence-to-change</div>
+<h1>From CMDB finding to a safe remediation decision.</h1>
+<p class="lead">A technical decision lab for configuration data governance: distinguish a diagnostic signal from a proven defect, establish source ownership, and preserve change control before attempting to merge, retire, or edit a CI.</p>
+<div class="tags"><span class="tag source">SOURCE-ONLY: source-informed controls</span><span class="tag mock">MOCK-ONLY: all scenario decisions</span><span class="tag">No native execution</span><span class="tag">No external requests</span></div>
+</div></div></header>
+<main id="main">
+<section><div class="wrap"><div class="eyebrow">01 / The client's pain &amp; history</div><h2>Healthy-looking counts can conceal unsafe decisions.</h2>
+<p>Multi-source CMDBs accumulate duplicate identities, mismatched lifecycle states, stale discovery observations and broken relationships. A count on a dashboard can point to an investigation, but it cannot identify the authoritative source, demonstrate business impact, or authorise a destructive fix. Historical remediation efforts often fail when an engineer merges CIs before checking IRE rules, reconciliation precedence, service dependencies and downstream task references.</p>
+<div class="three"><article class="panel"><h3>Identity confusion</h3><p>Duplicate names or serials are investigation candidates. They are not automatic evidence that two CIs represent the same asset.</p></article>
+<article class="panel"><h3>Incomplete measurements</h3><p>Unavailable tables, capped groupings and overlapping counts must be reported explicitly; they are not green health outcomes.</p></article>
+<article class="panel"><h3>Governance gap</h3><p>Unowned remediation can invalidate relationships, asset linkage, incident history or service-mapping paths.</p></article></div></div></section>
+<section><div class="wrap"><div class="eyebrow">02 / The ServiceNow solution</div><h2>Four gates between detection and authorised change.</h2>
+<p>The architecture uses read-only health collection for initial signals, CMDB ownership and IRE configuration review for diagnosis, risk-managed change and dependency analysis for control, then independently observed native read-back for closure.</p>
+<div class="steps"><div class="step"><b>G1 — Detect</b><span>Collect aggregate quality signals; disclose completeness and group caps.</span></div><div class="step"><b>G2 — Attribute</b><span>Compare class, identifiers, data source and reconciliation authority.</span></div><div class="step"><b>G3 — Authorise</b><span>Review CI dependencies, ownership, risk, CAB policy and rollback.</span></div><div class="step"><b>G4 — Verify</b><span>Read back CI/relationship state and service impact on the target build.</span></div></div>
+<div class="callout"><p><strong>Boundary:</strong> No CI is changed in this website. Selecting “approved” in the synthetic fixture is not a ServiceNow change approval, technical sign-off or permission to perform a merge.</p></div>
+</div></section>
+<section id="decision-lab"><div class="wrap"><div class="eyebrow">03 / Interactive control lab — synthetic</div><h2>Try four common CMDB remediation decisions.</h2>
+<p>Choose a fictional finding or change the evidence conditions. The advisory result updates locally and a HOLD-only preparation receipt can be exported for review. No records, credentials, instance URLs or browser data are transmitted.</p>
+<div class="lab">
+<div class="fixture" aria-label="Synthetic CMDB finding fixtures">
+<button type="button" data-fixture="duplicate" aria-pressed="true"><small>01 · DATA QUALITY</small>Suspected duplicate CI</button>
+<button type="button" data-fixture="relation" aria-pressed="false"><small>02 · RELATIONSHIPS</small>Orphaned dependency</button>
+<button type="button" data-fixture="stale" aria-pressed="false"><small>03 · LIFECYCLE</small>Discovery stale</button>
+<button type="button" data-fixture="ire" aria-pressed="false"><small>04 · IRE</small>Identifier conflict</button>
+</div>
+<div class="controls">
+<div class="field"><label for="evidence">Collector evidence completeness</label><select id="evidence"><option value="complete">Complete aggregate sample</option><option value="capped">Grouping capped / partial coverage</option><option value="unavailable">Table unavailable / metric unknown</option></select><small>A partial or unavailable sample cannot clear a diagnostic gate.</small></div>
+<div class="field"><label for="owner">CI / data-source authority</label><select id="owner"><option value="unknown">Not established</option><option value="conflict">Conflicting source ownership</option><option value="confirmed">Confirmed, independently reviewed</option></select><small>Confirm identifier, source precedence and accountable owner.</small></div>
+<div class="field"><label for="change">Change and rollback control</label><select id="change"><option value="pending">Approval / rollback not evidenced</option><option value="approved">Simulated approval and rollback prepared</option></select><small>Any approval selection here is fictional, never a real record.</small></div>
+<div class="field"><label for="impact">Business service / dependency impact</label><select id="impact"><option value="unknown">Not assessed</option><option value="reviewed">Assessed using a synthetic impact map</option></select><small>Check related incidents, assets, CSDM services and relationships.</small></div>
+</div>
+<div class="readout" role="region" aria-label="Advisory remediation decision">
+<div class="decision" aria-live="polite" aria-atomic="true"><div class="kicker">Advisory control outcome</div><strong id="decision">OWNERSHIP REVIEW</strong><p id="explanation">Ownership has not been established.</p><p style="margin-top:15px"><span class="status" id="native">NATIVE STATUS: NOT RUN · HOLD</span></p></div>
+<div class="notes"><h3 id="finding-heading">Suspected duplicate CI</h3><ul id="finding-actions"><li>Review class identifiers and source authority.</li></ul></div>
+</div>
+<div class="trace" id="trace" aria-label="Four-gate status trace"><div><strong>G1 Evidence</strong><span>Not assessed</span></div><div><strong>G2 Ownership</strong><span>Not assessed</span></div><div><strong>G3 Change</strong><span>Not assessed</span></div><div><strong>G4 Native read-back</strong><span>NOT RUN</span></div></div>
+<div class="actions"><button type="button" id="export">Export HOLD-only review receipt</button><button type="button" class="secondary" id="reset">Reset fixture</button></div>
+<p class="fine" id="receipt-note">Receipt is a locally created synthetic planning artefact; it contains no native test results, approvals, CI identifiers or private source evidence.</p>
+</div></div></section>
+<section><div class="wrap"><div class="eyebrow">04 / Architectural best practices</div><h2>Prefer OOTB controls; protect long-term CMDB integrity.</h2>
+<div class="table-scroll"><table><thead><tr><th>Control</th><th>ServiceNow implementation approach</th><th>Native evidence required</th></tr></thead><tbody>
+<tr><td>Identification / reconciliation</td><td>Use IRE identification rules and reconciliation definitions instead of name-only matching or scripted mass updates.</td><td>Rule precedence, source history, IRE Preview results and observed insert/update behaviour.</td></tr>
+<tr><td>CMDB quality &amp; lifecycle</td><td>Prefer CMDB Health, Data Manager policies, attestation and lifecycle governance where licensed and applicable.</td><td>Role/ACL assessment, policy execution audit, reviewed exclusions and before/after snapshots.</td></tr>
+<tr><td>Relationship stewardship</td><td>Resolve relationship type, parent/child validity, service mapping implications and reference dependencies before removal.</td><td>Service impact analysis, relationship read-back and dependent record checks.</td></tr>
+<tr><td>Delivery governance</td><td>Link accepted findings to owned requirements, RAID, change records, tests and controlled deployment evidence.</td><td>Approved change, rollback, test IDs, installed version and independent review receipt.</td></tr>
+</tbody></table></div>
+<div class="cols" style="margin-top:20px"><div class="panel"><h3>Evidence basis and limitations</h3><p>This narrative was informed by review of the private Diagnostic Workbench collector families for duplicates, IRE, relationships and stale lifecycle data, plus controlled Delivery As-Built and Diagnostic runbook guidance. No source code, proprietary mappings or original screenshots were copied.</p><p>Historical September source/DEV baselines and newer repository source versions remain distinct. The interactive rules and all values are <strong>synthetic</strong>, not a recorded ServiceNow production incident or verified deployed integration.</p></div><div class="panel"><h3>Licensing &amp; entitlements</h3><p>This public static lab requires <strong>no ServiceNow licence</strong>. Native execution may need CMDB/ITOM Visibility, Discovery/Service Graph connections, CMDB Health, Data Manager and applicable ITSM Change entitlements, plus authorised App Engine/custom-table usage where relevant. Confirm editions, roles, ACLs and instance plugin availability per contract; feature names do not establish entitlement.</p><p>See <a href="cmdb-diagnostic-trust-lab.html">diagnostic trust checks</a>, <a href="cmdb-ire-assurance.html">source-backed IRE assurance</a> and the <a href="workbench-acceptance-playbook.html">native acceptance playbook</a>.</p></div></div></div></section>
+</main>
+<footer><div class="wrap">SOURCE-ONLY architecture + MOCK-ONLY decision fixtures. Neither a CI mutation tool nor a ServiceNow-native verification record. <a href="portfolio-explorer.html">Browse all case studies</a>.</div></footer>
+<script>
+"use strict";
+const fixtures={
+duplicate:{name:"Suspected duplicate CI",actions:["Inspect identifier completeness and class inheritance before declaring a duplicate.","Compare Discovery, service graph and other source authority; do not merge by name alone.","Validate downstream asset, task, service and relationship references before proposed change."]},
+relation:{name:"Orphaned dependency",actions:["Check whether either CI was retired, reclassified or failed discovery.","Review relationship type, endpoints, service maps and consumers before deleting an edge.","Re-evaluate impact and confirm the correct service owner before any change."]},
+stale:{name:"Discovery stale",actions:["Check collection schedule, MID reachability and source last-observed timestamps.","Compare retirement policy and the difference between stale and decommissioned.","Use governed attestation/lifecycle review; do not mass-retire from age alone."]},
+ire:{name:"Identifier conflict",actions:["Compare source identifiers and the applicable identification rule order.","Review reconciliation definitions and attribute authority before attempting manual correction.","Test the proposed rule change using safe target-instance IRE Preview and controlled read-back."]}
+};
+let selected="duplicate";
+const ids=["evidence","owner","change","impact"];
+const fields=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+const buttons=[...document.querySelectorAll("[data-fixture]")];
+const decision=document.getElementById("decision"), explanation=document.getElementById("explanation");
+const trace=document.getElementById("trace"), heading=document.getElementById("finding-heading");
+const actions=document.getElementById("finding-actions");
+const defaults={evidence:"complete",owner:"unknown",change:"pending",impact:"unknown"};
+function evaluate(){
+ const v=Object.fromEntries(ids.map(id=>[id,fields[id].value]));
+ let verdict="CONTROLLED REVIEW ONLY",message="All synthetic preparation controls are marked complete. Native approval, executed validation, rollback authorisation and independent read-back remain NOT RUN.";
+ if(v.evidence==="unavailable"){verdict="EVIDENCE GAP";message="The metric is unknown or the source table is unavailable. Restore observability before interpreting this as healthy.";}
+ else if(v.evidence==="capped"){verdict="PARTIAL COVERAGE";message="Capped groups do not establish complete coverage. Scope the measurement and disclose uncertainty before remediation.";}
+ else if(v.owner!=="confirmed"){verdict="OWNERSHIP REVIEW";message=v.owner==="conflict"?"Sources disagree over authority; review IRE precedence and the owning team before changes.":"Authoritative source and CI owner are not established. Investigation must precede edits.";}
+ else if(v.impact!=="reviewed"){verdict="IMPACT ASSESSMENT";message="Business service, asset and relationship dependencies need a documented impact review.";}
+ else if(v.change!=="approved"){verdict="CHANGE CONTROL";message="An owner-accepted and risk-assessed rollback/change route is still missing.";}
+ decision.textContent=verdict;decision.classList.toggle("review",verdict==="CONTROLLED REVIEW ONLY");
+ explanation.textContent=message;
+ heading.textContent=fixtures[selected].name;
+ actions.replaceChildren();
+ for(const text of fixtures[selected].actions){const li=document.createElement("li");li.textContent=text;actions.append(li);}
+ const stage=[
+ ["G1 Evidence",v.evidence==="complete"?"Synthetic sample complete":v.evidence==="capped"?"PARTIAL / capped":"UNKNOWN / unavailable"],
+ ["G2 Ownership",v.owner==="confirmed"?"Synthetic authority reviewed":v.owner==="conflict"?"CONFLICT":"UNKNOWN"],
+ ["G3 Change",v.impact!=="reviewed"?"Impact unknown":v.change==="approved"?"Synthetic controls ready":"Approval pending"],
+ ["G4 Native read-back","NOT RUN / HOLD"]
+ ];
+ trace.replaceChildren();
+ for(const item of stage){const box=document.createElement("div"),b=document.createElement("strong"),span=document.createElement("span");b.textContent=item[0];span.textContent=item[1];box.append(b,span);trace.append(box);}
+ return {fixture:selected,scenario:"SYNTHETIC",inputs:v,advisory_outcome:verdict,decision_basis:message,control_trace:stage.map(x=>({gate:x[0],advisory_status:x[1]})),native_status:"NOT RUN",release_decision:"HOLD",dev_verified:false,production_verified:false,approval:false,screenshot_publication_approved:false};
+}
+function selectFixture(id){
+ selected=id;
+ for(const b of buttons)b.setAttribute("aria-pressed",String(b.dataset.fixture===id));
+ for(const key of ids)fields[key].value=defaults[key];
+ // Provide contrasting fictional starting points, never a real record.
+ if(id==="relation"){fields.evidence.value="capped";}
+ if(id==="stale"){fields.evidence.value="unavailable";}
+ if(id==="ire"){fields.owner.value="conflict";}
+ evaluate();
+}
+for(const b of buttons)b.addEventListener("click",()=>selectFixture(b.dataset.fixture));
+for(const field of Object.values(fields))field.addEventListener("change",evaluate);
+document.getElementById("reset").addEventListener("click",()=>selectFixture("duplicate"));
+document.getElementById("export").addEventListener("click",()=>{
+ const receipt={schema:"cmdb-remediation-preparation/1.0",generated_utc:new Date().toISOString(),...evaluate(),
+ evidence_classification:"MOCK-ONLY",no_native_execution:true,contains_customer_data:false};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+"\n"],{type:"application/json"}));
+ const a=document.createElement("a");a.href=url;a.download="cmdb-remediation-preparation-HOLD.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+selectFixture("duplicate");
+</script>
+</body>
+</html>
