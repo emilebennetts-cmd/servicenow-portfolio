@@ -211,6 +211,7 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 <span><strong id="obs-notrun">29</strong> not run</span><span><strong id="obs-pass">0</strong> observed pass</span><span><strong id="obs-fail">0</strong> observed fail</span><span><strong id="obs-blocked">0</strong> blocked</span><span><strong id="obs-missing">0</strong> unsupported observations</span>
 </div>
 <div class="obs-actions"><button id="obs-export" type="button">Export UNREVIEWED evidence packet (JSON)</button><button id="obs-reset" class="secondary" type="button">Clear local observations</button></div>
+<p class="obs-foot"><strong>Repeat-run comparison:</strong> <a href="candidate-delta-review.html">Open the browser-local candidate delta reviewer</a> to compare two unreviewed 29-case JSON exports without uploading any evidence. Comparison never grants DEV verification or release approval.</p>
 <div class="obs-import-panel" aria-labelledby="obs-import-heading">
 <h3 id="obs-import-heading">Resume an offline evidence candidate</h3>
 <p>Choose a JSON packet previously exported by this workbook. A valid import <strong>replaces</strong> the current 29 local notes and anonymous context; an invalid packet leaves everything unchanged. Files are inspected only in this browser session, never transmitted or stored. Imported PASS remains self-reported, not DEV-VERIFIED.</p>
