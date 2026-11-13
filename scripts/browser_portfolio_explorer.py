@@ -15,6 +15,8 @@ def verify(browser, width):
         page.goto(URL, wait_until="domcontentloaded", timeout=30000)
         assert not errors, errors
         assert page.locator(".result").count() >= 60
+        registered = page.locator(".result:not([data-evidence=unregistered])").count()
+        assert page.locator("#registered-pages").inner_text() == str(registered)
         assert page.locator(".result:visible").count() == 18
         assert page.locator("#more").is_visible()
         assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"), f"{width}px horizontal overflow"
@@ -35,6 +37,10 @@ def verify(browser, width):
         dev_rows = page.locator(".result:visible").all()
         assert len(dev_rows) >= 2
         assert all(row.get_attribute("data-evidence") == "dev-reported" for row in dev_rows)
+        page.locator("#evidence-status").select_option("proposed")
+        design_rows = page.locator(".result:visible").all()
+        assert len(design_rows) >= 3, f"{width}px proposed reference designs missing"
+        assert all(row.get_attribute("data-evidence") == "proposed" for row in design_rows)
         page.locator("#evidence-status").select_option("unregistered")
         assert page.locator(".result:visible").count() >= 1
         page.locator("#reset").click()
