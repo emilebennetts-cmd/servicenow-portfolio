@@ -18,6 +18,25 @@
 .lineage-summary{font-size:.92rem;color:#d1e4ee}
 .lineage-boundary{border-left:4px solid #ffcc8f;background:#322a21;color:#f7e4c3;padding:1rem 1.2rem;border-radius:0 10px 10px 0}
 @media(max-width:700px){.lineage-grid{grid-template-columns:1fr}.lineage-card{padding:1rem}}
+
+/* Live public verification catalogue — the local JSON register is authoritative. */
+.catalogue-intro{max-width:78ch}.catalogue-controls{display:grid;grid-template-columns:minmax(0,2fr) minmax(180px,1fr);gap:1rem;border:1px solid #527087;background:#142d43;padding:1.2rem;border-radius:14px}
+.catalogue-controls label{font-weight:750;display:block}.catalogue-controls input,.catalogue-controls select{display:block;width:100%;min-height:46px;margin-top:.5rem;border:1px solid #8ba7b8;background:#091d2d;color:#f5fbff;border-radius:9px;padding:.65rem .8rem;font:inherit}
+.catalogue-controls input:focus-visible,.catalogue-controls select:focus-visible,.catalogue-more:focus-visible{outline:3px solid #ffe28a;outline-offset:3px}
+.catalogue-count{font-size:.95rem;color:#deedf5;margin:1rem 0}
+.catalogue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.catalogue-entry{padding:1.2rem;border:1px solid #526d83;border-radius:14px;background:#152d43;min-width:0}
+.catalogue-entry h3{margin:.55rem 0;font-size:1.12rem;line-height:1.35;overflow-wrap:anywhere}.catalogue-entry .claim-id{font-size:.74rem;color:#bfd7e6;overflow-wrap:anywhere}
+.catalogue-entry .claim-class{display:inline-block;font-weight:850;font-size:.75rem;letter-spacing:.055em;border:1px solid #91b9d0;color:#b5f3e3;border-radius:100px;padding:.2rem .65rem}
+.catalogue-entry[data-class="DEV-reported"] .claim-class{color:#ffd39b;border-color:#b99773}
+.catalogue-entry[data-class="mock-only"] .claim-class,.catalogue-entry[data-class="proposed"] .claim-class{color:#cfd6fe;border-color:#9294c9}
+.catalogue-entry details{margin:.8rem 0;border-top:1px solid #425f77;padding-top:.7rem}
+.catalogue-entry summary{cursor:pointer;font-weight:750;color:#b7f5e7}
+.catalogue-entry dd{margin:0 0 .7rem;color:#c4d9e6;overflow-wrap:anywhere}
+.catalogue-entry dt{font-size:.8rem;font-weight:850;color:#f1f8ff}
+.catalogue-entry a{font-weight:750;overflow-wrap:anywhere}.catalogue-more{display:block;margin:1.3rem auto;padding:.75rem 1.4rem;font:inherit;font-weight:800;color:#091e27;background:#82e7d3;border:0;border-radius:9px;cursor:pointer}
+.catalogue-fallback{padding:1rem 1.2rem;background:#292a30;border-left:4px solid #f3c78f;border-radius:6px;color:#fae3bd}
+@media(max-width:680px){.catalogue-controls,.catalogue-grid{grid-template-columns:1fr}.catalogue-entry{padding:1rem}}@media print{.catalogue-controls,.catalogue-more{display:none!important}.catalogue-entry{break-inside:avoid;background:white;border-color:#777}.catalogue-entry dd,.catalogue-entry .claim-id,.catalogue-count{color:#333}}
 </style></head>
 <body><a class="skip" href="#main">Skip to main content</a><header><nav class="wrap" aria-label="Main navigation"><a href="index.html">Home</a><a href="delivery-case-study.html">Delivery</a><a href="diagnostic-case-study.html">Diagnostic</a><a href="evidence-methodology.html">Evidence policy</a></nav></header>
 <main class="wrap" id="main"><p class="badge">Evidence register · 14 November 2026</p><h1>Traceable engineering, not inflated claims.</h1><p class="lead">A reviewer-friendly index of publicly inspectable source evidence. Documentation, SDK source and demonstration interfaces do not independently establish an accepted production implementation.</p>
@@ -46,6 +65,18 @@
 </div>
 <p class="lineage-boundary"><strong>Verification boundary:</strong> Six records, zero newly DEV-VERIFIED and zero PRODUCTION-VERIFIED claims. Genuine ServiceNow screenshots remain unpublished: every candidate requires irreversible sanitisation, image-specific owner approval and separate review. Mock UI and synthetic Incident Pack demonstrations are not runtime acceptance.</p>
 </section>
+
+<section id="claim-catalogue" aria-labelledby="claim-catalogue-title"><h2 id="claim-catalogue-title">04 / Search the complete public claim register</h2>
+<p class="catalogue-intro">Explore <strong>every registered public claim</strong>, not just the six dated examples above. This reader uses the version-controlled <a href="evidence/public-verification-register.json">public verification register (JSON)</a> directly, so classifications and descriptions cannot drift into a separate hand-maintained list. The register documents claims, not independent verification.</p>
+<div class="catalogue-controls"><label for="claim-search">Search by title, claim ID, or supported feature
+<input id="claim-search" type="search" maxlength="120" placeholder="e.g. CMDB, Pattern, Incident, acceptance" autocomplete="off"></label>
+<label for="claim-classification">Classification
+<select id="claim-classification"><option value="all">All classifications</option><option value="source-only">SOURCE-ONLY</option><option value="DEV-reported">DEV-REPORTED</option><option value="mock-only">MOCK-ONLY</option><option value="proposed">PROPOSED</option><option value="DEV-verified">DEV-VERIFIED</option><option value="production-verified">PRODUCTION-VERIFIED</option></select></label></div>
+<p id="claim-count" class="catalogue-count" role="status" aria-live="polite">Loading version-controlled public claims…</p>
+<div id="claim-results" class="catalogue-grid" aria-label="Public verification claims"></div>
+<button type="button" id="claim-more" class="catalogue-more" hidden>Show 12 more claims</button>
+<p id="claim-fallback" class="catalogue-fallback" hidden>The public claim register could not be loaded. The <a href="evidence/public-verification-register.json">complete JSON register</a> is still available. This page will never substitute fabricated or cached claims.</p>
+<p class="lineage-boundary"><strong>Reader boundary:</strong> Entries are SOURCE-ONLY, MOCK-ONLY, PROPOSED or historical DEV-REPORTED unless the underlying public register includes an independently reviewed verified claim. A public HTML link is not a ServiceNow execution record. All genuine screenshot candidates remain on HOLD.</p></section>
 <section aria-labelledby="proof"><h2 id="proof">04 / What is still needed for stronger proof</h2><p>Evidence from existing architecture, as-built, user-guide and runbook materials is retained as internal reference until each item can be checked for provenance and publication permission. No private Drive links or unreviewed screenshots are embedded here.</p><ol><li><strong>DEV-VERIFIED:</strong> capture a dated authorised test, instance/build identity, expected versus actual result, and reviewed derivative image.</li><li><strong>PRODUCTION-VERIFIED:</strong> require separate production approval and evidence; do not infer it from a DEV result.</li><li><strong>Gallery release:</strong> irreversibly redact customer identifiers, strip metadata, record derivative SHA-256 and obtain explicit publication approval before adding images.</li></ol><p><a href="evidence-methodology.html">Read the publication and verification policy</a></p></section>
 <section aria-labelledby="licensing"><h2 id="licensing">05 / Entitlement considerations</h2><p>Viewing this static portfolio requires no ServiceNow licence. Operating the underlying scoped applications requires authorised instance access and confirmation of custom-app/App Engine rights. ITSM, ITOM, IntegrationHub/spokes, Performance Analytics, AI and external SaaS providers may each introduce separate subscription, role, transaction or connection requirements; verify against the actual tenant agreement before deployment.</p></section></main>
 <footer><div class="wrap"><p class="muted">Public evidence index · Source and mock classifications apply to the claims above; no new runtime or production acceptance is asserted.</p></div></footer><script>
@@ -62,4 +93,56 @@ records.forEach(record=>{record.hidden=mode!=='all'&&record.dataset.class!==mode
 count.textContent='Showing '+visible+' of 6 dated evidence records. All remain SOURCE-ONLY or historical DEV-REPORTED; nothing newly verified.';
 }));
 })();
-</script></body></html>
+</script>
+<script>
+/* Same-origin, client-only rendering. Never create HTML from untrusted register data. */
+(function(){
+'use strict';
+const registerUrl='evidence/public-verification-register.json';
+const valid=new Set(['source-only','DEV-reported','mock-only','proposed','DEV-verified','production-verified']);
+const host=document.getElementById('claim-results'),search=document.getElementById('claim-search'),classification=document.getElementById('claim-classification');
+const status=document.getElementById('claim-count'),more=document.getElementById('claim-more'),fallback=document.getElementById('claim-fallback');
+let items=[],limit=12;
+function node(tag,text,cls){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;}
+function createClaim(claim){
+const article=node('article',undefined,'catalogue-entry');article.dataset.class=claim.classification;
+article.append(node('span',claim.classification.toUpperCase(),'claim-class'),node('div',claim.id,'claim-id'),node('h3',claim.title));
+const detail=node('details');detail.append(node('summary','Inspect evidence boundary'));
+const description=node('dl');
+[['Source / basis',claim.basis],['Runtime evidence',claim.runtime_verification],['Screenshot status',claim.public_screenshot_status]].forEach(function(pair){description.append(node('dt',pair[0]),node('dd',pair[1]));});
+detail.append(description);article.append(detail);
+const link=node('a','Open the related public case study');
+link.href=claim.page;
+article.append(link);
+return article;
+}
+function matching(){
+const needle=search.value.trim().toLowerCase(),kind=classification.value;
+return items.filter(function(c){return (kind==='all'||c.classification===kind)&&(!needle||[c.id,c.title,c.basis,c.page].some(function(v){return v.toLowerCase().includes(needle);}));});
+}
+function render(){
+const matches=matching();host.replaceChildren();
+matches.slice(0,limit).forEach(function(c){host.append(createClaim(c));});
+status.textContent='Showing '+Math.min(limit,matches.length)+' of '+matches.length+' matching claims ('+items.length+' registered). These are evidence classifications, not execution certificates.';
+more.hidden=matches.length<=limit;
+}
+function validate(data){
+if(!data||data.schema_version!=='1.0'||!Array.isArray(data.items)||data.items.length<1||data.items.length>500)throw Error('invalid schema');
+const ids=new Set();
+data.items.forEach(function(c){
+if(!c||typeof c!=='object'||typeof c.id!=='string'||!/^[A-Za-z0-9][A-Za-z0-9_-]{0,100}$/.test(c.id)||ids.has(c.id)||
+!valid.has(c.classification)||!['title','basis','runtime_verification','public_screenshot_status'].every(function(k){return typeof c[k]==='string'&&c[k].length>0&&c[k].length<5000;})||
+typeof c.page!=='string'||!/^[a-z0-9-]+\.html$/.test(c.page))throw Error('invalid claim');
+ids.add(c.id);
+});
+return data.items;
+}
+search.addEventListener('input',function(){limit=12;render();});
+classification.addEventListener('change',function(){limit=12;render();});
+more.addEventListener('click',function(){limit+=12;render();});
+fetch(registerUrl,{cache:'no-store'}).then(function(resp){if(!resp.ok)throw Error('fetch');return resp.json();}).then(function(data){
+items=validate(data);render();
+}).catch(function(){status.textContent='Live claim catalogue unavailable — no claims inferred.';fallback.hidden=false;more.hidden=true;host.replaceChildren();});
+})();
+</script>
+</body></html>
