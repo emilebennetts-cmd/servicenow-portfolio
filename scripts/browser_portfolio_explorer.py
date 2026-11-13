@@ -42,7 +42,9 @@ def verify(browser, width):
         assert len(design_rows) >= 3, f"{width}px proposed reference designs missing"
         assert all(row.get_attribute("data-evidence") == "proposed" for row in design_rows)
         page.locator("#evidence-status").select_option("unregistered")
-        assert page.locator(".result:visible").count() >= 1
+        assert page.locator(".result:visible").count() == 0, "All existing pages should now be classified"
+        assert "No match." in page.locator("#helper").inner_text()
+        assert page.locator("#registered-pages").inner_text() == str(page.locator(".result").count())
         page.locator("#reset").click()
         assert page.locator("#search").input_value() == ""
         assert page.locator("#category").input_value() == "All"
