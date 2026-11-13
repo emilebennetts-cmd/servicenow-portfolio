@@ -8,7 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 HTML = (ROOT / "delivery-case-study.html").read_text(encoding="utf-8")
 START = HTML.index('<section id="persona-operations"')
-END = HTML.index('<section aria-labelledby="architecture">', START)
+END = HTML.index('<section id="closure-assurance"', START) if '<section id="closure-assurance"' in HTML[START:] else HTML.index('<section aria-labelledby="architecture">', START)
 GUIDE = HTML[START:END]
 
 
