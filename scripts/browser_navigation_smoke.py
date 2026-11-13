@@ -1264,7 +1264,8 @@ def check_native_assurance_atlas(browser, width):
 
 
 
-def check_native_execution_protocol(browser, width):
+def check_native_execution_protocol(browser, width)
+                check_diagnostic_operator_rehearsal(browser, width):
     """Verify source-derived protocol steps and non-certifying HOLD export in Chromium."""
     url = (Path(__file__).resolve().parents[1] / "native-assurance-coverage-atlas.html").as_uri()
     page = browser.new_page(viewport={"width": width, "height": 900},
@@ -1304,6 +1305,52 @@ def check_native_execution_protocol(browser, width):
                 f"{width}px: protocol has horizontal overflow")
         require(not outbound, f"{width}px: protocol generated an external request")
         print(f"PASS {width}px: native protocol selector, source steps, HOLD ticket and isolation")
+    finally:
+        page.close()
+
+
+
+def check_diagnostic_operator_rehearsal(browser, width):
+    """Exercise read-only guide: filters and HOLD export cannot certify execution."""
+    url=(Path(__file__).resolve().parents[1] / "diagnostic-workbench-case-study.html").as_uri()
+    page=browser.new_page(viewport={"width":width,"height":900},
+                          reduced_motion="reduce",accept_downloads=True)
+    outbound,errors=[],[]
+    page.on("request",lambda r:outbound.append(r.url) if r.url.startswith(("https:","http:")) else None)
+    page.on("pageerror",lambda e:errors.append(str(e)))
+    try:
+        page.goto(url,wait_until="domcontentloaded",timeout=30000)
+        require(page.locator(".diag-step").count()==10,f"{width}px: ten procedures expected")
+        require("0 of 10 read" in page.locator("#diag-progress").inner_text(),
+                f"{width}px: guide not initially clear")
+        page.locator("#diag-lane").select_option("ki")
+        require(page.locator(".diag-step:visible").count()==2,f"{width}px: KI lane filter")
+        page.locator("#diag-role").select_option("architect")
+        require(page.locator(".diag-step:visible").count()==1,f"{width}px: role/lane intersection")
+        require(page.locator(".diag-step:visible").first.get_attribute("data-step")=="KI-01",
+                f"{width}px: wrong architect procedure")
+        page.locator(".diag-step:visible input").check()
+        require("1 of 10 read" in page.locator("#diag-progress").inner_text(),
+                f"{width}px: reading progress absent")
+        with page.expect_download(timeout=12000) as receipt:
+            page.locator("#diag-export").click()
+        body=Path(receipt.value.path()).read_text(encoding="utf-8")
+        require(receipt.value.suggested_filename=="diagnostic-workbench-rehearsal-hold.txt",
+                f"{width}px: unsafe export filename")
+        for fragment in ("NOT RUN | HOLD","evidence_class=SOURCE-ONLY","runtime_verified=false",
+                         "independent_dev_verified=false","production_verified=false",
+                         "screenshot_approved=false","service_now_instance=none",
+                         "client_approval=NOT GRANTED","[x] KI-01"):
+            require(fragment in body,f"{width}px: missing export boundary {fragment}")
+        page.locator("#diag-reset").click()
+        require(page.locator(".diag-step:visible").count()==10
+                and "0 of 10 read" in page.locator("#diag-progress").inner_text(),
+                f"{width}px: reset did not restore all steps")
+        require(page.evaluate("() => document.documentElement.scrollWidth <= innerWidth+2"),
+                f"{width}px: horizontal overflow")
+        require(not errors,f"{width}px: JS errors {errors}")
+        require(not outbound,f"{width}px: unexpected network {outbound}")
+        print(f"PASS {width}px: diagnostic operator filters, reading marks, HOLD export and bounds")
     finally:
         page.close()
 
