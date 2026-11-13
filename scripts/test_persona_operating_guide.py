@@ -67,7 +67,7 @@ class PersonaOperatingGuideContract(unittest.TestCase):
     def test_version_pinned_truth_and_training_scope(self):
         for phrase in ("SOURCE-ONLY", "19 October 2026", "4.22.2",
                        "6 October 2026", "DEV-REPORTED", "NOT RUN", "HOLD",
-                       "not independently", "no original screenshots"):
+                       "not independent verification", "no original screenshots"):
             self.assertIn(phrase.lower(), GUIDE.lower())
         self.assertIn("production_verified=false", GUIDE)
         self.assertIn("screenshot_approved=false", GUIDE)
