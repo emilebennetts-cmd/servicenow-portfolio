@@ -50,3 +50,9 @@ The page is linked from the workbook, public home mobile directory and searchabl
 | Private repositories | Visibility unchanged |
 
 **Publication decision:** safe to publish this static, non-sensitive, source-only comparison page. Do not promote any individual imported case to DEV-VERIFIED or PRODUCTION-VERIFIED until an independently witnessed native acceptance process records the attributable execution and original private evidence. Do not publish any captured ServiceNow screen without image-specific review and irreversible sanitisation.
+
+## Publication discovery follow-up
+
+The new public route is also included in `sitemap.xml` and the 73-page searchable Portfolio Explorer catalogue (74 sitemap URLs including the site root). This is discoverability metadata, **not proof** that GitHub Pages is externally reachable. Browser CI and external HTTP propagation must be verified separately.
+
+Local source contract checks confirmed JavaScript compilation, all 29 pinned acceptance rows, `connect-src 'none'`, links from both the workbook and home directory, an 86-claim evidence register and no external link or browser-storage dependency on the delta page. Eight isolated schema-validator fixtures accepted valid HOLD inputs and rejected forged approval/DEV flags, altered case identity and invalid aliases. Chromium execution remains dependent on the dedicated GitHub Actions workflow.
