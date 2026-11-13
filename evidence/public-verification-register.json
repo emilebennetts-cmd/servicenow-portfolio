@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T15:29:21.298Z",
+  "updated_utc": "2026-11-13T16:21:48Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -663,8 +663,8 @@
       "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE_GALLERY-1",
       "title": "Architecture gallery and conceptual handoff",
       "classification": "source-only",
-      "basis": "Client-neutral diagrams of source-described Diagnostic and Delivery boundaries; diagrams are not authenticated instance screenshots.",
-      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "basis": "Version-pinned public source diagrams: controlled 30 September Delivery As-Built/Architecture 4.6.1 source versus DEV-reported 4.5.1, later source-described 4.22.2, and 21 October distinct-scope 4.22.8 synthetic DEV-reported pilot. The diagrams are not native instance screenshots.",
+      "runtime_verification": "Document-reported historical DEV observations only. No new independently witnessed DEV or Production execution. Original-source 29-case matrix remains NOT RUN.",
       "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
       "page": "workbench-architecture-gallery.html"
     },
@@ -672,7 +672,7 @@
       "id": "COVERAGE2-20261113-WORKBENCH_ARCHITECTURE_GALLERY-2",
       "title": "Architecture gallery and conceptual handoff",
       "classification": "proposed",
-      "basis": "Cross-Workbench evidence-to-delivery connection is an architectural sequence, not an independently verified live connector.",
+      "basis": "Conceptual and source-only Diagnostic-to-Delivery handoff; dated observations of a separate target scope do not prove a live cross-workbench connector or certification of another application identity.",
       "runtime_verification": "Design or test preparation only; no installation, execution or approval.",
       "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
       "page": "workbench-architecture-gallery.html"
