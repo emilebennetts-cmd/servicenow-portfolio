@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'workbench-architecture-gallery.html'
+      - 'scripts/test_architecture_gallery_claim_boundaries.py'
+      - 'scripts/browser_architecture_gallery_boundaries.py'
       - 'diagnostic-workbench-case-study.html'
       - 'reusable-delivery-patterns-case-study.html'
       - 'cmdb-ire-assurance.html'
@@ -81,6 +84,10 @@ jobs:
       # The test only launches the headless browser, not full Chrome.
       - name: Install Chromium headless shell (without apt downloads)
         run: python -m playwright install chromium --only-shell
+      - name: Verify architecture gallery historical DEV/source boundary
+        run: python scripts/test_architecture_gallery_claim_boundaries.py
+      - name: Exercise architecture evidence cards at four viewport widths
+        run: python scripts/browser_architecture_gallery_boundaries.py
       - name: Verify operational readiness publication contract
         run: python scripts/test_operational_readiness_runbook.py
       - name: Verify Incident pack publication and provenance contract
