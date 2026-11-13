@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T00:17:53Z",
+  "updated_utc": "2026-11-13T02:30:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -105,9 +105,9 @@
       "id": "VISUAL-REVIEWS",
       "title": "Privately inspected Workbench screenshot observations",
       "classification": "source-only",
-      "basis": "Six public textual observations of privately inspected source files; separate ten-candidate inventory may overlap",
-      "runtime_verification": "Visible UI pixels were inspected privately; no application version, current DEV transaction or production behaviour independently certified",
-      "public_screenshot_status": "Six originals on publication HOLD; zero genuine captures approved or embedded",
+      "basis": "Eight public textual observations of privately inspected source files, including an update-set metadata form and a training-document montage. The separate ten-candidate gallery inventory may overlap; no eight-file release claim is implied.",
+      "runtime_verification": "Visible source pixels and document pages privately inspected; an update-set marked Complete does not prove restoration/deployment and training instructions do not prove native execution. No independent current DEV or Production acceptance.",
+      "public_screenshot_status": "Eight originals remain on publication HOLD; zero genuine captures approved, embedded, or linked.",
       "page": "visual-evidence.html"
     },
     {
