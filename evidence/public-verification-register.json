@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T04:19:00Z",
+  "updated_utc": "2026-11-13T05:23:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -262,6 +262,231 @@
       "runtime_verification": "Evidence-type filters and badge summaries are generated from registered public claims; unmatched pages are marked NOT REGISTERED. No live ServiceNow execution or fresh independent DEV evidence.",
       "public_screenshot_status": "No original screenshots displayed. All eight inspected candidate records remain HOLD.",
       "page": "portfolio-explorer.html"
+    },
+    {
+      "id": "REVIEW-20261113-ARCHITECTURE_ATLAS",
+      "title": "Architecture Atlas",
+      "classification": "source-only",
+      "basis": "Public two-workbench architecture depiction corroborated by the Delivery 4.22.2 and Diagnostic Workbench 2 repository documentation.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "architecture-atlas.html"
+    },
+    {
+      "id": "REVIEW-20261113-ARCHITECTURE_BOUNDARIES",
+      "title": "Workbench Architecture Boundaries",
+      "classification": "source-only",
+      "basis": "Documented separation of Diagnostic writable findings from Delivery engagement records; identity and entitlement boundaries are from repository architecture.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "architecture-boundaries.html"
+    },
+    {
+      "id": "REVIEW-20261113-CAPABILITY_EXPLORER",
+      "title": "Capability Explorer",
+      "classification": "source-only",
+      "basis": "Browser-local capability catalogue is derived from source-described Delivery planning, implementation and Diagnostic companion packages; cards are not runtime receipts.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "capability-explorer.html"
+    },
+    {
+      "id": "REVIEW-20261113-CAPABILITY_TRACEABILITY",
+      "title": "Capability Traceability Matrix",
+      "classification": "source-only",
+      "basis": "Published crosswalk links capabilities to their owning source documentation and explicitly separates simulated from historical verification.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "capability-traceability.html"
+    },
+    {
+      "id": "REVIEW-20261113-CI_JOB_EVIDENCE",
+      "title": "Dated GitHub CI Job Evidence",
+      "classification": "source-only",
+      "basis": "Dated GitHub Actions job/step inspection snapshot of public website checks; a passing workflow proves neither a native ServiceNow build nor client UAT.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "ci-job-evidence.html"
+    },
+    {
+      "id": "REVIEW-20261113-DELIVERY_RELEASE_EVOLUTION",
+      "title": "Universal Delivery Workbench Release Evolution",
+      "classification": "source-only",
+      "basis": "Versioned Delivery repository descriptions document consolidation into one lifecycle engine, pattern governance and separately qualified integration claims.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "delivery-release-evolution.html"
+    },
+    {
+      "id": "REVIEW-20261113-DEPLOYMENT_IDENTITY_GATES",
+      "title": "Historical Deployment Identity Gate",
+      "classification": "DEV-reported",
+      "basis": "Historical controlled release record reports a mismatch between source application scope and demo target scope, with native test cases still not run; no fresh target read-back.",
+      "runtime_verification": "Historical DEV observation in source material only; current target/version not independently tested.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "deployment-identity-gates.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTIC_ARCHITECTURE",
+      "title": "Diagnostic Workbench Architecture",
+      "classification": "source-only",
+      "basis": "Diagnostic repository source and separate Knowledge Intelligence companion describe guided assessments, collectors and governed findings; not an observed live execution.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostic-architecture.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTIC_CASE_STUDY",
+      "title": "Diagnostic Workbench Source Case Study",
+      "classification": "source-only",
+      "basis": "Source-backed account of evidence ownership, Knowledge Intelligence companion separation and human-controlled remediation.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostic-case-study.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTIC_ENGINEERING",
+      "title": "Diagnostic Engineering Controls",
+      "classification": "source-only",
+      "basis": "Repository-supported collector, runbook, correlation and human review design; reported prior DEV history is explicitly not independently reproduced.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostic-engineering.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTIC_TO_DELIVERY_JOURNEY",
+      "title": "Diagnostic-to-Delivery Reference Journey",
+      "classification": "proposed",
+      "basis": "Conceptual, approval-gated cross-workbench handoff; a source-informed reference flow, not a witnessed native end-to-end transaction.",
+      "runtime_verification": "Unimplemented reference design; no end-to-end runtime integration or native verification.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostic-to-delivery-journey.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTIC_WORKBENCH_CASE_STUDY",
+      "title": "Diagnostic Workbench Technical Deep Dive",
+      "classification": "source-only",
+      "basis": "Repository-defined assessment lifecycle and separately deployed Knowledge Intelligence lane with source/readiness limitations.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostic-workbench-case-study.html"
+    },
+    {
+      "id": "REVIEW-20261113-DIAGNOSTICS_TO_DELIVERY",
+      "title": "Cross-Workbench Handoff Reference Architecture",
+      "classification": "proposed",
+      "basis": "Published minimal handoff contract and two bounded application responsibilities; integration example is a design proposal, not implemented sync proof.",
+      "runtime_verification": "Unimplemented reference design; no end-to-end runtime integration or native verification.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "diagnostics-to-delivery.html"
+    },
+    {
+      "id": "REVIEW-20261113-ENGINEERING_CASE_STUDIES",
+      "title": "Workbench Engineering Case Studies",
+      "classification": "source-only",
+      "basis": "Public source-linked synthesis of Delivery and Diagnostic architecture, with explicit source-only runtime limitations.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "engineering-case-studies.html"
+    },
+    {
+      "id": "REVIEW-20261113-ENGINEERING_EVIDENCE",
+      "title": "Engineering Evidence Classification",
+      "classification": "source-only",
+      "basis": "Published, testable claim-classification guidance distinguishing source, historical DEV reports, synthetic UI and native execution.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "engineering-evidence.html"
+    },
+    {
+      "id": "REVIEW-20261113-ENGINEERING_PROOF",
+      "title": "Engineering Proof Guide",
+      "classification": "source-only",
+      "basis": "Source-indexed engineering review of the Delivery and Diagnostic Workbenches; stated figures and version labels are dated source snapshots.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "engineering-proof.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_LED_DELIVERY",
+      "title": "Evidence-Led Delivery Architecture",
+      "classification": "source-only",
+      "basis": "Documentation-led account of requirements, reusable patterns, diagnostic references and governed delivery traceability.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-led-delivery.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_METHODOLOGY",
+      "title": "Evidence Methodology",
+      "classification": "source-only",
+      "basis": "Published portfolio review methodology and screenshot publication rules; process documentation is not an independent execution receipt.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-methodology.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_STANDARDS",
+      "title": "Evidence Standards",
+      "classification": "source-only",
+      "basis": "Published evidence taxonomy separating code, synthetic demonstrations, historical results and approved runtime proof.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-standards.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_TO_DELIVERY",
+      "title": "Synthetic Evidence-to-Delivery Journey",
+      "classification": "mock-only",
+      "basis": "Interactive browser demonstration uses invented records to illustrate controlled finding-to-engagement handoff; no ServiceNow requests.",
+      "runtime_verification": "Browser-local synthetic presentation only; no target-instance ServiceNow execution or native acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-to-delivery.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_TO_RELEASE_JOURNEY",
+      "title": "Evidence-to-Release Reference Journey",
+      "classification": "proposed",
+      "basis": "Representative governed finding, requirement, pattern, test and handover progression; not a native accepted release.",
+      "runtime_verification": "Unimplemented reference design; no end-to-end runtime integration or native verification.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-to-release-journey.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE_VERIFICATION",
+      "title": "Workbench Evidence Verification Guide",
+      "classification": "source-only",
+      "basis": "Source-linked reviewer guidance for documentary versus historical versus native acceptance evidence.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence-verification.html"
+    },
+    {
+      "id": "REVIEW-20261113-EVIDENCE",
+      "title": "Engineering Artefact Index",
+      "classification": "source-only",
+      "basis": "Curated pointers to restricted historical As-Built, architecture and training artefacts; their existence is not approval or current DEV proof.",
+      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "evidence.html"
+    },
+    {
+      "id": "REVIEW-20261113-FINDING_TO_DELIVERY",
+      "title": "Synthetic Finding-to-Delivery Walkthrough",
+      "classification": "mock-only",
+      "basis": "Browser-local synthetic finding scenario illustrates a bounded handoff; no production records, integration or target execution.",
+      "runtime_verification": "Browser-local synthetic presentation only; no target-instance ServiceNow execution or native acceptance.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "finding-to-delivery.html"
+    },
+    {
+      "id": "REVIEW-20261113-FINDING_TO_RELEASE_HANDOFF",
+      "title": "Finding-to-Release Handoff Contract",
+      "classification": "proposed",
+      "basis": "Source-informed prospective handoff contract specifying evidence references and approval gates; a proposal rather than a deployed interface.",
+      "runtime_verification": "Unimplemented reference design; no end-to-end runtime integration or native verification.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "page": "finding-to-release-handoff.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
