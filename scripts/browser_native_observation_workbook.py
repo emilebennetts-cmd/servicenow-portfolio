@@ -50,8 +50,62 @@ def verify(browser, width):
         assert page.locator("#obs-notrun").inner_text()=="29"
         assert page.locator("#obs-pass").inner_text()=="0"
         assert page.locator("#obs-environment").input_value()==""
+        # Import the packet exported above; a new session can resume offline without
+        # confusing reported observations with verified native evidence.
+        def upload(raw):
+            if isinstance(raw, dict):
+                raw=json.dumps(raw).encode("utf-8")
+            page.locator("#obs-import-file").set_input_files({
+                "name":"candidate.json", "mimeType":"application/json", "buffer":raw
+            })
+            page.wait_for_function("document.querySelector('#obs-import-status').textContent.includes('Restored') || document.querySelector('#obs-import-status').textContent.includes('rejected')")
+        upload(packet)
+        assert "Restored 29" in page.locator("#obs-import-status").inner_text()
+        assert page.locator("#obs-notrun").inner_text()=="27"
+        assert page.locator("#obs-pass").inner_text()=="1"
+        assert page.locator("#obs-blocked").inner_text()=="1"
+        assert page.locator("#obs-missing").inner_text()=="1"
+        assert first.locator("input").input_value()=="EV-NV-001"
+        assert page.locator("#obs-environment").input_value()=="DEV-LAB-01"
+        assert page.locator("#obs-import-file").input_value()==""
+
+        # Each rejected import must be atomic; preserve previously restored notes.
+        import copy
+        failures=[]
+        forged=copy.deepcopy(packet)
+        forged["native_verification_status"]="DEV-VERIFIED"
+        failures.append(forged)
+        forged=copy.deepcopy(packet)
+        forged["release_authorised"]=True
+        failures.append(forged)
+        duplicate=copy.deepcopy(packet)
+        duplicate["observations"][1]["case_id"]="NV-001"
+        failures.append(duplicate)
+        contaminated=copy.deepcopy(packet)
+        contaminated["context"]["instance_url"]="https://private.example"
+        failures.append(contaminated)
+        contaminated=copy.deepcopy(packet)
+        contaminated["observations"][0]["evidence_alias"]="https://private.example"
+        failures.append(contaminated)
+        inconsistent=copy.deepcopy(packet)
+        inconsistent["missing_evidence_aliases"]=[]
+        failures.append(inconsistent)
+        failures.extend([b"{", b"x"*131073])
+        for invalid in failures:
+            # Clear the previous message before the change so each new result is observed.
+            page.evaluate("document.querySelector('#obs-import-status').textContent='Checking packet…'")
+            upload(invalid)
+            assert "rejected" in page.locator("#obs-import-status").inner_text()
+            assert page.locator("#obs-import-status").get_attribute("data-error")=="true"
+            assert page.locator("#obs-pass").inner_text()=="1"
+            assert page.locator("#obs-blocked").inner_text()=="1"
+            assert page.locator("#obs-environment").input_value()=="DEV-LAB-01"
+            assert first.locator("input").input_value()=="EV-NV-001"
+        page.locator("#obs-reset").click()
+        assert page.locator("#obs-notrun").inner_text()=="29"
+        assert page.locator("#obs-environment").input_value()==""
         assert not errors,errors
-        print(f"PASS native candidate workbook {width}px: 29 cases, validation, HOLD export, reset")
+        print(f"PASS native candidate workbook {width}px: 29 cases, validation, HOLD export, offline resume, malicious-file rejection, reset")
     finally:
         page.close()
 
