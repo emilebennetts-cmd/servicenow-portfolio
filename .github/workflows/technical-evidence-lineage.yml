@@ -5,12 +5,16 @@ on:
     paths:
       - 'technical-evidence-register.html'
       - 'scripts/test_technical_evidence_lineage.py'
+      - 'scripts/test_public_claim_catalogue.py'
+      - 'evidence/public-verification-register.json'
       - 'scripts/browser_technical_evidence_lineage.py'
       - '.github/workflows/technical-evidence-lineage.yml'
   pull_request:
     paths:
       - 'technical-evidence-register.html'
       - 'scripts/test_technical_evidence_lineage.py'
+      - 'scripts/test_public_claim_catalogue.py'
+      - 'evidence/public-verification-register.json'
       - 'scripts/browser_technical_evidence_lineage.py'
       - '.github/workflows/technical-evidence-lineage.yml'
   workflow_dispatch:
@@ -25,11 +29,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test source and historical DEV evidence separation
-        run: python -m unittest discover -s scripts -p 'test_technical_evidence_lineage.py' -v
+      - name: Test source/DEV lineage and complete public claim reader
+        run: |
+          python -m unittest discover -s scripts -p 'test_technical_evidence_lineage.py' -v
+          python -m unittest discover -s scripts -p 'test_public_claim_catalogue.py' -v
       - name: Install headless browser
         run: |
           python -m pip install --disable-pip-version-check 'playwright==1.56.0'
           python -m playwright install --with-deps chromium
-      - name: Test evidence filters at four responsive widths
+      - name: Test dated and complete claim filters at four responsive widths
         run: python scripts/browser_technical_evidence_lineage.py
