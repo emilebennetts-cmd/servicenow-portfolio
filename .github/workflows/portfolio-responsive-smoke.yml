@@ -51,6 +51,8 @@ on:
       - 'scripts/test_assurance_coverage_atlas.py'
       - 'evidence/public-verification-register.json'
       - 'scripts/test_incident_pack_pilot.py'
+      - 'scripts/test_native_pack_acceptance_matrix.py'
+      - 'scripts/browser_native_pack_acceptance_matrix.py'
       - 'scripts/test_operational_readiness_runbook.py'
       - 'scripts/test_pattern_library_audit_trail.py'
       - 'scripts/test_acceptance_worksheet.py'
@@ -83,6 +85,10 @@ jobs:
         run: python scripts/test_operational_readiness_runbook.py
       - name: Verify Incident pack publication and provenance contract
         run: python scripts/test_incident_pack_pilot.py
+      - name: Verify source-pinned 29-case NOT RUN acceptance contract
+        run: python scripts/test_native_pack_acceptance_matrix.py
+      - name: Exercise the native acceptance matrix and safe CSV at four widths
+        run: python scripts/browser_native_pack_acceptance_matrix.py
       - name: Verify Delivery Plan source and synthetic preview contract
         run: python scripts/test_delivery_plan_lab.py
       - name: Exercise Delivery Plan at four viewport widths
