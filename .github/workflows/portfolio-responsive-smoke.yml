@@ -102,6 +102,10 @@ jobs:
         run: python scripts/test_native_pack_acceptance_matrix.py
       - name: Exercise the native acceptance matrix and safe CSV at four widths
         run: python scripts/browser_native_pack_acceptance_matrix.py
+      - name: Verify closure control desk keeps native approval and document issue on HOLD
+        run: python scripts/test_closure_assurance.py
+      - name: Exercise closure control desk at four browser widths
+        run: python scripts/browser_closure_assurance.py
       - name: Verify Delivery Plan source and synthetic preview contract
         run: python scripts/test_delivery_plan_lab.py
       - name: Exercise Delivery Plan at four viewport widths
