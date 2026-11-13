@@ -16,7 +16,7 @@ The responsive experience has differentiated cards, clear evidence boundaries, a
 - **Original screenshot publication:** HOLD — zero image-specific approvals established.
 
 ## Safety and assurance
-The new page uses text and links only, no external APIs, live ServiceNow instance data, credentials, original screenshot pixels or customer identifiers. The downloadable .txt route includes public URLs and cautionary labels. Added a standard-library regression suite to the public quality workflow's automatic discovery, covering route controls, mobile layout, evidence text and destination existence.
+The new page uses text and links only, no external APIs, live ServiceNow instance data, credentials, original screenshot pixels or customer identifiers. The downloadable .txt route includes public URLs and cautionary labels. Added a standard-library regression suite to the public quality workflow's automatic discovery, covering route controls, mobile layout, evidence text and destination existence. A separate Playwright/Chromium exercise runs at 390, 768, 1024 and 1440 pixels, checking responsive overflow, role switching, arrow-key focus, safe local-only routes, the text download and the no-JavaScript fallback.
 
 No ServiceNow licence is required for this static portfolio change. Reproducing native Workbench capabilities requires applicable App Engine/custom application permissions, scope/ACL and role checks, and any in-scope ITSM, ITOM/Discovery, IntegrationHub, analytics, AI or third-party entitlements.
 

@@ -53,7 +53,6 @@ class ReviewerRouteTests(unittest.TestCase):
             "not native DEV or production execution","not an acceptance receipt",
             "not independently witnessed production outcomes"):
             self.assertIn(text.lower(),self.html.lower())
-        self.assertIn('application/vnd', 'application/vnd') # no runtime dependency
         self.assertIn('type:"text/plain;charset=utf-8"',self.html)
 
 if __name__=="__main__":
