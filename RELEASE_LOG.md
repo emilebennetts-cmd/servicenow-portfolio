@@ -1,3 +1,7 @@
+## 13 November 2026 — Governed handoff decision desk (source-only and mock-only)
+
+Implemented a mobile-friendly eight-scenario, offline Diagnostic-to-Delivery handoff simulator in governed-handoff-contract.html; added a deterministic fail-closed JS rules engine, synthetic HOLD receipt export, Node-backed regression matrix and mock-only evidence registration. The adapter remains proposed and not deployed; no native DEV/Production execution or screenshot permission was obtained. See [release record](releases/2026-11-13-governed-handoff-decision-desk.md).
+
 ## 13 November 2026 — Pattern case-study publication-link containment and green CI repair (SOURCE-ONLY)
 
 - Corrected a **failed public quality gate** at commit `e0135bc7d7c6d9877cea916ed4e5957de04e748e`: two outgoing links in `pattern-library.html` pointed into source repositories marked restricted by the portfolio publication policy. Replaced both with accessible public-safe case-study summaries, and removed two restricted Drive document links that had disclosed private document identifiers. Repository visibility and original documents remain unchanged.
