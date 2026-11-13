@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="Compare two offline, unreviewed ServiceNow native acceptance candidates safely in your browser. No uploads, approvals or verification claims.">
+<title>Offline Candidate Delta Review | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#091723;--surface:#142b3a;--surface2:#1a3648;--line:#456174;--ink:#eef6fb;--muted:#bfd2de;--mint:#96ead5;--amber:#ffd39a;--rose:#ffb0ba}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+a{color:var(--mint);text-underline-offset:3px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.skip{position:absolute;left:1rem;top:-100px;padding:.6rem;background:#fff;color:#000}.skip:focus{top:1rem}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto}.hero{padding:3.4rem 0 2.8rem;background:radial-gradient(circle at 80% 8%,#1b5966,transparent 55%),#0e2231;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(2.25rem,6vw,4.4rem);line-height:1.07;letter-spacing:-.045em;margin:.5rem 0 1.1rem}h2{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.2}h3{font-size:1.08rem}p{color:var(--muted)}.lead{max-width:800px;font-size:1.1rem}
+nav{display:flex;gap:1.1rem;flex-wrap:wrap}.eyebrow{color:var(--mint);font-size:.78rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+main{padding:2.3rem 0 5rem}section{margin-bottom:2.5rem}.panel{padding:1.3rem;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
+.notice{border-left:4px solid var(--amber);padding:1rem 1.2rem;background:#282b36;border-radius:8px;color:var(--ink)}
+.notice strong{color:var(--amber)}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.field{display:block;border:1px solid var(--line);border-radius:12px;background:var(--surface2);padding:1rem;font-weight:750}
+.field small{display:block;color:var(--muted);font-weight:400;margin:.25rem 0 .7rem}.field input{max-width:100%;width:100%;color:var(--ink);font:inherit}
+.actions{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;margin-top:1rem}button,select{font:inherit;border:1px solid var(--line);border-radius:10px;background:#234657;color:var(--ink);padding:.7rem 1rem;cursor:pointer}
+button.primary{background:var(--mint);color:#062229;font-weight:800}button:disabled{opacity:.48;cursor:not-allowed}#status{min-height:1.5rem;color:var(--muted)}#status[data-error=true]{color:var(--rose)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem}.metric{padding:1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.metric b{font-size:1.7rem;display:block;color:var(--mint)}.metric small{color:var(--muted)}.row{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+#results{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.case{border:1px solid var(--line);background:var(--surface);padding:1rem;border-radius:12px;min-width:0}
+.case h3{margin:.3rem 0}.case p{margin:.3rem 0}.case .code{font-size:.76rem;letter-spacing:.08em;color:var(--mint);font-weight:800}.case .transition{font-weight:750;color:var(--ink)}
+.case[data-risk=true]{border-left:4px solid var(--amber)}.case .attention{color:var(--amber)}.subtle{font-size:.85rem;color:var(--muted)}
+[hidden]{display:none!important}footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted)}
+@media(max-width:680px){.fields,.metrics,#results{grid-template-columns:1fr 1fr}.metrics{gap:.5rem}.hero{padding:2.2rem 0}.panel{padding:1rem}}
+@media(max-width:480px){.fields,#results{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.row{align-items:stretch}.actions button{flex:1}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body>
+<a class="skip" href="#main">Skip to comparison</a><header class="hero"><div class="wrap">
+<div class="eyebrow">Evidence governance / Browser-local / Source-backed case catalogue</div>
+<h1>Compare candidate evidence. Not approvals.</h1>
+<p class="lead">Identify changed observations between two offline Incident Pack acceptance worksheets. Both inputs remain unreviewed, even if a status improves. No ServiceNow instance access, uploads, persistent storage or external requests.</p>
+<nav aria-label="Page navigation"><a href="./">Portfolio home</a><a href="incident-pack-native-pilot.html#native-observation-log">Open 29-case evidence workbook</a><a href="#compare">Compare files</a><a href="#boundaries">Verification boundaries</a></nav>
+</div></header>
+<main id="main" class="wrap">
+<section><h2>01 / The client's pain &amp; history</h2><p>In a governed implementation programme, a consultant may prepare one candidate before a DEV rehearsal and another after follow-up investigation. Manual comparisons can miss failed controls, removed evidence references and changes to the tested target. These are common delivery risks, not claims about a named customer.</p></section>
+<section><h2>02 / The ServiceNow solution</h2><p>Use the existing 29-case Incident Pack workbook to prepare two <strong>SELF-REPORTED / UNREVIEWED</strong> JSON candidates. This separate offline tool checks the known 1.0 export contract, compares the pinned case titles, statuses and anonymous evidence-alias presence, and highlights regressions or context differences for a human reviewer. It does not authenticate evidence or query ServiceNow.</p>
+<div class="notice"><strong>Permanent HOLD:</strong> OBSERVED PASS does not mean DEV-VERIFIED. File-format validation is not proof of file origin, version installation, production acceptance, customer approval, licensed usage or independent witness. Never upload real screenshots, names, URLs or client data.</div>
+</section>
+<section id="compare" class="panel" aria-labelledby="compare-title"><h2 id="compare-title">Compare two saved candidates</h2>
+<div class="fields"><label class="field" for="baseline">Baseline candidate <small>Earlier JSON export, up to 128 KiB</small><input type="file" id="baseline" accept=".json,application/json"></label>
+<label class="field" for="current">Current candidate <small>Later JSON export, up to 128 KiB</small><input type="file" id="current" accept=".json,application/json"></label></div>
+<div class="actions"><button type="button" class="primary" id="run">Compare locally</button><button type="button" id="reset">Clear all</button><button type="button" id="download" disabled>Export HOLD comparison JSON</button></div>
+<p id="status" role="status" aria-live="polite">Choose both files to begin. Neither file leaves your browser.</p>
+</section>
+<section id="outcome" hidden aria-labelledby="outcome-title"><div class="row"><h2 id="outcome-title">Candidate delta / Not verified</h2><label for="filter">Show <select id="filter"><option value="all">All 29 controls</option><option value="changed">Changes only</option><option value="attention">Attention required</option></select></label></div>
+<div class="metrics" aria-label="Difference summary"><div class="metric"><b id="total">0</b><small>Changed statuses</small></div><div class="metric"><b id="risk">0</b><small>Needs attention</small></div><div class="metric"><b id="alias">0</b><small>Evidence alias presence changes</small></div><div class="metric"><b id="unchanged">0</b><small>Unchanged statuses</small></div></div>
+<p id="context-note"></p><p id="shown" role="status" aria-live="polite"></p><ol id="results"></ol>
+</section>
+<section id="boundaries"><h2>03 / Architectural best practices</h2><p>The two candidates are checked against the 29 planned case IDs, titles, workstreams and personas from the same public acceptance catalogue. The validator rejects extra schema fields, unsupported statuses, forged verification flags, unsafe evidence aliases, inconsistent evidence-missing lists and invalid context formats. A failure never generates a delta.</p>
+<p>A status transition is a <em>reported change</em>, not an execution result. A removed alias, observed failure, blocked case, or context mismatch deserves further review. Any authorised DEV acceptance requires witnessed native runs, retained private proof, target/version pinning, role and ACL validation, and separate release approval. Production claims require further independently verified production evidence.</p>
+<p><strong>Licensing:</strong> This static comparison tool requires no ServiceNow licence. Native implementation or testing may depend on App Engine/custom-table entitlements, ITSM, ATF availability, roles and ACLs, and applicable ITOM, IntegrationHub, analytics, AI or external-provider rights under the target contract.</p>
+<p class="subtle">Evidence category: SOURCE-ONLY for public implementation; SELF-REPORTED / UNREVIEWED for both input candidates; no newly verified DEV or Production result. Screenshot publication: HOLD. Source boundaries last reconciled 14 November 2026.</p>
+</section></main><footer><div class="wrap">Public-safe source-backed acceptance catalogue · No client or private source published · <a href="./">Portfolio home</a></div></footer>
+<script>
+(()=>{'use strict';
+const CATALOGUE=[{"id":"NV-001","workstream":"Preflight","persona":"Platform reviewer","title":"Target identity"},{"id":"NV-002","workstream":"Preflight","persona":"Platform reviewer","title":"Before-state comparison"},{"id":"NV-003","workstream":"Preflight","persona":"Platform reviewer","title":"Payload and recovery review"},{"id":"NV-004","workstream":"Metadata","persona":"Platform reviewer","title":"Installed metadata read-back"},{"id":"NV-005","workstream":"Metadata","persona":"Platform reviewer","title":"Dictionary and indexes"},{"id":"NV-006","workstream":"Access","persona":"Delivery A","title":"Permitted delivery route"},{"id":"NV-007","workstream":"Access","persona":"Presales A","title":"Presales mutation denied"},{"id":"NV-008","workstream":"Access","persona":"Viewer A","title":"Read-only viewer"},{"id":"NV-009","workstream":"Isolation","persona":"Delivery B","title":"Cross-engagement isolation"},{"id":"NV-010","workstream":"Access","persona":"Delivery A","title":"Direct write protection"},{"id":"NV-011","workstream":"Guards","persona":"Platform reviewer","title":"Protected provenance"},{"id":"NV-012","workstream":"Functional","persona":"Delivery A","title":"Preview without writes"},{"id":"NV-013","workstream":"Functional","persona":"Delivery A","title":"Create linked drafts"},{"id":"NV-014","workstream":"Persistence","persona":"Delivery A","title":"Idempotent replay"},{"id":"NV-015","workstream":"Preservation","persona":"Delivery A","title":"Human edits preserved"},{"id":"NV-016","workstream":"Scope","persona":"Delivery A","title":"Scope drift conflict"},{"id":"NV-017","workstream":"Validation","persona":"Delivery A","title":"Invalid input rejected"},{"id":"NV-018","workstream":"MIM hold","persona":"Delivery A","title":"Held capability rejected"},{"id":"NV-019","workstream":"Paths","persona":"Delivery A","title":"Entitlement and design paths"},{"id":"NV-020","workstream":"Concurrency","persona":"Two Delivery sessions","title":"Simultaneous requests"},{"id":"NV-021","workstream":"Recovery","persona":"Platform + Delivery","title":"Interrupted insertion"},{"id":"NV-022","workstream":"Recovery","persona":"Platform + Delivery","title":"Interrupted confirmation"},{"id":"NV-023","workstream":"Recovery","persona":"Platform reviewer","title":"Conflicted target safety"},{"id":"NV-024","workstream":"Storage","persona":"Platform reviewer","title":"Large-field integrity"},{"id":"NV-025","workstream":"Lifecycle","persona":"Delivery A","title":"Draft gates remain closed"},{"id":"NV-026","workstream":"Regression","persona":"Delivery A","title":"Existing Workbench regression"},{"id":"NV-027","workstream":"Boundary","persona":"Platform reviewer","title":"No unintended outward effects"},{"id":"NV-028","workstream":"Protection","persona":"Assurance reviewer","title":"Original source preservation"},{"id":"NV-029","workstream":"Acceptance","persona":"Independent reviewer","title":"Independent acceptance"}];
+const STATUSES=['NOT RUN','OBSERVED PASS','OBSERVED FAIL','BLOCKED'];
+let difference=null;let entries=[];
+const $=id=>document.getElementById(id);
+const error=(message)=>{$('status').dataset.error='true';$('status').textContent=message;$('outcome').hidden=true;$('download').disabled=true;difference=null;};
+const safeAlias=v=>typeof v==='string'&&/^[A-Z0-9][A-Z0-9._-]{2,79}$/.test(v)&&!v.includes('..');
+const strictObject=(v,keys)=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).length===keys.length&&Object.keys(v).every(k=>keys.includes(k));
+const requireSafe=condition=>{if(!condition)throw new Error('Input does not match the approved candidate contract.');};
+function readPacket(p){
+const keys=['schema_version','kind','classification','observation_classification','native_verification_status','release_authorised','independent_review_approved','publication_status','evidence_origin','context','planned_cases','observations','missing_evidence_aliases','instructions'];
+requireSafe(strictObject(p,keys)&&p.schema_version==='1.0'&&p.kind==='service-now-native-observation-candidate'&&p.classification==='source-only'&&p.observation_classification==='SELF-REPORTED / UNREVIEWED'&&p.native_verification_status==='NOT VERIFIED'&&p.release_authorised===false&&p.independent_review_approved===false&&p.publication_status==='HOLD'&&p.evidence_origin==='browser-local-candidate'&&p.planned_cases===29&&typeof p.instructions==='string'&&p.instructions.length<=512);
+const fields=['environment_alias','installed_version','application_scope','source_commit_sha'];
+const patterns=[/^[A-Z0-9][A-Z0-9_-]{2,39}$/,/^[A-Za-z0-9][A-Za-z0-9._+-]{0,39}$/,/^(global|x_[a-z0-9_]{3,60})$/,/^[0-9a-f]{40}$/];
+requireSafe(strictObject(p.context,fields));
+fields.forEach((name,i)=>requireSafe(p.context[name]===null||(typeof p.context[name]==='string'&&patterns[i].test(p.context[name]))));
+requireSafe(Array.isArray(p.observations)&&p.observations.length===29&&Array.isArray(p.missing_evidence_aliases));
+const rowKeys=['case_id','workstream','persona','planned_control','status','evidence_alias','evidence_missing','independent_review_approved','dev_verified','production_verified'];
+const missing=[];
+p.observations.forEach((row,i)=>{
+const item=CATALOGUE[i];
+requireSafe(strictObject(row,rowKeys)&&row.case_id===item.id&&row.workstream===item.workstream&&row.persona===item.persona&&row.planned_control===item.title&&STATUSES.includes(row.status)&&row.independent_review_approved===false&&row.dev_verified===false&&row.production_verified===false&&(row.evidence_alias===null||safeAlias(row.evidence_alias)));
+const absent=row.status!=='NOT RUN'&&!safeAlias(row.evidence_alias);
+requireSafe(row.evidence_missing===absent);
+if(absent)missing.push(item.id);
+});
+requireSafe(p.missing_evidence_aliases.length===missing.length&&p.missing_evidence_aliases.every((id,i)=>id===missing[i]));
+return p;
+}
+async function loadFile(input){
+const file=input.files&&input.files[0];requireSafe(Boolean(file)&&file.size>0&&file.size<=131072);
+return readPacket(JSON.parse(await file.text()));
+}
+const make=(tag,cls,content)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(content!==undefined)el.textContent=content;return el;};
+function render(){
+const visible=entries.filter(row=>$('filter').value==='all'||($('filter').value==='changed'&&row.changed)||($('filter').value==='attention'&&row.attention));
+const host=$('results');host.replaceChildren();
+visible.forEach(row=>{
+const item=make('li','case');item.dataset.risk=String(row.attention);
+item.append(make('div','code',row.id+' · '+row.workstream),make('h3','',row.title),make('p','transition',row.before+' → '+row.after));
+item.append(make('p',row.attention?'attention':'subtle',row.attention?'Review required — '+row.reasons.join('; '):row.changed?'Changed observation — human review required':'No status change'));
+if(row.aliasChanged)item.append(make('p','subtle','Anonymous evidence-alias presence changed'));
+host.append(item);
+});
+$('shown').textContent='Showing '+visible.length+' of 29 planned controls. All results remain UNREVIEWED / HOLD.';
+}
+$('run').addEventListener('click',async()=>{
+$('run').disabled=true;$('status').dataset.error='false';$('status').textContent='Validating both files locally…';$('outcome').hidden=true;$('download').disabled=true;difference=null;
+try{
+const before=await loadFile($('baseline'));const after=await loadFile($('current'));
+entries=CATALOGUE.map((item,i)=>{
+const old=before.observations[i],now=after.observations[i];
+const changed=old.status!==now.status,aliasChanged=Boolean(old.evidence_alias)!==Boolean(now.evidence_alias);
+const reasons=[];
+if(now.status==='OBSERVED FAIL'||now.status==='BLOCKED')reasons.push('current failure or blocker');
+if(now.status==='NOT RUN'&&old.status!=='NOT RUN')reasons.push('reverted to not run');
+if(now.evidence_missing)reasons.push('reported observation missing evidence alias');
+if(old.evidence_alias&&!now.evidence_alias)reasons.push('evidence alias removed');
+return {...item,before:old.status,after:now.status,changed,aliasChanged,attention:reasons.length>0,reasons};
+});
+const mismatches=Object.keys(before.context).filter(k=>before.context[k]!==after.context[k]);
+const changed=entries.filter(r=>r.changed).length,attention=entries.filter(r=>r.attention).length,aliasChanged=entries.filter(r=>r.aliasChanged).length;
+$('total').textContent=String(changed);$('risk').textContent=String(attention);$('alias').textContent=String(aliasChanged);$('unchanged').textContent=String(29-changed);
+$('context-note').textContent=mismatches.length?'Target/context field differences ('+mismatches.join(', ')+') — comparison cannot establish a common installation baseline.':'No reported context-field differences. This does not establish a verified target identity.';
+difference={schema_version:'1.0',kind:'service-now-offline-candidate-delta',classification:'SELF-REPORTED / UNREVIEWED',native_verification_status:'NOT VERIFIED',independent_review_approved:false,release_authorised:false,production_verified:false,publication_status:'HOLD',context_fields_changed:mismatches,status_changes:changed,attention_cases:attention,alias_presence_changes:aliasChanged,cases:entries.map(r=>({case_id:r.id,baseline_status:r.before,current_status:r.after,status_changed:r.changed,alias_presence_changed:r.aliasChanged,attention_required:r.attention})),instructions:'Private reviewer must independently witness native execution and evidence. This local diff certifies nothing.'};
+$('filter').value='all';$('outcome').hidden=false;$('download').disabled=false;$('status').textContent='Compared 29/29 pinned cases locally. Unreviewed changes require independent evaluation.';render();
+}catch(e){error(e instanceof SyntaxError?'Malformed JSON. Current comparison cleared.':'File rejected: wrong format, incomplete catalogue, unsafe data or forged verification. No comparison created.');}
+finally{$('run').disabled=false;}
+});
+$('filter').addEventListener('change',render);
+$('reset').addEventListener('click',()=>{['baseline','current'].forEach(id=>$(id).value='');entries=[];difference=null;$('outcome').hidden=true;$('download').disabled=true;$('status').dataset.error='false';$('status').textContent='Cleared. No files retained by the website.';});
+$('download').addEventListener('click',()=>{if(!difference)return;const blob=new Blob([JSON.stringify(difference,null,2)+'\n'],{type:'application/json'});const u=URL.createObjectURL(blob);const link=document.createElement('a');link.href=u;link.download='incident-pack-candidate-delta-UNREVIEWED-HOLD.json';document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(u);});
+})();
+</script></body></html>
