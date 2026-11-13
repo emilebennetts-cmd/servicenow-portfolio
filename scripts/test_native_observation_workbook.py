@@ -56,5 +56,44 @@ class ObservationWorkbookContract(unittest.TestCase):
         self.assertNotRegex(section, r'(?:https?://|mailto:)')
 
 
+    def test_import_is_fail_closed_and_never_promotes_evidence(self):
+        required = (
+            'function readCandidate(packet)',
+            'function applyCandidate(parsed)',
+            'id="obs-import-file"',
+            'id="obs-import-status"',
+            'file.size>131072||file.size===0',
+            'packet.native_verification_status!=="NOT VERIFIED"',
+            'packet.publication_status!=="HOLD"',
+            'packet.release_authorised!==false',
+            'packet.independent_review_approved!==false',
+            'row.dev_verified!==false||row.production_verified!==false',
+            'row.case_id!==id',
+            'row.workstream!==node.dataset.nativeGroup',
+            'row.persona!==node.dataset.nativePersona',
+            'row.planned_control!==node.querySelector("h3").textContent',
+            'row.evidence_missing!==missing',
+            'Object.keys(context).length!==4',
+            'Object.keys(row).length!==allowed.length',
+            'field.value=""',
+            'Current entries unchanged.',
+            'Restored 29 candidate notes locally.'
+        )
+        for rule in required:
+            self.assertIn(rule, self.content, rule)
+        self.assertNotIn("localStorage", self.content)
+        self.assertNotIn("sessionStorage", self.content)
+
+    def test_import_does_not_expose_upload_or_network_surface(self):
+        start = self.content.index('<section id="native-observation-log"')
+        end = self.content.index('</section>', start)
+        section = self.content[start:end]
+        self.assertIn('type="file"', section)
+        self.assertNotRegex(section, r'<(?:form|iframe|script|img)\b')
+        self.assertNotRegex(section, r'(?:https?://|mailto:|enctype=|method=)')
+        self.assertIn('JSON.parse(await file.text())', self.content)
+        self.assertIn('output.textContent=', self.content)
+
+
 if __name__ == "__main__":
     unittest.main()
