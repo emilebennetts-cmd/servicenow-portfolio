@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
-import re
 import unittest
 
 SITE = Path(__file__).resolve().parents[1]
@@ -84,11 +83,11 @@ class PatternCatalogueLineageTests(unittest.TestCase):
         self.assertIn("#evidence-and-provenance", self.parser.hrefs)
         self.assertNotIn("dev438211.service-now.com", self.html)
         self.assertNotIn("servicenow-portfolio-control", self.html)
-        self.assertNotRegex(self.html, r"<img\\b")
+        self.assertNotRegex(self.html, r"<img\b")
         self.assertNotIn("genuine screenshot publication is approved", self.html.lower())
 
     def test_no_new_network_requirements(self) -> None:
-        self.assertNotRegex(self.html, r"<script\\s+src=")
+        self.assertNotRegex(self.html, r"<script\s+src=")
         self.assertNotIn("fetch(", self.html)
         self.assertNotIn("XMLHttpRequest", self.html)
 
