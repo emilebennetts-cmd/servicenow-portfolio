@@ -25,9 +25,22 @@ def verify(browser, width):
                    for x in page.locator(".result:visible").all())
         page.locator("#category").select_option(label="Labs & patterns")
         assert page.locator(".result:visible").count() >= 1
+        page.locator("#category").select_option("All")
+        page.locator("#search").fill("")
+        page.locator("#evidence-status").select_option("mock-only")
+        mock_rows = page.locator(".result:visible").all()
+        assert len(mock_rows) >= 5, f"{width}px too few MOCK-ONLY pages"
+        assert all(row.get_attribute("data-evidence") == "mock-only" for row in mock_rows)
+        page.locator("#evidence-status").select_option("dev-reported")
+        dev_rows = page.locator(".result:visible").all()
+        assert len(dev_rows) >= 2
+        assert all(row.get_attribute("data-evidence") == "dev-reported" for row in dev_rows)
+        page.locator("#evidence-status").select_option("unregistered")
+        assert page.locator(".result:visible").count() >= 1
         page.locator("#reset").click()
         assert page.locator("#search").input_value() == ""
         assert page.locator("#category").input_value() == "All"
+        assert page.locator("#evidence-status").input_value() == "All"
         assert page.locator(".result:visible").count() == 18
         page.locator("#more").click()
         assert page.locator(".result:visible").count() == page.locator(".result").count()

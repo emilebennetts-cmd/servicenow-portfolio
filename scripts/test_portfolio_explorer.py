@@ -51,7 +51,7 @@ class PortfolioExplorerTests(unittest.TestCase):
     def test_accessible_navigation_and_correct_indexing(self):
         self.assertEqual(self.parser.headings, 1)
         self.assertFalse(self.parser.duplicates)
-        self.assertTrue({"main", "results", "search", "category", "reset", "more", "count", "helper"} <= self.parser.ids)
+        self.assertTrue({"main", "results", "search", "category", "evidence-status", "reset", "more", "count", "helper"} <= self.parser.ids)
         self.assertEqual(self.parser.image_elements, 0)
         self.assertIn('role="status" aria-live="polite"', self.html)
         for token in ("@media(max-width:650px)", "prefers-reduced-motion", "document.querySelectorAll", "row.hidden=!show", "expanded=false", "search.focus()"):
