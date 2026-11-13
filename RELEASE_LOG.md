@@ -1,3 +1,9 @@
+## 14 November 2026 — source-traced Delivery operator guide (SOURCE-ONLY + existing MOCK-ONLY)
+
+- Added a twelve-procedure, nine-role, keyboard-friendly operating guide to [the Delivery case study](delivery-case-study.html#persona-operations), distilled from the controlled 19 October 2026 4.22.2 training pack. The page filters read-only procedures, tracks **read** marks and exports a local rehearsal checklist always labelled **NOT RUN / HOLD**. No native records, approvals or credentials are accessed.
+- Registered a separate SOURCE-ONLY training claim alongside the existing MOCK-ONLY Delivery Plan demonstrator, making the Explorer label **MIXED CLAIMS**, with six new Python contract tests and expanded four-viewport Chromium regression. Historical 6 October 4.22.2/0.4.2 DEV read-back remains dated DEV-REPORTED; no present DEV or Production verification is asserted.
+- No original screenshot pixels, private Drive links, customer data or private source published. Screenshots remain HOLD (0 approved). See [technical release record](releases/2026-11-14-delivery-operator-guide.md). Public website needs no ServiceNow licence; native App Engine/roles/ACLs, ITSM/ITOM, IntegrationHub, document/AI and provider entitlements must be confirmed per target.
+
 ## 13 November 2026 — Governed handoff decision desk (source-only and mock-only)
 
 Implemented a mobile-friendly eight-scenario, offline Diagnostic-to-Delivery handoff simulator in governed-handoff-contract.html; added a deterministic fail-closed JS rules engine, synthetic HOLD receipt export, Node-backed regression matrix and mock-only evidence registration. The adapter remains proposed and not deployed; no native DEV/Production execution or screenshot permission was obtained. See [release record](releases/2026-11-13-governed-handoff-decision-desk.md).
