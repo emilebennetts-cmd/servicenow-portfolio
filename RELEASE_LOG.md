@@ -1,3 +1,10 @@
+## 13 November 2026 — CMDB Remediation Decision Lab (SOURCE-ONLY + MOCK-ONLY)
+
+- Published a client-neutral, accessible, four-fixture CMDB remediation decision desk translating read-only duplicate, relationship, stale lifecycle and IRE diagnostics into an advisory investigation/change-control sequence. Users vary evidence completeness, source ownership, change/rollback readiness and impact review; evidence gaps and conflicting source authority fail closed. The local JSON receipt is permanently HOLD, NOT RUN, with no native verification or approval.
+- Reconciled mobile directory navigation, 72-page Explorer (73 root HTML pages including Explorer), canonical sitemap, source/mock mixed evidence claims, four-width Chromium regression and static publication tests. Public HTML uses a restrictive CSP, has no network calls and contains no real customer records, private collector code or original Workbench screenshots.
+- Evidence reviewed: Diagnostic repository aggregate collector categories and controlled Drive Delivery As-Built (source 4.6.1 / historical DEV 4.5.1), Delivery training and fictional Diagnostic completion runbook. Later Delivery repository source must not be misrepresented as that installed DEV baseline.
+- [Open the lab](cmdb-remediation-decision-lab.html) · [Release notes](releases/2026-11-13-cmdb-remediation-decision-lab.md). Website: no ServiceNow licence. Native CMDB, Discovery/ITOM, Change, Data Manager, App Engine, role/ACL and external ingestion entitlements require environment-specific checks.
+
 ## 13 November 2026 — Interactive evidence-first reviewer routes (SOURCE-ONLY)
 
 - Upgraded `engineering-case-studies.html` with three responsive, keyboard-accessible reading routes for hiring managers, architects and delivery leads. Each routes to public case studies and verification controls; the default route works without JavaScript.

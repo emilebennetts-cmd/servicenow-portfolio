@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T06:21:11Z",
+  "updated_utc": "2026-11-13T09:17:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -721,6 +721,24 @@
       "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
       "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
       "page": "workbench-experience.html"
+    },
+    {
+      "id": "CMDB-REMEDIATION-SOURCE-20261113",
+      "title": "CMDB remediation control chain and architectural practices",
+      "classification": "source-only",
+      "basis": "Source-informed synthesis of private Diagnostic Workbench duplicate, IRE, relationship and lifecycle aggregate collector families and controlled Delivery/Diagnostic operating guides; no proprietary source code reproduced.",
+      "runtime_verification": "Source/documentary review only; no new native execution or ServiceNow deployment.",
+      "public_screenshot_status": "HOLD — no original Workbench screenshots authorised.",
+      "page": "cmdb-remediation-decision-lab.html"
+    },
+    {
+      "id": "CMDB-REMEDIATION-MOCK-20261113",
+      "title": "Synthetic CMDB remediation decision desk",
+      "classification": "mock-only",
+      "basis": "Four fixed synthetic scenarios and browser-local rule evaluation; fixture approval fields do not represent authentic records.",
+      "runtime_verification": "No real CI mutation, current DEV execution, service impact read-back or Production verification.",
+      "public_screenshot_status": "Synthetic HTML only; no original screenshot pixels.",
+      "page": "cmdb-remediation-decision-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
