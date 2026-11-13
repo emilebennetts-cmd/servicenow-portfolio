@@ -29,6 +29,24 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 @media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.story{grid-template-columns:1fr}}
 @media(max-width:560px){.wrap{width:min(100% - 30px,1160px)}.cards,.steps{grid-template-columns:1fr}.card{padding:20px}.hero{padding-top:47px}.step-pane{min-height:0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111}.step-pane[hidden]{display:block}.steps,.controls,.hero-actions,.disclosure{display:none}.section{padding:20px 0}.card,.step-pane,.story article{background:#fff;color:#111}.card p,p{color:#222}a{color:#111}}
+
+/* Source-pinned Native Acceptance Navigator: synthetic browser-only review, never a test runner */
+.native-matrix{background:#0a1b29;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.native-toolbar{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;margin:22px 0;padding:19px;border-radius:14px;background:#163345;border:1px solid #486b7e}
+.native-toolbar label{display:block;color:#d9eaf0;font-size:.86rem;font-weight:800}
+.native-toolbar select{display:block;width:100%;margin-top:6px;background:#f1f8fa;color:#0c2936;border:1px solid #a4c0cd;border-radius:9px;padding:11px;font:inherit;min-height:45px}
+.native-toolbar button{padding:10px 14px;border:1px solid #91e9d0;border-radius:9px;background:#173d42;color:#b9ffeb;font-weight:800;min-height:46px}
+.native-list{padding:0;margin:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.native-item{background:#132d3d;border:1px solid #456578;border-radius:14px;padding:20px;min-width:0}
+.native-item[hidden]{display:none}.native-item h3{font-size:1.08rem;margin:10px 0}.native-item p{font-size:.9rem;margin:8px 0;color:#d4e6ee}
+.native-topline{display:flex;flex-wrap:wrap;gap:9px;align-items:center;color:#adf5de;font-size:.75rem;font-weight:900}
+.native-type{padding:3px 9px;border:1px solid #678a9b;border-radius:99px;color:#ffdcaa}
+.native-review{font-size:.77rem;color:#ffdcaa!important;font-weight:800}
+.native-output{font-weight:800;color:#abf3dd;min-height:25px}
+.native-hold{border-left:4px solid #d8a758;padding:16px 19px;border-radius:0 12px 12px 0;background:#2c2b28;color:#ffebcc;margin:18px 0}
+.native-hold p{color:#ffebcc;margin:0}
+@media(max-width:760px){.native-list{grid-template-columns:1fr}.native-toolbar{grid-template-columns:1fr}.native-toolbar button{width:100%}}
+@media print{.native-list{grid-template-columns:1fr 1fr}.native-toolbar{display:none}.native-item[hidden]{display:block}.native-matrix{background:white}.native-item{background:white;color:#111}}
 </style>
 </head>
 <body><a class="skip" href="#main">Skip to content</a>
@@ -39,7 +57,7 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 <div class="kicker">ServiceNow Engineering / Implementation Pack Assurance</div>
 <h1>From a recommended pattern to a <span style="color:var(--mint)">traceable native pilot.</span></h1>
 <p class="lead">An Incident Management pack workflow that links selection, rationale, pinned version, source-defined draft artefacts and replay checks. Its strongest runtime evidence is a narrowly scoped historical synthetic DEV pilot — not a customer deployment.</p>
-<div class="hero-actions"><a class="cta" href="#journey">Explore the workflow</a><a class="cta alt" href="#proof">Audit the evidence</a></div>
+<div class="hero-actions"><a class="cta" href="#journey">Explore the workflow</a><a class="cta alt" href="#proof">Audit the evidence</a><a class="cta alt" href="#native-matrix">Inspect 29 acceptance gates</a></div>
 <div class="disclosure"><strong>Evidence boundary · 21 October 2026.</strong> The figures below are a sanitised summary of dated private release records. No customer engagement, production record or approved screenshot is shown. All page interactions are explanatory, not connected to ServiceNow.</div>
 </section>
 <section class="line section"><div class="wrap">
@@ -101,6 +119,46 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 </tbody></table></div>
 <p class="caption">The filters are browser-local presentation only. They do not change any release register or acceptance status.</p>
 </div></section>
+<section class="section native-matrix" id="native-matrix" aria-labelledby="native-matrix-title"><div class="wrap">
+<div class="kicker">Native verification / 29 planned gates</div><h2 id="native-matrix-title">Acceptance matrix: what must be proved next</h2>
+<p class="section-intro">A public-safe, source-reconciled view of the 21 October 2026 native validation pack. These are <strong>29 prepared, NOT RUN cases</strong> on a separate reconciled source candidate. The earlier 83/83 historical read-back is not a substitute. Filter by workstream or test persona; every record remains a planned acceptance control.</p>
+<div class="native-hold"><p><strong>Execution status: 0 of 29 evidenced in this matrix.</strong> This browser only filters a static rehearsal index. It does not connect to ServiceNow, run ATF, authorise installation, change a test result or certify DEV / Production. The underlying private case procedures and execution ledger remain withheld.</p></div>
+<div class="native-toolbar" role="group" aria-label="Filter prepared native cases">
+<label for="native-group">Test workstream<select id="native-group"><option value="all">All workstreams</option><option value="Preflight">Preflight</option><option value="Metadata">Metadata</option><option value="Access">Access</option><option value="Isolation">Isolation</option><option value="Guards">Guards</option><option value="Functional">Functional</option><option value="Persistence">Persistence</option><option value="Preservation">Preservation</option><option value="Scope">Scope</option><option value="Validation">Validation</option><option value="MIM hold">MIM hold</option><option value="Paths">Paths</option><option value="Concurrency">Concurrency</option><option value="Recovery">Recovery</option><option value="Storage">Storage</option><option value="Lifecycle">Lifecycle</option><option value="Regression">Regression</option><option value="Boundary">Boundary</option><option value="Protection">Protection</option><option value="Acceptance">Acceptance</option></select></label>
+<label for="native-role">Execution persona<select id="native-role"><option value="all">All personas</option><option value="Platform reviewer">Platform reviewer</option><option value="Delivery A">Delivery A</option><option value="Presales A">Presales A</option><option value="Viewer A">Viewer A</option><option value="Delivery B">Delivery B</option><option value="Two Delivery sessions">Two Delivery sessions</option><option value="Platform + Delivery">Platform + Delivery</option><option value="Assurance reviewer">Assurance reviewer</option><option value="Independent reviewer">Independent reviewer</option></select></label>
+<button id="native-export" type="button">Export NOT RUN checklist (CSV)</button>
+</div><p class="native-output" id="native-count" role="status" aria-live="polite">Showing 29 of 29 prepared cases · 0 executed here.</p>
+<ol class="native-list" id="native-cases"><li class="native-item" data-native-group="Preflight" data-native-persona="Platform reviewer" data-native-case="NV-001"><article><div class="native-topline"><span>NV-001</span><span class="native-type">Preflight</span></div><h3>Target identity</h3><p>Confirm non-production target, release, application identity and entitlement before any native action.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Preflight" data-native-persona="Platform reviewer" data-native-case="NV-002"><article><div class="native-topline"><span>NV-002</span><span class="native-type">Preflight</span></div><h3>Before-state comparison</h3><p>Read-only preflight must reconcile existing dependencies and identify every unexplained drift.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Preflight" data-native-persona="Platform reviewer" data-native-case="NV-003"><article><div class="native-topline"><span>NV-003</span><span class="native-type">Preflight</span></div><h3>Payload and recovery review</h3><p>Review complete candidate payload, collisions, approved transport and reversible recovery boundaries.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Metadata" data-native-persona="Platform reviewer" data-native-case="NV-004"><article><div class="native-topline"><span>NV-004</span><span class="native-type">Metadata</span></div><h3>Installed metadata read-back</h3><p>After an authorised install, compare current metadata with the pinned candidate.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Metadata" data-native-persona="Platform reviewer" data-native-case="NV-005"><article><div class="native-topline"><span>NV-005</span><span class="native-type">Metadata</span></div><h3>Dictionary and indexes</h3><p>Independently verify key uniqueness, field limits and physical indexes in an isolated fixture.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Access" data-native-persona="Delivery A" data-native-case="NV-006"><article><div class="native-topline"><span>NV-006</span><span class="native-type">Access</span></div><h3>Permitted delivery route</h3><p>An engagement member with the Delivery role can complete reviewed recommendation and drafting.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Access" data-native-persona="Presales A" data-native-case="NV-007"><article><div class="native-topline"><span>NV-007</span><span class="native-type">Access</span></div><h3>Presales mutation denied</h3><p>Presales may preview but cannot generate records without an authorised role.</p><p class="native-review">Owner: Presales A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Access" data-native-persona="Viewer A" data-native-case="NV-008"><article><div class="native-topline"><span>NV-008</span><span class="native-type">Access</span></div><h3>Read-only viewer</h3><p>Viewer can inspect permitted records; every mutating route must deny the request.</p><p class="native-review">Owner: Viewer A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Isolation" data-native-persona="Delivery B" data-native-case="NV-009"><article><div class="native-topline"><span>NV-009</span><span class="native-type">Isolation</span></div><h3>Cross-engagement isolation</h3><p>A member of engagement B cannot enumerate, read or modify engagement A's artefacts.</p><p class="native-review">Owner: Delivery B · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Access" data-native-persona="Delivery A" data-native-case="NV-010"><article><div class="native-topline"><span>NV-010</span><span class="native-type">Access</span></div><h3>Direct write protection</h3><p>Bypass attempts through direct record and API routes must not create, edit or delete protected lineage.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Guards" data-native-persona="Platform reviewer" data-native-case="NV-011"><article><div class="native-topline"><span>NV-011</span><span class="native-type">Guards</span></div><h3>Protected provenance</h3><p>Record-level guards preserve immutable identifiers and controlled transitions in a synthetic fixture.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Functional" data-native-persona="Delivery A" data-native-case="NV-012"><article><div class="native-topline"><span>NV-012</span><span class="native-type">Functional</span></div><h3>Preview without writes</h3><p>A reviewed Incident pack preview produces no records and displays the correct draft plan.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Functional" data-native-persona="Delivery A" data-native-case="NV-013"><article><div class="native-topline"><span>NV-013</span><span class="native-type">Functional</span></div><h3>Create linked drafts</h3><p>A single confirmed generation creates 8 requirements, 8 stories and 20 not-run test designs.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Persistence" data-native-persona="Delivery A" data-native-case="NV-014"><article><div class="native-topline"><span>NV-014</span><span class="native-type">Persistence</span></div><h3>Idempotent replay</h3><p>Replaying the same request recognises 36 existing linked outputs and creates no duplicates.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Preservation" data-native-persona="Delivery A" data-native-case="NV-015"><article><div class="native-topline"><span>NV-015</span><span class="native-type">Preservation</span></div><h3>Human edits preserved</h3><p>Edited requirement and story content, and separately recorded test results, survive a replay.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Scope" data-native-persona="Delivery A" data-native-case="NV-016"><article><div class="native-topline"><span>NV-016</span><span class="native-type">Scope</span></div><h3>Scope drift conflict</h3><p>Changing approved engagement scope blocks stale generation before any new write.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Validation" data-native-persona="Delivery A" data-native-case="NV-017"><article><div class="native-topline"><span>NV-017</span><span class="native-type">Validation</span></div><h3>Invalid input rejected</h3><p>Missing rationale, rejected selection or stale review identity must be refused before writes.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="MIM hold" data-native-persona="Delivery A" data-native-case="NV-018"><article><div class="native-topline"><span>NV-018</span><span class="native-type">MIM hold</span></div><h3>Held capability rejected</h3><p>A held Major Incident pack must not be attached or silently converted to native records.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Paths" data-native-persona="Delivery A" data-native-case="NV-019"><article><div class="native-topline"><span>NV-019</span><span class="native-type">Paths</span></div><h3>Entitlement and design paths</h3><p>OOTB, custom and hybrid choices require suitable rationale and entitlement decisions.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Concurrency" data-native-persona="Two Delivery sessions" data-native-case="NV-020"><article><div class="native-topline"><span>NV-020</span><span class="native-type">Concurrency</span></div><h3>Simultaneous requests</h3><p>Concurrent requests for one selection must yield one generation intent and 36 unique outputs.</p><p class="native-review">Owner: Two Delivery sessions · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Recovery" data-native-persona="Platform + Delivery" data-native-case="NV-021"><article><div class="native-topline"><span>NV-021</span><span class="native-type">Recovery</span></div><h3>Interrupted insertion</h3><p>In a separately approved disposable fixture, a partial generation can resume without data loss.</p><p class="native-review">Owner: Platform + Delivery · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Recovery" data-native-persona="Platform + Delivery" data-native-case="NV-022"><article><div class="native-topline"><span>NV-022</span><span class="native-type">Recovery</span></div><h3>Interrupted confirmation</h3><p>Saved targets are reused after a simulated confirmation interruption; duplicates are prohibited.</p><p class="native-review">Owner: Platform + Delivery · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Recovery" data-native-persona="Platform reviewer" data-native-case="NV-023"><article><div class="native-topline"><span>NV-023</span><span class="native-type">Recovery</span></div><h3>Conflicted target safety</h3><p>A deliberately broken synthetic link must block replay rather than silently replace records.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Storage" data-native-persona="Platform reviewer" data-native-case="NV-024"><article><div class="native-topline"><span>NV-024</span><span class="native-type">Storage</span></div><h3>Large-field integrity</h3><p>Supported field lengths and platform representations must round-trip without truncation.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Lifecycle" data-native-persona="Delivery A" data-native-case="NV-025"><article><div class="native-topline"><span>NV-025</span><span class="native-type">Lifecycle</span></div><h3>Draft gates remain closed</h3><p>Generation must leave approvals, build, tests, handover and release in unapproved states.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Regression" data-native-persona="Delivery A" data-native-case="NV-026"><article><div class="native-topline"><span>NV-026</span><span class="native-type">Regression</span></div><h3>Existing Workbench regression</h3><p>Existing navigation, planning, workshop and document features remain available after the candidate.</p><p class="native-review">Owner: Delivery A · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Boundary" data-native-persona="Platform reviewer" data-native-case="NV-027"><article><div class="native-topline"><span>NV-027</span><span class="native-type">Boundary</span></div><h3>No unintended outward effects</h3><p>Pack actions must not produce live incidents, messages, external calls or client collection.</p><p class="native-review">Owner: Platform reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Protection" data-native-persona="Assurance reviewer" data-native-case="NV-028"><article><div class="native-topline"><span>NV-028</span><span class="native-type">Protection</span></div><h3>Original source preservation</h3><p>Protected companion capability and source identities remain unchanged by this candidate.</p><p class="native-review">Owner: Assurance reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li>
+<li class="native-item" data-native-group="Acceptance" data-native-persona="Independent reviewer" data-native-case="NV-029"><article><div class="native-topline"><span>NV-029</span><span class="native-type">Acceptance</span></div><h3>Independent acceptance</h3><p>Only executed, evidenced cases may be accepted; required gaps and entitlements block release.</p><p class="native-review">Owner: Independent reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li></ol>
+<p class="caption">All case IDs are retained for traceability, but private instance addresses, schema keys, payload hashes, credentials and unpublished source records are omitted. Preserve original evidence privately and obtain independent reviewer approval before promoting any claim.</p>
+</div></section>
 <section class="line section"><div class="wrap">
 <div class="kicker">03 / Architectural best practices</div><h2>OOTB-first, version-pinned and fail-closed</h2>
 <div class="cards">
@@ -145,6 +203,35 @@ filterButtons.forEach(btn=>btn.addEventListener("click",()=>{
   let shown=0;rows.forEach(row=>{row.hidden=value!=="all"&&row.dataset.class!==value;if(!row.hidden)shown++;});
   document.getElementById("filter-count").textContent="Showing "+shown+" of "+rows.length+" evidence items.";
 }));
+
+const nativeRows=Array.from(document.querySelectorAll("[data-native-case]"));
+const nativeGroup=document.getElementById("native-group");
+const nativeRole=document.getElementById("native-role");
+function updateNativeCases(){
+  let count=0;
+  nativeRows.forEach(row=>{
+    const ok=(nativeGroup.value==="all"||row.dataset.nativeGroup===nativeGroup.value)&&(nativeRole.value==="all"||row.dataset.nativePersona===nativeRole.value);
+    row.hidden=!ok;if(ok)count++;
+  });
+  document.getElementById("native-count").textContent="Showing "+count+" of "+nativeRows.length+" prepared cases · 0 executed here.";
+}
+nativeGroup.addEventListener("change",updateNativeCases);
+nativeRole.addEventListener("change",updateNativeCases);
+document.getElementById("native-export").addEventListener("click",()=>{
+  const quote=s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const rows=[["case_id","workstream","persona","planned_control","status","runtime_verified","release_authorised","source_state"]];
+  nativeRows.filter(row=>!row.hidden).forEach(row=>rows.push([
+    row.dataset.nativeCase,row.dataset.nativeGroup,row.dataset.nativePersona,
+    row.querySelector("h3").textContent+" — "+row.querySelector("p").textContent,
+    "NOT RUN","false","false","SOURCE-ONLY"
+  ]));
+  const csv=rows.map(r=>r.map(quote).join(",")).join("\r\n")+"\r\n";
+  const file=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(file);
+  const anchor=document.createElement("a");anchor.href=url;anchor.download="native-pack-validation-NOT-RUN.csv";
+  document.body.appendChild(anchor);anchor.click();anchor.remove();URL.revokeObjectURL(url);
+});
+
 })();
 </script>
 </body></html>
