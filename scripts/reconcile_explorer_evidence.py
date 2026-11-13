@@ -69,6 +69,19 @@ def annotate(source: str, register: dict) -> str:
     return output
 
 
+def unregistered_pages(source: str, register: dict) -> list[str]:
+    """List only catalogue page slugs that have no reviewed public claim."""
+    labels = claim_map(register)
+    missing = []
+    for match in ROW.finditer(source):
+        anchor = ANCHOR.search(match.group(2))
+        if not anchor:
+            raise ValueError("Explorer card is missing a public HTML link")
+        if anchor.group(1) not in labels:
+            missing.append(anchor.group(1))
+    return sorted(set(missing))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -78,6 +91,11 @@ def main() -> int:
     contents = EXPLORER.read_text(encoding="utf-8")
     register = json.loads(REGISTER.read_text(encoding="utf-8"))
     rendered = annotate(contents, register)
+    if args.check:
+        missing = unregistered_pages(contents, register)
+        if missing:
+            print("FAIL: Explorer pages without reviewed claims: " + ", ".join(missing))
+            return 1
     if args.write:
         EXPLORER.write_text(rendered, encoding="utf-8")
     elif contents != rendered:
