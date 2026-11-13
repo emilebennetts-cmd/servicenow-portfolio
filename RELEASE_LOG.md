@@ -1,3 +1,9 @@
+## 13 November 2026 — review packet covers all eight evidence records (SOURCE-ONLY)
+
+- Reconciled the screenshot handoff utility with all eight inspected visual-evidence records, including RV-07 update-set metadata and RV-08 training-guide pages. RV-04/RV-08 are explicitly document-only and cannot qualify as runtime-screen gallery entries.
+- Expanded safe HOLD-only exports with source-kind, eligibility and explicit native-execution=false; retained zero approvals and no native DEV/Production attestation. Added cross-page reconciliation tests and Chromium checks at 390/768/1024/1440px.
+- Updated [the review packet](screenshot-review-packet.html), [public evidence register](evidence/public-verification-register.json) and [release note](releases/2026-11-13-review-packet-evidence-reconciliation.md). CI/deployment status is to be checked on the committed revision. No ServiceNow licence for the website; native feature entitlements remain separate.
+
 ## 13 November 2026 — visual evidence source triage and classification uplift (SOURCE-ONLY / DOCUMENT / MOCK CONTENT)
 
 - Privately inspected two additional Drive source artefacts: a Diagnostic update-set recovery snapshot and a Universal Delivery training-guide montage, cross-checked against a separately observed synthetic Delivery Plan screen. Added public-safe reviewed entries **RV-07 / RV-08**, bringing the source-inspection set to **8**; the existing ten candidate slots are separate and may overlap. The captured update-set metadata **does not prove recovery or native installation**, and a guide page **is not a runtime screenshot**.

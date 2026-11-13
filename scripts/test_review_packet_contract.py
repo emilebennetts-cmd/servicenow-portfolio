@@ -67,8 +67,31 @@ class ReviewPacketContract(unittest.TestCase):
         }
         self.assertEqual(expected, set(self.markup.gates))
         self.assertEqual(8, len(self.markup.gates))
-        for ident in range(1, 7):
+        for ident in range(1, 9):
             self.assertIn("RV-%02d" % ident, self.html)
+
+    def test_packet_exactly_matches_reviewed_gallery_records(self):
+        gallery = (ROOT / "visual-evidence.html").read_text(encoding="utf-8")
+        gallery_ids = re.findall(r'data-review-id="(RV-\d{2})"', gallery)
+        packet_options = re.findall(r'<option value="(RV-\d{2})"', self.html)
+        defined = re.findall(r'^"(RV-\d{2})":\{classification:', self.html, re.M)
+        expected = {f"RV-{n:02d}" for n in range(1, 9)}
+        self.assertEqual(set(gallery_ids), expected)
+        self.assertEqual(set(packet_options), expected)
+        self.assertEqual(set(defined), expected)
+        self.assertEqual(len(gallery_ids), len(expected))
+        self.assertEqual(len(packet_options), len(expected))
+        self.assertEqual(len(defined), len(expected))
+        self.assertNotIn("six inspected", self.html.lower())
+        self.assertNotIn("Six reviewed observations", self.html)
+
+    def test_documents_never_masquerade_as_runtime_screens(self):
+        for item in ("RV-04", "RV-08"):
+            self.assertRegex(self.html, rf'"{item}":\{{classification:"SOURCE DOCUMENT[^\n]+source_kind:"documentation"')
+        self.assertIn('gallery_eligibility:records[id].source_kind==="documentation"?"DOCUMENT_EXCERPT_ONLY":"IMAGE_CANDIDATE_ONLY"', self.html)
+        self.assertIn("native_execution_established:false", self.html)
+        self.assertIn("DOCUMENT EXCERPT ONLY", self.html)
+        self.assertIn("publication_status:\"HOLD\"", self.html)
 
     def test_never_grants_publication_or_runtime_attestation(self):
         for required in (

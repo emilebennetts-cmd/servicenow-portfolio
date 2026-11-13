@@ -12,6 +12,9 @@ on:
       - 'itsm-greenfield-build-sequencer.html'
       - 'screenshot-redaction-desk.html'
       - 'screenshot-receipt-verifier.html'
+      - 'screenshot-review-packet.html'
+      - 'scripts/browser_review_packet.py'
+      - 'scripts/test_review_packet_contract.py'
       - 'diagnostic-coverage-explorer.html'
       - 'knowledge-intelligence-acceptance-matrix.html'
       - 'portfolio-review-guide.html'
@@ -90,5 +93,9 @@ jobs:
         run: python scripts/test_portfolio_explorer.py
       - name: Exercise local search and navigation at four viewport widths
         run: python scripts/browser_portfolio_explorer.py
+      - name: Verify eight-record screenshot handoff contract
+        run: python scripts/test_review_packet_contract.py
+      - name: Exercise HOLD-only review packets at four viewport widths
+        run: python scripts/browser_review_packet.py
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py

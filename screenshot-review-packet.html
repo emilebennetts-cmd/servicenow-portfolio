@@ -31,8 +31,8 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Conso
 </head>
 <body>
 <a class="skip" href="#main">Skip to review checklist</a>
-<nav class="top" aria-label="Portfolio and evidence tools"><div class="wrap"><a href="./">← Portfolio home</a><a href="visual-evidence.html#reviewed-captures">Six reviewed observations</a><a href="screenshot-redaction-desk.html">Local redaction</a><a href="screenshot-receipt-verifier.html">Integrity verification</a></div></nav>
-<header class="hero"><div class="wrap"><div class="kicker">Evidence governance / Owner-side preparation</div><h1>Turn a screenshot candidate into a reviewable handoff.</h1><p class="lead">A practical, offline-first checklist for the six inspected Workbench evidence records. Prepare a non-sensitive JSON review packet without uploading an image, disclosing private source references or granting publication permission.</p><div class="warning"><strong>Publication HOLD is enforced by design.</strong> This tool cannot confirm ownership, obtain legal consent, inspect a real image or approve its release. Completing every box only creates a handoff for an independent, authorised reviewer. Zero genuine Workbench screenshots are approved for this public portfolio.</div></div></header>
+<nav class="top" aria-label="Portfolio and evidence tools"><div class="wrap"><a href="./">← Portfolio home</a><a href="visual-evidence.html#reviewed-captures">Eight reviewed observations</a><a href="screenshot-redaction-desk.html">Local redaction</a><a href="screenshot-receipt-verifier.html">Integrity verification</a></div></nav>
+<header class="hero"><div class="wrap"><div class="kicker">Evidence governance / Owner-side preparation</div><h1>Turn a screenshot candidate into a reviewable handoff.</h1><p class="lead">A practical, offline-first checklist for the eight inspected Workbench evidence records. Prepare a non-sensitive JSON review packet without uploading an image, disclosing private source references or granting publication permission.</p><div class="warning"><strong>Publication HOLD is enforced by design.</strong> This tool cannot confirm ownership, obtain legal consent, inspect an original image or approve its release. Document-source records are not application screenshots. Completing every box only creates a handoff for an independent, authorised reviewer. Zero genuine Workbench screenshots are approved for this public portfolio.</div></div></header>
 <main id="main" class="wrap">
 <div class="layout">
 <section class="panel" aria-labelledby="checklist-title">
@@ -45,8 +45,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Conso
 <option value="RV-04">RV-04 · Workbench overview document</option>
 <option value="RV-05">RV-05 · Diagnostic discovery and process packs</option>
 <option value="RV-06">RV-06 · Delivery scope and implementation context</option>
+<option value="RV-07">RV-07 · Diagnostic update-set metadata snapshot</option>
+<option value="RV-08">RV-08 · Delivery training-guide document pages</option>
 </select>
-<div class="boundary" id="boundary" role="status" aria-live="polite"><strong id="review-class">SOURCE-ONLY · Interface observation</strong><p id="review-description">A genuine source capture has been privately inspected. The observed interface is not a new DEV acceptance result.</p><p><a id="review-link" href="visual-evidence.html#review-rv-01">Read public evidence boundary</a></p></div>
+<div class="boundary" id="boundary" role="status" aria-live="polite"><strong id="review-class">SOURCE-ONLY · Interface observation</strong><p id="review-description">A privately inspected source is not a new DEV acceptance result.</p><p><strong>Permitted evidence treatment:</strong> <span id="review-treatment">A sanitised image candidate requires independent, image-specific approval.</span></p><p><a id="review-link" href="visual-evidence.html#review-rv-01">Read public evidence boundary</a></p></div>
 <fieldset class="gates"><legend>Eight gates to document privately</legend>
 <label class="gate"><input type="checkbox" data-gate="provenance"><span><strong>Source provenance</strong><small>Original identity, origin, ownership, capture context and byte digest recorded privately.</small></span></label>
 <label class="gate"><input type="checkbox" data-gate="rights"><span><strong>Publication rights</strong><small>Rights holder or authorised delegate explicitly permits this specific derivative and its intended public use.</small></span></label>
@@ -64,7 +66,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Conso
 <p><span class="stat" id="gate-status">DRAFT · HOLD</span></p>
 <p id="status-note">No evidence has been supplied to an independent reviewer. Checks are self-reported and cannot be independently validated by this page.</p>
 <div class="actions"><button id="download-packet" type="button">Download HOLD review packet (.json)</button><button class="secondary" type="button" id="reset-packet">Reset checklist</button></div>
-<p class="fine">The generated JSON contains only the public review ID, eight booleans, a timestamp and conservative evidence boundaries. No image bytes, names, source URLs, file hashes, private reviewer details or browser history are collected. The page sends no network requests and stores nothing between visits.</p>
+<p class="fine">The generated JSON contains only the public review ID, source-kind classification, eight booleans, a timestamp and conservative evidence boundaries. No image bytes, names, source URLs, file hashes, private reviewer details or browser history are collected. The page sends no network requests and stores nothing between visits.</p>
 <details><summary>Inspect export preview</summary><pre id="packet-preview"></pre></details>
 </aside>
 </div>
@@ -75,12 +77,14 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Conso
 <script>
 "use strict";
 const records=Object.freeze({
-"RV-01":{classification:"SOURCE-ONLY · Interface observation",description:"Delivery Plan and milestones are visible. Saved milestones, installed release and DEV or production acceptance remain unverified."},
-"RV-02":{classification:"SOURCE-ONLY · Interface observation",description:"Diagnostic report and export controls are visible. Successful document generation and runtime tests remain unverified."},
-"RV-03":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine interface observation contains explicitly synthetic Major Incident scenario content. No live MIM execution is established."},
-"RV-04":{classification:"SOURCE-ONLY · Document observation",description:"An overview document is not an application screenshot or a runtime acceptance record."},
-"RV-05":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine interface observation contains synthetic MIM discovery/process-pack content. Workshop acceptance is not established."},
-"RV-06":{classification:"MOCK-ONLY · Pictured example content",description:"A genuine Delivery interface observation contains synthetic implementation context and demo-only provider indicators."}
+"RV-01":{classification:"SOURCE-ONLY · Interface observation",source_kind:"ui_capture",description:"A Delivery Plan and milestone interface is visible. The installed release, saved milestone execution and native acceptance are unverified.",treatment:"Image candidate only: version reconciliation, irreversible sanitisation and explicit publication rights required."},
+"RV-02":{classification:"SOURCE-ONLY · Interface observation",source_kind:"ui_capture",description:"Diagnostic report and export controls are visible. Successful generation and execution receipts remain unverified.",treatment:"Image candidate only: remove identifiable information and third-party branding; verify owner and release."},
+"RV-03":{classification:"MOCK-ONLY · Synthetic example inside a source capture",source_kind:"synthetic_ui_capture",description:"A captured workshop interface contains an explicitly synthetic Major Incident scenario. No customer implementation or real MIM execution is demonstrated.",treatment:"Image candidate only: public caption must explicitly state synthetic demonstration; approval remains independent."},
+"RV-04":{classification:"SOURCE DOCUMENT · Architectural overview, not runtime",source_kind:"documentation",description:"An overview document page is source documentation, not a Workbench runtime screenshot.",treatment:"DOCUMENT EXCERPT ONLY: not eligible for an application-screen gallery; any quotation or derivative requires separate approval."},
+"RV-05":{classification:"MOCK-ONLY · Synthetic material inside a source capture",source_kind:"synthetic_ui_capture",description:"Diagnostic discovery and process-pack UI appears alongside synthetic MIM reference material; answered workshops and collector runs are not established.",treatment:"Image candidate only: separate provenance, installed version and reviewed synthetic caption required."},
+"RV-06":{classification:"MOCK-ONLY · Synthetic material inside a source capture",source_kind:"synthetic_ui_capture",description:"Delivery scope and implementation context includes synthetic MIM planning and demo-only Jira/Notion indicators. No live integration or persisted execution is established.",treatment:"Image candidate only: remove identifiers, verify the source/instance boundary and label integrations as demo-only."},
+"RV-07":{classification:"SOURCE-ONLY · Update-set metadata observation",source_kind:"ui_capture",description:"A ServiceNow update-set form is marked Complete and lists updates. This does NOT demonstrate recovery, rollback, installation or DEV acceptance.",treatment:"Image candidate only: mask operator and technical identifiers; corroborate version and target separately before approval."},
+"RV-08":{classification:"SOURCE DOCUMENT · Training-guide pages, not runtime",source_kind:"documentation",description:"The reviewed multi-page training guide describes build, test, approval and handover steps, including requests for screenshots. It does NOT show those actions being executed.",treatment:"DOCUMENT EXCERPT ONLY: exclude from any application-screen gallery; separately approve a document extract and obtain actual runtime evidence."}
 });
 const get=id=>document.getElementById(id);
 const controls=[...document.querySelectorAll("input[data-gate]")];
@@ -93,6 +97,9 @@ function makePacket(){
   generated_utc:new Date().toISOString(),
   public_review_id:id,
   claim_classification:records[id].classification.split(" · ")[0],
+  source_kind:records[id].source_kind,
+  gallery_eligibility:records[id].source_kind==="documentation"?"DOCUMENT_EXCERPT_ONLY":"IMAGE_CANDIDATE_ONLY",
+  native_execution_established:false,
   gates:Object.fromEntries(controls.map(c=>[c.dataset.gate,c.checked])),
   completed_gates:completed,
   handoff_readiness:completed===controls.length?"READY_FOR_INDEPENDENT_REVIEW":"DRAFT",
@@ -100,7 +107,7 @@ function makePacket(){
   public_release_authorised:false,
   service_now_dev_verified:false,
   production_verified:false,
-  note:"Self-declared checklist only. Image rights, independent reviewer decision and final derivative digest must be verified in restricted controls before a separately authorised publication."
+  note:"Self-declared checklist only. Asset/document rights, independent reviewer decision and final derivative digest must be verified in restricted controls before a separately authorised publication."
  };
 }
 function render(){
@@ -108,6 +115,7 @@ function render(){
  const info=records[id];
  get("review-class").textContent=info.classification;
  get("review-description").textContent=info.description;
+ get("review-treatment").textContent=info.treatment;
  get("review-link").href="visual-evidence.html#review-"+id.toLowerCase();
  const completed=controls.filter(c=>c.checked).length;
  get("gate-count").textContent=completed+" of "+controls.length+" gates marked";

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T02:30:00Z",
+  "updated_utc": "2026-11-13T03:20:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -132,9 +132,9 @@
       "id": "REVIEW-PACKET",
       "title": "Browser-local screenshot approval handoff packet",
       "classification": "source-only",
-      "basis": "Public eight-gate owner-side review checklist for the six inspected Workbench evidence summaries; no original image bytes or private source identifiers handled",
-      "runtime_verification": "Interactive browser checklist and JSON export are not an independent reviewer decision, ServiceNow DEV execution or production acceptance",
-      "public_screenshot_status": "HOLD is mandatory in every exported packet; zero original screenshots cleared for public use",
+      "basis": "Public eight-gate, browser-local owner-side checklist reconciled to all eight reviewed visual evidence records (six interface/synthetic UI observations and two document-only sources). Original pixels and private identifiers are excluded.",
+      "runtime_verification": "Static and responsive browser-only testing; handoff packets always HOLD, even when eight boxes are checked. Document excerpts are explicitly excluded from application-screen evidence. No fresh DEV or Production acceptance.",
+      "public_screenshot_status": "Eight candidate/source records available for review preparation; zero public screenshot approvals. RV-04/RV-08 are document-only and must not enter a runtime gallery.",
       "page": "screenshot-review-packet.html"
     },
     {
