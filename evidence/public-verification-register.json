@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T19:26:14Z",
+  "updated_utc": "2026-11-13T21:26:51Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -775,6 +775,15 @@
       "runtime_verification": "Nine local checkboxes, seven synthetic scenarios and a downloaded JSON receipt demonstrate fail-closed preparation logic only. Every result is NOT RUN / HOLD; no issued documents, owner acceptance, closure request, independent approval, DEV validation or production completion is claimed. Later 4.22.2 source remains distinct from historical DEV-reported releases.",
       "public_screenshot_status": "No original ServiceNow images or screen pixels used; authentic Workbench captures remain withheld and individually unapproved (zero approved).",
       "page": "delivery-case-study.html"
+    },
+    {
+      "id": "INCIDENT-CANDIDATE-DELTA-20261114",
+      "title": "Offline candidate delta reviewer — pinned 29-case Incident Pack comparison",
+      "classification": "source-only",
+      "basis": "Public Incident Pack native acceptance catalogue NV-001–NV-029 and source-defined 1.0 JSON candidate schema. Two locally opened unreviewed worksheets are compared in the browser with fail-closed schema, case identity, approval-flag and evidence-alias validation. No external communication or stored evidence.",
+      "runtime_verification": "Browser-only comparison of SELF-REPORTED / UNREVIEWED candidate exports; generated review delta always NOT VERIFIED / HOLD. CI browser tests are independent of native ServiceNow DEV or Production execution. They cannot attest target installation, approvals, screenshot release or rights.",
+      "public_screenshot_status": "No genuine screenshots or customer records published; all original images remain individually unapproved (HOLD).",
+      "page": "candidate-delta-review.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
