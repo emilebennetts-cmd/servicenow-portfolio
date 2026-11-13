@@ -24,3 +24,10 @@ A production-grade handoff would require platform-owned authentication and autho
 **Licensing:** This static lab requires no ServiceNow licence. Native delivery would require appropriate App Engine/custom-table rights, roles/ACLs, potentially IntegrationHub or a scoped Scripted REST API, and any product-specific ITSM/ITOM/CMDB/Analytics/AI/spoke and third-party entitlements actually invoked in the implementation.
 
 **Verification boundary:** Website source commits and offline unit tests validate a local deterministic model only. A passing CI build is not a native ServiceNow acceptance receipt. No production assertion, live connector, customer data or genuine screenshot is published.
+
+## Browser hardening and CI continuation
+
+- Added a strict Content Security Policy to the case-study page: same-origin scripts only, no network connections, remote images, objects, external fonts or form submission.
+- Added scripts/browser_handoff_contract_sandbox.py and wired the responsive Chromium quality workflow to run the page at 390, 768, 1024 and 1440 px. The browser verifies eight fixture outcomes, replay precedence, the local HOLD receipt download, absence of external requests and horizontal overflow.
+- An initial browser regression incorrectly read text from a collapsed details disclosure using inner_text(); this test-only mistake was corrected to explicitly open the disclosure and inspect its text. See browser fix commit [64a948e](https://github.com/emilebennetts-cmd/servicenow-portfolio/commit/64a948e263d3e93554c1a920ace3a9f4dd877e19). The earlier failure was not a Workbench or production defect.
+- GitHub Actions is responsible for the final quality/deployment status; no successful website run is described as native ServiceNow acceptance.
