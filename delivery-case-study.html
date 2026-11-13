@@ -3,7 +3,7 @@
 <style>
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17263b;background:#f3f6fb;line-height:1.65}*{box-sizing:border-box}body{margin:0}a{color:#1356a2}a:focus-visible{outline:3px solid #e2a727;outline-offset:3px}header{background:#112943;color:white;padding:3rem max(1.25rem,calc((100vw - 1050px)/2))}header p{max-width:65ch;color:#d6e8f6}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin:.4rem 0}main{max-width:1050px;margin:auto;padding:2rem 1.25rem 4rem}.tag{display:inline-block;border-radius:1rem;background:#e6edf8;color:#173e67;padding:.15rem .7rem;font-size:.82rem;font-weight:700;margin:.2rem}.tag.warning{background:#fff0d0;color:#674100}section{background:white;border:1px solid #dce4ed;border-radius:16px;padding:clamp(1.2rem,3vw,2rem);margin:1.25rem 0;box-shadow:0 6px 22px #163a5b0a}h2{line-height:1.2;margin-top:0}h3{margin-bottom:.25rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1rem}.card{background:#f5f8fc;padding:1rem;border-radius:12px;border-left:4px solid #2c6cb2}.metric{font-size:1.7rem;font-weight:800;color:#174d85}.flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}.flow span{background:#e9f3fc;padding:.55rem .8rem;border-radius:8px;font-weight:600}.flow b{color:#63768d}table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{text-align:left;border-bottom:1px solid #d9e3ed;padding:.7rem;vertical-align:top}th{background:#eaf1f9}.scroll{overflow-x:auto}footer{padding:2rem 1.25rem;text-align:center;color:#40546c}header a{color:#cbe7ff}@media print{header{background:white;color:black;padding:1rem 0}header p{color:black}section{box-shadow:none;break-inside:avoid}body{background:white}main{padding:0}a{color:black}}
 </style></head><body><aside aria-label="Evidence verification guidance" style="margin:1rem auto;max-width:1050px;padding:1rem 1.25rem;border:2px solid #669b9a;border-radius:12px;background:#17314a;color:#fff;font:1rem/1.5 system-ui"><strong>How to interpret this case study:</strong> Source-backed architecture is not proof of a live deployment. Screenshots, demonstrations and production claims require separate verification and publication approval. <a href="evidence-methodology.html" style="color:#a7fff0;text-decoration:underline">Read the evidence and verification methodology →</a></aside><div style="padding:.75rem 1.25rem;background:#15314a;color:#fff;font:600 14px system-ui"><a style="color:#9df2df" href="./index.html">← Portfolio home</a> &nbsp;·&nbsp; SOURCE-ONLY procedures &amp; architecture · MOCK-ONLY Delivery Plan · no production verification or approved screenshots</div>
-<header><div class="tag">SERVICE MANAGEMENT ENGINEERING</div><h1>From fragmented delivery to governed, traceable execution</h1><p>Universal Delivery Workbench — a source-backed ServiceNow implementation case study. Representative business scenario, not a named customer outcome.</p><p><strong>Evidence status:</strong> MIXED CLAIMS (SOURCE-ONLY operating guide and architecture; MOCK-ONLY Delivery Plan) · 14 November 2026 · No production claim</p><p><a href="#persona-operations" style="color:#b8f5e4;font-weight:750">Explore 12 source-backed practitioner procedures</a></p></header>
+<header><div class="tag">SERVICE MANAGEMENT ENGINEERING</div><h1>From fragmented delivery to governed, traceable execution</h1><p>Universal Delivery Workbench — a source-backed ServiceNow implementation case study. Representative business scenario, not a named customer outcome.</p><p><strong>Evidence status:</strong> MIXED CLAIMS (SOURCE-ONLY operating guide and architecture; MOCK-ONLY Delivery Plan) · 14 November 2026 · No production claim</p><p><a href="#persona-operations" style="color:#b8f5e4;font-weight:750">Explore 12 source-backed practitioner procedures</a> · <a href="#closure-assurance" style="color:#b8f5e4;font-weight:750">Explore handover closure controls</a></p></header>
 <main>
 <section aria-labelledby="pain"><h2 id="pain">1. The client's pain &amp; history</h2><p>Consulting delivery can fragment across workshop notes, requirements spreadsheets, design drafts, build tasks and handover packs. Without controlled links between these records, teams repeat discovery, lose decisions and struggle to demonstrate what was approved, built and tested.</p><div class="grid"><div class="card"><h3>Fragmented discovery</h3><p>Requirements are hard to trace to evidence and decisions.</p></div><div class="card"><h3>Inconsistent reuse</h3><p>Patterns are selected without clear scope and review gates.</p></div><div class="card"><h3>Unclear acceptance</h3><p>Draft documents and demonstrations can be mistaken for approved delivery.</p></div></div></section>
 <section aria-labelledby="solution"><h2 id="solution">2. The ServiceNow solution</h2><p>The Workbench source connects governed scope selection, linked workshops and requirements, candidate patterns, Delivery Plan checkpoints, document generation and handover. Generated material remains draft until reviewed.</p><div class="flow" aria-label="Delivery lifecycle"><span>Discover</span><b>→</b><span>Scope &amp; requirements</span><b>→</b><span>Design</span><b>→</b><span>Build &amp; test</span><b>→</b><span>Release &amp; handover</span></div><div class="grid" style="margin-top:1rem"><div class="card"><div class="metric">8</div>Delivery Plan views over existing planning records</div><div class="card"><div class="metric">8</div>Narrative document families with audience-specific depth</div><div class="card"><div class="metric">11,000</div>Source catalogue issue definitions — not verified client defects</div><div class="card"><div class="metric">2,234</div>Candidate solution patterns — not certified implementations</div></div><p>Jira, Confluence and Notion integration contracts have <strong>MOCK-ONLY</strong> verification; authenticated live synchronisation is not claimed.</p></section>
@@ -174,6 +174,143 @@ section.querySelector("#persona-export").addEventListener("click",()=>{
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 render();
+})();
+</script>
+</section>
+
+
+<section id="closure-assurance" class="closure-assurance" aria-labelledby="closure-title">
+<style>
+.closure-assurance{background:linear-gradient(130deg,#eef9f7,#f9fcff);border:1px solid #85b9b5}
+.closure-assurance .closure-eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;color:#145e63;font-weight:850}
+.closure-assurance .closure-boundary{background:#fff4df;border-left:5px solid #a97829;border-radius:6px;padding:16px 18px;color:#5b3e10}
+.closure-assurance .closure-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:20px;margin-top:21px}
+.closure-assurance .closure-pane{padding:clamp(16px,3vw,24px);background:white;border:1px solid #b7d5d9;border-radius:14px;min-width:0}
+.closure-assurance label{font-weight:700;color:#183d4a}
+.closure-assurance select{width:100%;min-height:44px;margin:8px 0 15px;border:1px solid #648b9a;border-radius:8px;background:white;color:#132c3e;padding:10px;font:inherit}
+.closure-assurance .closure-check{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-top:1px solid #e3ebf0}
+.closure-assurance .closure-check input{width:20px;height:20px;flex:0 0 20px;accent-color:#126b6b;margin-top:3px}
+.closure-assurance .closure-check label{font-size:.91rem;font-weight:620}
+.closure-assurance .closure-check small{display:block;color:#53677b;font-weight:400}
+.closure-assurance .closure-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.closure-assurance button{background:#125661;color:white;border:1px solid #125661;border-radius:9px;font:700 .91rem system-ui;padding:12px 16px;cursor:pointer}
+.closure-assurance button.secondary{background:white;color:#125661}
+.closure-assurance button:focus-visible,.closure-assurance select:focus-visible,.closure-assurance input:focus-visible{outline:3px solid #be7a1b;outline-offset:3px}
+.closure-assurance .closure-result{background:#f5f8fa;border-left:4px solid #a9792b;padding:15px;margin:12px 0;border-radius:5px;color:#243e50;font-weight:750}
+.closure-assurance .closure-result.ready{background:#e6f3f2;border-color:#24776f}
+.closure-assurance .closure-blockers{padding-left:21px;color:#324c5b}
+.closure-assurance .closure-blockers li{margin:8px 0}
+.closure-assurance .closure-foot{font-size:.88rem;color:#355566}
+@media(max-width:760px){.closure-assurance .closure-layout{grid-template-columns:1fr}.closure-assurance .closure-pane{padding:16px}}
+@media print{.closure-assurance .closure-actions,.closure-assurance select{display:none!important}}
+</style>
+<div class="closure-eyebrow">SOURCE-ONLY governance model · MOCK-ONLY decision exercise</div>
+<h2 id="closure-title">Handover &amp; closure control desk</h2>
+<p>Follow the source-described governance path from <strong>draft</strong> artefacts to issued handover documentation and an <em>independently reviewed</em> closure request. The Workbench 4.14.0 source release names three mandatory close documents, three operational owners and separate final approval. This demonstration does not execute those ServiceNow controls.</p>
+<p class="closure-boundary"><strong>Publication boundary:</strong> Every scenario and checkbox is synthetic. Selecting all conditions permits only a fictional <em>request for approval</em>, never approval, document issue, change authority, DEV acceptance or Production verification. Exported receipts always remain <strong>NOT RUN / HOLD</strong>.</p>
+<div class="closure-layout">
+<div class="closure-pane">
+<label for="closure-scenario">Choose a synthetic failure or readiness scenario</label>
+<select id="closure-scenario">
+<option value="draft" selected>01 — Unprepared handover (9 blockers)</option>
+<option value="documents">02 — Documents issued; owners missing</option>
+<option value="owners">03 — Owners accepted; documents draft</option>
+<option value="hypercare">04 — Hypercare not completed or deferred</option>
+<option value="evidence">05 — Objective assurance incomplete</option>
+<option value="reviewer">06 — No independent reviewer nominated</option>
+<option value="ready">07 — Preparation complete; approval still HOLD</option>
+<option value="custom">Custom local exercise</option>
+</select>
+<div id="closure-checklist" role="group" aria-label="Nine synthetic preparation conditions">
+<div class="closure-check"><span>Enable JavaScript to exercise the nine controls; the source-defined gates are documented in the read-only checklist below.</span></div>
+</div>
+<div class="closure-actions"><button type="button" class="secondary" id="closure-reset">Reset to HOLD</button><button type="button" id="closure-export">Download HOLD-only JSON receipt</button></div>
+</div>
+<div class="closure-pane">
+<h3>Control trace</h3>
+<p id="closure-count" aria-live="polite">0 of 9 preparation conditions selected.</p>
+<div id="closure-state" class="closure-result" role="status" aria-live="polite">HOLD — native controls NOT RUN.</div>
+<h3>Named blockers</h3><ol id="closure-blockers" class="closure-blockers"><li>Native approval not executed.</li></ol>
+<p class="closure-foot"><strong>Independent authority:</strong> nominated reviewer ≠ approval. Even an eligible fictional request never changes a real engagement, document record, owner decision or closure state.</p>
+<h3>Version and evidence boundary</h3>
+<p class="closure-foot">Source-described 4.2.0 governance controls and 4.14.0 handover workflow; later Delivery 4.22.2 source is not thereby DEV-VERIFIED. Historical installation reports, when present, remain DEV-REPORTED for their own version/scope. Original Workbench screenshots remain unapproved and withheld.</p>
+</div>
+</div>
+<noscript><p><strong>Read-only checklist:</strong> transition/hypercare, business acceptance, service acceptance, support acceptance, issued As-built, issued Operations &amp; Support Handover, issued Project Closure Report, objective assurance/benefits/traceability, and independent reviewer nomination. None is verified on this page.</p></noscript>
+<p class="closure-foot">Architecture: prefer native approvals, role separation, retained evidence, immutable issued document versions and expiry-bounded waivers. No browser decision authorises native issue or closure. <a href="workbench-acceptance-playbook.html">Native verification guidance</a> · <a href="visual-evidence.html">Withheld screenshot provenance</a>.</p>
+<script>
+(function(){
+'use strict';
+const host=document.getElementById('closure-assurance');
+const items=[
+['transition','Transition and hypercare complete or explicitly deferred','Require owned transition evidence; deferrals must be recorded'],
+['business','Business owner operational acceptance','A delivery-team assertion is not business owner acceptance'],
+['service','Service owner operational acceptance','Verify distinct accountable service-owner decision'],
+['support','Support owner operational acceptance','Operational support takes ownership independently'],
+['asbuilt','As-built document issued or signed','ART-AS-BUILT — draft is not issue'],
+['operations','Operations and support handover issued or signed','ART-OPERATIONS-AND-SUPPORT — draft is not issue'],
+['report','Project closure report issued or signed','ART-PROJECT-CLOSURE-REPORT — draft is not issue'],
+['objective','Objective assurance, benefits and traceability gates met','Unmet evidence thresholds block closure'],
+['reviewer','Independent closure reviewer nominated','Nomination does not mean approval']
+];
+const ids=items.map(x=>x[0]);
+const scenarios={
+draft:[],
+documents:['asbuilt','operations','report'],
+owners:['business','service','support'],
+hypercare:ids.filter(x=>x!=='transition'),
+evidence:ids.filter(x=>x!=='objective'),
+reviewer:ids.filter(x=>x!=='reviewer'),
+ready:ids
+};
+const menu=host.querySelector('#closure-scenario');
+const wrap=host.querySelector('#closure-checklist');
+const count=host.querySelector('#closure-count');
+const result=host.querySelector('#closure-state');
+const blockers=host.querySelector('#closure-blockers');
+wrap.replaceChildren();
+for(const [id,title,description] of items){
+ const line=document.createElement('div');line.className='closure-check';
+ const cb=document.createElement('input');cb.type='checkbox';cb.id='closure-'+id;cb.dataset.gate=id;
+ const label=document.createElement('label');label.htmlFor=cb.id;label.append(document.createTextNode(title));
+ const small=document.createElement('small');small.textContent=description;label.append(small);
+ line.append(cb,label);wrap.append(line);
+ cb.addEventListener('change',()=>{menu.value='custom';render();});
+}
+function selected(){return ids.filter(id=>host.querySelector('#closure-'+id).checked);}
+function render(){
+ const chosen=new Set(selected()),missing=items.filter(x=>!chosen.has(x[0]));
+ count.textContent=chosen.size+' of 9 synthetic preparation conditions selected.';
+ result.classList.toggle('ready',!missing.length);
+ result.textContent=missing.length
+  ? 'HOLD — '+missing.length+' preparation blocker'+(missing.length===1?'':'s')+'. No closure request may be made in this exercise.'
+  : 'Eligible to request independent review — NOT APPROVED. Native status remains NOT RUN / HOLD.';
+ blockers.replaceChildren();
+ const labels=missing.length?missing.map(x=>x[1]):['No preparation blockers selected. Independent approval still required — HOLD.'];
+ for(const label of labels){const li=document.createElement('li');li.textContent=label;blockers.append(li);}
+}
+function apply(key){const ready=new Set(scenarios[key]||[]);for(const id of ids)host.querySelector('#closure-'+id).checked=ready.has(id);render();}
+menu.addEventListener('change',()=>{if(menu.value!=='custom')apply(menu.value);});
+host.querySelector('#closure-reset').addEventListener('click',()=>{menu.value='draft';apply('draft');});
+host.querySelector('#closure-export').addEventListener('click',()=>{
+ const chosen=new Set(selected());
+ const receipt={
+ schema:'portfolio-closure-preparation-v1',
+ evidence_class:'MOCK-ONLY',source_basis:'SOURCE-ONLY',
+ native_test_status:'NOT RUN',publication_status:'HOLD',
+ synthetic_preparation_ready:chosen.size===items.length,
+ approval_request_submitted:false,independent_closure_approved:false,
+ actual_document_issue_verified:false,actual_owner_acceptance_verified:false,
+ dev_verified:false,production_verified:false,original_screenshots_approved:0,
+ scenario:menu.value,
+ controls:items.map(([id,title])=>({gate:id,label:title,synthetic_selected:chosen.has(id)}))
+ };
+ const blob=new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='handover-closure-preparation-HOLD.json';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+apply('draft');
 })();
 </script>
 </section>
