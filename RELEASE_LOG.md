@@ -1,3 +1,9 @@
+## 13 November 2026 — Interactive evidence-first reviewer routes (SOURCE-ONLY)
+
+- Upgraded `engineering-case-studies.html` with three responsive, keyboard-accessible reading routes for hiring managers, architects and delivery leads. Each routes to public case studies and verification controls; the default route works without JavaScript.
+- Added honest version boundaries (Delivery source 4.22.2 vs historical 4.20.0 DEV), a source-only local text briefing export, and targeted offline regression checks. No native DEV or Production execution, approved screenshot pixels, customer data or private source was introduced.
+- See [release notes](releases/2026-11-13-evidence-first-reviewer-routes.md). Public website remains licence-free; runtime entitlements are scope/feature-specific.
+
 ## 13 November 2026 — version-pinned native verification metadata guard (SOURCE-ONLY)
 
 - Hardened the public evidence-register CI validator: any future DEV-VERIFIED or PRODUCTION-VERIFIED claim must record full source SHA, installed version, application scope, matched DEV/PROD environment, anonymised alias, unique executed tests, safe private receipt alias and claimed independent-review approval; existing dated HTTPS proof and production-authorisation gates remain. These are **metadata safeguards, not proof of native execution**.
