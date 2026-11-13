@@ -1,3 +1,9 @@
+## 13 November 2026 — visual evidence source triage and classification uplift (SOURCE-ONLY / DOCUMENT / MOCK CONTENT)
+
+- Privately inspected two additional Drive source artefacts: a Diagnostic update-set recovery snapshot and a Universal Delivery training-guide montage, cross-checked against a separately observed synthetic Delivery Plan screen. Added public-safe reviewed entries **RV-07 / RV-08**, bringing the source-inspection set to **8**; the existing ten candidate slots are separate and may overlap. The captured update-set metadata **does not prove recovery or native installation**, and a guide page **is not a runtime screenshot**.
+- Updated [the visual evidence review](visual-evidence.html#reviewed-captures), metadata-only search/export/print dataset, eight-record tests, and the public 27-item [verification register](evidence/public-verification-register.json). No original pixel content, screenshot URL, source hash or restricted detail was published. All eight review records remain **HOLD**, with **0 approved screenshots** and no new DEV-VERIFIED or PRODUCTION-VERIFIED claims.
+- Private screenshot provenance, original hashes, potential redaction targets and source links are retained only in private portfolio control. [Release note](releases/2026-11-13-visual-evidence-source-triage.md). CI / GitHub Pages status requires independent checking on the final revision. Public static site requires no ServiceNow licence; native source requires approved scoped-app, role, table and product entitlements.
+
 ## 13 November 2026 — self-checking 71-page portfolio catalogue (SOURCE-ONLY)
 
 - Corrected the Portfolio Explorer heading from 69 to **71 indexed pages** (72 root HTML pages including the Explorer itself). Added `scripts/reconcile_portfolio_explorer.py` with strict `--check`, safe `--write` reconciliation and five offline drift/security regression tests.
