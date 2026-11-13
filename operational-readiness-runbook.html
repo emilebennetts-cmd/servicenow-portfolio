@@ -25,10 +25,35 @@ a.inline{font-weight:800}footer{border-top:1px solid var(--line);padding:32px 0 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:white;color:#111}header{background:white;color:#111}p,li,td,.note{color:#333}.box,.item,.failure,.warning{background:white;color:#111;border-color:#aaa;break-inside:avoid}.filter,.toolbar,.actions,.skip{display:none}.runbooks{display:block}.item{margin-bottom:12px}.item[hidden]{display:block!important}.tag,.item .meta,.kicker{color:#123}.item .evidence{color:#111;background:white}.wrap{width:100%}}
 .handover-rows select,.handover-rows input{background:#0d2333;color:#f1f9fc;border:1px solid #7893a0;border-radius:8px;padding:9px;width:100%;min-height:42px;font:inherit}.handover-rows select{min-width:180px}.handover-rows input{min-width:170px}.handover-rows label{display:block;font-size:.8rem;font-weight:800;margin-bottom:5px}.handover-rows th{min-width:170px}.handover-status{border-left:4px solid var(--gold);background:#26323b;padding:15px 18px;border-radius:8px;color:#f5e1bc}.handover-help{font-size:.85rem;color:var(--sub)}@media print{#handover-ledger .actions,#handover-ledger input,#handover-ledger select{display:none}#handover-ledger{break-before:page}}
+
+/* Entitlement decision desk: offline rehearsal, never a licence approval. */
+.entitlement-desk{border:1px solid #46738b;background:linear-gradient(155deg,#112c3f,#0d2233);border-radius:19px;padding:clamp(20px,3.3vw,32px)}
+.entitlement-desk .desk-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.entitlement-desk .desk-score{color:var(--mint);font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:850}
+.entitlement-desk .desk-progress{width:100%;height:12px;accent-color:var(--mint);margin:13px 0}
+.entitlement-desk .desk-filters{display:flex;flex-wrap:wrap;gap:9px;margin:19px 0}
+.entitlement-desk .desk-filters button{font:inherit;border:1px solid #7894a7;border-radius:999px;padding:9px 15px;background:#163447;color:#f0fafb;cursor:pointer}
+.entitlement-desk .desk-filters button[aria-pressed=true]{background:var(--mint);color:#07272b;font-weight:850}
+.entitlement-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.entitlement-card{background:#102739;border:1px solid #476e83;border-radius:13px;padding:19px;min-width:0}
+.entitlement-card[hidden]{display:none!important}
+.entitlement-card h3{margin:7px 0 9px}
+.entitlement-card .desk-code{color:var(--mint);font-weight:850;font-size:.76rem;letter-spacing:.08em}
+.entitlement-card p{margin:9px 0;font-size:.9rem}
+.entitlement-card .desk-feature{font-size:.85rem;border-left:3px solid #81d6cb;padding:6px 0 6px 12px;color:#dfedf3}
+.entitlement-card label{display:block;margin:12px 0 6px;font-weight:800;font-size:.85rem}
+.entitlement-card select,.entitlement-card input{font:inherit;background:#071b2b;color:#fff;border:1px solid #789bac;border-radius:9px;width:100%;padding:10px;min-width:0}
+.entitlement-card input:focus-visible,.entitlement-card select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.entitlement-card .desk-owner{color:#bdd8e5;font-size:.82rem;margin-top:12px}
+.entitlement-desk .desk-hold{padding:15px;background:#2e302d;color:#ffe1b7;border-left:4px solid var(--gold);border-radius:8px}
+.entitlement-desk .desk-empty{padding:16px;border:1px dashed #67869a;border-radius:10px;color:#d2e6f0}
+@media(max-width:760px){.entitlement-cards{grid-template-columns:1fr}}
+@media(max-width:420px){.entitlement-desk{padding:16px}.entitlement-desk .actions button{width:100%}}
+@media print{.entitlement-desk{background:white;color:#111}.entitlement-card{background:white;color:#111;break-inside:avoid}.entitlement-desk .desk-filters,.entitlement-desk .actions{display:none}.entitlement-card select,.entitlement-card input{display:none}.entitlement-card[hidden]{display:block!important}}
 </style></head><body>
 <a class="skip" href="#main">Skip to main content</a>
 <header><div class="wrap">
-<nav class="nav" aria-label="Portfolio navigation"><a href="./">← Portfolio home</a><div class="links"><a href="delivery-case-study.html">Delivery case study</a><a href="workbench-acceptance-playbook.html">Native acceptance</a><a href="verification-ledger.html">Evidence ledger</a></div></nav>
+<nav class="nav" aria-label="Portfolio navigation"><a href="./">← Portfolio home</a><div class="links"><a href="delivery-case-study.html">Delivery case study</a><a href="#entitlement-gate">Entitlement gate</a><a href="workbench-acceptance-playbook.html">Native acceptance</a><a href="verification-ledger.html">Evidence ledger</a></div></nav>
 <p class="eyebrow">Delivery Workbench / operations assurance</p>
 <h1>From implementation to supportable service.</h1>
 <p class="lead">A source-backed, client-neutral operational runbook that turns release artefacts, daily checks and failure modes into an accountable handover decision. A successful build alone is not operational acceptance.</p>
@@ -70,6 +95,25 @@ a.inline{font-weight:800}footer{border-top:1px solid var(--line);padding:32px 0 
 </select>
 <div class="failure" id="failure-output" aria-live="polite"></div>
 </section>
+
+<section class="section" id="entitlement-gate" aria-labelledby="entitlement-title">
+<p class="kicker">Source-backed architecture / Contract-specific entitlement checks</p>
+<h2 id="entitlement-title">Entitlement &amp; OOTB decision desk</h2>
+<p>The controlled Diagnostic completion runbook calls for licensing decisions before design approval. Its <strong>20 showcase requirements</strong> are not the ten capability categories below. These are <strong>client-neutral review prompts</strong>, not an extracted requirement-by-requirement client register. Each category offers an out-of-the-box-first design path and the potential entitlement to check.</p>
+<div class="entitlement-desk">
+<div class="desk-head"><div><h3>Capture the entitlement decision boundary</h3><p class="note">No installation, licence verification, signed decision or runtime integration happens here. Never enter client details or a real contract reference.</p></div><div class="desk-score" id="entitlement-count" role="status" aria-live="polite">0 of 10 self-reported</div></div>
+<progress id="entitlement-progress" class="desk-progress" value="0" max="10" aria-label="Self-reported licensing decisions"></progress>
+<div class="desk-filters" role="group" aria-label="Filter capability categories">
+<button type="button" data-entitlement-filter="all" aria-pressed="true">All capabilities</button>
+<button type="button" data-entitlement-filter="unknown" aria-pressed="false">Unresolved only</button>
+<button type="button" data-entitlement-filter="optional" aria-pressed="false">Additional product review</button></div>
+<div id="entitlement-cards" class="entitlement-cards"></div>
+<p id="entitlement-empty" class="desk-empty" hidden>No categories match this filter. Clear your filters to view all ten.</p>
+<p id="entitlement-status" class="desk-hold" role="status" aria-live="polite">HOLD — no contractual evidence assessed.</p>
+<div class="actions"><button id="entitlement-export" type="button" class="btn">Download HOLD decision draft (JSON)</button><button id="entitlement-reset" type="button" class="btn secondary">Reset local decisions</button></div>
+<p class="note">Every non-unknown selection needs an anonymous evidence alias (letters, numbers, dots, dashes or underscores; max 64). A selection is <strong>self-reported</strong>, even when labelled entitlement claimed. Completion can never turn the output into authorised procurement, production release or DEV-VERIFIED evidence. For actual contract interpretation, seek the platform owner, licensing team and ServiceNow account team.</p>
+<p class="note">Vendor reference: <a href="https://www.servicenow.com/docs/r/platform-administration/table-administration-and-data-management/custom-tables.html">Custom-table entitlements</a> and <a href="https://www.servicenow.com/docs/r/integrate-applications/integration-hub/subscription-usage.html">Integration Hub subscription and spoke usage</a> (ServiceNow documentation, updated 12 March 2026). Exact rights remain contract-specific.</p>
+</div></section>
 <section class="section" id="handover-ledger" aria-labelledby="gate-title"><p class="kicker">Operational assurance / browser-local worksheet</p><h2 id="gate-title">Handover evidence decision register</h2>
 <p>Use this controlled checklist to record what still needs independent sign-off. The six gates below correspond to the release/operations acceptance conditions in the source-backed As-Built. These entries are <strong>self-reported browser inputs</strong>, not ServiceNow DEV tests, signatures, approval records or production evidence.</p>
 <div class="warning"><strong>Safety boundary:</strong> Do not enter client names, customer data, sys_ids, instance URLs, email addresses, credentials or private file paths. Use anonymous references such as <code>REL_A01</code>. This worksheet never saves data or sends requests to a remote service. Every export remains publication <strong>HOLD</strong>.</div>
@@ -111,6 +155,62 @@ recovery:['Platform unavailable: follow approved continuity','Do not bypass the 
 const output=document.getElementById('failure-output'),select=document.getElementById('failure-select');
 function renderFailure(){const [name,contain,recover]=outcomes[select.value];output.replaceChildren();const h=document.createElement('h3');h.textContent=name;const dl=document.createElement('dl');[['Containment',contain],['Owner / recovery',recover],['Verification','Guidance from controlled source; no current native DEV/production execution or automated ServiceNow action.']].forEach(([k,v])=>{const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=v;dl.append(dt,dd)});output.append(h,dl)}
 select.addEventListener('change',renderFailure);renderFailure();update();
+
+const entitlementCategories=[
+['ENT-01','Scoped application & tables','Use existing platform records and OOTB workflows first; assess every new custom table.','App Engine/custom-table mapping; platform roles and ACLs.','Platform owner / commercial owner','core'],
+['ENT-02','ITSM workflow','Prefer OOTB Incident, Problem, Change and Request models before extending.','Confirm relevant ITSM product rights and authorised users.','ITSM owner','core'],
+['ENT-03','CMDB & CSDM governance','Use supported CI classes, IRE, relationships and established CMDB controls.','Check entitlement and activation for selected CMDB Health/Data Manager features.','CMDB owner / platform owner','core'],
+['ENT-04','Discovery & source onboarding','Prefer supported source identification and read-only inventory reconciliation.','ITOM Visibility/Discovery, Service Graph connectors and source licences where applicable.','ITOM owner','optional'],
+['ENT-05','External work integrations','Keep manual, auditable work links as the default until a provider is approved.','Integration Hub subscription/spoke rights, transactions and external Jira/Confluence/Notion access.','Integration owner / provider owner','optional'],
+['ENT-06','Metrics & analytics','Begin with OOTB reports and platform dashboards.','Review Performance Analytics and advanced insight entitlements if specified.','Reporting owner','optional'],
+['ENT-07','Hardware & software assets','Reuse existing records and lifecycle processes before adopting advanced asset functions.','Validate HAM/SAM products, plugins and required user rights.','Asset owner','optional'],
+['ENT-08','Customer & employee service','Retain a narrow ITSM scope unless HR/CSM outcomes are explicitly in the SOW.','Validate HRSD/CSM product rights and privacy boundaries if in scope.','Business owner / security','optional'],
+['ENT-09','AI-assisted recommendations','Keep deterministic human-reviewed guidance available without AI.','Check Now Assist or approved external AI-provider subscription, usage and data-processing rights.','AI owner / privacy','optional'],
+['ENT-10','Document generation','Prefer platform-supported templates and safe export with manual fallback.','Confirm selected document-generation, Office/Word and third-party renderer rights.','Document owner / commercial owner','optional']
+];
+const entitlementStates=[
+['UNKNOWN','Not assessed / no decision'],
+['SELF_REPORTED_ENTITLED','Entitlement claimed — unverified'],
+['SELF_REPORTED_NOT_REQUIRED','Not needed for this scope — unverified'],
+['FALLBACK_PROPOSED','Alternative design proposed — not approved'],
+['OUT_OF_SCOPE_PROPOSED','Exclude from scope — approval pending']
+];
+const entitlementCards=document.getElementById('entitlement-cards');
+const entitlementMap=new Map();
+for(const [id,name,ootb,dependency,owner,group] of entitlementCategories){
+ const card=document.createElement('article');card.className='entitlement-card';card.dataset.entitlementGroup=group;card.dataset.entitlementId=id;
+ const code=document.createElement('div');code.className='desk-code';code.textContent=id+' / '+(group==='core'?'FOUNDATION':'ADDITIONAL PRODUCT');
+ const title=document.createElement('h3');title.textContent=name;
+ const o=document.createElement('p');o.className='desk-feature';o.textContent='OOTB-first design: '+ootb;
+ const dep=document.createElement('p');dep.textContent='Entitlement to validate: '+dependency;
+ const who=document.createElement('p');who.className='desk-owner';who.textContent='Decision owner role: '+owner;
+ const label=document.createElement('label');label.htmlFor='entitlement-state-'+id;label.textContent='Local decision (unverified)';
+ const select=document.createElement('select');select.id=label.htmlFor;select.setAttribute('aria-label',id+' entitlement decision');
+ for(const [value,text] of entitlementStates){const option=document.createElement('option');option.value=value;option.textContent=text;select.append(option)}
+ const aliasLabel=document.createElement('label');aliasLabel.htmlFor='entitlement-alias-'+id;aliasLabel.textContent='Anonymous evidence alias';
+ const alias=document.createElement('input');alias.id=aliasLabel.htmlFor;alias.placeholder='e.g. LIC_01';alias.maxLength=64;alias.autocomplete='off';alias.setAttribute('aria-label',id+' anonymous evidence alias');
+ card.append(code,title,o,dep,who,label,select,aliasLabel,alias);entitlementCards.append(card);
+ entitlementMap.set(id,{card,select,alias});select.addEventListener('change',updateEntitlement);alias.addEventListener('input',updateEntitlement);
+}
+const entitlementSafeAlias=/^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$/;
+let entitlementFilter='all';
+function entitlementRows(){return entitlementCategories.map(([id,name,ootb,dependency,owner,group])=>({id,category:name,group,owner_role:owner,selection:entitlementMap.get(id).select.value,evidence_alias:entitlementMap.get(id).alias.value.trim()}))}
+function entitlementProblems(rows){const errors=[];for(const row of rows){if(row.evidence_alias&&!entitlementSafeAlias.test(row.evidence_alias))errors.push(row.id+' invalid alias');if(row.selection!=='UNKNOWN'&&!row.evidence_alias)errors.push(row.id+' requires an anonymous alias')}return errors}
+function updateEntitlement(){
+ const rows=entitlementRows(),decided=rows.filter(r=>r.selection!=='UNKNOWN').length,errors=entitlementProblems(rows);
+ document.getElementById('entitlement-count').textContent=decided+' of 10 self-reported';
+ document.getElementById('entitlement-progress').value=decided;
+ let visible=0;
+ for(const row of rows){const entry=entitlementMap.get(row.id);const show=entitlementFilter==='all'||(entitlementFilter==='unknown'&&row.selection==='UNKNOWN')||(entitlementFilter==='optional'&&row.group==='optional');entry.card.hidden=!show;if(show)visible++}
+ document.getElementById('entitlement-empty').hidden=visible!==0;
+ document.getElementById('entitlement-status').textContent=errors.length?'HOLD — INVALID DRAFT: '+errors.join('; '):'HOLD — '+(10-decided)+' capability categories unresolved; '+decided+' self-reported only. Contract verification, independent approval and native execution NOT ESTABLISHED.';
+ document.getElementById('entitlement-export').disabled=errors.length>0;
+}
+document.querySelectorAll('[data-entitlement-filter]').forEach(b=>b.addEventListener('click',()=>{entitlementFilter=b.dataset.entitlementFilter;document.querySelectorAll('[data-entitlement-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updateEntitlement()}));
+document.getElementById('entitlement-reset').addEventListener('click',()=>{for(const entry of entitlementMap.values()){entry.select.value='UNKNOWN';entry.alias.value=''}entitlementFilter='all';document.querySelectorAll('[data-entitlement-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.entitlementFilter==='all')));updateEntitlement();entitlementMap.get('ENT-01').select.focus()});
+document.getElementById('entitlement-export').addEventListener('click',()=>{const decisions=entitlementRows();if(entitlementProblems(decisions).length)return;const receipt={schema:'entitlement-decision-draft-v1',evidence_class:'MOCK-ONLY',source_basis:'SOURCE-ONLY',publication_status:'HOLD',contract_verified:false,independent_approval:false,dev_verified:false,production_verified:false,installation_executed:false,licence_purchase_authorised:false,requirement_level_reconciliation_complete:false,category_count:10,decision_count:decisions.filter(x=>x.selection!=='UNKNOWN').length,decisions};const blob=new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='entitlement-review-HOLD.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+updateEntitlement();
+
 const handoverGates=[
 ['HR-01','Release identity','Exact source SHA, package identity and target are reconciled'],
 ['HR-02','Clean deployment preview','Update-set / application preview and dependencies are clear'],
