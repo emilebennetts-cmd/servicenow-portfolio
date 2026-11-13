@@ -72,14 +72,19 @@ class PatternCatalogueLineageTests(unittest.TestCase):
         self.assertIn("Live Chrome interaction was <em>not verified</em>", self.html)
 
     def test_provenance_and_publication_boundary(self) -> None:
-        self.assertIn(
-            "https://github.com/emilebennetts-cmd/solution-lifecycle-studio/blob/main/docs/releases/catalogue-11000-20261003.md",
-            self.parser.hrefs,
-        )
-        self.assertIn(
-            "https://github.com/emilebennetts-cmd/solution-lifecycle-studio/blob/main/README.md",
-            self.parser.hrefs,
-        )
+        for safe_page in (
+            "pattern-library-audit-trail.html",
+            "delivery-release-evolution.html",
+            "reusable-delivery-patterns-case-study.html",
+        ):
+            self.assertIn(safe_page, self.parser.hrefs)
+            self.assertTrue((SITE / safe_page).is_file())
+        self.assertNotIn("https://github.com/emilebennetts-cmd/solution-lifecycle-studio", self.html)
+        self.assertNotIn("https://drive.google.com/file/d/", self.html)
+        self.assertNotIn("https://docs.google.com/document/d/", self.html)
+        self.assertIn("Their original Drive identifiers, records and access-controlled links are not published.", self.html)
+        self.assertIn('http-equiv="Content-Security-Policy"', self.html)
+        self.assertIn("connect-src 'none'", self.html)
         self.assertIn("#evidence-and-provenance", self.parser.hrefs)
         self.assertNotIn("dev438211.service-now.com", self.html)
         self.assertNotIn("servicenow-portfolio-control", self.html)

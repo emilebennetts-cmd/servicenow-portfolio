@@ -1,3 +1,9 @@
+## 13 November 2026 — Pattern case-study publication-link containment and green CI repair (SOURCE-ONLY)
+
+- Corrected a **failed public quality gate** at commit `e0135bc7d7c6d9877cea916ed4e5957de04e748e`: two outgoing links in `pattern-library.html` pointed into source repositories marked restricted by the portfolio publication policy. Replaced both with accessible public-safe case-study summaries, and removed two restricted Drive document links that had disclosed private document identifiers. Repository visibility and original documents remain unchanged.
+- Added strict no-network Content Security Policy to the Pattern Library page, strengthened provenance regression assertions, and updated the historical release record without elevating any source claim to DEV-VERIFIED or PRODUCTION-VERIFIED. See [containment release](releases/2026-11-13-pattern-public-link-containment-fix.md).
+- Public static website: no ServiceNow licence required. Live scoped-app deployment and any ITSM/ITOM, IntegrationHub, AI, analytics and provider features require target-specific entitlement and ACL validation.
+
 ## 13 November 2026 — Pattern catalogue provenance reconciliation (SOURCE-ONLY)
 
 - Upgraded [Pattern Library Engineering](pattern-library.html#catalogue-lineage) with a mobile-friendly, accessible three-snapshot comparison: the 28 September 96-pattern/4,595-item read-only export; the 3 October 11,000-issue/2,234-candidate catalogue; and the later Delivery 4.22.2 source declaration.

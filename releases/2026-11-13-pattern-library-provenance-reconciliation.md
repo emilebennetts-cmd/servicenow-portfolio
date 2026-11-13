@@ -1,3 +1,5 @@
+> **13 November publication correction:** A subsequent CI check found this release had introduced two public links into access-restricted source repositories. Those links and two historical restricted Drive links were removed from the case study and replaced with public-safe supporting pages; see [correction record](2026-11-13-pattern-public-link-containment-fix.md). The original source remains restricted.
+
 # Pattern Library provenance reconciliation — 13 November 2026
 
 **Publication class:** SOURCE-ONLY site enhancement. Historical ServiceNow metadata reported by a dated source is DEV-REPORTED, **not new DEV-VERIFIED**. No production assurance or screenshot approval.
@@ -15,7 +17,7 @@ Enhanced the existing public `pattern-library.html` rather than adding another n
 - A responsive, side-by-side source-lineage section comparing September historical export, October catalogue source, and later current source declaration.
 - Distinct unit-labelled inventory indicators, a 69.1% source-composition bar with a non-KPI disclaimer, and an explicit warning against adding incomparable counts.
 - Four accessible browser-local filters (all, September, October and later source) with `aria-pressed`, live status message and progressive enhancement: all three cards remain readable with JavaScript disabled.
-- Direct links to source-controlled public [catalogue release](https://github.com/emilebennetts-cmd/solution-lifecycle-studio/blob/main/docs/releases/catalogue-11000-20261003.md) and [Delivery README](https://github.com/emilebennetts-cmd/solution-lifecycle-studio/blob/main/README.md), while retaining the existing restricted-source citation.
+- Public-safe, self-contained [catalogue audit](../pattern-library-audit-trail.html) and [Delivery release evolution](../delivery-release-evolution.html) reference pages. The original restricted-source references are retained in controlled material, not public navigation.
 - A certification gate narrative: semantic deduplication, target applicability/entitlement, version pinning, Diagnostic evidence, owner approval, tests and change authority.
 - Five new Python standard-library regression tests under `scripts/test_pattern_catalogue_lineage.py`; automatically picked up by the existing quality workflow's `unittest discover -s scripts` command.
 
