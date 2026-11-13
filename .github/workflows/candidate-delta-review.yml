@@ -1,0 +1,33 @@
+name: Candidate Delta Review Browser Contract
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'candidate-delta-review.html'
+      - 'incident-pack-native-pilot.html'
+      - 'scripts/browser_candidate_delta_review.py'
+      - '.github/workflows/candidate-delta-review.yml'
+  pull_request:
+    paths:
+      - 'candidate-delta-review.html'
+      - 'incident-pack-native-pilot.html'
+      - 'scripts/browser_candidate_delta_review.py'
+      - '.github/workflows/candidate-delta-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python -m playwright install --with-deps chromium
+      - name: Test pinned 29-case offline delta and safety boundary
+        run: python scripts/browser_candidate_delta_review.py
