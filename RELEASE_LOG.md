@@ -1,3 +1,11 @@
+## 14 November 2026 — offline resume for native observation candidates (SOURCE-ONLY / SELF-REPORTED)
+
+- Added a **local-only JSON restore panel** to [Incident Pack Native Observation Workbook](incident-pack-native-pilot.html#native-observation-log): 29 case statuses, safe private evidence aliases and anonymised source/environment context can be resumed from the previously exported 1.0 candidate packet, without uploading or persisting data.
+- Fail-closed import validation rejects files larger than 128 KiB, malformed or unknown schema, inconsistent/duplicate case IDs, unexpected fields, unsafe aliases, context contamination, mismatched case titles/workstreams/personas and any attempted DEV/Production, approval or publication promotion. Invalid input leaves existing notes unchanged; all restored entries remain UNREVIEWED / NOT VERIFIED / HOLD.
+- Added static contract and 390/768/1024/1440 px Chromium round-trip and malicious-file rejection tests to the existing CI workflows. New DEV or Production verification: **none**. Genuine screenshots approved: **0**.
+- Reviewed 21 October native-validation README and blank execution record in the controlled Delivery source and separate Diagnostic scope boundary; the public release contains no private source or evidence pixels. No additional evidence claims were created; existing 85-claim register remains unchanged.
+- [Technical release](releases/2026-11-14-native-evidence-offline-resume.md). Static-site licence: none; native App Engine/custom table, ITSM/Change, ATF, ITOM, IntegrationHub, AI and external service entitlements must be separately evidenced. CI/Pages status is determined by final-commit GitHub Actions, not the existence of this log entry.
+
 ## 14 November 2026 — handover and closure control desk (SOURCE-ONLY / MOCK-ONLY)
 
 - Extended [Universal Delivery Workbench case study](delivery-case-study.html#closure-assurance) with a nine-control, seven-scenario, fail-closed closure preparation experience: three owner decisions, three issued close artefacts, transition/hypercare, objective assurance and an independent reviewer. The browser-local exercise shows named blockers and exports a HOLD-only JSON receipt.
