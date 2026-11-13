@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T13:24:00Z",
+  "updated_utc": "2026-11-13T14:21:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -366,9 +366,9 @@
       "id": "REVIEW-20261113-DIAGNOSTIC_WORKBENCH_CASE_STUDY",
       "title": "Diagnostic Workbench Technical Deep Dive",
       "classification": "source-only",
-      "basis": "Repository-defined assessment lifecycle and separately deployed Knowledge Intelligence lane with source/readiness limitations.",
-      "runtime_verification": "Source/document review only; no new independent native DEV or Production acceptance.",
-      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; publication approval remains HOLD.",
+      "basis": "Diagnostic Workbench 2 core v0.0.1 and separately deployed Knowledge Intelligence 0.1.0 source-defined operating model; ten source-grounded procedural rehearsal cards filter by role and runtime lane. The offline read checklist is not native execution or acceptance. Historical DEV observations dated 1 and 30 September 2026 are document-reported, not independently repeated.",
+      "runtime_verification": "Source/document and website-interaction review only; no new independent native DEV/Production execution. Guide export always marks NOT RUN | HOLD and false verification flags.",
+      "public_screenshot_status": "No original ServiceNow screenshots authorised or published; image-specific permission remains HOLD.",
       "page": "diagnostic-workbench-case-study.html"
     },
     {
