@@ -47,6 +47,36 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 .native-hold p{color:#ffebcc;margin:0}
 @media(max-width:760px){.native-list{grid-template-columns:1fr}.native-toolbar{grid-template-columns:1fr}.native-toolbar button{width:100%}}
 @media print{.native-list{grid-template-columns:1fr 1fr}.native-toolbar{display:none}.native-item[hidden]{display:block}.native-matrix{background:white}.native-item{background:white;color:#111}}
+
+/* Source-only candidate execution workbook; does not certify ServiceNow */
+.observation-workbook{border-top:1px solid #3d6070;padding:65px 0;background:linear-gradient(150deg,#10293b,#091a28)}
+.observation-workbook .notice{border:1px solid #a6834f;background:#322b20;color:#ffe6c4;border-radius:12px;padding:18px 22px;margin:22px 0}
+.observation-workbook .notice strong{color:#fff}
+.observation-workbook .obs-context{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}
+.observation-workbook label{display:block;color:#d6e9f0;font-size:.84rem;font-weight:800}
+.observation-workbook input,.observation-workbook select{display:block;min-width:0;width:100%;background:#091e2c;color:#fff;border:1px solid #72929f;border-radius:8px;padding:10px;margin-top:7px;font:inherit}
+.observation-workbook input:focus-visible,.observation-workbook select:focus-visible,.observation-workbook button:focus-visible{outline:3px solid #8ff2db;outline-offset:3px}
+.observation-workbook input[aria-invalid=true]{border-color:#ffb28a}
+.observation-workbook .obs-summary{display:flex;flex-wrap:wrap;gap:11px;margin:23px 0}
+.observation-workbook .obs-summary span{padding:10px 14px;border:1px solid #436979;border-radius:9px;background:#173548;font-weight:750}
+.observation-workbook .obs-summary strong{color:#99f1dc}
+.observation-workbook .obs-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:21px 0}
+.observation-workbook button{font:inherit;border:1px solid #82cbb7;background:#8ff0d8;color:#0a2428;border-radius:9px;padding:11px 19px;font-weight:850;cursor:pointer}
+.observation-workbook button.secondary{background:transparent;color:#d4f9ee}
+.observation-workbook .obs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:25px}
+.observation-workbook .obs-card{min-width:0;background:#102637;border:1px solid #426679;border-radius:13px;padding:18px}
+.observation-workbook .obs-card h3{font-size:1.05rem;margin:8px 0}.observation-workbook .obs-card p{font-size:.86rem;margin:6px 0 14px}
+.observation-workbook .obs-card .obs-key{color:#94f4db;font-weight:850;letter-spacing:.06em;font-size:.74rem}
+.observation-workbook .obs-card .obs-inputs{display:grid;grid-template-columns:minmax(150px,.7fr) minmax(180px,1.3fr);gap:13px}
+.observation-workbook .obs-warning{font-size:.8rem;color:#ffd6ac;min-height:1.4em}
+.observation-workbook .obs-card[data-status="OBSERVED PASS"]{border-left:4px solid #8ce9ce}
+.observation-workbook .obs-card[data-status="OBSERVED FAIL"]{border-left:4px solid #ffb08a}
+.observation-workbook .obs-card[data-status="BLOCKED"]{border-left:4px solid #eac487}
+.observation-workbook .obs-foot{font-size:.87rem;color:#c3d6e1;margin-top:18px}
+@media(max-width:900px){.observation-workbook .obs-context{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:690px){.observation-workbook .obs-grid,.observation-workbook .obs-card .obs-inputs{grid-template-columns:1fr}}
+@media(max-width:430px){.observation-workbook .obs-context{grid-template-columns:1fr}.observation-workbook .obs-actions button{width:100%}}
+@media print{.observation-workbook .obs-actions,.observation-workbook .obs-context{display:none}.observation-workbook .obs-card{break-inside:avoid}}
 </style>
 </head>
 <body><a class="skip" href="#main">Skip to content</a>
@@ -159,6 +189,28 @@ p{color:var(--muted)}.lead{font-size:clamp(1.04rem,2vw,1.23rem);max-width:810px}
 <li class="native-item" data-native-group="Acceptance" data-native-persona="Independent reviewer" data-native-case="NV-029"><article><div class="native-topline"><span>NV-029</span><span class="native-type">Acceptance</span></div><h3>Independent acceptance</h3><p>Only executed, evidenced cases may be accepted; required gaps and entitlements block release.</p><p class="native-review">Owner: Independent reviewer · SOURCE-ONLY checklist · NOT RUN</p></article></li></ol>
 <p class="caption">All case IDs are retained for traceability, but private instance addresses, schema keys, payload hashes, credentials and unpublished source records are omitted. Preserve original evidence privately and obtain independent reviewer approval before promoting any claim.</p>
 </div></section>
+<section id="native-observation-log" class="observation-workbook" aria-labelledby="obs-title">
+<div class="wrap">
+<div class="kicker">Native execution / private reviewer preparation</div>
+<h2 id="obs-title">Capture observations — without inventing acceptance.</h2>
+<p class="section-intro">A browser-local worksheet for the 29 prepared Incident Pack acceptance cases above. Record <em>self-reported observations</em> and anonymous evidence aliases during an independently authorised DEV session, then export a candidate JSON packet for private review. Nothing is transmitted or saved by the site. A reported PASS never becomes DEV-VERIFIED here.</p>
+<div class="notice"><strong>Hard boundary:</strong> Unreviewed observations are not test certification, an installation record, ServiceNow ATF output, a deployment authorisation or publication approval. Original screenshots, instance URLs, credentials, names and customer references must stay in approved private evidence storage. The packet always exports <strong>HOLD / UNREVIEWED / NOT VERIFIED</strong>.</div>
+<div class="obs-context" aria-label="Anonymised execution context">
+<label for="obs-environment">Environment alias (optional)<input id="obs-environment" maxlength="40" placeholder="DEV-LAB-01" autocomplete="off" spellcheck="false"></label>
+<label for="obs-version">Installed version (optional)<input id="obs-version" maxlength="40" placeholder="4.22.8" autocomplete="off" spellcheck="false"></label>
+<label for="obs-scope">Application scope (optional)<input id="obs-scope" maxlength="64" placeholder="x_example_scope" autocomplete="off" spellcheck="false"></label>
+<label for="obs-commit">Exact source SHA (optional)<input id="obs-commit" maxlength="64" placeholder="40 lowercase hex characters" autocomplete="off" spellcheck="false"></label>
+</div>
+<div class="obs-summary" id="obs-summary" aria-live="polite" role="status">
+<span><strong id="obs-notrun">29</strong> not run</span><span><strong id="obs-pass">0</strong> observed pass</span><span><strong id="obs-fail">0</strong> observed fail</span><span><strong id="obs-blocked">0</strong> blocked</span><span><strong id="obs-missing">0</strong> unsupported observations</span>
+</div>
+<div class="obs-actions"><button id="obs-export" type="button">Export UNREVIEWED evidence packet (JSON)</button><button id="obs-reset" class="secondary" type="button">Clear local observations</button></div>
+<p id="obs-alert" class="obs-foot" role="status" aria-live="polite">29 prepared test cases. No observations have been recorded. No native verification is established.</p>
+<div class="obs-grid" id="obs-cases" aria-label="Offline candidate execution notes"></div>
+<p class="obs-foot">Evidence aliases are intentionally short tokens such as <code>EV-NV-001</code>; never paste ServiceNow record data, sensitive URLs or screenshots. A missing/invalid alias is flagged. Exported candidate packets require separate evidence inspection, attributable test execution, permission checks, version reconciliation and independent approval before any evidence class can change.</p>
+<noscript><p>JavaScript is required to record local observations. The 29-case NOT RUN checklist above remains available without JavaScript.</p></noscript>
+</div></section>
+
 <section class="line section"><div class="wrap">
 <div class="kicker">03 / Architectural best practices</div><h2>OOTB-first, version-pinned and fail-closed</h2>
 <div class="cards">
@@ -232,6 +284,101 @@ document.getElementById("native-export").addEventListener("click",()=>{
   document.body.appendChild(anchor);anchor.click();anchor.remove();URL.revokeObjectURL(url);
 });
 
+})();
+</script>
+
+<script>
+(function(){
+"use strict";
+const source=Array.from(document.querySelectorAll("#native-cases [data-native-case]"));
+const host=document.getElementById("obs-cases");
+if(source.length!==29||!host)return;
+const statuses=["NOT RUN","OBSERVED PASS","OBSERVED FAIL","BLOCKED"];
+const observations=new Map();
+const aliases={environment:document.getElementById("obs-environment"),version:document.getElementById("obs-version"),scope:document.getElementById("obs-scope"),commit:document.getElementById("obs-commit")};
+function validAlias(value){return /^[A-Z0-9][A-Z0-9._-]{2,79}$/.test(value)&&!value.includes("..");}
+function sanitizeContext(){
+  const data={environment_alias:aliases.environment.value.trim(),installed_version:aliases.version.value.trim(),application_scope:aliases.scope.value.trim(),source_commit_sha:aliases.commit.value.trim()};
+  const accepted={
+    environment_alias:/^[A-Z0-9][A-Z0-9_-]{2,39}$/.test(data.environment_alias),
+    installed_version:/^[A-Za-z0-9][A-Za-z0-9._+-]{0,39}$/.test(data.installed_version),
+    application_scope:/^(global|x_[a-z0-9_]{3,60})$/.test(data.application_scope),
+    source_commit_sha:/^[0-9a-f]{40}$/.test(data.source_commit_sha)
+  };
+  const result={}; Object.keys(data).forEach(k=>result[k]=accepted[k]?data[k]:null);
+  return result;
+}
+function current(id){return observations.get(id)||{status:"NOT RUN",alias:""};}
+function count(){
+  const totals={"NOT RUN":0,"OBSERVED PASS":0,"OBSERVED FAIL":0,"BLOCKED":0};
+  let missing=0;
+  source.forEach(node=>{
+    const item=current(node.dataset.nativeCase);totals[item.status]++;
+    if(item.status!=="NOT RUN"&&!validAlias(item.alias))missing++;
+  });
+  [["obs-notrun","NOT RUN"],["obs-pass","OBSERVED PASS"],["obs-fail","OBSERVED FAIL"],["obs-blocked","BLOCKED"]].forEach(([id,name])=>document.getElementById(id).textContent=totals[name]);
+  document.getElementById("obs-missing").textContent=missing;
+  document.getElementById("obs-alert").textContent=missing?
+    missing+" self-reported observation(s) lack valid evidence aliases. All candidate results remain UNREVIEWED and NOT VERIFIED.":
+    "All entries are self-reported candidate notes; no ServiceNow runtime acceptance, approval or release is established.";
+}
+source.forEach(node=>{
+ const id=node.dataset.nativeCase;
+ const card=document.createElement("article");card.className="obs-card";card.dataset.caseId=id;card.dataset.status="NOT RUN";
+ const key=document.createElement("span");key.className="obs-key";key.textContent=id+" / "+node.dataset.nativeGroup+" / "+node.dataset.nativePersona;
+ const title=document.createElement("h3");title.textContent=node.querySelector("h3").textContent;
+ const detail=document.createElement("p");detail.textContent=node.querySelector("p").textContent;
+ const wrap=document.createElement("div");wrap.className="obs-inputs";
+ const statusLabel=document.createElement("label");statusLabel.textContent="Self-reported result";
+ const select=document.createElement("select");select.setAttribute("aria-label",id+" self-reported result");
+ statuses.forEach(s=>{const option=document.createElement("option");option.value=s;option.textContent=s;select.appendChild(option);});
+ const evidenceLabel=document.createElement("label");evidenceLabel.textContent="Private evidence alias";
+ const input=document.createElement("input");input.maxLength=80;input.placeholder="EV-"+id;input.autocomplete="off";input.spellcheck=false;input.setAttribute("aria-label",id+" private evidence alias");
+ const warning=document.createElement("p");warning.className="obs-warning";warning.setAttribute("aria-live","polite");
+ function update(){
+   const status=select.value;const alias=input.value.trim();
+   observations.set(id,{status,alias});
+   const bad=status!=="NOT RUN"&&!validAlias(alias);
+   input.setAttribute("aria-invalid",String(bad));
+   warning.textContent=bad?"Private evidence alias required (3–80 safe token characters, no spaces).":"";
+   card.dataset.status=status;count();
+ }
+ select.addEventListener("change",update);input.addEventListener("input",update);
+ statusLabel.appendChild(select);evidenceLabel.appendChild(input);
+ wrap.append(statusLabel,evidenceLabel);card.append(key,title,detail,wrap,warning);host.appendChild(card);
+});
+count();
+document.getElementById("obs-reset").addEventListener("click",()=>{
+ observations.clear();
+ host.querySelectorAll(".obs-card").forEach(card=>{
+  card.querySelector("select").value="NOT RUN";card.querySelector("input").value="";
+  card.querySelector("input").setAttribute("aria-invalid","false");
+  card.querySelector(".obs-warning").textContent="";card.dataset.status="NOT RUN";
+ });
+ Object.values(aliases).forEach(input=>input.value="");count();
+});
+document.getElementById("obs-export").addEventListener("click",()=>{
+ const rows=source.map(node=>{
+  const id=node.dataset.nativeCase;
+  const value=current(id);
+  return {case_id:id,workstream:node.dataset.nativeGroup,persona:node.dataset.nativePersona,
+    planned_control:node.querySelector("h3").textContent,status:value.status,
+    evidence_alias:validAlias(value.alias)?value.alias:null,
+    evidence_missing:value.status!=="NOT RUN"&&!validAlias(value.alias),
+    independent_review_approved:false,dev_verified:false,production_verified:false};
+ });
+ const packet={schema_version:"1.0",kind:"service-now-native-observation-candidate",
+   classification:"source-only",observation_classification:"SELF-REPORTED / UNREVIEWED",
+   native_verification_status:"NOT VERIFIED",release_authorised:false,
+   independent_review_approved:false,publication_status:"HOLD",evidence_origin:"browser-local-candidate",
+   context:sanitizeContext(),planned_cases:29,observations:rows,
+   missing_evidence_aliases:rows.filter(r=>r.evidence_missing).map(r=>r.case_id),
+   instructions:"Privately review original evidence and native test execution before any separate authorised acceptance record. This packet is not a DEV or Production verification receipt."};
+ const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json"});
+ const url=URL.createObjectURL(blob);const link=document.createElement("a");
+ link.href=url;link.download="native-observation-candidate-UNREVIEWED-HOLD.json";
+ document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);
+});
 })();
 </script>
 </body></html>
