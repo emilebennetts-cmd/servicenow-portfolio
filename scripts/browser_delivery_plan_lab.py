@@ -36,6 +36,26 @@ def verify(browser,width):
         assert data["client_approved"] is False
         assert data["original_screenshots_approved"]==0
         assert pending.value.suggested_filename=="delivery-plan-synthetic-preview.json"
+        # The source-backed operating guide is a rehearsal, not a native test.
+        assert page.locator("#persona-cards .persona-card").count()==12
+        page.locator("#persona-role").select_option("scanner")
+        assert page.locator("#persona-cards .persona-card:visible").count()==1
+        assert page.locator('#persona-cards .persona-card:visible').get_attribute("data-procedure")=="4.9"
+        assert "1 of 12" in page.locator("#persona-count").inner_text()
+        page.locator('#persona-cards .persona-card:visible input').check()
+        assert "1 read" in page.locator("#persona-count").inner_text()
+        with page.expect_download() as packet:
+            page.locator("#persona-export").click()
+        txt=Path(packet.value.path()).read_text(encoding="utf-8")
+        assert packet.value.suggested_filename=="delivery-workbench-rehearsal-hold.txt"
+        assert "NOT RUN | HOLD" in txt
+        assert "production_verified=false" in txt
+        assert "[x] Guide §4.9" in txt
+        page.locator("#persona-role").select_option("all")
+        page.locator("#persona-reset").click()
+        assert "0 read" in page.locator("#persona-count").inner_text()
+        assert page.locator("#persona-cards .persona-card:visible").count()==12
+        assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth+2"),f"{width}px overflow after role switch"
         assert not errors,errors
         assert not requests,requests
         print(f"PASS {width}px: 8 views, SOW safety, 24 preview selector, export, no network")
