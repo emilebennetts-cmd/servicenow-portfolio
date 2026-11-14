@@ -48,6 +48,7 @@ let receipt=null;
 function setStatus(message,kind){status.textContent=message;status.className=kind||"";}
 function clear(){receipt=null;file.value="";results.classList.add("hidden");el("receipt").disabled=true;setStatus("No CSV reviewed. Structural status: NOT ASSESSED · HOLD.");}
 function parseCsv(text){
+ if(text.charCodeAt(0)===65279)text=text.slice(1);
  if(text.length>262144 || text.includes("\u0000") || text.includes("\ufffd"))throw Error("File is too large or contains unsupported bytes.");
  const rows=[];let row=[],cell="",quoted=false,afterQuote=false;
  for(let i=0;i<text.length;i++){
