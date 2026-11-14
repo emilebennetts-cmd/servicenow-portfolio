@@ -24,3 +24,11 @@ Updated public homepage directory, 90-second review, implementation-boundary pag
 - Website quality and deployment must be validated separately against GitHub Actions final release SHA. Native DEV acceptance and Production acceptance remain open.
 
 **Open blockers:** Customer-specific licence/legal schedule validation, target-instance access and native testing, independent release acceptance, and individual screenshot approval.
+
+## Release reconciliation and independent test boundary
+
+- Final public register contains **89 classified claims**: 56 SOURCE-ONLY (including this site gate), 20 MOCK-ONLY, 9 PROPOSED and 4 historical DEV-REPORTED. Zero independent native DEV-VERIFIED or PRODUCTION-VERIFIED.
+- **76 indexed HTML case-study pages** plus homepage appear in the uniquely sorted public sitemap; public Portfolio Explorer summary matches the index.
+- `scripts/browser_entitlement_readiness.py` and `.github/workflows/entitlement-readiness-browser.yml` exercise four responsive widths, switching domains, browser-local JSON export, false approval flags and zero remote requests.
+- Static unit tests also assert the single source-only claim and future-proof sitemap/index equality.
+- Connector read-back and structural invariants passed; independent execution of the new Chromium workflow and final GitHub Pages HTTP retrieval could not be confirmed in this environment. Treat both as **NOT CONFIRMED**, not as a native or website release acceptance.
