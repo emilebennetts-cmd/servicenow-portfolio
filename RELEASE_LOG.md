@@ -1,3 +1,9 @@
+## 15 November 2026 — Knowledge Intelligence CSV baseline integrity guard (SOURCE-ONLY / PROPOSED / MOCK-ONLY / HOLD)
+
+- Repaired an incorrect `test_id` comparison in the intake checker that accepted forged unique case IDs; rejected modified instructions and expected outcomes for all four canonical RUN/TABLE/FIELD/LINT procedures. Retained original source-domain, schema, completeness, flag and CSV guards.
+- Strengthened four-viewport Chromium regression with forged-ID, unsafe TABLE-instruction and false-healthy TABLE-outcome negative tests. The receipt explicitly declares that authenticity was **not** cryptographically verified. No imported client evidence or native runtime results are published.
+- [Technical release and testing boundary](releases/2026-11-15-ki-intake-baseline-integrity.md). No static-site licence needed; native execution requires product entitlements, scoped App Engine/ACL rights and target acceptance. DEV-VERIFIED and PRODUCTION-VERIFIED remain false; screenshot publication approvals stay at **0 / HOLD**.
+
 ## 15 November 2026 — Restore publication quality gates for Knowledge Intelligence CSV intake (MOCK-ONLY / HOLD)
 
 - Investigated final-head GitHub Actions failures rather than treating the successful Pages deployment as evidence of release quality. The quality audit found an out-of-date Portfolio Explorer count; the quality gate found the new page absent from the verification register; Chromium reported a test race while waiting for browser File.text() after CSV selection.
