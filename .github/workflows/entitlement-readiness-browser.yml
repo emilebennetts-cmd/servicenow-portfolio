@@ -1,0 +1,33 @@
+name: Entitlement Readiness — Public Browser Assurance
+on:
+  push:
+    paths:
+      - 'entitlement-readiness.html'
+      - 'scripts/browser_entitlement_readiness.py'
+      - 'tests/test_entitlement_readiness.py'
+      - '.github/workflows/entitlement-readiness-browser.yml'
+      - 'evidence/public-verification-register.json'
+      - 'portfolio-explorer.html'
+      - 'sitemap.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify public licence and evidence boundary
+        run: python -m unittest discover -s tests -p 'test_entitlement_readiness.py'
+      - name: Install Playwright and Chromium
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Exercise four responsive viewports and offline HOLD export
+        run: python scripts/browser_entitlement_readiness.py
