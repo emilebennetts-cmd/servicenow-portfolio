@@ -30,3 +30,7 @@ This release repairs website quality controls, not native ServiceNow capability.
 **Entitlements:** The public HTML, CSV review and local JSON export require **no ServiceNow licence**. Native Knowledge Intelligence needs confirmed App Engine/custom-table and scoped application rights, `ki_admin`/`ki_user` (as appropriate), ACLs, licensed underlying ITSM/CMDB/ITOM/ITAM/SecOps/IRM/HRSD/CSM/SPM content, plus optional IntegrationHub, AI, ATF and third-party knowledge rights.
 
 **Restricted evidence:** Existing sensitive source, customer details and genuine screenshots stay private; publication approval count is **zero / HOLD**. Independent native DEV and Production acceptance remain outstanding.
+
+## Follow-up: narrow-screen overflow and variable catalogue tests
+
+An initial browser regression read-back at 390px exposed a real page overflow (document 498px versus a 390px viewport). DOM inspection isolated the overlong slash-delimited licensing string inside a notice paragraph. Added `overflow-wrap:anywhere` to prose/list text so the entitlement explanation wraps within the mobile viewport rather than being clipped. The Worklist browser contract previously assumed exactly 20 MOCK-ONLY claims; with the newly registered intake claim, its JSON/CSV assertions now derive the expected number from the public register. Browser quality results remain pending a fresh final-head run.
