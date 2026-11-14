@@ -1,3 +1,9 @@
+## 15 November 2026 — KI capability-label substitution and spreadsheet-formula quarantine (SOURCE-ONLY / PROPOSED / MOCK-ONLY / HOLD)
+
+- The public 180-case CSV intake checker now pins **all 45 module descriptions** to the canonical public matrix generator instead of merely requiring non-empty labels. A forged formula-like capability cell, cross-module label swap or whitespace-modified label now triggers a structural exception; the one-module demonstration uses the canonical label too.
+- Added four-width Chromium negative regressions covering formula substitution, swapped labels and drift; the JSON review receipt records `capability_label_check: true` but explicitly **does not** claim cryptographic authenticity, executed ServiceNow tests or sign-off.
+- [Release, threat model and licensing](releases/2026-11-15-ki-capability-label-integrity.md). No ServiceNow licence is needed for this public offline checker. Native collector tests require subscribed product rights, scoped ACLs and independently reviewed entitlements. Original screenshot publication approvals remain **0 / HOLD**.
+
 ## 15 November 2026 — Knowledge Intelligence CSV baseline integrity guard (SOURCE-ONLY / PROPOSED / MOCK-ONLY / HOLD)
 
 - Repaired an incorrect `test_id` comparison in the intake checker that accepted forged unique case IDs; rejected modified instructions and expected outcomes for all four canonical RUN/TABLE/FIELD/LINT procedures. Retained original source-domain, schema, completeness, flag and CSV guards.
