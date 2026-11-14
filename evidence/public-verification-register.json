@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-14T08:24:16.462Z",
+  "updated_utc": "2026-11-14T15:15:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -811,6 +811,15 @@
       "runtime_verification": "Public browser-only capability filtering and a locally downloaded UNREVIEWED / NOT VERIFIED / HOLD JSON worksheet. All native DEV, target-instance subscription checks, security approval, ITSM/ITOM/IntegrationHub/analytics/ATF entitlements and Production acceptance are NOT VERIFIED. Historical DEV-REPORTED baselines remain separate; no verification promotion.",
       "public_screenshot_status": "No original screenshots used. All original ServiceNow captures remain individually unapproved (zero approved) and held from public publication.",
       "page": "entitlement-readiness.html"
+    },
+    {
+      "id": "CSDM5-NATIVE-ACCEPTANCE-DESK-20261115",
+      "title": "CSDM 5 native acceptance preparation desk — synthetic six-gate scenarios",
+      "classification": "mock-only",
+      "basis": "Source-informed, independently authored browser-only CSDM 5 scenario review desk; three fictional service-ownership, IRE identity and offering scenarios and six fixed preparation controls. Supporting case study is source-reviewed architecture, not installed runtime proof.",
+      "runtime_verification": "No native CMDB query, IRE preview, ServiceNow DEV/Production read-back, licensed-feature test or owner attestation. Browser selections are preparation stages only; all JSON exports preserve MOCK-ONLY / NOT RUN / NOT VERIFIED / UNREVIEWED / HOLD and false approval/production flags.",
+      "public_screenshot_status": "No original ServiceNow capture, customer record or private file linked or embedded. Original screenshot approvals remain zero / HOLD.",
+      "page": "csdm-native-acceptance.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
