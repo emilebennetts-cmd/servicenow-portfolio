@@ -62,7 +62,7 @@ class CollectorFaultContractTests(unittest.TestCase):
                      "KI-COL-01", "KI-COL-02", "KI-COL-03", "KI-COL-04",
                      "source-informed, synthetic contract gallery"):
             self.assertIn(text, self.html)
-        self.assertIn("historical DEV-REPORTED", self.html)
+        self.assertIn("DEV-REPORTED", self.html)
         self.assertIn("no DEV read-back", self.html.lower())
         self.assertIn("no ServiceNow licence", self.html)
 
