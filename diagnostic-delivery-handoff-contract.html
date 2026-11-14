@@ -47,7 +47,7 @@ fieldset{border:0;padding:0;margin:0}legend{font-weight:800;margin-bottom:.8rem}
 <button type="button" data-lane="dev" aria-pressed="false">Native DEV verification</button>
 <button type="button" data-lane="production" aria-pressed="false">Production release</button>
 </div></fieldset>
-<label class="check"><input id="critical" type="checkbox"> Show blocking / mandatory controls only</label>
+<label class="check"><input id="critical" type="checkbox"> Show blocking controls only</label>
 <p id="summary" role="status" aria-live="polite">Tier 0: planning only; no customer-instance execution.</p>
 <div class="actions"><button type="button" id="export">Export non-certifying review packet (JSON)</button><button type="button" id="reset" class="secondary">Reset view</button><button type="button" id="print" class="secondary">Print contract</button></div>
 <p style="font-size:.86rem">All exports are generated locally. They contain generic control statements and explicitly remain UNREVIEWED / NOT VERIFIED / HOLD. Nothing is uploaded, persisted or approved.</p>
@@ -85,7 +85,7 @@ var active='tier0',critical=false,steps=document.getElementById('steps');
 function el(tag,cls,text){var node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
 function result(){return controls.map(function(c,i){return {id:c.id,title:c.title,owner:c.owner,control_state:lanes[active].states[i],required_evidence:c.evidence,context:lanes[active].notes[i]};});}
 function render(){
- var lane=lanes[active],all=result(),visible=all.filter(function(r){return !critical||r.control_state==='blocked'||r.control_state==='required';});
+ var lane=lanes[active],all=result(),visible=all.filter(function(r){return !critical||r.control_state==='blocked';});
  steps.replaceChildren();visible.forEach(function(r){
   var source=controls.find(function(c){return c.id===r.id;});
   var card=el('article','step');card.dataset.state=r.control_state;card.append(el('span','index',r.id),el('h3','',r.title),el('span','state',r.control_state.toUpperCase()));
@@ -100,7 +100,7 @@ document.getElementById('critical').addEventListener('change',function(e){critic
 document.getElementById('reset').addEventListener('click',function(){active='tier0';critical=false;document.getElementById('critical').checked=false;render();});
 document.getElementById('print').addEventListener('click',function(){window.print();});
 document.getElementById('export').addEventListener('click',function(){
- var packet={schema_version:'1.0',title:'Diagnostic-to-Delivery Handoff Contract',source_basis:'public source-bounded architecture',interaction_classification:'MOCK-ONLY',architecture_classification:'SOURCE-ONLY',boundary:active,boundary_label:lanes[active].label,filter_mandatory:critical,review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,records:result()};
+ var packet={schema_version:'1.0',title:'Diagnostic-to-Delivery Handoff Contract',source_basis:'public source-bounded architecture',interaction_classification:'MOCK-ONLY',architecture_classification:'SOURCE-ONLY',boundary:active,boundary_label:lanes[active].label,filter_blockers_only:critical,review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,records:result()};
  var url=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)+'\n'],{type:'application/json;charset=utf-8'})),link=el('a');
  link.href=url;link.download='diagnostic-delivery-handoff-hold.json';document.body.append(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);
 });
