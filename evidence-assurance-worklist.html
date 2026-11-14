@@ -60,8 +60,8 @@ section{margin:2.4rem 0}.toolbar{display:grid;grid-template-columns:minmax(0,2fr
 <label for="classification">Evidence classification<select id="classification"><option value="all">All classifications</option><option value="source-only">SOURCE-ONLY</option><option value="DEV-reported">DEV-REPORTED</option><option value="mock-only">MOCK-ONLY</option><option value="proposed">PROPOSED</option><option value="DEV-verified">DEV-VERIFIED</option><option value="production-verified">PRODUCTION-VERIFIED</option></select></label>
 <label for="action-filter">Next control gate<select id="action-filter"><option value="all">All gates</option><option value="design">Design / approve</option><option value="integration">Replace mock / validate integration</option><option value="native">Run native acceptance</option><option value="repeat">Repeat historical DEV</option><option value="release">Independent release review</option></select></label>
 </div>
-<div class="actions"><button class="primary" id="download" disabled>Export filtered worklist (JSON)</button><button id="clear">Reset filters</button></div>
-<p class="hint">Export is browser-local and includes public claim IDs, classification, next-gate guidance and a public page reference only. It always carries UNREVIEWED / NOT VERIFIED / HOLD labels.</p>
+<div class="actions"><button class="primary" id="download" disabled>Export filtered worklist (JSON)</button><button id="download-csv" disabled>Export review worksheet (CSV)</button><button id="clear">Reset filters</button></div>
+<p class="hint">Both exports are created locally from the current filters and contain only public claim IDs, classifications, next-gate actions and public page references. CSV is spreadsheet-safe: dangerous formula-leading cells are neutralised. Both carry UNREVIEWED / NOT VERIFIED / HOLD labels and can never certify runtime execution.</p>
 <p id="status" class="count" role="status" aria-live="polite">Loading the same-origin public verification register…</p>
 <p id="failure" hidden role="alert">Public register unavailable or invalid. No claim or verification state has been inferred.</p>
 <div id="results" class="cards" aria-label="Filtered evidence review actions"></div>
@@ -81,7 +81,7 @@ section{margin:2.4rem 0}.toolbar{display:grid;grid-template-columns:minmax(0,2fr
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
-const search=$('search'),classification=$('classification'),actionFilter=$('action-filter'),results=$('results'),status=$('status'),failure=$('failure'),download=$('download'),more=$('load-more');
+const search=$('search'),classification=$('classification'),actionFilter=$('action-filter'),results=$('results'),status=$('status'),failure=$('failure'),download=$('download'),csvDownload=$('download-csv'),more=$('load-more');
 const allowed=new Set(['source-only','DEV-reported','mock-only','proposed','DEV-verified','production-verified']);
 const nextGate={
  'proposed':['design','Approve the design, confirm entitlements and implement in a controlled target before planning runtime tests.'],
@@ -127,18 +127,35 @@ function render(){
   details.append(dl);article.append(details);
   const a=make('a','','Open public case study');a.href=c.page;article.append(a);fragment.append(article);
  });
- results.append(fragment);more.hidden=all.length<=limit;more.disabled=all.length<=limit;download.disabled=all.length===0;
+ results.append(fragment);more.hidden=all.length<=limit;more.disabled=all.length<=limit;download.disabled=all.length===0;csvDownload.disabled=all.length===0;
 }
 function packet(){
  return {schema_version:'1.0',source:'evidence/public-verification-register.json',register_updated_utc:updatedUtc,exported_utc:new Date().toISOString(),review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',independent_native_verification:false,production_acceptance:false,screenshot_publication_approved:false,filter:{classification:classification.value,next_gate:actionFilter.value,search:search.value.trim().slice(0,120)},items:filtered().map(c=>({id:c.id,title:c.title,classification:c.classification,next_gate:nextGate[c.classification][0],recommended_action:nextGate[c.classification][1],public_page:c.page}))};
 }
-download.addEventListener('click',()=>{if(!items.length||!filtered().length)return;const blob=new Blob([JSON.stringify(packet(),null,2)+'\n'],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='servicenow-public-evidence-assurance-worklist.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+function saveFile(data,type,name){
+ const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;document.body.append(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvCell(value){
+ const cleaned=String(value).replace(/[\u0000-\u001f\u007f]/g,' ');
+ // Protect Excel/Sheets from formula injection, including cells with leading whitespace.
+ const neutralised=/^\s*[=+\-@]/.test(cleaned)?"'"+cleaned:cleaned;
+ return '"'+neutralised.replace(/"/g,'""')+'"';
+}
+function csvPacket(){
+ const header=['claim_id','title','classification','next_gate','recommended_action','public_page','register_updated_utc','review_state','verification_state','release_state','independent_native_verification','production_acceptance','screenshot_publication_approved'];
+ const rows=filtered().map(c=>[c.id,c.title,c.classification,nextGate[c.classification][0],nextGate[c.classification][1],c.page,updatedUtc,'UNREVIEWED','NOT VERIFIED','HOLD','FALSE','FALSE','FALSE']);
+ return [header,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n')+'\r\n';
+}
+download.addEventListener('click',()=>{if(!items.length||!filtered().length)return;saveFile(JSON.stringify(packet(),null,2)+'\n','application/json;charset=utf-8','servicenow-public-evidence-assurance-worklist.json');});
+csvDownload.addEventListener('click',()=>{if(!items.length||!filtered().length)return;saveFile(csvPacket(),'text/csv;charset=utf-8','servicenow-public-evidence-assurance-worklist.csv');});
 more.addEventListener('click',()=>{limit+=12;render();});
 $('clear').addEventListener('click',()=>{search.value='';classification.value='all';actionFilter.value='all';limit=12;render();});
 [search,classification,actionFilter].forEach(el=>el.addEventListener(el===search?'input':'change',()=>{limit=12;render();}));
 fetch('evidence/public-verification-register.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP');return r.json();}).then(d=>{const valid=validate(d);items=valid.items;updatedUtc=valid.updated_utc;
  tally('total',()=>true);tally('source-count',c=>c.classification==='source-only');tally('mock-count',c=>c.classification==='mock-only');tally('reported-count',c=>c.classification==='DEV-reported');tally('proposal-count',c=>c.classification==='proposed');tally('verified-count',c=>c.classification==='DEV-verified'||c.classification==='production-verified');render();
-}).catch(()=>{items=[];results.replaceChildren();failure.hidden=false;status.textContent='Public evidence unavailable; no claims inferred.';download.disabled=true;more.hidden=true;});
+}).catch(()=>{items=[];results.replaceChildren();failure.hidden=false;status.textContent='Public evidence unavailable; no claims inferred.';download.disabled=true;csvDownload.disabled=true;more.hidden=true;});
 })();
 </script>
 </body></html>
