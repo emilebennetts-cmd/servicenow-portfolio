@@ -83,7 +83,7 @@ class EntitlementReadinessTests(unittest.TestCase):
         self.assertIn("No original", own[0]["public_screenshot_status"])
 
     def test_sitemap_and_directory_match_without_hardcoded_totals(self):
-        paths = re.findall(r'/servicenow-portfolio/([a-z0-9-]+\\.html)</loc>', SITEMAP.read_text(encoding="utf-8"))
+        paths = re.findall(r'/servicenow-portfolio/([a-z0-9-]+[.]html)</loc>', SITEMAP.read_text(encoding="utf-8"))
         catalog = re.findall(r'<li class="result"', EXPLORER.read_text(encoding="utf-8"))
         self.assertEqual(len(paths), len(set(paths)))
         self.assertEqual(paths, sorted(paths))
