@@ -1,3 +1,9 @@
+## 15 November 2026 — Delivery source-to-target release identity preflight (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Added a working local-only [Release Identity Preflight](delivery-release-evolution.html#release-identity-preflight) to the existing Release Evolution case study: exact source-scope/version comparison, four synthetic scenarios, invalid-input handling, mobile layout and a downloadable **redacted HOLD-only JSON worksheet**.
+- The feature deliberately never upgrades matching labels to native certification: **NO DEV-VERIFIED, NO PRODUCTION-VERIFIED, NO screenshot approval**. User-entered raw target values are omitted from the export, and no external requests or local storage are used.
+- Added contract regression and four-width Chromium tests with a dedicated GitHub Actions workflow. [Release, security boundary and licensing](releases/2026-11-15-delivery-release-identity-preflight.md). Public website requires no ServiceNow licence; native scoped app, roles/ACLs, underlying products, IntegrationHub/AI and provider-specific rights are independently verified.
+
 ## 15 November 2026 — Reconcile contradictory Delivery DEV release receipts (SOURCE-ONLY / DEV-REPORTED / HOLD)
 
 - Cross-checked the current Delivery README against controlled 19 October As-Built / Architecture and user-guide text. Distinguish source version 4.22.2, README historical 4.20.0 DEV-reported on 5 October, and a separate documentation assertion of a 4.22.2 DEV read-back on 6 October whose introduction cautions that source 4.22.2 is not represented as installed. The statements remain unresolved pending version-matched independent target evidence.
