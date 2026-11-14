@@ -15,6 +15,28 @@
 .claim-review .decision p{margin:0;color:#ffe3c4}
 @media(max-width:720px){.claim-columns{grid-template-columns:1fr}.claim-record dl{grid-template-columns:1fr;gap:2px}.claim-record dd{margin-bottom:9px}}
 @media print{.claim-review,.claim-record,.claim-review details{background:#fff;color:#111;border-color:#999}.claim-record p,.claim-review p,.claim-record dt,.claim-record dd{color:#222}.claim-review details{break-inside:avoid}}
+
+/* Local-only release identity preflight: cannot certify native execution. */
+.preflight{border:1px solid #548196;border-radius:20px;padding:clamp(18px,3.4vw,32px);margin:40px 0;background:#0d2637}
+.preflight h2{margin:0 0 12px}.preflight .preface{max-width:77ch}.preflight label{font-weight:750;display:block;margin:0 0 7px}
+.preflight input{width:100%;min-width:0;border:1px solid #83a9ba;border-radius:9px;background:#061724;color:#fff;padding:12px 13px;font:inherit}
+.preflight input:focus-visible,.preflight button:focus-visible{outline:3px solid #ffcf78;outline-offset:3px}
+.preflight .field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.preflight .reference{background:#17364a;border:1px solid #4c7288;border-radius:12px;padding:15px;overflow-wrap:anywhere}
+.preflight .reference strong{display:block;color:#fff}.preflight .reference code{color:#9ff5dc}
+.preflight .hint{font-size:.87rem;color:#c9dfe8;margin:7px 0 0}
+.preflight .presets,.preflight .toolbar{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}
+.preflight button{cursor:pointer;border-radius:9px;border:1px solid #81a8bd;background:#1b3d54;color:#fff;font:700 .93rem/1.4 system-ui,sans-serif;padding:11px 16px}
+.preflight button.primary{background:#a7f5df;color:#082331;border-color:#a7f5df}
+.preflight button:hover{filter:brightness(1.12)}
+.preflight .decision-panel{background:#30281e;border:1px solid #987a4a;padding:17px 19px;border-radius:12px}
+.preflight .decision-panel strong{color:#ffda9d}.preflight .decision-panel p{color:#f7e0c4;margin:5px 0}
+.preflight .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+.preflight .result{border:1px solid #56798a;border-radius:10px;padding:13px;background:#142e40}
+.preflight .result span{font-size:.78rem;color:#c5dce4}.preflight .result strong{display:block;color:#fff;overflow-wrap:anywhere}
+.preflight .privacy{font-size:.88rem;color:#cde0e9}
+@media(max-width:650px){.preflight .field-grid,.preflight .result-grid{grid-template-columns:1fr}.preflight button{flex:1 1 auto}}
+@media print{.preflight{background:#fff;color:#111}.preflight .decision-panel,.preflight .reference,.preflight .result{background:#fff;color:#111}.preflight p,.preflight strong,.preflight .decision-panel p{color:#222!important}.preflight .presets,.preflight .toolbar{display:none}}
 </style></head><body><header><nav class="wrap" aria-label="Primary"><a href="index.html">← Portfolio</a><a href="pattern-library.html">Pattern library</a><a href="verification-ledger.html">Verification ledger</a><a href="visual-evidence.html">Visual evidence</a></nav></header><main class="wrap"><span class="badge">Source-traced engineering case study · reviewed 15 November 2026</span><h1>From delivery records to a governed lifecycle engine.</h1><p class="lead">An evidence-conscious account of how the Universal Delivery Workbench evolved into a single guided ServiceNow delivery product—without conflating repository capabilities, instance validation, mock integrations or production deployment.</p><section><h2>01 · The client's pain &amp; history</h2><p>Delivery knowledge spread across legacy workbenches, diagnostic investigations, pattern references and document-generation workflows creates duplicate effort and weak traceability. The engineering objective was to bring discovery, design, build, assurance and handover into one controlled journey while preserving the original evidence systems of record.</p></section><section><h2>02 · The ServiceNow solution</h2><div class="grid"><article class="card"><h3>One canonical delivery shell</h3><p>Source documentation describes Solution Lifecycle Studio as the lifecycle engine inside the Universal Delivery Workbench, with legacy Delivery Workbench retained read-only. Diagnostic investigations remain separately owned; delivery carries reviewed references rather than copying writable findings.</p></article><article class="card"><h3>Pattern-led implementation</h3><p>Scope selection previews source-traced implementation drafts. Generation can reconcile linked scope, workshops, requirements, decisions, build guidance, unrun tests and handover actions while preserving existing edits and approvals. Other modules receive a review-required scaffold—not invented OOTB defaults.</p></article><article class="card"><h3>Governed documentation</h3><p>The source README describes a first-class Delivery Plan, eight narrative document types, and controlled HTML/Word output with Executive, Client and Technical depths. Acceptance and issue gates remain in place.</p></article><article class="card"><h3>Integration truthfulness</h3><p>Jira, Confluence and Notion contracts have mock-only correlation and replay checks. Live authentication, external writes and production sync are not verified; provider activation remains gated.</p></article></div></section><section><h2>Release and evidence timeline</h2><div class="timeline"><article><h3>4.20.0 · Instance baseline</h3><p>The repository README reports DEV instance read-back for the canonical and compatibility UI clients, including recovery and record-preservation evidence on 5 October 2026. This is <strong>repository-reported DEV evidence</strong>, not independent verification by this website.</p></article><article><h3>4.21.x · Context and planning</h3><p>Source release notes describe Delivery Plan navigation, a contextual Next Best Action rail and integration status visibility. Deployment/read-back for later versions is tracked separately.</p></article><article><h3>4.22.2 · Current README declaration</h3><p>The latest reviewed README identifies version 4.22.2 and a presentation-only context-rail patch. This is a <strong>source declaration</strong>; it does not prove that the same build is deployed in DEV or production.</p></article></div></section>
 <section class="claim-review" id="release-evidence-reconciliation" aria-labelledby="claim-review-title">
 <span class="badge">Evidence conflict review · 15 November 2026</span>
@@ -31,4 +53,97 @@
 <p class="decision"><strong>Release decision: HOLD.</strong> SOURCE-ONLY is supported for the current code declaration; historical records remain DEV-REPORTED and partly conflicting. There is no new DEV-VERIFIED or PRODUCTION-VERIFIED assertion and no approved original screenshot. This section is a documentation comparison, not a live diagnostic or installed application feature.</p>
 <p><a href="verification-ledger.html">Read the public verification ledger</a> · <a href="workbench-acceptance-playbook.html">Inspect native acceptance criteria</a> · <a href="screenshot-publication-gate.html">Review image clearance controls</a></p>
 </section>
-<section><h2>03 · Architectural best practices</h2><div class="grid"><article class="card"><h3>OOTB-first and upgrade-safe</h3><p>Keep native Incident, Change and approval processes authoritative. Use stable scoped identities, extension points, explicit contracts and isolated synthetic demonstrations.</p></article><article class="card"><h3>Assurance and traceability</h3><p>Preserve source references, hash-locked approvals, time-bound waivers, measurable acceptance criteria and independent release evidence before claiming deployed functionality.</p></article></div><p class="callout"><strong>Verification boundary:</strong> This is a documentation case study, not a live ServiceNow demo. No production deployment is claimed. No private code, customer records or unreviewed screenshots are embedded. For visual material, consult the gated evidence register.</p></section><section><h2>Licensing and entitlements</h2><p>This public static page needs no ServiceNow licence. Deploying the scoped workbench requires authorised instance access and applicable custom-application entitlements. ITSM/ITOM/IRM/HRSD/CSM patterns require the relevant subscribed products. IntegrationHub spokes, external provider credentials, AI features and advanced analytics require separate entitlement and security checks where used.</p><p><strong>Primary public source:</strong> <a href="./delivery-case-study.html">Read public Delivery case study →</a>. Historical As-Built material was located in connected Google Drive but is not redistributed here. This page reconciles the authenticated source README and restricted documentation as reviewed 15 November 2026; it does not reproduce private files or certify a current installation.</p></section></main><footer><div class="wrap">ServiceNow Professional Portfolio · Evidence-labelled technical work</div></footer></body></html>
+
+<section class="preflight" id="release-identity-preflight" aria-labelledby="preflight-heading">
+<span class="badge">Interactive, offline-only · metadata comparison · MOCK-ONLY</span>
+<h2 id="preflight-heading">Release identity preflight</h2>
+<p class="preface">Compare manually entered target metadata against the reviewed Delivery source declaration. This is a <strong>local preparation aid</strong>, not a ServiceNow connector, runtime probe, acceptance test or independent witness. Even an exact metadata match remains <strong>HOLD</strong> until the package, identity, roles, ACLs and native acceptance are evidenced.</p>
+<div class="field-grid" aria-label="Reviewed source declaration">
+<div class="reference"><strong>Expected source technical scope</strong><code>x_1577958_vdf</code><p class="hint">Private repository README / reviewed source; not a universal target requirement</p></div>
+<div class="reference"><strong>Expected source release declaration</strong><code>4.22.2</code><p class="hint">Source version, not an independently verified installed package</p></div>
+</div>
+<p><strong>Try a synthetic discrepancy</strong> or enter only non-sensitive, sanitised metadata. No instance credentials, customer names, sys_ids, access tokens or evidence content.</p>
+<div class="presets" aria-label="Example scenarios">
+<button type="button" data-preflight-preset="scope">Scope mismatch example</button>
+<button type="button" data-preflight-preset="version">Older DEV version example</button>
+<button type="button" data-preflight-preset="aligned">Matching labels example</button>
+<button type="button" data-preflight-preset="unknown">Unknown target example</button>
+</div>
+<form id="release-preflight-form" novalidate>
+<div class="field-grid">
+<div><label for="target-scope">Observed target technical scope</label><input id="target-scope" name="target-scope" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="90" placeholder="e.g. x_1577958_vdf" aria-describedby="scope-guidance"><p id="scope-guidance" class="hint">The actual application technical scope, not display name</p></div>
+<div><label for="target-version">Observed installed app version</label><input id="target-version" name="target-version" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="40" placeholder="e.g. 4.20.0" aria-describedby="version-guidance"><p id="version-guidance" class="hint">Read from the authorised installed application record</p></div>
+</div>
+<div class="toolbar"><button type="button" class="primary" id="preflight-export">Download HOLD-only JSON worksheet</button><button type="reset">Clear observations</button></div>
+</form>
+<p id="preflight-origin" class="hint">Scenario: no target observations loaded</p>
+<div class="result-grid" aria-label="Local comparison results">
+<div class="result"><span>Technical scope comparison</span><strong id="scope-result">UNAVAILABLE</strong></div>
+<div class="result"><span>Release version comparison</span><strong id="version-result">UNAVAILABLE</strong></div>
+</div>
+<div class="decision-panel" role="status" aria-live="polite" aria-atomic="true"><strong id="preflight-status">HOLD — insufficient target metadata</strong><p id="preflight-detail">Enter source-matched fields or load a synthetic scenario; this is not a live instance check.</p></div>
+<p class="privacy">Privacy boundary: all comparisons run in your browser with no server request, analytics or storage. The downloadable worksheet contains <strong>comparison statuses only</strong>, never entered values. An exact text match does not authenticate a package or establish DEV-VERIFIED or PRODUCTION-VERIFIED operation.</p>
+<p><a href="deployment-identity-gates.html">Scope identity and migration gate</a> · <a href="workbench-acceptance-playbook.html">Native acceptance playbook</a> · <a href="screenshot-review-packet.html">Image-by-image approval workflow</a></p>
+</section>
+<section><h2>03 · Architectural best practices</h2><div class="grid"><article class="card"><h3>OOTB-first and upgrade-safe</h3><p>Keep native Incident, Change and approval processes authoritative. Use stable scoped identities, extension points, explicit contracts and isolated synthetic demonstrations.</p></article><article class="card"><h3>Assurance and traceability</h3><p>Preserve source references, hash-locked approvals, time-bound waivers, measurable acceptance criteria and independent release evidence before claiming deployed functionality.</p></article></div><p class="callout"><strong>Verification boundary:</strong> This is a documentation case study, not a live ServiceNow demo. No production deployment is claimed. No private code, customer records or unreviewed screenshots are embedded. For visual material, consult the gated evidence register.</p></section><section><h2>Licensing and entitlements</h2><p>This public static page needs no ServiceNow licence. Deploying the scoped workbench requires authorised instance access and applicable custom-application entitlements. ITSM/ITOM/IRM/HRSD/CSM patterns require the relevant subscribed products. IntegrationHub spokes, external provider credentials, AI features and advanced analytics require separate entitlement and security checks where used.</p><p><strong>Primary public source:</strong> <a href="./delivery-case-study.html">Read public Delivery case study →</a>. Historical As-Built material was located in connected Google Drive but is not redistributed here. This page reconciles the authenticated source README and restricted documentation as reviewed 15 November 2026; it does not reproduce private files or certify a current installation.</p></section></main><footer><div class="wrap">ServiceNow Professional Portfolio · Evidence-labelled technical work</div></footer>
+<script>
+/* Release preflight is intentionally offline, non-certifying and value-redacting. */
+(function(){
+"use strict";
+const byId=id=>document.getElementById(id);
+const scope=byId("target-scope"),version=byId("target-version"),form=byId("release-preflight-form");
+const expected=Object.freeze({scope:"x_1577958_vdf",version:"4.22.2"});
+let origin="No target observations";
+function classify(raw,kind){
+const value=raw.trim();
+if(!value)return "UNAVAILABLE";
+if(kind==="scope"&&!/^x_[a-z0-9_]{1,60}$/.test(value))return "INVALID INPUT";
+if(kind==="version"&&!/^[0-9]{1,5}(\.[0-9]{1,5}){2}$/.test(value))return "INVALID INPUT";
+return value===expected[kind]?"TEXT MATCH · NOT VERIFIED":"MISMATCH";
+}
+function current(){return {scope:classify(scope.value,"scope"),version:classify(version.value,"version")};}
+function refresh(){
+const result=current();
+byId("scope-result").textContent=result.scope;
+byId("version-result").textContent=result.version;
+byId("preflight-origin").textContent="Scenario: "+origin;
+let title="HOLD — insufficient target metadata",detail="Target metadata is missing. This preparation aid cannot read a ServiceNow instance.";
+if(Object.values(result).includes("INVALID INPUT")){
+title="HOLD — invalid metadata format";detail="Use a technical scope beginning x_ and a numeric three-part app version; no raw values are retained in exported worksheets.";
+}else if(Object.values(result).includes("MISMATCH")){
+title="HOLD — divergent application identity";detail="Stop release promotion. Verify scoped application identity, immutable package receipt, target-specific migration requirements and native tests.";
+}else if(Object.values(result).every(x=>x==="TEXT MATCH · NOT VERIFIED")){
+title="HOLD — labels align, runtime unverified";detail="A text match is not a package hash, independently witnessed DEV check, ACL test, UAT or production approval.";
+}
+byId("preflight-status").textContent=title;
+byId("preflight-detail").textContent=detail;
+}
+document.querySelectorAll("[data-preflight-preset]").forEach(button=>button.addEventListener("click",()=>{
+const choice=button.getAttribute("data-preflight-preset");
+const cases={scope:["x_eitsp_vdf","4.22.2"],version:["x_1577958_vdf","4.20.0"],aligned:["x_1577958_vdf","4.22.2"],unknown:["",""]};
+[scope.value,version.value]=cases[choice]||cases.unknown;
+origin=choice==="unknown"?"Synthetic unknown target":"Synthetic "+choice+" example (not an instance observation)";
+refresh();
+}));
+[scope,version].forEach(el=>el.addEventListener("input",()=>{origin="Untrusted manual entry — not a witnessed target read-back";refresh();}));
+form.addEventListener("reset",()=>{origin="No target observations";scope.value="";version.value="";refresh();});
+byId("preflight-export").addEventListener("click",()=>{
+const result=current();
+const packet={
+schema:"portfolio.release-identity-preflight.v1",
+tool_status:"MOCK-ONLY",source_evidence:"SOURCE-ONLY",origin:origin.startsWith("Synthetic")?"synthetic fixture":"untrusted manual input",
+source_release:"4.22.2 (source declaration only)",
+comparison_results:result,
+observed_values_included:false,
+native_execution:"NOT RUN",target_package_hash_verified:false,independent_dev_verified:false,production_verified:false,
+image_publication_approved:false,approval_status:"UNREVIEWED",release_decision:"HOLD",
+remaining_gates:["Confirm target app sys_id and technical scope under authorised access","Match immutable build/package hash to source commit","Witness installed UI client and navigation read-back","Execute positive and negative role/ACL tests","Execute target-version synthetic acceptance and retain redacted receipts","Obtain separately authorised release and screenshot sign-off"]
+};
+const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json;charset=utf-8"});
+const url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download="servicenow-release-identity-HOLD.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+});
+refresh();
+})();
+</script>
+</body></html>
