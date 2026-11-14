@@ -41,6 +41,13 @@ class WorklistContract(unittest.TestCase):
         self.assertIn("independent_native_verification:false", source)
         self.assertIn("production_acceptance:false", source)
         self.assertIn("screenshot_publication_approved:false", source)
+        self.assertIn("csvDownload.disabled=all.length===0", source)
+        self.assertIn("csvDownload.disabled=true", source)
+        self.assertIn("function csvPacket()", source)
+        self.assertIn("return [header,...rows].map(row=>row.map(csvCell).join(',')).join('\\r\\n')", source)
+        self.assertIn("neutralised=/^\\s*[=+\\-@]/.test(cleaned)", source)
+        self.assertIn("screenshot_publication_approved']", source)
+        self.assertIn("'UNREVIEWED','NOT VERIFIED','HOLD','FALSE','FALSE','FALSE'", source)
         self.assertNotIn("localStorage", source)
         self.assertNotIn("sessionStorage", source)
 
@@ -49,7 +56,7 @@ class WorklistContract(unittest.TestCase):
         parser.feed(self.html)
         self.assertEqual(len(parser.ids), len(set(parser.ids)))
         for required in ("main", "search", "classification", "action-filter", "results",
-                         "download", "load-more", "failure", "status"):
+                         "download", "download-csv", "load-more", "failure", "status"):
             self.assertIn(required, parser.ids)
         self.assertIn('aria-live="polite"', self.html)
         self.assertIn('@media(max-width:760px)', self.html)
