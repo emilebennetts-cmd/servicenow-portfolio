@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-13T21:26:51Z",
+  "updated_utc": "2026-11-14T00:28:03.071Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -600,8 +600,8 @@
       "id": "COVERAGE2-20261113-TECHNICAL_EVIDENCE_REGISTER",
       "title": "Public technical evidence register",
       "classification": "source-only",
-      "basis": "Curated public pointers to SDK/source documentation and bounded historical DEV assertions; this page does not independently execute the Workbenches.",
-      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution.",
+      "basis": "Curated public pointers to SDK/source documentation and bounded historical DEV assertions; this page does not independently execute the Workbenches. The same-origin, public-only claim catalogue now supports cross-filter selection and local Markdown/JSON reviewer briefing exports built exclusively from these validated published entries.",
+      "runtime_verification": "Document/source review only; no new independently observed DEV or Production execution. Browser download and schema checks are web-presentation tests only; exported packets remain UNREVIEWED / NOT VERIFIED / HOLD, without native execution or approval.",
       "public_screenshot_status": "HOLD — zero original Workbench screenshots individually approved for public publication.",
       "page": "technical-evidence-register.html"
     },
