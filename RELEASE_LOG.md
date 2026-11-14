@@ -1,3 +1,9 @@
+## 15 November 2026 — Knowledge Intelligence read-only collector failure-mode contract (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Enhanced the [45-module Knowledge Intelligence acceptance matrix](knowledge-intelligence-acceptance-matrix.html#collector-contract) with a four-fixture, mobile-responsive gallery distinguishing synthetic complete evidence from `table_unavailable`, `field_unavailable` and blocked mutation. Target-specific negative-test IDs, safe handling guidance and non-certifying JSON exports preserve `NOT RUN / HOLD` and false DEV/production approvals.
+- Connected the KI architecture page to the new gallery, added an offline source/security contract and a four-viewport Chromium workflow. Existing 16-table reconciliation, 45-module inventory, 90 registered evidence claims and historical DEV-REPORTED classification remain unchanged; no native target verification or screenshot approval is inferred.
+- [Technical release, privacy and entitlement boundaries](releases/2026-11-15-ki-collector-failure-mode-contract.md). GitHub CI/Pages outcome must be read back against the final public head. Original screenshots remain **0 approved / HOLD**; public website licence requirements: none.
+
 ## 15 November 2026 — CSDM 5 native acceptance preparation desk (MOCK-ONLY / HOLD)
 
 - Added [CSDM 5 Native Acceptance Desk](csdm-native-acceptance.html), with three synthetic CMDB ownership/IRE/service-offering scenarios, six OOTB-first evidence preparation gates, per-scenario local state, live counts, reset and a downloadable non-certifying JSON packet. All exports remain **MOCK-ONLY / NOT RUN / NOT VERIFIED / UNREVIEWED / HOLD** with false approvals. This is not a live native ServiceNow feature.
