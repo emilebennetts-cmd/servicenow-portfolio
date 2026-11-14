@@ -20,7 +20,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
 def check(browser, width, base):
-    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce")
+    page = browser.new_page(viewport={"width": width, "height": 900}, reduced_motion="reduce", accept_downloads=True)
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     try:
@@ -57,11 +57,52 @@ def check(browser, width, base):
         assert page.locator(".catalogue-entry dt").count() == 3
         page.locator("#claim-search").fill("NO-SUCH-PUBLIC-CLAIM-XXXXXXXXXXXXXXXXXX")
         assert page.locator(".catalogue-entry").count() == 0
+        assert page.locator("#shortlist-export-json").is_disabled()
+        assert page.locator("#shortlist-preview li").count() == 0
         assert "Showing 0 of 0 matching" in page.locator("#claim-count").inner_text()
         page.locator("#claim-search").fill("")
         page.locator("#claim-classification").select_option("source-only")
         assert page.locator(".catalogue-entry").count() == 12
         assert "of " + str(CLASS_COUNTS["source-only"]) in page.locator("#claim-count").inner_text()
+
+        # Selection persists across filters and pagination but never becomes approval.
+        assert page.locator("#shortlist-export-json").is_disabled()
+        first_source_id = page.locator(".catalogue-entry .claim-id").first.inner_text()
+        page.locator(".catalogue-entry .claim-choice input").first.check()
+        assert "1 selected public claims" in page.locator("#shortlist-count").inner_text()
+        page.locator("#claim-classification").select_option("DEV-reported")
+        first_dev_id = page.locator(".catalogue-entry .claim-id").first.inner_text()
+        page.locator(".catalogue-entry .claim-choice input").first.check()
+        assert "2 selected public claims" in page.locator("#shortlist-count").inner_text()
+        page.locator("#claim-classification").select_option("source-only")
+        assert page.locator(".catalogue-entry .claim-choice input").first.is_checked()
+        with page.expect_download() as artifact:
+            page.locator("#shortlist-export-json").click()
+        packet = json.loads(Path(artifact.value.path()).read_text(encoding="utf-8"))
+        assert artifact.value.suggested_filename == "servicenow-public-evidence-briefing.json"
+        assert packet["verification_state"] == "NOT VERIFIED"
+        assert packet["review_state"] == "UNREVIEWED"
+        assert packet["release_state"] == "HOLD"
+        assert not packet["native_service_now_execution"]
+        assert not packet["independent_review_approved"]
+        assert not packet["screenshot_publication_approved"]
+        assert [c["id"] for c in packet["claims"]] == [
+            c["id"] for c in REGISTER["items"] if c["id"] in {first_source_id, first_dev_id}
+        ]
+        assert {c["classification"] for c in packet["claims"]} == {"source-only", "DEV-reported"}
+        assert all(c["public_url"].startswith(
+            "https://emilebennetts-cmd.github.io/servicenow-portfolio/"
+        ) for c in packet["claims"])
+        with page.expect_download() as document:
+            page.locator("#shortlist-export-md").click()
+        markdown = Path(document.value.path()).read_text(encoding="utf-8")
+        assert "UNREVIEWED / NOT VERIFIED / HOLD" in markdown
+        assert first_source_id in markdown and first_dev_id in markdown
+        assert "not independently DEV-VERIFIED" in markdown
+        page.locator("#shortlist-clear").click()
+        assert page.locator("#shortlist-export-json").is_disabled()
+        assert page.locator("#shortlist-preview li").count() == 0
+        assert not page.locator(".catalogue-entry .claim-choice input").first.is_checked()
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), width
         assert not errors, errors
         print(f"PASS evidence {width}px: lineage filters, {len(REGISTER['items'])} claims, query, pagination, safe rendering")
