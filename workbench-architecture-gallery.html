@@ -15,8 +15,26 @@
 .baseline-legend p{margin:0}
 @media(max-width:880px){.baseline-grid{grid-template-columns:1fr}}
 @media(max-width:580px){.baseline-card{padding:18px}}
+
+/* Controlled-draft persona review experience: synthetic controls, not native execution. */
+.persona-shell{border:1px solid #476f80;background:#0d2434;border-radius:20px;overflow:hidden;margin-top:25px}
+.persona-steps{display:flex;gap:8px;padding:15px;background:#132f41;overflow-x:auto;scrollbar-width:thin}
+.persona-steps button{flex:1 0 135px;min-height:48px;border:1px solid #688495;border-radius:9px;background:#203f50;color:#e8f5f6;font:700 .88rem system-ui,sans-serif;cursor:pointer;padding:11px 14px}
+.persona-steps button[aria-selected=true]{background:#a3f5df;color:#092432;border-color:#a3f5df}
+.persona-steps button:focus-visible,.persona-export:focus-visible{outline:3px solid #ffcf85;outline-offset:3px}
+.persona-panel{padding:clamp(22px,4vw,34px);min-height:285px}
+.persona-panel h3{font-size:clamp(1.35rem,3vw,1.9rem);margin:7px 0 12px}
+.persona-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}
+.persona-columns article{border:1px solid #4c697b;border-radius:12px;padding:18px;background:#173145;min-width:0}
+.persona-columns strong{display:block;color:#a3f5df;margin-bottom:8px}
+.persona-columns p{margin:0;font-size:.91rem;overflow-wrap:anywhere}
+.persona-export{border:1px solid #92d9d3;border-radius:9px;color:#092432;background:#a3f5df;font-weight:800;padding:12px 16px;cursor:pointer}
+.persona-foot{font-size:.85rem;color:#c9dbe2;margin-top:14px}
+.persona-state{color:#ffdeb0;font-weight:800;font-size:.79rem;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:780px){.persona-columns{grid-template-columns:1fr}.persona-steps button{flex-basis:155px}.persona-panel{min-height:0}}
+@media(prefers-reduced-motion:reduce){.persona-steps{scroll-behavior:auto}}
 </style></head><body><a class="skip" href="#main-content">Skip to main content</a>
-<header><div class="wrap"><div class="eyebrow">ServiceNow / Engineering evidence</div><h1>Workbench architecture gallery</h1><p class="lead">A visual explanation of the assessment-to-delivery lifecycle, supported by public source records. These are <strong>architecture diagrams, not instance screenshots</strong>; no customer records or private code are included.</p><nav aria-label="Page navigation"><a href="./">Portfolio home</a><a href="#journey">Architecture</a><a href="#baseline">Version evidence</a><a href="#verification">Verification</a><a href="#inspection">Reviewer checklist</a><a href="#licensing">Licensing</a><a href="workbench-evidence-ledger.html">Evidence ledger</a></nav></div></header>
+<header><div class="wrap"><div class="eyebrow">ServiceNow / Engineering evidence</div><h1>Workbench architecture gallery</h1><p class="lead">A visual explanation of the assessment-to-delivery lifecycle, supported by public source records. These are <strong>architecture diagrams, not instance screenshots</strong>; no customer records or private code are included.</p><nav aria-label="Page navigation"><a href="./">Portfolio home</a><a href="#journey">Architecture</a><a href="#baseline">Version evidence</a><a href="#persona-tour">Role walkthrough</a><a href="#verification">Verification</a><a href="#inspection">Reviewer checklist</a><a href="#licensing">Licensing</a><a href="workbench-evidence-ledger.html">Evidence ledger</a></nav></div></header>
 <main class="wrap" id="main-content" tabindex="-1"><section id="journey"><h2>From finding to controlled release</h2><div class="grid">
 <article class="card"><div class="diagram" role="img" aria-label="Conceptual sequence: read-only collection, finding, human review"><span class="node">Collect</span><span class="arrow" aria-hidden="true">→</span><span class="node">Finding</span><span class="arrow" aria-hidden="true">→</span><span class="node">Review</span></div><div class="body"><span class="badge">SOURCE-ONLY</span><h3>01 / Diagnostic Workbench</h3><p>Documented scoped diagnostics and review workflow. Historical source descriptions do not constitute a fresh DEV or production test.</p><a  href="diagnostic-workbench-case-study.html">Review public Diagnostic evidence summary →</a></div></article>
 <article class="card"><div class="diagram" role="img" aria-label="Conceptual sequence: evidence, requirement, reusable pattern, approval gate"><span class="node">Evidence</span><span class="arrow" aria-hidden="true">→</span><span class="node">Requirement</span><span class="arrow" aria-hidden="true">→</span><span class="node">Pattern</span><span class="arrow" aria-hidden="true">→</span><span class="node">Gate</span></div><div class="body"><span class="badge">DESIGN / SOURCE-ONLY</span><h3>02 / Universal Delivery Workbench</h3><p>Requirements and reusable delivery patterns inform governed implementation. Cross-Workbench integration is an architectural model, not a verified live connection.</p><a  href="reusable-delivery-patterns-case-study.html">Review public Delivery evidence summary →</a></div></article>
@@ -32,6 +50,36 @@
 </div>
 <div class="baseline-legend"><p><strong>Architecture principle:</strong> a matching screen, version number or metadata read-back cannot bridge a different application scope. Require identical source/build identity, installed version, target scope, executed tests and independent approval before promoting any native verification claim.</p></div>
 </section>
+
+<section id="persona-tour" aria-labelledby="persona-heading">
+<div class="eyebrow">Source-backed operating procedures · synthetic interaction</div>
+<h2 id="persona-heading">How each consultant uses the Workbench</h2>
+<p>Role-by-role walkthrough derived from the <strong>30 September 2026 controlled-draft User Guides and Training</strong> for source 4.6.1. The guide describes operational procedures, not proof that source 4.6.1 was installed in DEV. Use these scenarios to assess responsibilities and required evidence without exposing the private guide or any original screenshots.</p>
+<div class="notice"><p><strong>Verification boundary:</strong> The role controls below are MOCK-ONLY website interactions informed by SOURCE-ONLY training material. The distinct 4.5.1 historical DEV read-back is not evidence for these exact 4.6.1 journeys. Every exported review remains UNREVIEWED / NOT VERIFIED / HOLD.</p></div>
+<div class="persona-shell">
+<div class="persona-steps" id="persona-tabs" role="tablist" aria-label="Select the Delivery Workbench role">
+<button type="button" role="tab" id="role-presales" data-role="presales" aria-selected="true" aria-controls="persona-panel" tabindex="0">Presales</button>
+<button type="button" role="tab" id="role-architect" data-role="architect" aria-selected="false" aria-controls="persona-panel" tabindex="-1">Architect</button>
+<button type="button" role="tab" id="role-delivery" data-role="delivery" aria-selected="false" aria-controls="persona-panel" tabindex="-1">Delivery lead</button>
+<button type="button" role="tab" id="role-tester" data-role="tester" aria-selected="false" aria-controls="persona-panel" tabindex="-1">Developer / tester</button>
+<button type="button" role="tab" id="role-deployer" data-role="deployer" aria-selected="false" aria-controls="persona-panel" tabindex="-1">Deployer</button>
+<button type="button" role="tab" id="role-support" data-role="support" aria-selected="false" aria-controls="persona-panel" tabindex="-1">Platform support</button>
+</div>
+<div class="persona-panel" id="persona-panel" role="tabpanel" aria-labelledby="role-presales" tabindex="0">
+<span class="persona-state" id="persona-classification">MOCK-ONLY · NOT VERIFIED</span>
+<h3 id="persona-name">Presales: establish a governed engagement</h3>
+<p id="persona-explain">Capture scope, outcomes and assumptions without implying release approval.</p>
+<div class="persona-columns">
+<article><strong>01 / OOTB-aligned approach</strong><p id="persona-approach">Use governed engagement records and accountable ownership.</p></article>
+<article><strong>02 / Required evidence</strong><p id="persona-proof">An approved scope and identified responsible roles.</p></article>
+<article><strong>03 / Release gate</strong><p id="persona-gate">No native execution or approval is inferred.</p></article>
+</div>
+<button class="persona-export" type="button" id="persona-export">Download review checklist (JSON)</button>
+<p class="persona-foot">Browser-only downloadable preparation checklist. No customer details, persistence, provider calls, approvals or genuine ServiceNow screenshots.</p>
+</div>
+</div>
+<p>Follow the <a href="workbench-acceptance-playbook.html">acceptance playbook</a> for authorised, environment-specific tests. Review <a href="screenshot-publication-gate.html">image publication controls</a> before submitting visual evidence.</p>
+</section>
 <section id="verification"><h2>Evidence status and publication controls</h2><div class="notice"><p><strong>Genuine screenshot status:</strong> none published in this gallery. Existing Drive captures are candidates only; environment, version, ownership, irreversible redaction and explicit publication approval must be established before release.</p></div><dl><dt>SOURCE-ONLY</dt><dd>Public repository descriptions and historical release artefacts.</dd><dt>DEV-REPORTED</dt><dd>Historic 4.5.1 read-back and the separate synthetic 4.22.8 demo are described in dated controlled records. Neither was independently re-executed for this gallery.</dd><dt>DEV-VERIFIED</dt><dd>No new version-pinned, independently witnessed native execution is established by this page.</dd><dt>MOCK-ONLY</dt><dd>All three diagrams on this page are explanatory illustrations, not ServiceNow screenshots.</dd><dt>PRODUCTION-VERIFIED</dt><dd>Not established for the integrated lifecycle shown.</dd></dl><p>The original Delivery As-Built baseline and source gallery are access-restricted; public access is not asserted. See the <a href="workbench-evidence-ledger.html">public evidence ledger</a> for a sanitised provenance summary and the limits of historical DEV verification.</p></section>
 <section id="inspection"><h2>What a technical reviewer can inspect</h2><p>Open each evidence path to distinguish implementation artefacts from runtime claims. This is a review checklist, not an assertion that every feature was tested.</p><div class="inspection">
 <details><summary>Diagnostic / source inspection</summary><ul><li>Inspect scoped application structure and documented collection boundaries in the Diagnostic repository.</li><li>Check read-only assessment assumptions, access controls, and the human review stage.</li><li>Request a dated instance test record before treating a finding as DEV-verified.</li></ul><p><a  href="diagnostic-workbench-case-study.html">Review public Diagnostic evidence summary →</a></p></details>
@@ -40,4 +88,29 @@
 <details><summary>Screenshots / publication decision</summary><ul><li>Confirm image origin, instance, date, ownership and permission to publish.</li><li>Remove customer names, identifiers, instance URLs, tokens and metadata irreversibly.</li><li>Keep unapproved source captures out of public Git history, even when blurred previews look safe.</li></ul><p><a href="https://github.com/emilebennetts-cmd/servicenow-portfolio/blob/main/docs/evidence/screenshot-publication-gate-2026-11-11.md">Publication gate</a></p></details></div>
 <p class="status"><strong>Website quality evidence:</strong> Static-site commits, CI test runs and GitHub Pages deployment have their own release records. A successful browser or publication gate verifies only the portfolio website, not ServiceNow native execution. <a href="publication-quality.html">Inspect the public quality approach</a> and <a href="incident-pack-native-pilot.html#native-matrix">the unrun native acceptance matrix</a>.</p></section>
 <section id="case-study"><h2>Delivery patterns case study</h2><p>Follow the evidence-classified journey from discovery and reusable pattern selection to implementation assurance. <a href="reusable-delivery-patterns-case-study.html">Read the reusable delivery patterns case study</a>. This is a source-backed explanation, not a new DEV or production verification claim.</p></section>
-<section id="licensing"><h2>Architecture and entitlements</h2><p>Prefer OOTB capabilities, scoped application boundaries, least-privilege roles, supported APIs, and ITIL 4-aligned change controls. This static website requires no ServiceNow licence. Runtime deployment may require App Engine/custom application entitlements, ITSM or ITOM subscriptions, IntegrationHub transactions/spokes, Performance Analytics, AI capabilities and third-party subscriptions. Validate requirements against the actual contract and implementation scope.</p></section></main><footer><div class="wrap">Public-safe illustrations · No private source · No unapproved screenshots · <a href="./">Return to portfolio</a></div></footer></body></html>
+<section id="licensing"><h2>Architecture and entitlements</h2><p>Prefer OOTB capabilities, scoped application boundaries, least-privilege roles, supported APIs, and ITIL 4-aligned change controls. This static website requires no ServiceNow licence. Runtime deployment may require App Engine/custom application entitlements, ITSM or ITOM subscriptions, IntegrationHub transactions/spokes, Performance Analytics, AI capabilities and third-party subscriptions. Validate requirements against the actual contract and implementation scope.</p></section></main><footer><div class="wrap">Public-safe illustrations · No private source · No unapproved screenshots · <a href="./">Return to portfolio</a></div></footer>
+<script>
+/* Public-safe persona review: source-informed text, never a ServiceNow runtime call. */
+(()=>{'use strict';
+const data={
+presales:{name:'Presales: establish a governed engagement',explain:'Capture outcomes, scope, exclusions and assumptions before proposing a delivery path.',approach:'Start the engagement, nominate accountable owners and separate contracted from deferred work.',proof:'Engagement reference, scoped outcomes, assumptions, named ownership and explicit AI-processing decision.',gate:'A proposal or initialised journey is not an approval, deployment or customer acceptance.'},
+architect:{name:'Architect: connect requirements to build specifications',explain:'Translate discovery outcomes into reviewed technical decisions and traceable design.',approach:'Prefer OOTB design, linked requirements, decisions, dependencies and reusable patterns where suitable.',proof:'Decision rationale, requirement coverage, integration boundaries, security review and acceptance criteria.',gate:'Unapproved choices, deferred scope and untested integrations stay blocked from deployment.'},
+delivery:{name:'Delivery lead: govern work and readiness',explain:'Coordinate delivery across workshops, build, assurance, change and handover.',approach:'Use an accountable lifecycle with explicit gates, owners, risks, decisions and waiver controls.',proof:'Approved plan, assigned work, traced risks, test outcomes and operational readiness sign-off.',gate:'A green dashboard, generated document or completed task alone is not release authority.'},
+tester:{name:'Developer / tester: produce attributable proof',explain:'Deliver configuration and tests with scope, build and environment traceability.',approach:'Implement scoped OOTB-first configuration; test controlled flows without bypassing access controls.',proof:'Source commit, installed app version/scope, executed test IDs, results and reviewed evidence receipt.',gate:'Source tests or mocked fixtures do not establish DEV-VERIFIED or production acceptance.'},
+deployer:{name:'Deployer: control release and preview',explain:'Work only within authorised environment, scope and change windows.',approach:'Validate prerequisites, preview deployment/update sets, resolve conflicts and re-preview.',proof:'Change reference, approval, target identity, preview outcome, reconciliation and rollback readiness.',gate:'Never promote after unresolved preview failures or without explicit production change authority.'},
+support:{name:'Platform support: operate and contain risk',explain:'Sustain entitlement, access, integration and evidence hygiene after handover.',approach:'Maintain least-privilege access, approved credential aliases, monitoring and support ownership.',proof:'Support runbook, role/ACL review, retention decision, failure controls and tested escalation.',gate:'Production readiness, privacy accreditation and licensed feature rights require separate confirmation.'}
+};
+const tabs=Array.from(document.querySelectorAll('#persona-tabs [role="tab"]'));
+const fields={name:document.getElementById('persona-name'),explain:document.getElementById('persona-explain'),approach:document.getElementById('persona-approach'),proof:document.getElementById('persona-proof'),gate:document.getElementById('persona-gate')};
+const panel=document.getElementById('persona-panel');
+let selected='presales';
+function activate(key,focus){if(!Object.prototype.hasOwnProperty.call(data,key))return;selected=key;const d=data[key];Object.keys(fields).forEach(k=>fields[k].textContent=d[k]);tabs.forEach(t=>{const active=t.dataset.role===key;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;if(active){panel.setAttribute('aria-labelledby',t.id);if(focus)t.focus();}});}
+tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab.dataset.role,false));tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;else return;e.preventDefault();activate(tabs[n].dataset.role,true);});});
+document.getElementById('persona-export').addEventListener('click',()=>{
+const d=data[selected];
+const receipt={schema:'portfolio-persona-review-v1',source_basis:'30 September 2026 controlled-draft User Guides and Training; source 4.6.1',persona:selected,step:d.name,operating_approach:d.approach,required_evidence:d.proof,release_gate:d.gate,architecture_classification:'SOURCE-ONLY',interaction_classification:'MOCK-ONLY',historical_dev_baseline:'4.5.1 historical report only',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD'};
+const blob=new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='workbench-persona-review-'+selected+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+});
+activate('presales',false);
+})();
+</script></body></html>
