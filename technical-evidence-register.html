@@ -37,6 +37,23 @@
 .catalogue-entry a{font-weight:750;overflow-wrap:anywhere}.catalogue-more{display:block;margin:1.3rem auto;padding:.75rem 1.4rem;font:inherit;font-weight:800;color:#091e27;background:#82e7d3;border:0;border-radius:9px;cursor:pointer}
 .catalogue-fallback{padding:1rem 1.2rem;background:#292a30;border-left:4px solid #f3c78f;border-radius:6px;color:#fae3bd}
 @media(max-width:680px){.catalogue-controls,.catalogue-grid{grid-template-columns:1fr}.catalogue-entry{padding:1rem}}@media print{.catalogue-controls,.catalogue-more{display:none!important}.catalogue-entry{break-inside:avoid;background:white;border-color:#777}.catalogue-entry dd,.catalogue-entry .claim-id,.catalogue-count{color:#333}}
+
+/* Public-only evidence shortlist: no storage, server submission or authorisation. */
+.claim-choice{display:flex;gap:.65rem;align-items:center;margin:.9rem 0 .2rem;color:#f1f8ff;font-weight:750;cursor:pointer}
+.claim-choice input{width:22px;height:22px;accent-color:#82e7d3;flex:none}
+.claim-choice input:focus-visible{outline:3px solid #ffe28a;outline-offset:3px}
+.shortlist{margin:2rem 0;border:1px solid #7298a6;border-radius:16px;background:#132b3d;padding:clamp(1rem,3vw,1.5rem)}
+.shortlist h3{margin:0 0 .45rem}.shortlist p{margin:.5rem 0 1rem}
+.shortlist-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0}
+.shortlist-actions button,.shortlist-preview button{font:inherit;font-weight:750;border:1px solid #9bb8c5;border-radius:9px;padding:.65rem .95rem;min-height:44px;background:#244258;color:#f3fbff;cursor:pointer}
+.shortlist-actions button:focus-visible,.shortlist-preview button:focus-visible{outline:3px solid #ffe28a;outline-offset:3px}
+.shortlist-actions button:disabled{opacity:.48;cursor:not-allowed}
+.shortlist-actions button:first-child:not(:disabled){background:#82e7d3;color:#092329;border-color:#82e7d3}
+.shortlist-preview{margin:.5rem 0 0;padding-left:1.5rem;max-height:330px;overflow:auto}
+.shortlist-preview li{padding:.35rem 0;overflow-wrap:anywhere}
+.shortlist-preview button{font-size:.85rem;margin-left:.65rem}
+@media(max-width:560px){.shortlist-actions{display:grid}.shortlist-actions button{width:100%}.shortlist-preview button{display:block;margin:.4rem 0 0}}
+@media print{.claim-choice,.shortlist-actions,.shortlist-preview button{display:none!important}.shortlist{background:white;border-color:#777}}
 </style></head>
 <body><a class="skip" href="#main">Skip to main content</a><header><nav class="wrap" aria-label="Main navigation"><a href="index.html">Home</a><a href="delivery-case-study.html">Delivery</a><a href="diagnostic-case-study.html">Diagnostic</a><a href="evidence-methodology.html">Evidence policy</a></nav></header>
 <main class="wrap" id="main"><p class="badge">Evidence register · 14 November 2026</p><h1>Traceable engineering, not inflated claims.</h1><p class="lead">A reviewer-friendly index of publicly inspectable source evidence. Documentation, SDK source and demonstration interfaces do not independently establish an accepted production implementation.</p>
@@ -76,6 +93,18 @@
 <div id="claim-results" class="catalogue-grid" aria-label="Public verification claims"></div>
 <button type="button" id="claim-more" class="catalogue-more" hidden>Show 12 more claims</button>
 <p id="claim-fallback" class="catalogue-fallback" hidden>The public claim register could not be loaded. The <a href="evidence/public-verification-register.json">complete JSON register</a> is still available. This page will never substitute fabricated or cached claims.</p>
+<section class="shortlist" id="claim-shortlist" aria-labelledby="claim-shortlist-title">
+<h3 id="claim-shortlist-title">Build a public evidence briefing</h3>
+<p>Select claims across searches and filters, then export a shareable, publicly sourced briefing. Selection is held only in this open browser tab. <strong>Every export is UNREVIEWED / NOT VERIFIED / HOLD</strong>, even when a claim describes a historical DEV report. This tool neither contacts ServiceNow nor requests screenshot approval.</p>
+<p id="shortlist-count" role="status" aria-live="polite">0 claims selected. Downloads are disabled until a public claim is selected.</p>
+<div class="shortlist-actions">
+<button type="button" id="shortlist-export-md" disabled>Download Markdown briefing</button>
+<button type="button" id="shortlist-export-json" disabled>Download JSON briefing</button>
+<button type="button" id="shortlist-clear" disabled>Clear selections</button>
+</div>
+<ol id="shortlist-preview" class="shortlist-preview" aria-label="Selected public evidence claims"></ol>
+<p class="muted">Only the already-published claim register is included. No browser storage, uploads, private Drive URLs, instance credentials, customer evidence or genuine screenshot files.</p>
+</section>
 <p class="lineage-boundary"><strong>Reader boundary:</strong> Entries are SOURCE-ONLY, MOCK-ONLY, PROPOSED or historical DEV-REPORTED unless the underlying public register includes an independently reviewed verified claim. A public HTML link is not a ServiceNow execution record. All genuine screenshot candidates remain on HOLD.</p></section>
 <section aria-labelledby="proof"><h2 id="proof">04 / What is still needed for stronger proof</h2><p>Evidence from existing architecture, as-built, user-guide and runbook materials is retained as internal reference until each item can be checked for provenance and publication permission. No private Drive links or unreviewed screenshots are embedded here.</p><ol><li><strong>DEV-VERIFIED:</strong> capture a dated authorised test, instance/build identity, expected versus actual result, and reviewed derivative image.</li><li><strong>PRODUCTION-VERIFIED:</strong> require separate production approval and evidence; do not infer it from a DEV result.</li><li><strong>Gallery release:</strong> irreversibly redact customer identifiers, strip metadata, record derivative SHA-256 and obtain explicit publication approval before adding images.</li></ol><p><a href="evidence-methodology.html">Read the publication and verification policy</a></p></section>
 <section aria-labelledby="licensing"><h2 id="licensing">05 / Entitlement considerations</h2><p>Viewing this static portfolio requires no ServiceNow licence. Operating the underlying scoped applications requires authorised instance access and confirmation of custom-app/App Engine rights. ITSM, ITOM, IntegrationHub/spokes, Performance Analytics, AI and external SaaS providers may each introduce separate subscription, role, transaction or connection requirements; verify against the actual tenant agreement before deployment.</p></section></main>
@@ -103,6 +132,8 @@ const valid=new Set(['source-only','DEV-reported','mock-only','proposed','DEV-ve
 const host=document.getElementById('claim-results'),search=document.getElementById('claim-search'),classification=document.getElementById('claim-classification');
 const status=document.getElementById('claim-count'),more=document.getElementById('claim-more'),fallback=document.getElementById('claim-fallback');
 let items=[],limit=12;
+const selected=new Set(),selectionCount=document.getElementById('shortlist-count'),preview=document.getElementById('shortlist-preview');
+const exportMd=document.getElementById('shortlist-export-md'),exportJson=document.getElementById('shortlist-export-json'),clear=document.getElementById('shortlist-clear');
 function node(tag,text,cls){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;}
 function createClaim(claim){
 const article=node('article',undefined,'catalogue-entry');article.dataset.class=claim.classification;
@@ -114,6 +145,11 @@ detail.append(description);article.append(detail);
 const link=node('a','Open the related public case study');
 link.href=claim.page;
 article.append(link);
+const choice=node('label',undefined,'claim-choice'),check=node('input');
+check.type='checkbox';check.checked=selected.has(claim.id);
+check.setAttribute('aria-label','Include claim '+claim.id+' in evidence briefing');
+check.addEventListener('change',function(){if(check.checked)selected.add(claim.id);else selected.delete(claim.id);updateSelection();});
+choice.append(check,node('span','Include in public briefing'));article.append(choice);
 return article;
 }
 function matching(){
@@ -137,12 +173,56 @@ ids.add(c.id);
 });
 return data.items;
 }
+
+function selectedClaims(){return items.filter(function(c){return selected.has(c.id);});}
+function updateSelection(){
+const current=selectedClaims();preview.replaceChildren();
+current.forEach(function(c){
+const li=node('li');li.append(node('span',c.id+' — '+c.title+' ('+c.classification.toUpperCase()+')'));
+const remove=node('button','Remove');remove.type='button';remove.setAttribute('aria-label','Remove claim '+c.id);
+remove.addEventListener('click',function(){selected.delete(c.id);render();updateSelection();});
+li.append(remove);preview.append(li);
+});
+selectionCount.textContent=current.length+' selected public claims. '+(current.length?'Export is UNREVIEWED / NOT VERIFIED / HOLD.':'Downloads are disabled until a public claim is selected.');
+exportMd.disabled=exportJson.disabled=clear.disabled=current.length===0;
+}
+function publicUrl(c){return 'https://emilebennetts-cmd.github.io/servicenow-portfolio/'+c.page;}
+function reviewPacket(){
+return {schema_version:'1.0',source:'public-verification-register.json',exported_utc:new Date().toISOString(),
+review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',
+native_service_now_execution:false,independent_review_approved:false,screenshot_publication_approved:false,
+claims:selectedClaims().map(function(c){return {
+id:c.id,title:c.title,classification:c.classification,basis:c.basis,
+runtime_verification:c.runtime_verification,public_screenshot_status:c.public_screenshot_status,
+public_url:publicUrl(c)
+};})};
+}
+function safeMarkdown(v){return String(v).replace(/[\r\n\t]+/g,' ').replace(/([\\*_{}\[\]()#+!|>])/g,'\\$1');}
+function reviewMarkdown(packet){
+const lines=['# ServiceNow portfolio — public evidence briefing','',
+'**Status: UNREVIEWED / NOT VERIFIED / HOLD.** This export is a public source reference, not native ServiceNow execution, independent acceptance, an entitlement decision or screenshot approval.','','**Selected public claims:** '+packet.claims.length,''];
+packet.claims.forEach(function(c,i){lines.push('## '+(i+1)+'. '+safeMarkdown(c.title),'',
+'**Claim ID:** '+safeMarkdown(c.id),'**Class:** '+safeMarkdown(c.classification.toUpperCase()),'',
+'**Source basis:** '+safeMarkdown(c.basis),'','**Runtime boundary:** '+safeMarkdown(c.runtime_verification),'',
+'**Screenshot boundary:** '+safeMarkdown(c.public_screenshot_status),'',
+'**Public case study:** '+c.public_url,'');});
+lines.push('---','','The status of a historical DEV-REPORTED claim is not independently DEV-VERIFIED. No production verification or genuine screenshot publication is conferred.');
+return lines.join('\n');
+}
+function downloadBrief(name,textValue,mime){
+const blob=new Blob([textValue],{type:mime}),url=URL.createObjectURL(blob),anchor=node('a');
+anchor.href=url;anchor.download=name;document.body.append(anchor);anchor.click();anchor.remove();
+setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+exportMd.addEventListener('click',function(){if(!selectedClaims().length)return;const packet=reviewPacket();downloadBrief('servicenow-public-evidence-briefing.md',reviewMarkdown(packet),'text/markdown;charset=utf-8');});
+exportJson.addEventListener('click',function(){if(!selectedClaims().length)return;downloadBrief('servicenow-public-evidence-briefing.json',JSON.stringify(reviewPacket(),null,2)+'\n','application/json;charset=utf-8');});
+clear.addEventListener('click',function(){selected.clear();render();updateSelection();});
 search.addEventListener('input',function(){limit=12;render();});
 classification.addEventListener('change',function(){limit=12;render();});
 more.addEventListener('click',function(){limit+=12;render();});
 fetch(registerUrl,{cache:'no-store'}).then(function(resp){if(!resp.ok)throw Error('fetch');return resp.json();}).then(function(data){
-items=validate(data);render();
-}).catch(function(){status.textContent='Live claim catalogue unavailable — no claims inferred.';fallback.hidden=false;more.hidden=true;host.replaceChildren();});
+items=validate(data);render();updateSelection();
+}).catch(function(){status.textContent='Live claim catalogue unavailable — no claims inferred.';fallback.hidden=false;more.hidden=true;host.replaceChildren();selected.clear();updateSelection();});
 })();
 </script>
 </body></html>
