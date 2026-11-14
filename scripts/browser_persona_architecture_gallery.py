@@ -66,6 +66,10 @@ def run(browser, width):
         assert "?role=deployer#persona-tour" in direct
         assert "servicenow-portfolio-control" not in direct
         page.locator("#persona-copy-link").click()
+        page.wait_for_function("""() => {
+            const text=document.getElementById('persona-share-status').textContent.toLowerCase();
+            return text.includes('copied') || text.includes('unavailable');
+        }""")
         status=page.locator("#persona-share-status").inner_text().lower()
         assert ("copied" in status or "unavailable" in status),status
         if "unavailable" in status:
