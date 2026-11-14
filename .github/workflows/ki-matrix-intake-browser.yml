@@ -1,0 +1,27 @@
+name: KI Matrix Intake — Chromium regression
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ki-matrix-intake.html'
+      - 'knowledge-intelligence-acceptance-matrix.html'
+      - 'tests/ki-matrix-intake.cjs'
+      - '.github/workflows/ki-matrix-intake-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test runner
+        run: npm install --no-save --ignore-scripts playwright@1.56.1
+      - name: Install Chromium dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run four-width CSV and security regression
+        run: node tests/ki-matrix-intake.cjs
