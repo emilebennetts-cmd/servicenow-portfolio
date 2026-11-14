@@ -88,7 +88,7 @@ class Contract(unittest.TestCase):
         matched = [x for x in claims if x["page"] == "csdm-native-acceptance.html"]
         self.assertEqual(len(matched), 1)
         self.assertEqual(matched[0]["classification"], "mock-only")
-        self.assertIn("NOT VERIFIED", matched[0]["runtime_verification"].upper() + " NOT VERIFIED")
+        self.assertIn("NO NATIVE CMDB QUERY", matched[0]["runtime_verification"].upper())
 
 if __name__ == "__main__":
     unittest.main()
