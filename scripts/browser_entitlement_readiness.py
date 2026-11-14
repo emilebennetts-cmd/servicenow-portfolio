@@ -37,11 +37,17 @@ def check(browser, base, width):
         page.locator('[data-domain-filter="platform"]').click()
         assert page.locator(".entitlement-card:visible").count() == 2
         assert page.locator('[data-domain-filter="platform"]').get_attribute("aria-pressed") == "true"
+        page.locator("#triage-WEB-001").select_option("evidence-requested")
         page.locator('[data-domain-filter="operations"]').click()
         assert page.locator(".entitlement-card:visible").count() == 3
         page.locator('[data-domain-filter="extension"]').click()
         assert page.locator(".entitlement-card:visible").count() == 3
         assert "3 of 8" in page.locator("#filter-status").inner_text()
+        page.locator("#triage-INT-006").select_option("gap")
+        page.locator("#triage-ANA-007").select_option("review-ready")
+        assert "1 evidence requested" in page.locator("#triage-status").inner_text()
+        assert "1 gaps" in page.locator("#triage-status").inner_text()
+        assert "1 materials staged" in page.locator("#triage-status").inner_text()
 
         with page.expect_download() as pending:
             page.locator("#export-packet").click()
@@ -58,9 +64,20 @@ def check(browser, base, width):
         assert [i["id"] for i in payload["items"]] == ["INT-006", "ANA-007", "ATF-008"]
         assert all(i["independent_native_test"] == "NOT RUN" for i in payload["items"])
         assert all(i["approval"] == "HOLD" for i in payload["items"])
+        assert payload["reviewer_actions_only"] is True
+        stages={i["id"]:i["reviewer_follow_up"] for i in payload["items"]}
+        assert stages == {"INT-006":"GAP OR ENTITLEMENT DECISION NEEDED",
+                          "ANA-007":"MATERIALS STAGED / REVIEW PENDING",
+                          "ATF-008":"NOT ASSESSED"}
+        assert all(i["suggested_review_owner"] for i in payload["items"])
 
         page.locator('[data-domain-filter="all"]').click()
         assert page.locator(".entitlement-card:visible").count() == 8
+        assert page.locator("#triage-WEB-001").input_value() == "evidence-requested"
+        page.locator("#reset-triage").click()
+        assert page.locator("#triage-WEB-001").input_value() == "not-assessed"
+        assert page.locator("#triage-INT-006").input_value() == "not-assessed"
+        assert "8 not assessed" in page.locator("#triage-status").inner_text()
         assert not remote, remote
         assert not errors, errors
         # Bounding-box width is a conservative smoke check without injecting
