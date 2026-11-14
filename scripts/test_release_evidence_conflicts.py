@@ -28,7 +28,7 @@ class ReleaseClaimEvidenceBoundary(unittest.TestCase):
 
     def test_diagnostic_historical_receipt_never_calls_itself_dev_verified(self):
         summaries = [unescape(re.sub(r"<[^>]+>", "", s)) for s in
-                     re.findall(r"<summary\\b[^>]*>(.*?)</summary>", DIAG, re.S | re.I)]
+                     re.findall(r"<summary\b[^>]*>(.*?)</summary>", DIAG, re.S | re.I)]
         self.assertTrue(any("DEV-REPORTED" in s and "historical" in s for s in summaries))
         self.assertFalse(any("DEV-VERIFIED" in s and "historical" in s for s in summaries))
         self.assertIn('delivery-release-evolution.html#release-evidence-reconciliation', DIAG)
