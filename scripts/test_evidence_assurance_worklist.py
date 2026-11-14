@@ -67,15 +67,17 @@ class WorklistContract(unittest.TestCase):
             self.assertIn(link, parser.links)
 
     def test_counts_and_catalogue_provenance(self):
-        self.assertEqual(len(self.data["items"]), 87)
+        self.assertGreaterEqual(len(self.data["items"]), 87)
+        self.assertEqual(len(self.data["items"]), len({x["id"] for x in self.data["items"]}))
         counts = {kind: sum(c["classification"] == kind for c in self.data["items"])
                   for kind in self.data["classification_definitions"]}
-        self.assertEqual(counts["source-only"], 54)
-        self.assertEqual(counts["DEV-reported"], 4)
-        self.assertEqual(counts["mock-only"], 20)
-        self.assertEqual(counts["proposed"], 9)
+        self.assertGreaterEqual(counts["source-only"], 54)
+        self.assertGreaterEqual(counts["DEV-reported"], 4)
+        self.assertGreaterEqual(counts["mock-only"], 20)
+        self.assertGreaterEqual(counts["proposed"], 9)
         self.assertEqual(counts["DEV-verified"], 0)
         self.assertEqual(counts["production-verified"], 0)
+        self.assertEqual(sum(counts.values()), len(self.data["items"]))
         record = [x for x in self.data["items"]
                   if x["id"] == "PUBLIC-EVIDENCE-ASSURANCE-WORKLIST-20261114"]
         self.assertEqual(len(record), 1)

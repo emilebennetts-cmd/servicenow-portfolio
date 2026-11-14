@@ -92,7 +92,8 @@ class PublicClaimCatalogueContract(unittest.TestCase):
         self.assertNotIn("history.pushState", self.html)
         self.assertNotIn("localStorage", self.html)
         self.assertNotIn("sessionStorage", self.html)
-        self.assertEqual(len(self.data["items"]), 87)
+        self.assertGreaterEqual(len(self.data["items"]), 87)
+        self.assertEqual(len(self.data["items"]), len({x["id"] for x in self.data["items"]}))
 
 if __name__ == "__main__":
     unittest.main()

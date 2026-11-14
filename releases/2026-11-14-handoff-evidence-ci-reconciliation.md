@@ -37,3 +37,7 @@ Final GitHub Actions conclusions must be inspected for the exact commit before t
 **Entitlements:** Public HTML, evidence JSON and CI require no ServiceNow licence. Native scoped application deployment requires applicable App Engine/custom-table rights and ACL/role coverage. ITSM, ITOM/Discovery, IntegrationHub/spokes, ATF, Performance Analytics, AI and third-party provider subscriptions depend on the implementation and actual customer contract.
 
 **Blockers remain:** independent DEV acceptance with source SHA, target app/scope/version, dated executed tests, reviewer identity and private receipts; separate production/change authority; image-by-image irreversible redaction and express publication permission. **No DEV-VERIFIED / PRODUCTION-VERIFIED promotion.**
+
+### Second CI reconciliation (same day)
+
+The first repair commit registered the missing source claim and cleared the publication audit, but uncovered two unrelated **hard-coded 87-claim** regression assertions in `test_evidence_assurance_worklist.py` and `test_public_claim_catalogue.py`. Those assertions failed when the valid register expanded to 88. Both have now been changed to assert ID uniqueness, conservation of classification totals, nonpromotion boundaries and a minimum historical baseline rather than a permanently frozen count. This is a test-fixture correction, not a change to native verification status. New CI status must be checked separately after this commit.
