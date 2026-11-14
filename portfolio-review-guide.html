@@ -25,13 +25,48 @@ footer{padding:32px 0;color:var(--muted)}footer .wrap{display:flex;flex-wrap:wra
 @media(max-width:800px){.hero{grid-template-columns:1fr}.journey{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.route-links{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}header .wrap{padding-bottom:48px}.hero{margin-top:46px}}
 @media(max-width:560px){.grid,.journey,.stat-grid,.gallery{grid-template-columns:1fr}.hero-note .number{font-size:2rem}main section{padding:40px 0}.route-toolbar button{width:100%;text-align:left}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Reviewer briefing: browser-only export and print; no approval state is mutable. */
+.review-packet-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+.review-packet-actions button{font:inherit;min-height:44px;cursor:pointer;border:1px solid #91c5d5;background:#19384c;color:#f2fafc;border-radius:10px;padding:11px 17px;font-weight:800}
+.review-packet-actions button:hover{background:#275269}
+.review-packet-actions button:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.packet-status{flex:1 1 100%;font-size:.85rem;margin:2px 0 0;color:#ffda9f}
+.packet-print-only{display:none}
+@media print{
+ @page{size:A4;margin:14mm}
+ :root{color-scheme:light}
+ html{scroll-behavior:auto}
+ body,header{background:#fff!important;color:#14232a!important;print-color-adjust:exact}
+ .wrap{width:100%!important;max-width:none!important}
+ header .wrap{padding:0 0 16px!important}
+ .topnav,.actions,.route-toolbar,.review-packet-actions,.skip,footer{display:none!important}
+ .hero{display:block!important;margin-top:0!important}
+ .hero-note{margin-top:12px!important;padding:12px!important}
+ h1{font-size:26pt!important;line-height:1.1!important;margin:12px 0}
+ h2{font-size:18pt!important}
+ h3{font-size:12pt!important}
+ main section{padding:13px 0!important;border-bottom:1px solid #bbb!important}
+ .grid,.stat-grid,.gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .journey{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .route-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .card,.hero-note,.journey li,.stat,.sample,.route-panel,.route-links li,.notice{background:#fff!important;color:#14232a!important;box-shadow:none!important;border:1px solid #aaa!important;break-inside:avoid}
+ .route-panel[hidden], [hidden]{display:none!important}
+ .route-panel:not([hidden]){display:block!important}
+ .table-wrap{overflow:visible!important}
+ table{min-width:0!important;font-size:9pt}
+ th,td{padding:6px 8px!important}
+ p,li,span,small,.eyebrow,.kind,.sample span,.stat span,.stat b,.hero-note .number,.journey strong,.notice p{color:#14232a!important}
+ a{color:#14586a!important;text-decoration:underline}
+ .packet-print-only{display:block!important;border-top:2px solid #555;padding:10px 0;font-size:9pt;font-weight:700}
+}
 </style>
 </head><body>
 <a href="#main" class="skip">Skip to content</a>
 <header><div class="wrap">
 <nav class="topnav" aria-label="Primary"><a href="./">← Portfolio home</a><div class="subnav"><a href="delivery-case-study.html">Delivery</a><a href="diagnostic-case-study.html">Diagnostic</a><a href="diagnostic-rescan-decision-lab.html">Rescan decision lab</a><a href="verification-ledger.html">Verification ledger</a><a href="entitlement-readiness.html">Entitlement gates</a><a href="portfolio-explorer.html">Explore all pages</a></div></nav>
 <div class="hero"><div><p class="eyebrow">ServiceNow engineering · 90-second review</p><h1>Find the issue. Govern the fix. Prove the outcome.</h1><p class="lead">Two workbenches built around a common consulting problem: technical findings lose their context between investigation and implementation. This portfolio shows source-backed engineering decisions, reusable patterns and assurance controls — with synthetic demonstrations clearly separated from ServiceNow runtime evidence.</p><div class="actions"><a class="button primary" href="#review-route">Choose your review path</a><a class="button" href="#source-observations">See evidence observations</a></div></div>
-<aside class="hero-note" aria-label="Evidence baseline"><span class="eyebrow">Evidence integrity</span><span class="number">0 approved</span><p>Genuine Workbench screenshots cleared for public publication. Eight privately reviewed evidence observations are summarised without publishing their original pixels.</p><a href="visual-evidence.html#reviewed-captures">Inspect the evidence register →</a></aside></div>
+<aside class="hero-note" aria-label="Evidence baseline"><span class="eyebrow">Evidence integrity</span><span class="number">0 approved</span><p>Genuine Workbench screenshots cleared for public publication. Eight privately inspected files (six UI capture observations and two documents) are summarised without publishing their original pixels.</p><a href="visual-evidence.html#reviewed-captures">Inspect the evidence register →</a></aside></div>
 </div></header>
 <main id="main" class="wrap">
 <section id="pain"><span class="eyebrow">01 / The client's pain &amp; history</span><h2>Discovery and delivery should not be disconnected.</h2><p class="section-intro">A representative enterprise ITSM programme might manage assessment notes in spreadsheets, remediation proposals in documents and test evidence in a separate project tracker. Ownership and requirements are repeated, while the reason for each solution decision becomes hard to reconstruct. This is a generalised scenario, not an assertion about a named client.</p></section>
@@ -40,12 +75,14 @@ footer{padding:32px 0;color:var(--muted)}footer .wrap{display:flex;flex-wrap:wra
 <article class="card"><span class="kind">Plan / deliver / assure</span><h3>Universal Delivery Workbench</h3><p>Connects requirements to reusable solution patterns, design decisions, build guidance, tests and release/handover records. Gate and approval integrity remain important when automation accelerates drafting.</p><a href="delivery-case-study.html">Open the Delivery case study →</a> <a href="integration-contract-lab.html">Explore integration authority and replay →</a> · <a href="diagnostic-gate-closure-lab.html">Diagnostic gate closure case study →</a></article></div>
 <ol class="journey" aria-label="Conceptual lifecycle, not a recorded transaction"><li><strong>01 · Assess</strong><p>Record source, scope and limitations of observed evidence.</p></li><li><strong>02 · Qualify</strong><p>Trace findings to a prioritised, owned requirement.</p></li><li><strong>03 · Reuse</strong><p>Evaluate OOTB-first patterns and controlled exceptions.</p></li><li><strong>04 · Assure</strong><p>Link testing, acceptance and release/handover evidence.</p></li></ol>
 <p><a href="finding-to-release-handoff.html">Explore the proposed cross-workbench handoff contract →</a> · <a href="pattern-library-experience.html">Explore the synthetic pattern walkthrough →</a></p></section>
-<section id="review-route"><span class="eyebrow">Guided reviewer journey</span><h2>Choose the proof you want to inspect.</h2><p>Select a perspective; the links and their context update locally. This selector does not access ServiceNow, transmit data or alter the evidence register.</p>
+<section id="review-route"><span class="eyebrow">Guided reviewer journey</span><h2>Choose the proof you want to inspect.</h2><p>Select a perspective; the links and their context update locally. This selector does not access ServiceNow, transmit data or alter the evidence register. Export or print a reviewer-specific briefing with permanent verification HOLD controls.</p>
 <div class="route-toolbar" role="group" aria-label="Review perspective"><button type="button" aria-pressed="true" aria-controls="route-recruiter" data-route="recruiter">Hiring manager · 90 sec</button><button type="button" aria-pressed="false" aria-controls="route-architect" data-route="architect">Technical architect</button><button type="button" aria-pressed="false" aria-controls="route-assurance" data-route="assurance">Assurance reviewer</button></div>
 <div class="route-panel" id="route-recruiter" data-panel="recruiter"><h3>A quick view of practical delivery impact</h3><p>Start with what each workbench is designed to improve, then inspect the visual source observations and evidence boundaries.</p><ul class="route-links"><li><a href="delivery-case-study.html">Governed delivery</a><small>Requirements, patterns and controlled release outcomes</small></li><li><a href="diagnostic-case-study.html">Diagnostic engineering</a><small>Coverage, finding provenance and reviewable remediation</small></li><li><a href="visual-evidence.html#reviewed-captures">Source observations</a><small>Six privately inspected captures; public originals remain on HOLD</small></li></ul><p class="foot">Classification: SOURCE-ONLY narrative with synthetic/DEV-reported material explicitly labelled on linked pages.</p></div>
 <div class="route-panel" id="route-architect" data-panel="architect" hidden><h3>Inspect architecture and the delivery boundary</h3><p>Review scoped responsibilities, source-to-runtime gaps, and the difference between OOTB ServiceNow configuration and custom Workbench services.</p><ul class="route-links"><li><a href="workbench-architecture.html">Solution architecture</a><small>Boundaries between Diagnostic evidence and Delivery planning</small></li><li><a href="cmdb-ire-assurance.html">CMDB / IRE analysis</a><small>Identification, reconciliation and completeness engineering</small></li><li><a href="knowledge-intelligence-acceptance-matrix.html#schema-reconciliation">Schema reconciliation</a><small>16 source-declared KI tables; installed-instance acceptance remains separate</small></li><li><a href="pattern-library-audit-trail.html">Pattern library source audit</a><small>572 accepted candidates, deduplication, quality and unverified pilot gates</small></li></ul><p class="foot">A source design is not a successful import, live collector execution or production release.</p></div>
 <div class="route-panel" id="route-assurance" data-panel="assurance" hidden><h3>Audit every significant claim before relying on it</h3><p>Examine classification, provenance, screenshot publication restrictions and native acceptance requirements.</p><ul class="route-links"><li><a href="verification-ledger.html">Public verification ledger</a><small>Source-only, mock-only, DEV-reported, DEV-verified and production-verified boundaries</small></li><li><a href="screenshot-review-packet.html">Publication review packet</a><small>Review controls do not grant independent release permission</small></li><li><a href="workbench-acceptance-playbook.html#acceptance-import">Native acceptance and receipt inspection</a><small>Version, ACL and functional test gates; compare private HOLD receipts locally without asserting DEV acceptance</small></li>
 <li><a href="incident-pack-native-pilot.html">Incident pack native pilot</a><small>Historical synthetic DEV metadata and draft-flow evidence, with explicit limitations and pending native gates</small></li><li><a href="source-target-compatibility.html">Source-to-target compatibility firewall</a><small>Contrast separate application generations and inspect seven native acceptance gates without elevating self-reported evidence</small></li><li><a href="native-assurance-coverage-atlas.html#execution-protocols">Independent native assurance &amp; execution protocols</a><small>29 Not run Delivery scenarios, 14 Diagnostic source requirements and nine risk-first procedural examples with HOLD-only preparation tickets; no native acceptance implied</small></li><li><a href="operational-readiness-runbook.html">Operational readiness and support runbook</a><small>12 source-backed checks, failure containment and unresolved handover gates; no production claim</small></li></ul><p class="foot">No new DEV read-back or production validation was conducted for this guide.</p></div>
+<div class="review-packet-actions" aria-label="Prepare selected reviewer briefing"><button type="button" id="export-review-route">Export selected path (JSON)</button><button type="button" id="print-review-route">Print selected path / Save PDF</button><p class="packet-status" id="review-export-status" role="status" aria-live="polite">Preparation only · SOURCE-ONLY references, MOCK-ONLY selector · UNREVIEWED / NOT VERIFIED / HOLD</p></div>
+<p class="packet-print-only">Portfolio review copy · Classification: SOURCE-ONLY narrative and MOCK-ONLY route selection. No independently verified DEV or production claims established. Original images: HOLD. This printout is not an acceptance or publication approval.</p>
 </section>
 <section id="source-observations"><span class="eyebrow">Evidence-led, not a mock screenshot gallery</span><h2>What has actually been inspected?</h2><div class="stat-grid"><div class="stat"><b>6</b><span>Privately inspected source-capture observations</span></div><div class="stat"><b>0</b><span>Approved genuine images published</span></div><div class="stat"><b>16</b><span>Knowledge Intelligence source XML table definitions</span></div><div class="stat"><b>0</b><span>New native DEV or production checks in this release</span></div></div>
 <div class="gallery" aria-label="Selected descriptions of privately inspected images"><article class="sample"><span class="symbol" aria-hidden="true">RV-01</span><strong>Delivery Plan &amp; milestones</strong><p>Observed interface sections described in the restricted evidence review record. Not a runtime acceptance record.</p><span>GENUINE SOURCE OBSERVATION · HOLD</span></article><article class="sample"><span class="symbol" aria-hidden="true">RV-02</span><strong>Diagnostic report &amp; export</strong><p>Source-capture observation, not proof of a live report transaction at the current release.</p><span>GENUINE SOURCE OBSERVATION · HOLD</span></article><article class="sample"><span class="symbol" aria-hidden="true">RV-05</span><strong>Discovery &amp; process packs</strong><p>Contains a synthetic MIM illustration; it cannot substantiate client discovery completion.</p><span>GENUINE SOURCE OBSERVATION · MOCK CONTENT · HOLD</span></article></div>
@@ -72,6 +109,49 @@ footer{padding:32px 0;color:var(--muted)}footer .wrap{display:flex;flex-wrap:wra
     buttons.forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
     panels.forEach(panel=>{panel.hidden=panel.dataset.panel!==next;});
   }));
+
+  // Only the selected, authored public route can enter the generated review packet.
+  const exportButton=document.getElementById("export-review-route");
+  const printButton=document.getElementById("print-review-route");
+  const exportStatus=document.getElementById("review-export-status");
+  const origin="https://emilebennetts-cmd.github.io/servicenow-portfolio/";
+  function selectedRoutePacket(){
+    const active=buttons.find(button=>button.getAttribute("aria-pressed")==="true");
+    const panel=panels.find(item=>!item.hidden);
+    if(!active||!panel||active.dataset.route!==panel.dataset.panel)throw new Error("Reviewer route is inconsistent");
+    const refs=Array.from(panel.querySelectorAll(".route-links a")).map(a=>{
+      const href=a.getAttribute("href")||"";
+      // Do not export private URLs, arbitrary schemes, local files or embedded data.
+      if(!/^[a-z0-9-]+\.html(?:#[a-z0-9-]+)?$/i.test(href))throw new Error("Unapproved evidence link");
+      return {label:a.textContent.trim(),public_url:origin+href,why:a.parentElement.querySelector("small")?.textContent.trim()||""};
+    });
+    if(refs.length===0)throw new Error("Review route has no public evidence links");
+    return {
+      schema_version:"1.0",type:"portfolio-review-briefing",prepared_at_utc:new Date().toISOString(),
+      audience:active.dataset.route,route_title:panel.querySelector("h3").textContent.trim(),
+      narrative:panel.querySelector("p").textContent.trim(),public_source:origin+"portfolio-review-guide.html",
+      evidence_links:refs,claim_basis:"SOURCE-ONLY",interaction_basis:"MOCK-ONLY",
+      historical_dev_reports_are_not_new_dev_acceptance:true,
+      native_dev_verified:false,production_verified:false,original_screenshots_approved:0,
+      review_state:"UNREVIEWED",verification_state:"NOT VERIFIED",publication_state:"HOLD",
+      licence_note:"Static portfolio needs no ServiceNow licence. Native applications and platform features need contract-specific entitlements and ACLs."
+    };
+  }
+  exportButton.addEventListener("click",()=>{
+    try{
+      const packet=selectedRoutePacket();
+      const blob=new Blob([JSON.stringify(packet,null,2)+"\\n"],{type:"application/json"});
+      const url=URL.createObjectURL(blob),link=document.createElement("a");
+      link.href=url;link.download="servicenow-review-"+packet.audience+"-HOLD.json";
+      document.body.append(link);link.click();link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      exportStatus.textContent="Prepared "+packet.audience+" briefing · NOT VERIFIED / HOLD";
+    }catch(_error){exportStatus.textContent="Export blocked: public review links could not be validated. HOLD remains in effect."}
+  });
+  printButton.addEventListener("click",()=>{
+    try{selectedRoutePacket();window.print()}
+    catch(_error){exportStatus.textContent="Print blocked: public review links could not be validated. HOLD remains in effect."}
+  });
 }());
 </script>
 </body></html>
