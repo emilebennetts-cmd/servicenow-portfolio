@@ -47,6 +47,41 @@ def verify(browser,width):
                     "production_verified","public_screenshot_approved"):
             assert packet[key] is False,key
         assert "dev438211" not in json.dumps(packet)
+        # Offline roundtrip: a completed mock review can be resumed from its own
+        # exported packet, without promoting any attestation flags.
+        page.locator("#fit-reset").click()
+        assert page.locator("#fit-scenario").input_value()=="mim"
+        page.locator("#fit-import-file").set_input_files({
+            "name":"review.json","mimeType":"application/json",
+            "buffer":json.dumps(packet).encode("utf-8")})
+        page.wait_for_function("document.querySelector('#fit-export-feedback').textContent.includes('Draft restored')")
+        assert page.locator("#fit-scenario").input_value()=="cmdb"
+        assert page.locator("#fit-approach").input_value()=="pattern"
+        assert "PREPARED FOR INDEPENDENT REVIEW" in page.locator("#fit-status").inner_text()
+        for label in ("owner","baseline","entitlement","security","acceptance","exception"):
+            assert page.locator(f'[data-fit-check="{label}"]').is_checked()
+        # Tampering, unknown selectors, extra fields, invalid JSON and oversize
+        # files fail closed and leave previously selected controls untouched.
+        invalid=[
+            dict(packet,review_state="APPROVED"),
+            dict(packet,production_verified=True),
+            dict(packet,scenario="fake"),
+            dict(packet,prepared_checks=["owner","owner"]),
+            dict(packet,unexpected_private_field="unsafe"),
+        ]
+        for idx,entry in enumerate(invalid):
+            page.locator("#fit-import-file").set_input_files({
+                "name":f"tampered-{idx}.json","mimeType":"application/json",
+                "buffer":json.dumps(entry).encode("utf-8")})
+            page.wait_for_function("document.querySelector('#fit-export-feedback').textContent.includes('Import rejected')")
+            assert page.locator("#fit-scenario").input_value()=="cmdb"
+            assert page.locator("#fit-approach").input_value()=="pattern"
+            assert "PREPARED FOR INDEPENDENT REVIEW" in page.locator("#fit-status").inner_text()
+        for name,data in [("malformed.json",b"{bad json"),("oversize.json",b" "*16385)]:
+            page.locator("#fit-import-file").set_input_files({
+                "name":name,"mimeType":"application/json","buffer":data})
+            page.wait_for_function("document.querySelector('#fit-export-feedback').textContent.includes('Import rejected')")
+            assert page.locator("#fit-scenario").input_value()=="cmdb"
         page.locator('[data-fit-check="exception"]').uncheck()
         page.locator("#fit-approach").select_option("ootb")
         assert "PREPARED FOR INDEPENDENT REVIEW" in page.locator("#fit-status").inner_text()
@@ -59,7 +94,7 @@ def verify(browser,width):
         assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"),width
         assert not failures,failures
         assert not outbound,outbound
-        print(f"PASS pattern decision desk {width}px: 3 scenarios, 3 options, conservative HOLD export, reset")
+        print(f"PASS pattern decision desk {width}px: 3 scenarios, 3 options, conservative HOLD export, tamper-resistant offline import, reset")
     finally:
         page.close()
 
