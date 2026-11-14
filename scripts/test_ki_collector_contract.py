@@ -63,7 +63,7 @@ class CollectorFaultContractTests(unittest.TestCase):
                      "source-informed, synthetic contract gallery"):
             self.assertIn(text, self.html)
         self.assertIn("DEV-REPORTED", self.html)
-        self.assertIn("no DEV read-back", self.html.lower())
+        self.assertIn("no dev read-back", self.html.lower())
         self.assertIn("no ServiceNow licence", self.html)
 
     def test_export_is_immutable_mock_only_not_native(self):
