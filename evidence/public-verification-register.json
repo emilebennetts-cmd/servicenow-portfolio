@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-14T05:20:20.384Z",
+  "updated_utc": "2026-11-14T08:24:16.462Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -802,6 +802,15 @@
       "runtime_verification": "SOURCE-ONLY architecture and MOCK-ONLY browser-local scenarios. Historical DEV-REPORTED source statements are not independently reproduced; native current-target execution is NOT RUN, independently DEV-VERIFIED and PRODUCTION-VERIFIED are NOT ESTABLISHED. Browser CI validates the portfolio UI only.",
       "public_screenshot_status": "HOLD — zero image-specific original ServiceNow screenshot publication approvals; no private source, customer content or screenshot pixels published.",
       "page": "diagnostic-delivery-handoff-contract.html"
+    },
+    {
+      "id": "PUBLIC-ENTITLEMENT-READINESS-20261114",
+      "title": "Source-bounded ServiceNow entitlement and deployment readiness review",
+      "classification": "source-only",
+      "basis": "Version-controlled static entitlement-readiness.html and test_entitlement_readiness.py; restricted Delivery and Diagnostic README source declarations, historic demo7 source-versus-target compatibility caveat, and published ServiceNow guidance on custom tables and subscription mapping. Eight review areas are decision prompts, not a contractual licence interpretation.",
+      "runtime_verification": "Public browser-only capability filtering and a locally downloaded UNREVIEWED / NOT VERIFIED / HOLD JSON worksheet. All native DEV, target-instance subscription checks, security approval, ITSM/ITOM/IntegrationHub/analytics/ATF entitlements and Production acceptance are NOT VERIFIED. Historical DEV-REPORTED baselines remain separate; no verification promotion.",
+      "public_screenshot_status": "No original screenshots used. All original ServiceNow captures remain individually unapproved (zero approved) and held from public publication.",
+      "page": "entitlement-readiness.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
