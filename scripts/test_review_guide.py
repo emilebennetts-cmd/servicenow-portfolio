@@ -67,6 +67,21 @@ class ReviewerGuideTests(unittest.TestCase):
         self.assertIn("no ServiceNow licence", self.content)
         self.assertIn("No new DEV read-back", self.content)
 
+    def test_offline_reviewer_briefing_and_print_holds(self):
+        for value in ('id="export-review-route"', 'id="print-review-route"',
+                      'id="review-export-status"', '@media print',
+                      '.route-panel[hidden], [hidden]{display:none!important}',
+                      'original_screenshots_approved:0', 'native_dev_verified:false',
+                      'production_verified:false', 'review_state:"UNREVIEWED"',
+                      'verification_state:"NOT VERIFIED"', 'publication_state:"HOLD"',
+                      'window.print()', 'selectedRoutePacket()', 'URL.createObjectURL(blob)',
+                      'Unapproved evidence link', 'servicenow-review-'):
+            self.assertIn(value, self.content)
+        self.assertIn('Six UI capture observations and two documents'.lower(),
+                      self.content.lower())
+        self.assertNotRegex(self.content, r"<(?:img|iframe|object|embed)\\b")
+        self.assertNotIn("new XMLHttpRequest", self.content)
+
     def test_no_private_assets_or_network_calls(self):
         self.assertFalse(self.scan.images, "Genuine screenshots are not publication-approved")
         self.assertNotIn("drive.google.com", self.content)
