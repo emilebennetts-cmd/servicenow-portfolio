@@ -71,5 +71,23 @@ class EntitlementReadinessTests(unittest.TestCase):
         self.assertIn("entitlement-readiness.html",EXPLORER.read_text(encoding="utf-8"))
         self.assertEqual(1,SITEMAP.read_text(encoding="utf-8").count("<loc>"+CANONICAL+"</loc>"))
 
+    def test_public_register_classifies_only_website_source(self):
+        import json
+        register = json.loads((ROOT / "evidence/public-verification-register.json").read_text(encoding="utf-8"))
+        claims = register["items"]
+        self.assertEqual(len(claims), len({c["id"] for c in claims}))
+        own = [c for c in claims if c.get("page") == "entitlement-readiness.html"]
+        self.assertEqual(1, len(own))
+        self.assertEqual("source-only", own[0]["classification"])
+        self.assertIn("NOT VERIFIED", own[0]["runtime_verification"])
+        self.assertIn("No original", own[0]["public_screenshot_status"])
+
+    def test_sitemap_and_directory_match_without_hardcoded_totals(self):
+        paths = re.findall(r'/servicenow-portfolio/([a-z0-9-]+\\.html)</loc>', SITEMAP.read_text(encoding="utf-8"))
+        catalog = re.findall(r'<li class="result"', EXPLORER.read_text(encoding="utf-8"))
+        self.assertEqual(len(paths), len(set(paths)))
+        self.assertEqual(paths, sorted(paths))
+        self.assertEqual(len(paths), len(catalog))
+
 if __name__ == "__main__":
     unittest.main()
