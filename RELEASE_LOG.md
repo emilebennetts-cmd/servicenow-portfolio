@@ -1,3 +1,10 @@
+## 14 November 2026 — offline CSV evidence assurance worksheet (SOURCE-ONLY / HOLD)
+
+- Extended the [Evidence Assurance Worklist](evidence-assurance-worklist.html) with an offline spreadsheet-safe CSV export for current search, classification and gate filters, retaining the existing JSON output. Each export row carries an immutable public register timestamp and conservative **UNREVIEWED / NOT VERIFIED / HOLD** and false verification/approval flags.
+- Implemented CSV quote/escape and formula-injection neutralisation (including leading whitespace), zero-match disabling, and fail-closed handling of invalid/duplicate claims. No private source, customer records, Drive URLs or unapproved screenshots enter a spreadsheet. The existing SOURCE-ONLY register claim covers this change; **87 public claims** remain unchanged.
+- Added static regression assertions and Chromium export/injection checks across 390, 768, 1024 and 1440px viewports. [Technical release](releases/2026-11-14-offline-evidence-csv-worksheet.md). The static website needs no ServiceNow licence; native tests depend on customer App Engine/custom-table, ITSM, ITOM/Discovery, IntegrationHub, analytics, ATF, AI and external entitlements.
+- GitHub Actions, Pages and any independent live HTTP retrieval must be checked against the final commit. No new native DEV/Production claims or image approvals.
+
 ## 14 November 2026 — portable public claim review links (SOURCE-ONLY / HOLD)
 
 - Extended [the public evidence briefing builder](technical-evidence-register.html#claim-shortlist) with same-origin review links for 1–12 public claim IDs, safely rehydrated only after validation against the 86-claim register. A copyable URL and open-link action support reviewer collaboration without private evidence, storage or external submission.
