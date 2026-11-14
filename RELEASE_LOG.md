@@ -1,3 +1,9 @@
+## 15 November 2026 — Reconcile contradictory Delivery DEV release receipts (SOURCE-ONLY / DEV-REPORTED / HOLD)
+
+- Cross-checked the current Delivery README against controlled 19 October As-Built / Architecture and user-guide text. Distinguish source version 4.22.2, README historical 4.20.0 DEV-reported on 5 October, and a separate documentation assertion of a 4.22.2 DEV read-back on 6 October whose introduction cautions that source 4.22.2 is not represented as installed. The statements remain unresolved pending version-matched independent target evidence.
+- Added a four-card responsive source/DEV/production comparison, evidence-resolution checklist and links to native acceptance and screenshot-publication gates. Corrected Diagnostic Workbench's inaccurate "DEV-VERIFIED · historical document-reported" label to **DEV-REPORTED** without promoting historical source assertions.
+- [Full release, test and licensing boundary](releases/2026-11-15-release-claim-provenance-reconciliation.md). No customer data, private documents or unapproved imagery published; no new DEV-VERIFIED / PRODUCTION-VERIFIED claims; screenshot approvals **0 / HOLD**.
+
 ## 15 November 2026 — KI capability-label substitution and spreadsheet-formula quarantine (SOURCE-ONLY / PROPOSED / MOCK-ONLY / HOLD)
 
 - The public 180-case CSV intake checker now pins **all 45 module descriptions** to the canonical public matrix generator instead of merely requiring non-empty labels. A forged formula-like capability cell, cross-module label swap or whitespace-modified label now triggers a structural exception; the one-module demonstration uses the canonical label too.
