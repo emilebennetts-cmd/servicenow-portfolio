@@ -1,0 +1,37 @@
+name: Public Evidence Assurance Worklist
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'evidence-assurance-worklist.html'
+      - 'evidence/public-verification-register.json'
+      - 'scripts/test_evidence_assurance_worklist.py'
+      - 'scripts/browser_evidence_assurance_worklist.py'
+      - '.github/workflows/evidence-assurance-worklist.yml'
+  pull_request:
+    paths:
+      - 'evidence-assurance-worklist.html'
+      - 'evidence/public-verification-register.json'
+      - 'scripts/test_evidence_assurance_worklist.py'
+      - 'scripts/browser_evidence_assurance_worklist.py'
+      - '.github/workflows/evidence-assurance-worklist.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence-worklist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check source-only evidence register and status boundaries
+        run: python -m unittest discover -s scripts -p 'test_evidence_assurance_worklist.py' -v
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python -m playwright install --with-deps chromium
+      - name: Test responsive assurance review and offline export
+        run: python scripts/browser_evidence_assurance_worklist.py
