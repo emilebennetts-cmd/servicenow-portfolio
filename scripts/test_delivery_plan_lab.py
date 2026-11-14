@@ -63,7 +63,10 @@ class DeliveryPlanContract(unittest.TestCase):
                        "dev438211","x_1577958","Bearer ","client_secret","token="):
             self.assertNotIn(secret,self.html)
         self.assertNotRegex(self.html,r"(?i)data:image|<script\s+src=|XMLHttpRequest|navigator\.sendBeacon")
-        self.assertNotRegex(self.html,r"(?i)https?://")
+        # An absolute same-origin canonical/OG URL is static publication metadata,
+        # not a network call. Preserve the ban on all other remote URLs.
+        permitted="https://emilebennetts-cmd.github.io/servicenow-portfolio/delivery-case-study.html"
+        self.assertNotRegex(self.html.replace(permitted,""),r"(?i)https?://")
         self.assertIn("no production",self.html.lower())
 
 if __name__=="__main__":
