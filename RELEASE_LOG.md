@@ -1,3 +1,9 @@
+## 14 November 2026 — shareable role-specific architecture tours (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Improved the [Workbench Architecture Gallery](workbench-architecture-gallery.html#persona-tour) with allowlisted six-role direct URLs, a copy-link control and accessible read-only fallback for blocked clipboard permission. Recruiters can send architect, deployer, support or other role journeys without asking recipients to navigate tabs.
+- Added browser regression for safe query restoration, malformed/prototype role rejection, copy outcomes and four responsive widths; retained keyboard tabs, immutable UNREVIEWED / NOT VERIFIED / HOLD JSON, no network calls or image pixels. No new evidence claim required: public claim register remains **89** (56 SOURCE-ONLY, 20 MOCK-ONLY, 9 PROPOSED, 4 DEV-REPORTED).
+- [Technical release](releases/2026-11-14-persona-direct-links-and-copy-fallback.md). Public site licensing none; native App Engine/custom-table, roles/ACLs, ITSM, ITOM/Discovery, IntegrationHub, ATF, analytics, AI and external rights remain contract-specific. GitHub CI and Pages do not prove native DEV/production execution. Genuine screenshot approval remains **0 / HOLD**.
+
 ## 14 November 2026 — browser-only entitlement follow-up triage (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Added eight suggested reviewer roles and per-capability follow-up stages to the [Entitlement & Deployment Readiness](entitlement-readiness.html) review. Filter changes retain browser-only stages, a live count and reset support reviewer preparation without certifying any licence, installation, DEV result or release.
