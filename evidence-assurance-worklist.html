@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Interactive, source-bounded evidence assurance worklist for the ServiceNow Professional Portfolio. Prioritise native testing without mistaking public claims for verification.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'">
+<title>Evidence Assurance Worklist | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1724;--panel:#142a40;--line:#466477;--ink:#f0f7fa;--muted:#c6dce7;--mint:#85eed6;--gold:#f9ce95}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 84% 0,#174459 0,transparent 48%),var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--mint);text-underline-offset:3px}a:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.wrap{width:min(1150px,100%);margin:auto;padding:clamp(1rem,4vw,2.5rem)}
+.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:10;background:#fff;color:#111;padding:.65rem}
+header,footer{border-bottom:1px solid var(--line)}header nav{display:flex;flex-wrap:wrap;gap:1.1rem}
+h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.09;letter-spacing:-.04em;margin:1rem 0 1.25rem}h2{font-size:clamp(1.45rem,3vw,2.1rem)}h3{font-size:1.15rem;line-height:1.33}
+p{max-width:88ch}.lead{font-size:1.18rem;color:var(--muted)}.eyebrow{color:var(--mint);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,225px),1fr));gap:1rem}.stats{margin:1.5rem 0}.stat,.card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:1.2rem;min-width:0}.stat strong{display:block;font-size:clamp(1.9rem,5vw,2.6rem);line-height:1.2}.stat small{display:block;color:var(--muted)}
+.notice{border-left:4px solid var(--gold);background:#342c23;padding:1.1rem;border-radius:0 9px 9px 0;color:#f8e6cd}
+section{margin:2.4rem 0}.toolbar{display:grid;grid-template-columns:minmax(0,2fr) minmax(190px,1fr) minmax(190px,1fr);gap:1rem;padding:1.2rem;background:#123148;border:1px solid var(--line);border-radius:14px}
+.toolbar label{font-weight:750}.toolbar input,.toolbar select{display:block;width:100%;min-height:46px;margin-top:.4rem;border:1px solid #9eb9c8;background:#071e2b;color:#fff;padding:.6rem;border-radius:8px;font:inherit}
+.actions{display:flex;flex-wrap:wrap;gap:.8rem;margin:1rem 0}.actions button{font:inherit;font-weight:750;min-height:44px;border-radius:9px;border:1px solid #9eb9c8;background:#25475a;color:#fff;padding:.6rem 1rem;cursor:pointer}
+.actions button:disabled{opacity:.5;cursor:not-allowed}.actions .primary:not(:disabled){background:var(--mint);color:#0a2a30;border-color:var(--mint)}
+.muted{color:var(--muted)}.count{color:#d9ecf5}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.card h3{margin:.55rem 0}.card p{color:var(--muted);margin:.4rem 0}.card a{display:inline-block;margin-top:.7rem;overflow-wrap:anywhere;font-weight:750}
+.identifier{font-size:.75rem;color:#cee7f5;overflow-wrap:anywhere}.class{display:inline-block;border:1px solid #98b5c9;border-radius:20px;padding:.12rem .55rem;font-size:.74rem;font-weight:800;letter-spacing:.03em;color:#b4fae0}
+.card[data-kind="mock-only"] .class,.card[data-kind="proposed"] .class{color:#d9d4ff}.card[data-kind="DEV-reported"] .class{color:#ffd6a0}
+.next{margin-top:.75rem;padding:.65rem .8rem;border-left:3px solid var(--mint);background:#0c2334;color:#f1f9fc}
+.card details{margin-top:.8rem}.card summary{cursor:pointer;color:var(--mint);font-weight:700}.card dt{font-size:.8rem;color:#e8f8ff;font-weight:800;margin-top:.6rem}.card dd{margin:0;overflow-wrap:anywhere;color:var(--muted)}
+#failure{padding:1rem;border:1px solid var(--gold);color:#ffe6c4;background:#322a22}
+#load-more{margin:1rem auto;display:block}
+.hint{font-size:.9rem;color:var(--muted)}
+@media(max-width:760px){.toolbar{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.actions button{flex:1 1 100%}}
+@media print{body{background:#fff;color:#111}.stat,.card{background:#fff;border-color:#777;break-inside:avoid}.stat small,.card p,.muted,.card dd{color:#333}.toolbar,.actions,.skip{display:none!important}.class{color:#111!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to evidence worklist</a>
+<header><div class="wrap"><nav aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="portfolio-explorer.html">All case studies</a><a href="technical-evidence-register.html#claim-catalogue">Evidence register</a><a href="workbench-acceptance-playbook.html">Native acceptance playbook</a></nav></div></header>
+<main class="wrap" id="main">
+<p class="eyebrow">Public evidence / technical assurance</p>
+<h1>Evidence Assurance Worklist</h1>
+<p class="lead">Turn the public portfolio's classified claims into a bounded, version-aware verification worklist. This is an engineering planning aid, not a certification dashboard.</p>
+<div class="notice" role="note"><strong>Verification boundary:</strong> Every count below describes <em>public register entries</em>, not installed ServiceNow features, successful test cases or customer delivery outcomes. Historical DEV reports are not independent DEV-VERIFIED evidence. No published evidence can certify production execution or authorise a screenshot.</div>
+<div class="grid stats" aria-label="Claim classification totals">
+<div class="stat"><strong id="total">—</strong><small>Claims in public register</small></div>
+<div class="stat"><strong id="source-count">—</strong><small>Source-only claims requiring direct test evidence</small></div>
+<div class="stat"><strong id="mock-count">—</strong><small>Mock-only demonstrations</small></div>
+<div class="stat"><strong id="reported-count">—</strong><small>Historical DEV-reported observations</small></div>
+<div class="stat"><strong id="proposal-count">—</strong><small>Proposed designs requiring approval and build</small></div>
+<div class="stat"><strong id="verified-count">—</strong><small>Independently DEV/production-verified register claims</small></div>
+</div>
+<section aria-labelledby="pain"><h2 id="pain">1. The client's pain &amp; history</h2>
+<p>A representative ServiceNow programme accumulates As-Built documents, evolving source releases, synthetic demonstrations and historical developer-instance test notes. Without a structured assurance worklist, those records can be mistaken for current-instance proof. This scenario is illustrative, not a statement about a named client.</p>
+</section>
+<section aria-labelledby="solution"><h2 id="solution">2. The ServiceNow solution — a gated review queue</h2>
+<p>Filter the public evidence register by classification, search claim IDs or titles, and export a client-neutral checklist. Each item has a conservative next engineering action. No new ServiceNow data is collected or transmitted, and there is no approval, entitlement or execution action in this browser tool.</p>
+<div class="toolbar" aria-label="Evidence worklist filters">
+<label for="search">Search claim or source basis<input id="search" type="search" autocomplete="off" placeholder="e.g. CMDB, handover, diagnostic"></label>
+<label for="classification">Evidence classification<select id="classification"><option value="all">All classifications</option><option value="source-only">SOURCE-ONLY</option><option value="DEV-reported">DEV-REPORTED</option><option value="mock-only">MOCK-ONLY</option><option value="proposed">PROPOSED</option><option value="DEV-verified">DEV-VERIFIED</option><option value="production-verified">PRODUCTION-VERIFIED</option></select></label>
+<label for="action-filter">Next control gate<select id="action-filter"><option value="all">All gates</option><option value="design">Design / approve</option><option value="integration">Replace mock / validate integration</option><option value="native">Run native acceptance</option><option value="repeat">Repeat historical DEV</option><option value="release">Independent release review</option></select></label>
+</div>
+<div class="actions"><button class="primary" id="download" disabled>Export filtered worklist (JSON)</button><button id="clear">Reset filters</button></div>
+<p class="hint">Export is browser-local and includes public claim IDs, classification, next-gate guidance and a public page reference only. It always carries UNREVIEWED / NOT VERIFIED / HOLD labels.</p>
+<p id="status" class="count" role="status" aria-live="polite">Loading the same-origin public verification register…</p>
+<p id="failure" hidden role="alert">Public register unavailable or invalid. No claim or verification state has been inferred.</p>
+<div id="results" class="cards" aria-label="Filtered evidence review actions"></div>
+<div class="actions"><button id="load-more" hidden>Show 12 more claims</button></div>
+</section>
+<section aria-labelledby="architecture"><h2 id="architecture">3. Architectural best practices</h2>
+<div class="grid">
+<div class="card"><h3>OOTB first</h3><p>Validate the target release, activated plugins, baseline processes and roles before adopting custom tables, scripts or parallel state engines. Preserve upgrade-safe configuration and documented exceptions.</p></div>
+<div class="card"><h3>Trace evidence</h3><p>Native acceptance must be tied to a specific scope, app version, instance, dated test protocol, identity, witness and immutable evidence reference. Source-only and historical reports never automatically change classification.</p></div>
+<div class="card"><h3>Protect publication</h3><p>Keep original ServiceNow captures and customer material private. No image can enter the public gallery without rights review, irreversible redaction and approval of the exact published derivative.</p></div>
+<div class="card"><h3>Entitlements are a gate</h3><p>Check App Engine/custom-table rights and roles/ACLs. Depending on implementation, verify ITSM, ITOM/Discovery, IntegrationHub/spokes, analytics, ATF, AI and external-provider subscriptions against the target contract.</p></div>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><p>Source-bounded portfolio artefact · SOURCE-ONLY website functionality · No independent native DEV or production acceptance claimed · No screenshots embedded.</p><a href="screenshot-publication-gate.html">Screenshot publication gate</a> · <a href="verification-ledger.html">Verification ledger</a></div></footer>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const search=$('search'),classification=$('classification'),actionFilter=$('action-filter'),results=$('results'),status=$('status'),failure=$('failure'),download=$('download'),more=$('load-more');
+const allowed=new Set(['source-only','DEV-reported','mock-only','proposed','DEV-verified','production-verified']);
+const nextGate={
+ 'proposed':['design','Approve the design, confirm entitlements and implement in a controlled target before planning runtime tests.'],
+ 'mock-only':['integration','Agree an authorised non-production integration test; record provider response, boundaries and independent review.'],
+ 'source-only':['native','Execute a version-pinned native DEV protocol with an independent witness and private evidence reference.'],
+ 'DEV-reported':['repeat','Repeat the historical DEV scenario against the actual current target; do not inherit the old result.'],
+ 'DEV-verified':['release','Review DEV evidence scope, identity and date; assess separate release and production gates.'],
+ 'production-verified':['release','Check dated production evidence scope, access permissions and revalidation after change.']
+};
+let items=[],limit=12,updatedUtc=null;
+function safe(v,max){return typeof v==='string' && v.length>0 && v.length<=max && !/[\u0000-\u001f\u007f]/.test(v);}
+function validate(data){
+ if(!data||data.schema_version!=='1.0'||!Array.isArray(data.items)||data.items.length<1||data.items.length>1000||!safe(data.updated_utc,80))throw Error('schema');
+ if(!data.classification_definitions||!allowed.size)throw Error('classification schema');
+ for(const kind of allowed)if(!safe(data.classification_definitions[kind],700))throw Error('classification definitions');
+ const used=new Set();
+ for(const entry of data.items){
+  if(!entry||!safe(entry.id,110)||!/^[A-Z0-9_-]+$/.test(entry.id)||used.has(entry.id)||!allowed.has(entry.classification))throw Error('claim identity');
+  if(!safe(entry.title,350)||!safe(entry.basis,2500)||!safe(entry.runtime_verification,2500)||!safe(entry.public_screenshot_status,1500))throw Error('claim fields');
+  if(typeof entry.page!=='string'||!/^[a-z0-9][a-z0-9-]{0,90}\.html$/.test(entry.page))throw Error('unsafe page');
+  used.add(entry.id);
+ }
+ return data;
+}
+function text(el,value){el.textContent=value;return el;}
+function make(tag,className,content){const el=document.createElement(tag);if(className)el.className=className;if(content!==undefined)text(el,content);return el;}
+function tally(id,predicate){text($(id),String(items.filter(predicate).length));}
+function filtered(){
+ const term=search.value.trim().toLocaleLowerCase(),cls=classification.value,gate=actionFilter.value;
+ return items.filter(c=>(cls==='all'||c.classification===cls)&&(gate==='all'||nextGate[c.classification][0]===gate)&&(!term||(c.id+' '+c.title+' '+c.basis+' '+c.page).toLocaleLowerCase().includes(term)));
+}
+function render(){
+ results.replaceChildren();if(!items.length)return;
+ const all=filtered();status.textContent=all.length+' of '+items.length+' public claims match. No native acceptance is inferred.';
+ const fragment=document.createDocumentFragment();
+ all.slice(0,limit).forEach(c=>{
+  const article=make('article','card');article.dataset.kind=c.classification;
+  article.append(make('span','identifier',c.id),make('h3','',c.title),make('span','class',c.classification.toUpperCase()));
+  const guidance=make('p','next');guidance.append(make('strong','','Next control: '),document.createTextNode(nextGate[c.classification][1]));article.append(guidance);
+  const details=make('details'),summary=make('summary','','Show source and runtime boundaries');details.append(summary);
+  const dl=make('dl');
+  [['Public basis',c.basis],['Runtime verification',c.runtime_verification],['Screenshot status',c.public_screenshot_status]].forEach(pair=>{dl.append(make('dt','',pair[0]),make('dd','',pair[1]));});
+  details.append(dl);article.append(details);
+  const a=make('a','','Open public case study');a.href=c.page;article.append(a);fragment.append(article);
+ });
+ results.append(fragment);more.hidden=all.length<=limit;more.disabled=all.length<=limit;download.disabled=all.length===0;
+}
+function packet(){
+ return {schema_version:'1.0',source:'evidence/public-verification-register.json',register_updated_utc:updatedUtc,exported_utc:new Date().toISOString(),review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',independent_native_verification:false,production_acceptance:false,screenshot_publication_approved:false,filter:{classification:classification.value,next_gate:actionFilter.value,search:search.value.trim().slice(0,120)},items:filtered().map(c=>({id:c.id,title:c.title,classification:c.classification,next_gate:nextGate[c.classification][0],recommended_action:nextGate[c.classification][1],public_page:c.page}))};
+}
+download.addEventListener('click',()=>{if(!items.length||!filtered().length)return;const blob=new Blob([JSON.stringify(packet(),null,2)+'\n'],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='servicenow-public-evidence-assurance-worklist.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+more.addEventListener('click',()=>{limit+=12;render();});
+$('clear').addEventListener('click',()=>{search.value='';classification.value='all';actionFilter.value='all';limit=12;render();});
+[search,classification,actionFilter].forEach(el=>el.addEventListener(el===search?'input':'change',()=>{limit=12;render();}));
+fetch('evidence/public-verification-register.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP');return r.json();}).then(d=>{const valid=validate(d);items=valid.items;updatedUtc=valid.updated_utc;
+ tally('total',()=>true);tally('source-count',c=>c.classification==='source-only');tally('mock-count',c=>c.classification==='mock-only');tally('reported-count',c=>c.classification==='DEV-reported');tally('proposal-count',c=>c.classification==='proposed');tally('verified-count',c=>c.classification==='DEV-verified'||c.classification==='production-verified');render();
+}).catch(()=>{items=[];results.replaceChildren();failure.hidden=false;status.textContent='Public evidence unavailable; no claims inferred.';download.disabled=true;more.hidden=true;});
+})();
+</script>
+</body></html>
