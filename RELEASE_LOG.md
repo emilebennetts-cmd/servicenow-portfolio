@@ -1,3 +1,10 @@
+## 14 November 2026 — selectable public evidence briefing (SOURCE-ONLY / HOLD)
+
+- Extended the [Technical Evidence Register](technical-evidence-register.html#claim-shortlist) with a client-only shortlist: select claims across filters/pages, review or remove selections, and export Markdown or JSON with stable public links. Responsive controls and keyboard-accessible selection are included.
+- Every export is **UNREVIEWED / NOT VERIFIED / HOLD**, with no native ServiceNow execution, independent review or screenshot-publication approval implied. No browser persistence, customer data, credentials, private source, third-party submission or unapproved screenshot pixels. Genuine screenshots remain 0 approved.
+- Updated the existing source-only evidence claim without increasing the **86-claim** register or converting four historical DEV-REPORTED items to DEV-VERIFIED. Extended static tests and real-browser checks (390/768/1024/1440 px) for cross-filter selection, JSON/Markdown download, poisoned-register rejection and clearing.
+- [Technical release record](releases/2026-11-14-public-evidence-shortlist.md). Website and local export require no ServiceNow licence; native work requires contract-specific App Engine/custom-table, ITSM/ITOM, IntegrationHub, analytics, AI and external entitlements. CI and publication must be confirmed against final GitHub commits, not inferred from this entry.
+
 ## 14 November 2026 — searchable complete public evidence claims (SOURCE-ONLY / mixed registered claims)
 
 - Added [complete public claim catalogue](technical-evidence-register.html#claim-catalogue) to the Technical Evidence Register: same-origin public JSON reading, keyword and classification search, accessible status, 12-at-a-time pagination and links to public-safe source pages. No private content or image pixels are fetched or exposed.
