@@ -1,3 +1,10 @@
+## 14 November 2026 — handoff case-study evidence registration and CI gate recovery (SOURCE-ONLY / HOLD)
+
+- Diagnosed two failed final quality pipelines on `ff56227b50e1cfb6e413b54745c3037cd089169f`: Explorer had indexed the new Diagnostic-to-Delivery Handoff Contract, but no matching canonical public verification claim existed. Handoff browser tests and GitHub Pages had passed, which did not waive source audit failures.
+- Added one SOURCE-ONLY public claim mapping the six-control handoff architecture to its source documents, preserving MOCK-ONLY scenario semantics and NO native acceptance or screenshot approval. Added a pinned regression to prevent silent reclassification. The register now contains **88 claims**.
+- No private source, customer data, images, credentials or live integration was published. [Detailed evidence repair release](releases/2026-11-14-handoff-evidence-ci-reconciliation.md). New final CI/Pages status must be checked against the repair commit; no native DEV/Production claims.
+- Public website/CI requires no ServiceNow licence; native App Engine/custom-table rights, roles/ACLs and applicable ITSM/ITOM/IntegrationHub/ATF/analytics/AI entitlements require contract review.
+
 ## 14 November 2026 — offline CSV evidence assurance worksheet (SOURCE-ONLY / HOLD)
 
 - Extended the [Evidence Assurance Worklist](evidence-assurance-worklist.html) with an offline spreadsheet-safe CSV export for current search, classification and gate filters, retaining the existing JSON output. Each export row carries an immutable public register timestamp and conservative **UNREVIEWED / NOT VERIFIED / HOLD** and false verification/approval flags.

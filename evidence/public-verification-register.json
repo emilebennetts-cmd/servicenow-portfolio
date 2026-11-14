@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-14T02:19:22Z",
+  "updated_utc": "2026-11-14T05:20:20.384Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -793,6 +793,15 @@
       "runtime_verification": "Browser-side review preparation only; not a native ServiceNow test, independent approval or production acceptance",
       "public_screenshot_status": "No original screenshot published; exact-image rights and sanitisation approval remain on hold",
       "page": "evidence-assurance-worklist.html"
+    },
+    {
+      "id": "DIAGNOSTIC-DELIVERY-HANDOFF-CONTRACT-SOURCE-20261114",
+      "title": "Diagnostic-to-Delivery governed handoff architecture and browser-local boundary walkthrough",
+      "classification": "source-only",
+      "basis": "Diagnostic Workbench 2 README (investigation, controlled evidence and Knowledge Intelligence companion); Universal Delivery Workbench README 4.22.2 source (reference-only cross-workbench ownership); public 14 November 2026 handoff release and deterministic local browser tests. Six process controls and four execution lanes are explanatory architecture, not a deployed cross-application integration.",
+      "runtime_verification": "SOURCE-ONLY architecture and MOCK-ONLY browser-local scenarios. Historical DEV-REPORTED source statements are not independently reproduced; native current-target execution is NOT RUN, independently DEV-VERIFIED and PRODUCTION-VERIFIED are NOT ESTABLISHED. Browser CI validates the portfolio UI only.",
+      "public_screenshot_status": "HOLD — zero image-specific original ServiceNow screenshot publication approvals; no private source, customer content or screenshot pixels published.",
+      "page": "diagnostic-delivery-handoff-contract.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."

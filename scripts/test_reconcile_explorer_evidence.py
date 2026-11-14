@@ -33,6 +33,17 @@ class ExplorerEvidenceTests(unittest.TestCase):
         self.assertEqual(module.unregistered_pages(source, register), [])
         self.assertNotIn('data-evidence="unregistered"', source)
 
+    def test_diagnostic_handoff_claim_is_source_only_and_mock_runtime(self):
+        register = json.loads((ROOT / "evidence/public-verification-register.json").read_text(encoding="utf-8"))
+        claims = [claim for claim in register["items"] if claim["page"] == "diagnostic-delivery-handoff-contract.html"]
+        self.assertEqual(len(claims), 1)
+        self.assertEqual(claims[0]["classification"], "source-only")
+        self.assertIn("MOCK-ONLY", claims[0]["runtime_verification"])
+        self.assertIn("NOT RUN", claims[0]["runtime_verification"])
+        self.assertIn("HOLD", claims[0]["public_screenshot_status"])
+        self.assertEqual(module.claim_map(register)["diagnostic-delivery-handoff-contract.html"],
+                         ("source-only", "SOURCE-ONLY"))
+
     def test_new_unregistered_page_is_detected_before_publication(self):
         source = '<li class="result"><a href="new-page.html">New</a><span class="locator">new-page.html</span></li>'
         register = {"items": []}
