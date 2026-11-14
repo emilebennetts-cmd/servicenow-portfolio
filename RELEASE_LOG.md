@@ -838,3 +838,12 @@ Published a mobile-responsive CMDB and IRE case study with five source-defined c
 - Entitlements: static page requires none; actual ServiceNow scoped app, ITSM/ITOM, IntegrationHub, PA, AI and provider integrations depend on contracted entitlements and deployment architecture.
 - Commits: `7d968202eb56d09fc923e665eeb3471c725cdf91` (walkthrough), `da713491b1e80d69ed3b4ba912dcb919e6a024da` (navigation).
 - Verification: GitHub commit acceptance confirmed; GitHub Pages deployment, browser rendering and CI completion not yet independently confirmed.
+
+
+## 2026-11-14 — Role-based reviewer export and print/PDF briefing
+
+- Added browser-local JSON and print/PDF preparation to `portfolio-review-guide.html` for hiring manager, architect and assurance routes, carrying only authored public evidence links.
+- Browser exports remain `SOURCE-ONLY` narrative / `MOCK-ONLY` interactive selection, `UNREVIEWED / NOT VERIFIED / HOLD`; no native DEV or Production verification or screenshot permission is inferred.
+- Clarified eight privately inspected visual-source files = six UI capture observations plus two document observations, with zero genuine images approved for public publication.
+- Added structural tests, four-width Chromium browser tests, and a dedicated CI workflow. See [release details](releases/2026-11-14-reviewer-briefing-print-export.md).
+- Browser CI passed on the feature workflow commit; final page deployment and site quality checks are tracked independently and should not be asserted until completed.
