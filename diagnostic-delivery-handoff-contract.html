@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1c2a">
+<meta name="description" content="Source-bounded Diagnostic-to-Delivery handoff contract for ServiceNow: zero-footprint review, controlled evidence collection, native DEV verification and production release boundaries.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Diagnostic-to-Delivery Handoff Contract | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#081825;--panel:#122b3a;--panel2:#0d2435;--line:#547485;--ink:#eff8fc;--muted:#c7dce6;--mint:#91f1d8;--gold:#ffdca2;--blue:#accaff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 83% 0,#194a5860,transparent 45%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--mint);text-underline-offset:4px}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.wrap{max-width:1160px;width:calc(100% - 36px);margin:auto}.skip{position:absolute;top:-100px;left:12px;background:white;color:#111;padding:.6rem;z-index:10}.skip:focus{top:10px}
+header{border-bottom:1px solid var(--line)}header nav{display:flex;flex-wrap:wrap;gap:.7rem 1.4rem;padding:1.1rem 0;font-size:.9rem}
+.hero{padding:clamp(2.7rem,7vw,6.8rem) 0 3.2rem;border-bottom:1px solid var(--line)}.eyebrow{color:var(--mint);font-weight:800;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase}
+h1,h2,h3{line-height:1.13;letter-spacing:-.035em}h1{font-size:clamp(2.6rem,7vw,5.7rem);max-width:970px;margin:.8rem 0 1.3rem}h2{font-size:clamp(1.7rem,3.5vw,2.5rem)}h3{font-size:1.2rem}p,li{color:var(--muted)}.lead{font-size:1.2rem;max-width:850px}.tag{display:inline-block;border:1px solid #81a3b2;color:#e2f8fa;border-radius:99px;padding:.25rem .75rem;margin:.5rem .5rem 0 0;font-size:.78rem;font-weight:700}
+section{padding:2.5rem 0}.notice{padding:1rem 1.25rem;background:#342d22;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;color:#ffe5c2;max-width:950px;margin:1.6rem 0}.notice strong{color:#ffe0aa}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card,.step,.receipt{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:1.3rem;min-width:0}.card h3{margin:.5rem 0}.card p:last-child{margin-bottom:0}.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin:1.5rem 0}.flow .node{background:#173747;border:1px solid #6c9998;border-radius:10px;padding:.8rem;font-size:.82rem;font-weight:750;min-height:75px}.flow .node small{display:block;color:#c4d8e3;font-weight:500;margin-top:.3rem}
+fieldset{border:0;padding:0;margin:0}legend{font-weight:800;margin-bottom:.8rem}.choices{display:flex;flex-wrap:wrap;gap:.65rem}.choices button{background:#203e4e;border:1px solid #8eaeba;color:#edf9ff;font:inherit;font-weight:700;cursor:pointer;border-radius:11px;padding:.7rem 1rem;min-height:46px}.choices button[aria-pressed="true"]{color:#072a30;background:var(--mint);border-color:var(--mint)}
+.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.2rem 0}.step h3{margin:.5rem 0}.step p{margin:.6rem 0}.index{font-weight:900;color:var(--mint);font-size:.82rem;letter-spacing:.1em}.state{border-radius:5px;background:#263d48;color:#e9f6fa;font-size:.73rem;font-weight:900;padding:.25rem .6rem;display:inline-block}.step[data-state="blocked"] .state{background:#423121;color:#ffe0ab}.step[data-state="required"] .state{background:#1b4650;color:#a5f6e2}.step[data-state="not-applicable"] .state{background:#313d49;color:#d8e0ed}
+.step dl{margin:1rem 0 0;border-top:1px solid #45687b}.step dt{font-weight:800;font-size:.8rem;margin-top:.7rem;color:#eaf8fd}.step dd{margin:0;color:var(--muted);overflow-wrap:anywhere;font-size:.91rem}
+.toolbar{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:1.3rem}.check{display:inline-flex;align-items:center;gap:.6rem;margin:1rem 0;font-weight:700;color:var(--ink)}.check input{width:20px;height:20px;accent-color:var(--mint)}.actions{display:flex;gap:.7rem;flex-wrap:wrap}.actions button{background:var(--mint);color:#092632;border:1px solid var(--mint);font:inherit;font-weight:800;padding:.7rem 1rem;cursor:pointer;border-radius:9px;min-height:44px}.actions .secondary{background:#243d4f;color:#edf9fa;border-color:#8daab8}
+#summary{font-size:.95rem;color:#fff;font-weight:750}#cards-empty{padding:1rem;border:1px dashed var(--line)}.receipt{margin-top:1rem}details{border-top:1px solid var(--line);padding:1rem 0}summary{cursor:pointer;font-weight:800;color:var(--mint)}footer{border-top:1px solid var(--line);padding:1.5rem 0 3rem;color:var(--muted)}
+@media(max-width:960px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.grid,.board{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:2.8rem 0}.choices button{flex:1 1 45%}}
+@media(max-width:370px){.flow{grid-template-columns:1fr}.choices button{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:white;color:#111}.card,.step,.receipt,.toolbar{background:white;color:#111;border-color:#777}.step p,.card p,p,li,.step dd{color:#333}.choices,.actions,.check,header,footer{display:none}.board{grid-template-columns:1fr 1fr}.state{color:#111!important;background:#eee!important}}
+</style></head>
+<body><a class="skip" href="#main">Skip to handoff contract</a>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="diagnostic-workbench-case-study.html">Diagnostic case study</a><a href="delivery-case-study.html">Delivery case study</a><a href="native-assurance-coverage-atlas.html">Native acceptance coverage</a></nav></header>
+<main id="main">
+<div class="hero"><div class="wrap"><p class="eyebrow">ServiceNow engineering · governance boundary</p><h1>Evidence crosses systems. <span style="color:var(--mint)">Authority does not.</span></h1>
+<p class="lead">A source-grounded Diagnostic-to-Delivery handoff contract. Explore what changes between a zero-footprint assessment, authorised offline collection, native DEV acceptance and production release.</p>
+<span class="tag">SOURCE-ONLY architecture</span><span class="tag">MOCK-ONLY interactive walkthrough</span><span class="tag">0 fresh DEV-VERIFIED claims</span><span class="tag">0 production-verification claims</span>
+<div class="notice" role="note"><strong>Publication and runtime boundary:</strong> This page is a static explanatory demonstration. It does not run ServiceNow scripts, move evidence, confirm installed packages, approve findings, release an application or authorise image publication. Historic DEV reports remain DEV-REPORTED, not independently confirmed here.</div></div></div>
+<section class="wrap" aria-labelledby="pain"><h2 id="pain">1. The client's pain &amp; history</h2><div class="grid">
+<article class="card"><h3>Uncontrolled data movement</h3><p>Teams often copy diagnostic outputs into workshop packs without a recorded collection scope or review. Sensitive values and unknown lineage can travel with a seemingly helpful finding.</p></article>
+<article class="card"><h3>Competing systems of record</h3><p>A new delivery workspace can accidentally become a second writable evidence store. Duplicated findings then diverge from the operational assessment and change without a clear owner.</p></article>
+<article class="card"><h3>Evidence confused with approval</h3><p>A source commit, synthetic scenario or dated developer test report may be treated as proof of current-instance operation. Environment identity, licences and release authority are then overlooked.</p></article>
+</div><p class="eyebrow">Representative programme pattern · not a customer-specific claim</p></section>
+<section class="wrap" aria-labelledby="solution"><h2 id="solution">2. The ServiceNow solution — controlled handoff</h2>
+<p>Diagnostic Workbench owns investigation and writable evidence. The Delivery Workbench consumes reviewed, versioned references for solution selection and governed planning. These source-described responsibilities do not imply a live cross-app integration or a new shared database.</p>
+<div class="flow" aria-label="Six-stage reference-only handoff"><div class="node">1. Assess<small>Scope and purpose</small></div><div class="node">2. Collect<small>Authorised read-only</small></div><div class="node">3. Validate<small>Schema and privacy</small></div><div class="node">4. Review<small>Finding and rule</small></div><div class="node">5. Reference<small>Versioned handoff</small></div><div class="node">6. Accept<small>Independent release gate</small></div></div>
+<div class="toolbar" id="handoff-controls">
+<fieldset><legend>Choose a delivery boundary to inspect</legend><div class="choices" role="group" aria-label="Handoff execution boundary">
+<button type="button" data-lane="tier0" aria-pressed="true">Tier 0 · No access</button>
+<button type="button" data-lane="offline" aria-pressed="false">Offline collection</button>
+<button type="button" data-lane="dev" aria-pressed="false">Native DEV verification</button>
+<button type="button" data-lane="production" aria-pressed="false">Production release</button>
+</div></fieldset>
+<label class="check"><input id="critical" type="checkbox"> Show blocking / mandatory controls only</label>
+<p id="summary" role="status" aria-live="polite">Tier 0: planning only; no customer-instance execution.</p>
+<div class="actions"><button type="button" id="export">Export non-certifying review packet (JSON)</button><button type="button" id="reset" class="secondary">Reset view</button><button type="button" id="print" class="secondary">Print contract</button></div>
+<p style="font-size:.86rem">All exports are generated locally. They contain generic control statements and explicitly remain UNREVIEWED / NOT VERIFIED / HOLD. Nothing is uploaded, persisted or approved.</p>
+</div>
+<div id="steps" class="board" aria-label="Handoff contract controls"></div><p id="cards-empty" hidden>No controls match this filter.</p>
+</section>
+<section class="wrap" aria-labelledby="architecture"><h2 id="architecture">3. Architectural best practices</h2>
+<div class="grid"><article class="card"><h3>OOTB-first, scoped by role</h3><p>Use supported roles, ACLs, update-set or SDK promotion and native approvals where available. Test the exact instance, installed app identity and package version before accepting a custom-scoped design.</p></article>
+<article class="card"><h3>Single ownership of evidence</h3><p>Persist original operational evidence and findings in Diagnostic's authorised store. Delivery stores immutable references and independent handoff/acceptance status; do not silently copy confidential evidence into workshop records.</p></article>
+<article class="card"><h3>No automatic certification</h3><p>Collector lint, source builds, browser simulations and historical DEV read-backs prove different things. Native DEV acceptance requires dated actor, target, outcome and independently reviewable private evidence; production is a separate gate.</p></article></div>
+<div class="receipt"><h3>Documented source basis and limitations</h3><p>Source reviewed: the Universal Delivery Workbench repository README (source 4.22.2), Diagnostic Workbench 2 README and Knowledge Intelligence 0.1.0 README, plus the controlled portfolio release history. Knowledge Intelligence is a separately installed companion with governed evidence intake; it is not asserted to be automatically navigable from or synchronised with the core Workbench.</p>
+<details><summary>Illustrative native acceptance checks</summary><p>Negative collector mutation tests; redacted evidence-envelope validation; no healthy score for an unassessed area; link from rule to metric to reviewed finding; source-and-target identity match; role-negative ACL tests; delivery reference and version integrity; independent operational owner approval and change control.</p></details>
+<details><summary>ServiceNow licences and entitlements</summary><p>This public page needs no ServiceNow licence. Native scoped-app installation may require App Engine/custom-table entitlements, authorised roles and ACLs, and applicable ITSM, ITOM/Discovery, IntegrationHub/spokes, ATF, analytics, AI and third-party data/content licences. Collector execution must follow the customer's approved access and change policies; not all collectors or features are OOTB or covered by the base platform subscription.</p></details>
+<details><summary>Evidence and screenshot publication</summary><p>Architecture is SOURCE-ONLY. The interactions are MOCK-ONLY; no fresh DEV-VERIFIED or PRODUCTION-VERIFIED evidence was collected. Historical DEV-REPORTED notes remain dated and separate. Genuine screenshot approval remains HOLD until the specific irreversibly redacted derivative is independently approved. No original screenshots are embedded here.</p></details>
+<p>Related technical reading: <a href="diagnostic-workbench-case-study.html#diagnostic-operator">Diagnostic operator rehearsal</a> · <a href="source-target-compatibility.html">Source/target compatibility</a> · <a href="screenshot-publication-gate.html">Image publication gate</a> · <a href="technical-evidence-register.html#claim-catalogue">Public evidence claims</a>.</p></div>
+</section></main><footer><div class="wrap">Professional portfolio · illustrative handoff contract · no live ServiceNow connection · publication HOLD</div></footer>
+<script>
+(function(){
+'use strict';
+var controls=[
+ {id:'H-01',title:'Assessment purpose and permission',owner:'Engagement lead',basis:'Diagnostic assessment/runbook context must be bounded by a documented scope.',evidence:'Approved assessment purpose, target boundary and nominated accountable owner.'},
+ {id:'H-02',title:'Read-only collection path',owner:'Authorised platform engineer',basis:'Repository collector patterns are read-only or aggregate-only; mutation lint is not live execution proof.',evidence:'Authorised non-production execution receipt, collector version, mutation-negative result and privacy review.'},
+ {id:'H-03',title:'Evidence envelope validation',owner:'Diagnostic reviewer',basis:'Structured evidence intake and privacy checks precede a finding.',evidence:'Validated redacted evidence envelope, rejection cases and private immutable reference.'},
+ {id:'H-04',title:'Evidence-linked finding and human review',owner:'Diagnostic product owner',basis:'Draft rule-driven findings link to evidence and remain awaiting human review.',evidence:'Rule/metric/record lineage and dated reviewed outcome without automatic confirmation.'},
+ {id:'H-05',title:'Reference-only Delivery handoff',owner:'Delivery architect',basis:'Delivery carries governed references and assessed recommendations, not a second writable operational evidence store.',evidence:'Scope-matched versioned reference, recipients, traceability and an explicit acceptance decision.'},
+ {id:'H-06',title:'Target identity and release assurance',owner:'Independent approver',basis:'Repository source, dated DEV report and production release are separate baselines.',evidence:'Installed app/scope/version read-back, role/ACL acceptance, independent sign-off and production change receipt.'}
+];
+var lanes={
+ tier0:{label:'Tier 0 · No access',summary:'Planning only. No customer-instance installation, collection or approval is possible.',states:['required','blocked','blocked','blocked','required','blocked'],notes:['Agree scope without accessing customer data.','Not permitted at zero footprint.','No client envelope has been collected.','Do not infer findings from examples.','Draft a reference-only handoff design, not a live sync.','Native and production verification require separate authorised execution.']},
+ offline:{label:'Offline collection',summary:'Authorised non-production collector execution is required outside this page; evidence stays under Diagnostic control.',states:['required','required','required','blocked','required','blocked'],notes:['Confirm permission, data minimisation and non-production target.','Execute only an approved read-only collector, outside this public site.','Validate and retain redacted evidence privately.','A finding remains a draft until independent review.','Draft a controlled reference, not an unapproved transfer.','Do not assume a matching installed target or permitted production release.']},
+ dev:{label:'Native DEV verification',summary:'All six controls require witnessed target-specific execution; source and historical reports alone are insufficient.',states:['required','required','required','required','required','required'],notes:['Record target release and role scope.','Repeat lint and negative tests against the actual DEV build.','Witness envelope validation and failed input tests.','Inspect rule, metric and human-review records.','Verify reference identity, nonduplication and acceptance state.','Read back exact application version, ACL coverage and independent DEV approval.']},
+ production:{label:'Production release',summary:'Production needs an approved change, customer ownership and its own independent acceptance.',states:['required','required','required','required','required','blocked'],notes:['Obtain production data and execution authorisation.','Use an approved operating procedure; do not run experimental collectors in production.','Apply customer privacy, retention and evidence controls.','Require named operational owner acknowledgement.','Verify approved handoff recipients and record-level permissions.','BLOCKED without independently evidenced change approval, cutover, access and production acceptance.']}
+};
+var active='tier0',critical=false,steps=document.getElementById('steps');
+function el(tag,cls,text){var node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
+function result(){return controls.map(function(c,i){return {id:c.id,title:c.title,owner:c.owner,control_state:lanes[active].states[i],required_evidence:c.evidence,context:lanes[active].notes[i]};});}
+function render(){
+ var lane=lanes[active],all=result(),visible=all.filter(function(r){return !critical||r.control_state==='blocked'||r.control_state==='required';});
+ steps.replaceChildren();visible.forEach(function(r){
+  var source=controls.find(function(c){return c.id===r.id;});
+  var card=el('article','step');card.dataset.state=r.control_state;card.append(el('span','index',r.id),el('h3','',r.title),el('span','state',r.control_state.toUpperCase()));
+  card.append(el('p','',r.context));var dl=el('dl');[['Control owner',r.owner],['Source basis',source.basis],['Acceptance evidence (required, not collected)',r.required_evidence]].forEach(function(pair){dl.append(el('dt','',pair[0]),el('dd','',pair[1]));});card.append(dl);steps.append(card);
+ });
+ document.getElementById('summary').textContent=lane.label+': '+lane.summary+' '+visible.length+' of '+all.length+' control cards shown. NOT VERIFIED.';
+ document.getElementById('cards-empty').hidden=visible.length!==0;
+ document.querySelectorAll('[data-lane]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.lane===active));});
+}
+document.querySelectorAll('[data-lane]').forEach(function(b){b.addEventListener('click',function(){active=b.dataset.lane;render();});});
+document.getElementById('critical').addEventListener('change',function(e){critical=e.target.checked;render();});
+document.getElementById('reset').addEventListener('click',function(){active='tier0';critical=false;document.getElementById('critical').checked=false;render();});
+document.getElementById('print').addEventListener('click',function(){window.print();});
+document.getElementById('export').addEventListener('click',function(){
+ var packet={schema_version:'1.0',title:'Diagnostic-to-Delivery Handoff Contract',source_basis:'public source-bounded architecture',interaction_classification:'MOCK-ONLY',architecture_classification:'SOURCE-ONLY',boundary:active,boundary_label:lanes[active].label,filter_mandatory:critical,review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,records:result()};
+ var url=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)+'\n'],{type:'application/json;charset=utf-8'})),link=el('a');
+ link.href=url;link.download='diagnostic-delivery-handoff-hold.json';document.body.append(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);
+});
+render();
+})();
+</script></body></html>
