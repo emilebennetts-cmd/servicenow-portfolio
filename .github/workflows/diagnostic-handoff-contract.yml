@@ -1,0 +1,30 @@
+name: Diagnostic-to-Delivery Handoff Contract
+on:
+  push:
+    paths:
+      - 'diagnostic-delivery-handoff-contract.html'
+      - 'scripts/browser_diagnostic_handoff_contract.py'
+      - '.github/workflows/diagnostic-handoff-contract.yml'
+  pull_request:
+    paths:
+      - 'diagnostic-delivery-handoff-contract.html'
+      - 'scripts/browser_diagnostic_handoff_contract.py'
+      - '.github/workflows/diagnostic-handoff-contract.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Test source boundaries and four viewport journeys
+        run: python scripts/browser_diagnostic_handoff_contract.py
