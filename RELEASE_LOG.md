@@ -1,3 +1,10 @@
+## 14 November 2026 — browser-only entitlement follow-up triage (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Added eight suggested reviewer roles and per-capability follow-up stages to the [Entitlement & Deployment Readiness](entitlement-readiness.html) review. Filter changes retain browser-only stages, a live count and reset support reviewer preparation without certifying any licence, installation, DEV result or release.
+- Filtered JSON export includes role and follow-up stage; every approval stays false/HOLD and every native test remains NOT RUN. No text input, persistence, network call, customer evidence, private source or screenshots were added. Registered public evidence claim count remains unchanged.
+- Extended static and 390/768/1024/1440px Chromium tests. [Technical release](releases/2026-11-14-entitlement-followup-triage.md). Website needs no ServiceNow licence; native App Engine/custom-table, ITSM, ITOM, IntegrationHub, analytics, AI, ATF, external-product and contractual user entitlements need independent review.
+- Final CI / Pages status must be checked against the last source and documentation commit; native DEV, Production and original-image approval are still blocked.
+
 ## 14 November 2026 — handoff case-study evidence registration and CI gate recovery (SOURCE-ONLY / HOLD)
 
 - Diagnosed two failed final quality pipelines on `ff56227b50e1cfb6e413b54745c3037cd089169f`: Explorer had indexed the new Diagnostic-to-Delivery Handoff Contract, but no matching canonical public verification claim existed. Handoff browser tests and GitHub Pages had passed, which did not waive source audit failures.
