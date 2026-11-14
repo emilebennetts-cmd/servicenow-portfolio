@@ -43,6 +43,10 @@ try{
   assert.equal(receipt.customer_data_included,false);
   assert.equal(receipt.reviewed_test_rows,180);
   assert(!JSON.stringify(receipt).includes("evidence_reference"));
+  // BOM-prefixed UTF-8 CSVs from common spreadsheet tools are also accepted.
+  await page.locator("#matrix-file").setInputFiles({name:"ki-bom.csv",mimeType:"text/csv",buffer:Buffer.concat([Buffer.from([0xEF,0xBB,0xBF]),content])});
+  await page.locator("#check").click();
+  assert.match(await page.locator("#status").innerText(),/Full plan structurally aligned: 180 cases/);
   // Filtered export with exactly four scenarios for one module.
   const lines=csv.trim().split(/\r?\n/);
   const subset=lines.slice(0,5).join("\r\n")+"\r\n";
