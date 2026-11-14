@@ -14,6 +14,8 @@ on:
       - 'cmdb-remediation-decision-lab.html'
       - 'scripts/test_cmdb_remediation_decision_lab.py'
       - 'scripts/browser_cmdb_remediation_decision_lab.py'
+      - 'scripts/test_csdm_ownership_architecture.py'
+      - 'scripts/browser_csdm_ownership_architecture.py'
       - 'cmdb-diagnostic-trust-lab.html'
       - 'major-incident-implementation-lab.html'
       - 'itsm-greenfield-build-sequencer.html'
@@ -126,6 +128,8 @@ jobs:
         run: python scripts/test_cmdb_remediation_decision_lab.py
       - name: Exercise CMDB remediation decisions at four viewport widths
         run: python scripts/browser_cmdb_remediation_decision_lab.py
+      - name: Exercise CSDM 5 ownership architecture, disclosures and mobile layout
+        run: python scripts/browser_csdm_ownership_architecture.py
       - name: Verify synthetic diagnostic rescan publication contract
         run: python scripts/test_diagnostic_rescan_lab.py
       - name: Exercise diagnostic rescan fixtures at four viewport widths
