@@ -41,3 +41,12 @@ No external services, credentials, screenshot pixels, local storage or customer 
 **Licensing and entitlements:** No ServiceNow licence needed for this public HTML/JavaScript. Native scoped-app operation requires confirmation of App Engine/custom-table entitlements, roles, membership and ACLs. ITSM, ITOM/Discovery, IntegrationHub/spokes, ATF, Performance Analytics, AI and third-party rights depend on the approved target design; no entitlement is inferred from the reference documentation.
 
 **Next evidence gates:** independently witnessed native DEV test with source SHA, installed version and app scope; recorded execution and reviewer; separate production change authorisation; individual screenshot ownership, irreversible sanitisation and publication approval.
+
+## Verified CI receipts (14 November 2026)
+
+- [Full responsive browser smoke](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43566131706) — **SUCCESS**, including new six-persona Playwright assertions at 390, 768, 1024 and 1440 px. Verified at source commit `de1a48679fb66c6bf40bbdf360ab654790e87bb3`.
+- [Public source quality gate](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43566169260) — **SUCCESS** for release-documentation commit `6ea7d46553263c63f198125c7b34e0a3e3a54c03`.
+- [Publication and evidence quality audit](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43566169287) — **SUCCESS** for the same source head.
+- [GitHub Pages deployment](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43566169335) — **SUCCESS** for the same source head.
+
+GitHub Actions completed successfully, but independent third-party HTTP retrieval of the public URL could not be established. These CI receipts apply to the public website only, **not** native ServiceNow DEV/PROD functionality or screenshot approval.
