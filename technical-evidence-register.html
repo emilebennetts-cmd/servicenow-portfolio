@@ -54,6 +54,16 @@
 .shortlist-preview button{font-size:.85rem;margin-left:.65rem}
 @media(max-width:560px){.shortlist-actions{display:grid}.shortlist-actions button{width:100%}.shortlist-preview button{display:block;margin:.4rem 0 0}}
 @media print{.claim-choice,.shortlist-actions,.shortlist-preview button{display:none!important}.shortlist{background:white;border-color:#777}}
+
+/* Public-only shortlist permalink: no browser storage and no private identifiers. */
+.shortlist-share{border:1px solid #547f95;background:#0e2639;border-radius:12px;padding:1rem;margin:1.1rem 0}
+.shortlist-share label{display:block;font-weight:750;margin-bottom:.4rem}
+.shortlist-share input{width:100%;min-width:0;min-height:44px;background:#081927;border:1px solid #88a7bb;border-radius:8px;color:#f1f8ff;font:inherit;padding:.6rem;overflow-wrap:anywhere}
+.shortlist-share input:focus-visible,.shortlist-share a:focus-visible{outline:3px solid #ffe28a;outline-offset:3px}
+.shortlist-share a{display:inline-block;align-self:center;font-weight:750;overflow-wrap:anywhere}
+.shortlist-share a[hidden]{display:none!important}
+.shortlist-share p{margin:.5rem 0;color:#d6e7f3;font-size:.92rem}
+@media(max-width:560px){.shortlist-share{padding:.8rem}}
 </style></head>
 <body><a class="skip" href="#main">Skip to main content</a><header><nav class="wrap" aria-label="Main navigation"><a href="index.html">Home</a><a href="delivery-case-study.html">Delivery</a><a href="diagnostic-case-study.html">Diagnostic</a><a href="evidence-methodology.html">Evidence policy</a></nav></header>
 <main class="wrap" id="main"><p class="badge">Evidence register · 14 November 2026</p><h1>Traceable engineering, not inflated claims.</h1><p class="lead">A reviewer-friendly index of publicly inspectable source evidence. Documentation, SDK source and demonstration interfaces do not independently establish an accepted production implementation.</p>
@@ -95,12 +105,18 @@
 <p id="claim-fallback" class="catalogue-fallback" hidden>The public claim register could not be loaded. The <a href="evidence/public-verification-register.json">complete JSON register</a> is still available. This page will never substitute fabricated or cached claims.</p>
 <section class="shortlist" id="claim-shortlist" aria-labelledby="claim-shortlist-title">
 <h3 id="claim-shortlist-title">Build a public evidence briefing</h3>
-<p>Select claims across searches and filters, then export a shareable, publicly sourced briefing. Selection is held only in this open browser tab. <strong>Every export is UNREVIEWED / NOT VERIFIED / HOLD</strong>, even when a claim describes a historical DEV report. This tool neither contacts ServiceNow nor requests screenshot approval.</p>
+<p>Select claims across searches and filters, then export a publicly sourced briefing or create a shareable public-only review link for up to 12 claims. Selection is held only in this tab unless you deliberately copy the link; links contain public claim IDs, never notes or evidence files. <strong>Every export is UNREVIEWED / NOT VERIFIED / HOLD</strong>, even when a claim describes a historical DEV report. This tool neither contacts ServiceNow nor requests screenshot approval.</p>
 <p id="shortlist-count" role="status" aria-live="polite">0 claims selected. Downloads are disabled until a public claim is selected.</p>
 <div class="shortlist-actions">
 <button type="button" id="shortlist-export-md" disabled>Download Markdown briefing</button>
 <button type="button" id="shortlist-export-json" disabled>Download JSON briefing</button>
 <button type="button" id="shortlist-clear" disabled>Clear selections</button>
+</div>
+<div class="shortlist-share" id="shortlist-share" aria-label="Portable public evidence review">
+<label for="shortlist-link">Public-only review link (1–12 claims)</label>
+<input id="shortlist-link" type="url" readonly aria-describedby="share-status" placeholder="Select up to 12 public claims to create a link">
+<div class="shortlist-actions"><button type="button" id="shortlist-copy" disabled>Copy public review link</button><a id="shortlist-open" hidden>Open this review link</a></div>
+<p id="share-status" role="status" aria-live="polite">Only public claim IDs can be shared; links are not evidence, DEV verification or approval. For more than 12 claims, use a local download.</p>
 </div>
 <ol id="shortlist-preview" class="shortlist-preview" aria-label="Selected public evidence claims"></ol>
 <p class="muted">Only the already-published claim register is included. No browser storage, uploads, private Drive URLs, instance credentials, customer evidence or genuine screenshot files.</p>
@@ -134,6 +150,8 @@ const status=document.getElementById('claim-count'),more=document.getElementById
 let items=[],limit=12;
 const selected=new Set(),selectionCount=document.getElementById('shortlist-count'),preview=document.getElementById('shortlist-preview');
 const exportMd=document.getElementById('shortlist-export-md'),exportJson=document.getElementById('shortlist-export-json'),clear=document.getElementById('shortlist-clear');
+const shareInput=document.getElementById('shortlist-link'),copyLink=document.getElementById('shortlist-copy'),openLink=document.getElementById('shortlist-open'),shareStatus=document.getElementById('share-status');
+const sharedRequest=parsePublicReviewLink();
 function node(tag,text,cls){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;}
 function createClaim(claim){
 const article=node('article',undefined,'catalogue-entry');article.dataset.class=claim.classification;
@@ -175,6 +193,32 @@ return data.items;
 }
 
 function selectedClaims(){return items.filter(function(c){return selected.has(c.id);});}
+function parsePublicReviewLink(){
+const params=new URL(window.location.href).searchParams,all=params.getAll('brief');
+if(!all.length)return null;
+if(all.length!==1||all[0].length>1300)return {invalid:true};
+const ids=all[0].split(',');
+if(ids.length<1||ids.length>12||ids.some(function(id){return !/^[A-Za-z0-9][A-Za-z0-9_-]{0,100}$/.test(id);})||new Set(ids).size!==ids.length)return {invalid:true};
+return {ids:ids};
+}
+function restoreSharedSelection(){
+if(!sharedRequest)return;
+if(sharedRequest.invalid||!sharedRequest.ids.every(function(id){return items.some(function(c){return c.id===id;});})){
+shareStatus.textContent='Invalid or unknown public review link: no claims restored. Use the catalogue to select claims.';
+return;
+}
+sharedRequest.ids.forEach(function(id){selected.add(id);});
+shareStatus.textContent='Restored '+sharedRequest.ids.length+' public claim IDs from this link. UNREVIEWED / NOT VERIFIED / HOLD; no ServiceNow execution or approval.';
+}
+function publicReviewUrl(){
+const current=selectedClaims();
+if(!current.length||current.length>12)return null;
+const url=new URL(window.location.pathname,window.location.origin);
+url.searchParams.set('brief',current.map(function(c){return c.id;}).join(','));
+url.hash='claim-shortlist';
+return url.href;
+}
+
 function updateSelection(){
 const current=selectedClaims();preview.replaceChildren();
 current.forEach(function(c){
@@ -185,6 +229,12 @@ li.append(remove);preview.append(li);
 });
 selectionCount.textContent=current.length+' selected public claims. '+(current.length?'Export is UNREVIEWED / NOT VERIFIED / HOLD.':'Downloads are disabled until a public claim is selected.');
 exportMd.disabled=exportJson.disabled=clear.disabled=current.length===0;
+const link=publicReviewUrl();
+shareInput.value=link||'';
+copyLink.disabled=!link;
+openLink.hidden=!link;
+if(link)openLink.href=link;else openLink.removeAttribute('href');
+if(current.length>12)shareStatus.textContent='Share links are limited to 12 public claims; export Markdown or JSON for larger briefings.';
 }
 function publicUrl(c){return 'https://emilebennetts-cmd.github.io/servicenow-portfolio/'+c.page;}
 function reviewPacket(){
@@ -216,12 +266,23 @@ setTimeout(function(){URL.revokeObjectURL(url);},1000);
 }
 exportMd.addEventListener('click',function(){if(!selectedClaims().length)return;const packet=reviewPacket();downloadBrief('servicenow-public-evidence-briefing.md',reviewMarkdown(packet),'text/markdown;charset=utf-8');});
 exportJson.addEventListener('click',function(){if(!selectedClaims().length)return;downloadBrief('servicenow-public-evidence-briefing.json',JSON.stringify(reviewPacket(),null,2)+'\n','application/json;charset=utf-8');});
-clear.addEventListener('click',function(){selected.clear();render();updateSelection();});
+clear.addEventListener('click',function(){selected.clear();render();updateSelection();shareStatus.textContent='Selection cleared in this tab. A previously shared link may still reopen its public IDs.';});
+copyLink.addEventListener('click',async function(){
+const link=publicReviewUrl();if(!link)return;
+try{
+if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error('clipboard unavailable');
+await navigator.clipboard.writeText(link);
+shareStatus.textContent='Public claim-ID review link copied. This is UNREVIEWED / NOT VERIFIED / HOLD.';
+}catch(_error){
+shareInput.focus();shareInput.select();
+shareStatus.textContent='Browser clipboard unavailable. Copy the selected public-only URL field manually.';
+}
+});
 search.addEventListener('input',function(){limit=12;render();});
 classification.addEventListener('change',function(){limit=12;render();});
 more.addEventListener('click',function(){limit+=12;render();});
 fetch(registerUrl,{cache:'no-store'}).then(function(resp){if(!resp.ok)throw Error('fetch');return resp.json();}).then(function(data){
-items=validate(data);render();updateSelection();
+items=validate(data);restoreSharedSelection();render();updateSelection();
 }).catch(function(){status.textContent='Live claim catalogue unavailable — no claims inferred.';fallback.hidden=false;more.hidden=true;host.replaceChildren();selected.clear();updateSelection();});
 })();
 </script>

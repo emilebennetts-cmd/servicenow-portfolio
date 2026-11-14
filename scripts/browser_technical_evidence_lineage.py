@@ -90,6 +90,22 @@ def check(browser, width, base):
             c["id"] for c in REGISTER["items"] if c["id"] in {first_source_id, first_dev_id}
         ]
         assert {c["classification"] for c in packet["claims"]} == {"source-only", "DEV-reported"}
+        # A public-only deep link restores only IDs after fresh schema validation.
+        link = page.locator("#shortlist-link").input_value()
+        assert "brief=" in link and "#claim-shortlist" in link
+        assert not page.locator("#shortlist-copy").is_disabled()
+        assert page.locator("#shortlist-open").get_attribute("href") == link
+        restored = browser.new_page(viewport={"width": width, "height": 900})
+        try:
+            restored.goto(link, wait_until="domcontentloaded")
+            restored.locator("#claim-count").get_by_text("registered", exact=False).wait_for(timeout=10000)
+            assert "2 selected public claims" in restored.locator("#shortlist-count").inner_text()
+            assert {first_source_id, first_dev_id} == set(
+                restored.locator("#shortlist-preview li").evaluate_all(
+                    "(els) => els.map(e => e.textContent.split(' — ')[0])"))
+            assert "NOT VERIFIED / HOLD" in restored.locator("#share-status").inner_text()
+        finally:
+            restored.close()
         assert all(c["public_url"].startswith(
             "https://emilebennetts-cmd.github.io/servicenow-portfolio/"
         ) for c in packet["claims"])
@@ -102,6 +118,9 @@ def check(browser, width, base):
         page.locator("#shortlist-clear").click()
         assert page.locator("#shortlist-export-json").is_disabled()
         assert page.locator("#shortlist-preview li").count() == 0
+        assert page.locator("#shortlist-link").input_value() == ""
+        assert page.locator("#shortlist-copy").is_disabled()
+        assert page.locator("#shortlist-open").is_hidden()
         assert not page.locator(".catalogue-entry .claim-choice input").first.is_checked()
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), width
         assert not errors, errors
@@ -128,6 +147,32 @@ def reject_bad_register(browser, base):
     finally:
         page.close()
 
+
+def reject_bad_share_links(browser, base):
+    from urllib.parse import quote
+    root = base + "/technical-evidence-register.html?brief="
+    cases = [
+        "UNKNOWN-CLAIM",
+        "DELIVERY,DELIVERY",
+        ",".join(["DELIVERY"] + [f"UNKNOWN-{i}" for i in range(12)]),
+        "<svg onload=alert(1)>",
+        "DELIVERY,,DELIVERY-DEV",
+    ]
+    cases_urls = [root + quote(value, safe="") for value in cases]
+    cases_urls.append(root + "DELIVERY&brief=DELIVERY-DEV")
+    for url in cases_urls:
+        page = browser.new_page()
+        try:
+            page.goto(url, wait_until="domcontentloaded")
+            page.locator("#claim-count").get_by_text("registered", exact=False).wait_for(timeout=10000)
+            assert page.locator("#shortlist-preview li").count() == 0, url
+            assert page.locator("#shortlist-export-json").is_disabled(), url
+            assert page.locator("#shortlist-link").input_value() == "", url
+            assert "Invalid or unknown" in page.locator("#share-status").inner_text(), url
+        finally:
+            page.close()
+    print("PASS public review permalinks: forged, duplicate, 13 IDs, unsafe and repeated parameters rejected")
+
 if __name__ == "__main__":
     handler = partial(QuietHandler, directory=str(ROOT))
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
@@ -141,6 +186,7 @@ if __name__ == "__main__":
                 for width in (390, 768, 1024, 1440):
                     check(browser, width, base)
                 reject_bad_register(browser, base)
+                reject_bad_share_links(browser, base)
             finally:
                 browser.close()
     finally:

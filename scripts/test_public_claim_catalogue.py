@@ -76,5 +76,23 @@ class PublicClaimCatalogueContract(unittest.TestCase):
         self.assertIn("if(!selectedClaims().length)return", self.html)
         self.assertIn("selected.clear();updateSelection();", self.html)
 
+    def test_public_review_permalink_is_bounded_and_never_certifies_claims(self):
+        for ident in ("shortlist-share", "shortlist-link", "shortlist-copy",
+                      "shortlist-open", "share-status"):
+            self.assertIn(f'id="{ident}"', self.html)
+        for marker in ("function parsePublicReviewLink()", "function restoreSharedSelection()",
+                       "function publicReviewUrl()", "params.getAll('brief')",
+                       "all.length!==1", "all[0].length>1300", "ids.length>12",
+                       "new Set(ids).size!==ids.length", "shareInput.value=link||''",
+                       "new URL(window.location.pathname,window.location.origin)",
+                       "url.hash='claim-shortlist'", "sharedRequest.ids.every",
+                       "navigator.clipboard.writeText(link)",
+                       "UNREVIEWED / NOT VERIFIED / HOLD"):
+            self.assertIn(marker, self.html)
+        self.assertNotIn("history.pushState", self.html)
+        self.assertNotIn("localStorage", self.html)
+        self.assertNotIn("sessionStorage", self.html)
+        self.assertEqual(len(self.data["items"]), 86)
+
 if __name__ == "__main__":
     unittest.main()

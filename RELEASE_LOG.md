@@ -1,3 +1,10 @@
+## 14 November 2026 — portable public claim review links (SOURCE-ONLY / HOLD)
+
+- Extended [the public evidence briefing builder](technical-evidence-register.html#claim-shortlist) with same-origin review links for 1–12 public claim IDs, safely rehydrated only after validation against the 86-claim register. A copyable URL and open-link action support reviewer collaboration without private evidence, storage or external submission.
+- Added fail-closed parsing for repeated, forged, oversized, invalid or unknown claim IDs; Markdown/JSON exports remain available for large selections. All paths remain UNREVIEWED / NOT VERIFIED / HOLD.
+- Expanded source contract and 390/768/1024/1440 px Chromium round-trip and adversarial tests. The unchanged source-only evidence claim documents browser behaviour without inventing native DEV/Production verification. Original image approval remains zero.
+- [Technical release](releases/2026-11-14-portable-public-briefing-links.md). Static site requires no ServiceNow licence; native custom-app, ITSM/ITOM, IntegrationHub, analytics, AI and external provider entitlements are contract-dependent. CI and deployment require separate confirmation.
+
 ## 14 November 2026 — selectable public evidence briefing (SOURCE-ONLY / HOLD)
 
 - Extended the [Technical Evidence Register](technical-evidence-register.html#claim-shortlist) with a client-only shortlist: select claims across filters/pages, review or remove selections, and export Markdown or JSON with stable public links. Responsive controls and keyboard-accessible selection are included.
