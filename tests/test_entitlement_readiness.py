@@ -21,12 +21,15 @@ class Audit(HTMLParser):
         self.cards = []
         self.filters = []
         self.links = []
+        self.triage_ids = []
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "article" and "entitlement-card" in attrs.get("class","").split():
             self.cards.append((attrs.get("data-id"),attrs.get("data-domain")))
         if tag == "button" and "data-domain-filter" in attrs:
             self.filters.append(attrs["data-domain-filter"])
+        if tag == "select" and "data-triage" in attrs:
+            self.triage_ids.append(attrs.get("id"))
         if tag == "a" and attrs.get("href"):
             self.links.append(attrs["href"])
 
@@ -41,14 +44,23 @@ class EntitlementReadinessTests(unittest.TestCase):
         self.assertEqual(8,len({i for i,_ in self.audit.cards}))
         self.assertEqual({"all","platform","operations","extension"},set(self.audit.filters))
         self.assertTrue(all(domain in {"platform","operations","extension"} for _,domain in self.audit.cards))
+        self.assertEqual({"triage-"+id for id,_ in self.audit.cards},set(self.audit.triage_ids))
+        self.assertEqual(8,len(self.audit.triage_ids))
+        for value in ("not-assessed","evidence-requested","gap","review-ready"):
+            self.assertEqual(8,self.html.count('<option value="'+value+'">'))
 
     def test_export_never_certifies(self):
         for literal in ("review_status:'UNREVIEWED'","verification_status:'NOT VERIFIED'",
                         "release_status:'HOLD'","native_dev_verified:false",
                         "production_verified:false","screenshot_publication_approved:false",
                         "licence_approval:false","independent_native_test:'NOT RUN'",
-                        "licence_entitlement_review:'REQUIRED'"):
+                        "licence_entitlement_review:'REQUIRED'",
+                        "reviewer_actions_only:true", "reviewer_follow_up:stages[stage]",
+                        "approval:'HOLD'"):
             self.assertIn(literal,self.html)
+        self.assertIn("All approvals remain HOLD",self.html)
+        self.assertIn("data-owner-role=",self.html)
+        self.assertIn("id=\"reset-triage\"",self.html)
         self.assertNotIn("localStorage",self.html)
         self.assertNotIn("sessionStorage",self.html)
         self.assertNotIn("fetch(",self.html)
