@@ -12,6 +12,27 @@
 @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}}
 @media(max-width:580px){.container{width:min(100% - 30px,1100px)}.hero .container{padding:46px 0}.grid{grid-template-columns:1fr}.flow{flex-direction:column;align-items:stretch}.flow .arrow{text-align:center;transform:rotate(90deg)}section{padding:38px 0}.card{padding:20px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* CSDM service ownership model: conceptual source-reviewed architecture, not a screenshot */
+.csdm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:26px 0}
+.csdm-node{padding:20px 17px;background:linear-gradient(145deg,#173b4e,#102737);border:1px solid #668392;border-radius:13px;min-width:0}
+.csdm-node strong{display:block;font-size:1.06rem;margin:10px 0;line-height:1.3}
+.csdm-node code{display:inline-block;overflow-wrap:anywhere;white-space:normal;font-size:.76rem}
+.csdm-node small{color:#92ecd6;text-transform:uppercase;letter-spacing:.09em;font-weight:800}
+.csdm-node p{font-size:.89rem;margin:12px 0 0}
+.csdm-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:20px 0}
+.csdm-cases details{padding:21px;background:var(--surface);border:1px solid #638495;border-radius:14px}
+.csdm-cases details[open]{border-color:var(--mint)}
+.csdm-cases summary{cursor:pointer;color:var(--mint);font-weight:850;line-height:1.35}
+.csdm-cases summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.csdm-cases p{font-size:.9rem}
+.csdm-gates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;list-style:none}
+.csdm-gates li{background:#102939;border:1px solid var(--edge);border-left:3px solid var(--mint);border-radius:9px;padding:17px}
+.csdm-gates strong{display:block;color:#edfaf5}
+.csdm-boundary{border:1px solid #9b8053;background:#292a27;border-radius:12px;padding:20px 24px}
+.csdm-boundary p{color:#f3dbb2}
+@media(max-width:900px){.csdm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.csdm-cases{grid-template-columns:1fr}}
+@media(max-width:560px){.csdm-grid,.csdm-gates{grid-template-columns:1fr}.csdm-node{padding:17px}}
 </style>
 </head>
 <body>
@@ -20,7 +41,7 @@
 <div class="kicker">Engineering deep dive / CMDB · CSDM · IRE</div>
 <h1>CMDB &amp; IRE assurance, without pretending a script is a health check</h1>
 <p class="lead">A technical review of a source-defined diagnostic collector suite: what it measures, where the measurements can mislead, and the tests required before evidence becomes an accepted remediation decision.</p>
-<nav aria-label="Page navigation" class="nav"><a href="./">Portfolio home</a><a href="diagnostic-workbench-case-study.html">Diagnostic Workbench</a><a href="#metrics">Collector contracts</a><a href="#risks">Engineering review</a><a href="#acceptance">Acceptance criteria</a></nav>
+<nav aria-label="Page navigation" class="nav"><a href="./">Portfolio home</a><a href="diagnostic-workbench-case-study.html">Diagnostic Workbench</a><a href="#metrics">Collector contracts</a><a href="#risks">Engineering review</a><a href="#acceptance">Acceptance criteria</a><a href="#csdm-ownership">CSDM 5 ownership</a></nav>
 <div class="status-line" aria-label="Evidence status"><span class="status source">SOURCE-ONLY / reviewed implementation</span><span class="status mock">MOCK-ONLY / process illustration</span><span class="status">DEV-VERIFIED / no new execution</span><span class="status">PRODUCTION-VERIFIED / not established</span></div>
 </div></header>
 <main class="container" id="main" tabindex="-1">
@@ -60,6 +81,38 @@
 <section><div class="split"><div><div class="kicker">Technical approach</div><h2>Upgrade-safe, OOTB-first</h2><p>Use the platform's standard CMDB Health, IRE rules, CI Class Manager and CSDM relationships as the system of record. Treat custom read-only diagnostics as supporting evidence with transparent limits; do not duplicate reconciliation logic or update CI records through an assessment collector. Govern fixes through normal change, test and promotion controls.</p></div><div><div class="kicker">Licensing &amp; entitlements</div><h2>Know the platform boundary</h2><p>This static public page requires <strong>no ServiceNow licence</strong>. Actual execution requires authorised instance access and appropriate roles. CMDB/IRE base capabilities, CMDB Health, Discovery/ITOM Visibility, Service Graph connectors, App Engine/custom tables, Flow Designer or IntegrationHub each need customer-specific product/licensing confirmation according to enabled features and contract. OOTB availability must be confirmed per release and subscription; no entitlement is presumed.</p></div></div></section>
 <section aria-labelledby="trust-lab-link"><div class="kicker">05 / Demonstrable engineering decisions</div><h2 id="trust-lab-link">Try the diagnostic confidence gates</h2><p class="section-intro">The interactive CMDB Trust Lab uses five hard-coded synthetic fixtures to demonstrate NOT ASSESSED when a source is unavailable, PARTIAL when groups are truncated, and correct deduplication of overlapping relationship gaps. It is a MOCK-ONLY exercise, not a ServiceNow instance assessment.</p><p><a class="cta" href="cmdb-diagnostic-trust-lab.html#lab">Open the interactive synthetic lab →</a></p></section>
 <section><div class="kicker">06 / Ingestion design lab</div><h2>Test the onboarding gate before a new source writes to CMDB</h2><p class="section-intro">A separate, completely synthetic source-ingestion design lab tests identifier quality, source authority, class mapping, security and target acceptance evidence. The exported design receipt can never claim native IRE execution, DEV acceptance or production verification.</p><p><a class="cta" href="cmdb-source-onboarding-lab.html#lab">Open the CMDB source onboarding lab →</a></p></section>
+
+<section id="csdm-ownership" aria-labelledby="csdm-heading">
+<div class="kicker">07 / CSDM 5 service ownership architecture</div>
+<h2 id="csdm-heading">Model service accountability before claiming trustworthy CMDB impact</h2>
+<p class="section-intro">A representative enterprise can have thousands of discovered configuration items but no independently confirmed mapping from deployed services to owning teams, consumer-facing offerings or supported business outcomes. This is a <strong>representative architectural problem, not a measured client result</strong>. The solution is a release-aware, OOTB-first service ownership model, not a script that invents relationships.</p>
+<div class="callout"><strong>Evidence status: SOURCE-ONLY / PROPOSED.</strong><p>This is a conceptual design based on reviewed source and official ServiceNow guidance. No actual client records, live relationships, original screenshots, DEV-VERIFIED acceptance or PRODUCTION-VERIFIED results are represented by the cards.</p></div>
+<h3>Four distinct model responsibilities — not an automatic four-record relationship</h3>
+<div class="csdm-grid" role="list" aria-label="Conceptual CSDM records; not a verified relationship chain">
+<article class="csdm-node" role="listitem"><small>Design and planning</small><strong>Business Application</strong><code>cmdb_ci_business_app</code><p>Logical portfolio definition, not the deployed runtime or a server.</p></article>
+<article class="csdm-node" role="listitem"><small>Service delivery</small><strong>Service Instance</strong><code>cmdb_ci_service_auto</code><p>CSDM 5 class family for a deployed service instance; concrete implementation and subclasses must be verified.</p></article>
+<article class="csdm-node" role="listitem"><small>Service consumption</small><strong>Business Service</strong><code>cmdb_ci_service_business</code><p>Consumer-facing operational service with accountable ownership and impact scope.</p></article>
+<article class="csdm-node" role="listitem"><small>Service consumption</small><strong>Service Offering</strong><code>service_offering</code><p>How a parent service is supplied, with defined consumers and service commitments.</p></article>
+</div>
+<p><strong>Boundary:</strong> visual adjacency does <em>not</em> establish a direct native CI relationship or a completed CSDM mapping. Validate approved relationship types and the target release. The provider-facing <strong>Technology Management Service</strong> class <code>cmdb_ci_service_technical</code> is distinct; this name reflects Australia-family CSDM 5 terminology previously shown as Technical Service.</p>
+<h3>Three evidence-led failure modes</h3>
+<div class="csdm-cases">
+<details open><summary>01 · Service instance with unclear ownership</summary><p><strong>Pain:</strong> orphaned service dependencies undermine impact assessment and change authority.</p><p><strong>OOTB response:</strong> reconcile confirmed business application, service instance and service ownership evidence using the target model; do not default missing owners.</p><p><strong>Acceptance:</strong> independent owner attestation, validated relationship, negative test for null owner and repeatable completeness measurement.</p></details>
+<details><summary>02 · Discovery collision and inconsistent CI identity</summary><p><strong>Pain:</strong> weak or mutable identifiers cause duplicate and overloaded configuration items.</p><p><strong>OOTB response:</strong> inspect IRE identification/reconciliation, source authority, stable identifiers and competing payloads before changing import logic.</p><p><strong>Acceptance:</strong> authorised DEV replay of stable and collision fixtures, actual IRE decision evidence, controlled cleanup and read-back.</p></details>
+<details><summary>03 · Offerings are not linked to operational evidence</summary><p><strong>Pain:</strong> a catalogue or service portfolio looks complete but consumers and upstream dependencies remain unproven.</p><p><strong>OOTB response:</strong> verify Service Portfolio Management definitions, confirmed service instances, responsibilities and real dependency paths.</p><p><strong>Acceptance:</strong> service owner confirms offering and impact scope; unmatched or unsupported links remain NOT ASSESSED rather than healthy.</p></details>
+</div>
+<h3>Six acceptance gates required for any native claim</h3>
+<ol class="csdm-gates">
+<li><strong>01 / Target version and classes</strong>Pin target family, actual CSDM class metadata, relationship rules and installed plugins.</li>
+<li><strong>02 / IRE source authority</strong>Verify identification criteria, reconciliation precedence and collision behaviours through explicit tests.</li>
+<li><strong>03 / Ownership accountability</strong>Capture real business and technical owner attestation. Do not derive ownership from a guess.</li>
+<li><strong>04 / Relationships from evidence</strong>Only accept measured query matches or independently confirmed CI paths. No inferred sys_ids.</li>
+<li><strong>05 / CMDB Health reconciliation</strong>Show completeness, correctness, compliance and relationship-health coverage, exclusions and caps.</li>
+<li><strong>06 / Controlled remediation</strong>Approve changes, negative tests, rollback and repeatable baseline/rescan receipts with version and reviewer.</li>
+</ol>
+<div class="csdm-boundary"><strong>Architectural best practices and licensing boundary</strong><p>Prefer ServiceNow's CMDB Health, IRE, CI Class Manager and CSDM-aligned Service Portfolio Management over parallel bespoke reconciliation. The reviewed Diagnostic Workbench runbook model uses scope, discovery, read-only collection, validation, confirmed correlation, human diagnosis, design, build/test, rescan and delivery stages. These stages are SOURCE-ONLY guidance, not a native execution receipt.</p><p>The static portfolio requires <strong>no ServiceNow licence</strong>. Native implementations must confirm CMDB/IRE and Health rights, Service Portfolio Management, Discovery, Service Mapping, Service Graph, IntegrationHub, App Engine/custom tables, ATF, access roles and applicable third-party entitlements per contract and release. No licence approval or runtime sign-off is implied.</p></div>
+<p>Official reference: <a href="https://www.servicenow.com/docs/r/servicenow-platform/common-service-data-model-csdm/csdm-conceptual-model.html" target="_blank" rel="noopener noreferrer">CSDM domains</a>, <a href="https://www.servicenow.com/docs/r/it-service-management/service-portfolio-management/SPM2-services.html" target="_blank" rel="noopener noreferrer">Service Portfolio Management</a>, and <a href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/overview-cmdb-health.html" target="_blank" rel="noopener noreferrer">CMDB Health</a> (Australia release, March 2026).</p>
+</section>
 <section><h2>Explore the supporting architecture</h2><nav class="nav" aria-label="Related portfolio pages"><a href="diagnostic-workbench-case-study.html#implementation">Diagnostic two-lane architecture</a><a href="workbench-evidence-ledger.html">Workbench evidence ledger</a><a href="workbench-acceptance-playbook.html">Acceptance playbook</a><a href="visual-evidence.html">Screenshot approval boundary</a></nav></section>
 </main><footer class="container footer"><span>ServiceNow engineering portfolio · Source-reviewed, customer-neutral</span><a href="./">Return to portfolio home</a></footer>
 </body></html>
