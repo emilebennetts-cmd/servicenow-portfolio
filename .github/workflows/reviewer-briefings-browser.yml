@@ -1,0 +1,30 @@
+name: Reviewer Briefings — Offline Browser Assurance
+on:
+  push:
+    paths:
+      - 'portfolio-review-guide.html'
+      - 'scripts/test_review_guide.py'
+      - 'scripts/browser_review_guide_briefings.py'
+      - '.github/workflows/reviewer-briefings-browser.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check public reviewer guide evidence and offline export contract
+        run: python scripts/test_review_guide.py
+      - name: Install pinned Playwright and Chromium
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Test three role exports and print at four viewports
+        run: python scripts/browser_review_guide_briefings.py
