@@ -35,7 +35,7 @@ class PatternArchitectureDecisionDeskTests(unittest.TestCase):
     def test_accessible_and_bounded_user_controls(self):
         self.assertEqual(len(self.dom.ids), len(set(self.dom.ids)))
         for ident in ("pattern-fit-desk","fit-scenario","fit-approach","fit-context",
-                      "fit-status","fit-gaps","fit-export","fit-reset","fit-export-feedback"):
+                      "fit-status","fit-gaps","fit-export","fit-reset","fit-import-file","fit-export-feedback"):
             self.assertIn(ident, self.dom.ids)
         self.assertEqual(self.dom.options,
                          ["mim","cmdb","request","ootb","pattern","extension"])
@@ -56,6 +56,15 @@ class PatternArchitectureDecisionDeskTests(unittest.TestCase):
         self.assertIn("ul.replaceChildren()",self.html)
         self.assertIn("li.textContent=g",self.html)
         self.assertIn("JSON.stringify(payload,null,2)",self.html)
+        for marker in ("function validateDraft(data)","Object.keys(data).length!==keys.length",
+                       "Object.prototype.hasOwnProperty.call(scenarios,data.scenario)",
+                       "new Set(selected).size!==selected.length","buildSnapshot(data.scenario",
+                       "JSON.stringify(data[k])!==JSON.stringify(expected[k])",
+                       "file.size>16384","Invalid, altered"):
+            # The user-facing rejection uses lower case; do not depend on text capitalization.
+            if marker=="Invalid, altered":
+                marker="invalid, altered"
+            self.assertIn(marker,self.html)
 
     def test_no_sensitive_data_or_unsanctioned_networking(self):
         for forbidden in ("localStorage","sessionStorage","fetch(","XMLHttpRequest",
