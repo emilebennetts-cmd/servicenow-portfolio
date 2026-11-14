@@ -1,0 +1,28 @@
+name: Pattern Architecture Decision — Public Browser Assurance
+on:
+  push:
+    paths:
+      - 'reusable-delivery-patterns-case-study.html'
+      - 'scripts/test_pattern_architecture_decision_desk.py'
+      - 'scripts/browser_pattern_architecture_decision_desk.py'
+      - '.github/workflows/pattern-architecture-decision-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm public mock-only evidence contract
+        run: python -m unittest discover -s scripts -p 'test_pattern_architecture_decision_desk.py' -v
+      - name: Install pinned Playwright and Chromium
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Test options and HOLD JSON export at four responsive viewports
+        run: python scripts/browser_pattern_architecture_decision_desk.py
