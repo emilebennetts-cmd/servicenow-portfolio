@@ -47,6 +47,9 @@ try{
   assert.equal(receipt.production_verified,false);
   assert.equal(receipt.publication_approval,"HOLD");
   assert.equal(receipt.customer_data_included,false);
+  assert.equal(receipt.exact_case_id_check,true);
+  assert.equal(receipt.baseline_procedure_check,true);
+  assert.equal(receipt.cryptographic_authenticity_verified,false);
   assert.equal(receipt.reviewed_test_rows,180);
   assert(!JSON.stringify(receipt).includes("evidence_reference"));
   // BOM-prefixed UTF-8 CSVs from common spreadsheet tools are also accepted.
@@ -67,6 +70,23 @@ try{
   await assessFile(page,"Structural exceptions detected");
   assert.match(await page.locator("#status").innerText(),/Structural exceptions detected/);
   assert.match(await page.locator("#issues").innerText(),/unreviewed plan flags were changed/);
+  // Regression: a forged but unique KI case ID used to bypass the old truthiness check.
+  const forged=subset.replace('"KI-PLAT-APPDEV-RUN"','"KI-PLAT-APPDEV-FORGED"');
+  assert.notEqual(forged,subset);
+  await page.locator("#matrix-file").setInputFiles({name:"forged-id.csv",mimeType:"text/csv",buffer:Buffer.from(forged)});
+  await assessFile(page,"Structural exceptions detected");
+  assert.match(await page.locator("#issues").innerText(),/test ID\/scenario mismatch/);
+  // Unsafe negative-fixture instruction and altered expected handling must stay on HOLD.
+  const unsafe=subset.replace("never delete a real table.","delete a real table.");
+  assert.notEqual(unsafe,subset);
+  await page.locator("#matrix-file").setInputFiles({name:"unsafe-instruction.csv",mimeType:"text/csv",buffer:Buffer.from(unsafe)});
+  await assessFile(page,"Structural exceptions detected");
+  assert.match(await page.locator("#issues").innerText(),/baseline procedure or expected result differs/);
+  const falseHealthy=subset.replace("table_unavailable; no passing score","ok; passing score");
+  assert.notEqual(falseHealthy,subset);
+  await page.locator("#matrix-file").setInputFiles({name:"false-healthy.csv",mimeType:"text/csv",buffer:Buffer.from(falseHealthy)});
+  await assessFile(page,"Structural exceptions detected");
+  assert.match(await page.locator("#issues").innerText(),/baseline procedure or expected result differs/);
   // Duplicate ID, missing scenario and malformed quotes are rejected or held.
   const duplicate=lines.slice(0,4).concat(lines[1]).join("\r\n");
   await page.locator("#matrix-file").setInputFiles({name:"duplicate.csv",mimeType:"text/csv",buffer:Buffer.from(duplicate)});
@@ -88,6 +108,6 @@ try{
   await page.close();
   checked++;
  }
- console.log("PASS: KI matrix original export, 180-case import, filtered coverage, tamper detection, malformed CSV, receipt HOLD, offline network isolation and responsive layouts at 390/768/1024/1440 ("+checked+"/4).");
+ console.log("PASS: KI matrix original export, 180-case import, filtered coverage, forged ID/procedure tamper rejection, malformed CSV, receipt HOLD, offline network isolation and responsive layouts at 390/768/1024/1440 ("+checked+"/4).");
 }catch(e){console.error(e);process.exitCode=1;}finally{await browser.close();}
 })();
