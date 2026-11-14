@@ -38,3 +38,10 @@ Public static HTML, CSV import and JSON structural receipt: **no ServiceNow lice
 - Independently confirm external GitHub Pages HTTPS reachability.
 
 **Publication control:** The three scoped source/control repositories remain private. No change to repository visibility, proprietary code, customer data, secrets or unreviewed screenshots. No promotion of SOURCE-ONLY, MOCK-ONLY or historical DEV-REPORTED evidence.
+
+### Post-release hardening and source read-back
+
+- UTF-8 BOM prefixes are handled before quoted-header parsing (`cd2d6275568e71fee8fdb154e6785ce0f876988a`).
+- Selecting a different CSV invalidates the previous receipt before review; the synthetic demo clears a previously selected file (`f10717cdc0b67514e3cc6385f7d366ea5bbf3bf1`).
+- Browser regression expanded for BOM and stale-receipt handling (`085b5016a71ee744a554faf4a0e469594e53d5c9`, `941d740c35f5c79b7be70200780c6a88b66ebaaa`).
+- **Static source read-back: eight targeted checks passed**, including matching all 45 module/domain/table triples to the public generator, JavaScript syntax compilation, parser BOM behaviour, sitemap/navigation links, strict offline CSP, hardcoded non-certifying flags and regression wiring. These are *not* a substitute for Chromium CI or native DEV acceptance.
