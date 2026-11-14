@@ -60,13 +60,13 @@ def verify(browser, base, width):
         assert data["release_state"] == "HOLD"
         assert data["independent_native_verification"] is False
         assert data["screenshot_publication_approved"] is False
-        assert len(data["items"]) == 20
+        assert len(data["items"]) == COUNTS["mock-only"]
         assert all(entry["classification"] == "mock-only" for entry in data["items"])
         with page.expect_download() as csv_pending:
             page.locator("#download-csv").click()
         csv_text = Path(csv_pending.value.path()).read_text(encoding="utf-8")
         rows = list(csv.DictReader(io.StringIO(csv_text)))
-        assert len(rows) == 20
+        assert len(rows) == COUNTS["mock-only"]
         assert all(row["classification"] == "mock-only" for row in rows)
         assert all(row["review_state"] == "UNREVIEWED" for row in rows)
         assert all(row["verification_state"] == "NOT VERIFIED" for row in rows)

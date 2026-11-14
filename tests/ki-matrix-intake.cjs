@@ -82,8 +82,8 @@ try{
   assert.equal(await page.locator("#module-count").innerText(),"1");
   await page.locator("#reset").click();
   assert.equal(await page.locator("#receipt").isDisabled(),true);
-  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1);
-  assert.equal(overflow,false,"horizontal overflow at "+width);
+  const layout=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:innerWidth,offenders:[...document.querySelectorAll("body *")].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,12).map(e=>({tag:e.tagName,id:e.id,cls:typeof e.className==="string"?e.className.slice(0,80):"",right:Math.round(e.getBoundingClientRect().right),width:Math.round(e.getBoundingClientRect().width),scroll:e.scrollWidth,client:e.clientWidth,overflow:getComputedStyle(e).overflowX}))}));
+  assert.equal(layout.document<=layout.viewport+1,true,"horizontal overflow at "+width+": "+JSON.stringify(layout));
   assert.deepEqual(outgoing,[],"no network requests in public KI pages");
   await page.close();
   checked++;
