@@ -49,6 +49,7 @@ try{
   assert.equal(receipt.customer_data_included,false);
   assert.equal(receipt.exact_case_id_check,true);
   assert.equal(receipt.baseline_procedure_check,true);
+  assert.equal(receipt.capability_label_check,true);
   assert.equal(receipt.cryptographic_authenticity_verified,false);
   assert.equal(receipt.reviewed_test_rows,180);
   assert(!JSON.stringify(receipt).includes("evidence_reference"));
@@ -87,6 +88,23 @@ try{
   await page.locator("#matrix-file").setInputFiles({name:"false-healthy.csv",mimeType:"text/csv",buffer:Buffer.from(falseHealthy)});
   await assessFile(page,"Structural exceptions detected");
   assert.match(await page.locator("#issues").innerText(),/baseline procedure or expected result differs/);
+  // Capability descriptions are source-controlled, not free text. A formula
+  // substitution, a label swapped from another module, or whitespace drift
+  // must never count as a structurally accepted baseline.
+  const originalLabel='"Application development and customisation"';
+  assert(subset.includes(originalLabel),"expected public source taxonomy label");
+  for(const [name,replacement] of [
+    ["formula-capability.csv",'"=1+1"'],
+    ["swapped-capability.csv",'"Security, ACL and access"'],
+    ["drifted-capability.csv",'"Application development and customisation "']
+  ]){
+    const altered=subset.replace(originalLabel,replacement);
+    assert.notEqual(altered,subset);
+    await page.locator("#matrix-file").setInputFiles({name,mimeType:"text/csv",buffer:Buffer.from(altered)});
+    await assessFile(page,"Structural exceptions detected");
+    assert.match(await page.locator("#issues").innerText(),/capability label differs from published taxonomy/);
+    assert.equal(await page.locator("#receipt").isEnabled(),true);
+  }
   // Duplicate ID, missing scenario and malformed quotes are rejected or held.
   const duplicate=lines.slice(0,4).concat(lines[1]).join("\r\n");
   await page.locator("#matrix-file").setInputFiles({name:"duplicate.csv",mimeType:"text/csv",buffer:Buffer.from(duplicate)});
