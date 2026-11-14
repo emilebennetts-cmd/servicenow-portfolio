@@ -51,7 +51,8 @@ def run_browser(browser, base, width):
         page.locator('[data-lane="production"]').click()
         assert page.locator(".step[data-state='blocked']").count()==1
         page.locator("#critical").check()
-        assert page.locator(".step").count()==6
+        assert page.locator(".step").count()==1
+        assert page.locator(".step").first.get_attribute("data-state")=="blocked"
         with page.expect_download() as pending:
             page.locator("#export").click()
         payload=json.loads(Path(pending.value.path()).read_text(encoding="utf-8"))
