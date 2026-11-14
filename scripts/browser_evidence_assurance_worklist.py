@@ -7,10 +7,13 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTER = json.loads((ROOT / "evidence/public-verification-register.json").read_text(encoding="utf-8"))
+TOTAL = len(REGISTER["items"])
+COUNTS = {kind: sum(item["classification"] == kind for item in REGISTER["items"])
+          for kind in REGISTER["classification_definitions"]}
 
 class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, *_args):
@@ -23,12 +26,12 @@ def verify(browser, base, width):
     page.on("pageerror", lambda e: errors.append(str(e)))
     try:
         page.goto(base + "/evidence-assurance-worklist.html", wait_until="domcontentloaded")
-        page.wait_for_function("document.querySelector('#total').textContent === '87'", timeout=10000)
-        assert page.locator("#source-count").inner_text() == "54"
-        assert page.locator("#mock-count").inner_text() == "20"
-        assert page.locator("#reported-count").inner_text() == "4"
-        assert page.locator("#proposal-count").inner_text() == "9"
-        assert page.locator("#verified-count").inner_text() == "0"
+        expect(page.locator("#total")).to_have_text(str(TOTAL), timeout=10000)
+        assert page.locator("#source-count").inner_text() == str(COUNTS["source-only"])
+        assert page.locator("#mock-count").inner_text() == str(COUNTS["mock-only"])
+        assert page.locator("#reported-count").inner_text() == str(COUNTS["DEV-reported"])
+        assert page.locator("#proposal-count").inner_text() == str(COUNTS["proposed"])
+        assert page.locator("#verified-count").inner_text() == str(COUNTS["DEV-verified"] + COUNTS["production-verified"])
         assert page.locator(".card[data-kind]").count() == 12
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), width
 
@@ -47,7 +50,7 @@ def verify(browser, base, width):
         assert page.locator(".card[data-kind]").count() == 24
 
         page.locator("#classification").select_option("mock-only")
-        assert page.locator("#status").inner_text().startswith("20 of 87")
+        assert page.locator("#status").inner_text().startswith(f"{COUNTS['mock-only']} of {TOTAL}")
         with page.expect_download() as pending:
             page.locator("#download").click()
         downloaded = pending.value
@@ -106,15 +109,15 @@ def verify_formula_neutralisation(browser, base):
                    lambda route: route.fulfill(status=200, content_type="application/json",
                                                body=json.dumps(poisoned)))
         page.goto(base + "/evidence-assurance-worklist.html")
-        page.wait_for_function("document.querySelector('#total').textContent === '87'")
+        expect(page.locator("#total")).to_have_text(str(TOTAL), timeout=10000)
         with page.expect_download() as pending:
             page.locator("#download-csv").click()
         csv_text = Path(pending.value.path()).read_text(encoding="utf-8")
         rows = list(csv.DictReader(io.StringIO(csv_text)))
-        assert len(rows) == 87
+        assert len(rows) == TOTAL
         assert rows[0]["title"].startswith("'=HYPERLINK("), rows[0]["title"]
         assert rows[1]["title"].startswith("'  -SUM("), rows[1]["title"]
-        assert csv_text.count("\n") >= 88
+        assert csv_text.count("\n") >= TOTAL + 1
         print("PASS CSV injection: leading formula and whitespace-prefixed formulas neutralised")
     finally:
         page.close()

@@ -41,3 +41,7 @@ Final GitHub Actions conclusions must be inspected for the exact commit before t
 ### Second CI reconciliation (same day)
 
 The first repair commit registered the missing source claim and cleared the publication audit, but uncovered two unrelated **hard-coded 87-claim** regression assertions in `test_evidence_assurance_worklist.py` and `test_public_claim_catalogue.py`. Those assertions failed when the valid register expanded to 88. Both have now been changed to assert ID uniqueness, conservation of classification totals, nonpromotion boundaries and a minimum historical baseline rather than a permanently frozen count. This is a test-fixture correction, not a change to native verification status. New CI status must be checked separately after this commit.
+
+### Browser smoke hardening after new evidence record
+
+The standalone Evidence Assurance Worklist Chromium job had an additional stale 87-row expectation in its browser runner. Its original `wait_for_function` also attempted JavaScript string evaluation under the site's restrictive CSP (`script-src 'unsafe-inline'`, no `unsafe-eval`) and failed before reaching the register assertions. The browser runner now waits via Playwright's locator assertion (CSP-compatible), derives both total and category expectations from the current checked-in public register, and retains CSV formula-neutralisation and fail-closed corrupt-register tests. No browser security policy was weakened. Final workflow status must be independently confirmed after this patch.
