@@ -1,3 +1,9 @@
+## 15 November 2026 — offline pattern architecture draft resume (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Improved the [Reusable Delivery Patterns Architecture Decision Desk](reusable-delivery-patterns-case-study.html#pattern-fit-desk): previously exported JSON decisions can now be re-imported locally with the six preparation declarations and scenario/approach selections restored; no browser storage or network transmission.
+- Strict schema and derived-field equality rejects forged approvals, changed evidence gates, unknown fields, duplicate checks, invalid JSON and files over 16 KiB **before** updating controls. The review always remains MOCK-ONLY / UNREVIEWED / NOT VERIFIED / HOLD. No native DEV or production verification, new genuine screenshots or new public claims.
+- Expanded source regression and four-width Chromium browser tests. [Technical release and entitlement dependencies](releases/2026-11-15-pattern-architecture-draft-resume.md). GitHub CI and Pages must be read back on the final commit before being described as passed.
+
 ## 14 November 2026 — shareable role-specific architecture tours (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Improved the [Workbench Architecture Gallery](workbench-architecture-gallery.html#persona-tour) with allowlisted six-role direct URLs, a copy-link control and accessible read-only fallback for blocked clipboard permission. Recruiters can send architect, deployer, support or other role journeys without asking recipients to navigate tabs.
