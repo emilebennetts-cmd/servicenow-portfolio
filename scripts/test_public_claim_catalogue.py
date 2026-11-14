@@ -57,5 +57,24 @@ class PublicClaimCatalogueContract(unittest.TestCase):
                 self.assertRegex(claim["page"], r"^[a-z0-9-]+\.html$")
                 self.assertTrue((ROOT / claim["page"]).is_file())
 
+
+    def test_selection_is_local_only_and_exports_cannot_certify_execution(self):
+        for ident in ("claim-shortlist", "shortlist-count", "shortlist-export-md",
+                      "shortlist-export-json", "shortlist-clear", "shortlist-preview"):
+            self.assertIn(f'id="{ident}"', self.html)
+        for snippet in ("const selected=new Set()", "function selectedClaims()", "function reviewPacket()",
+                        "function publicUrl(c)", "function safeMarkdown(v)", "function reviewMarkdown(packet)",
+                        "review_state:'UNREVIEWED'", "verification_state:'NOT VERIFIED'",
+                        "release_state:'HOLD'", "native_service_now_execution:false",
+                        "independent_review_approved:false", "screenshot_publication_approved:false",
+                        "No browser storage, uploads", "check.checked=selected.has(claim.id)",
+                        "selected.clear();render();updateSelection()", "URL.createObjectURL(blob)"):
+            self.assertIn(snippet, self.html)
+        self.assertNotIn("localStorage", self.html)
+        self.assertNotIn("sessionStorage", self.html)
+        self.assertNotIn("navigator.sendBeacon", self.html)
+        self.assertIn("if(!selectedClaims().length)return", self.html)
+        self.assertIn("selected.clear();updateSelection();", self.html)
+
 if __name__ == "__main__":
     unittest.main()
