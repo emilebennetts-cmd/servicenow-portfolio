@@ -114,7 +114,7 @@ def verify_formula_neutralisation(browser, base):
         assert len(rows) == 87
         assert rows[0]["title"].startswith("'=HYPERLINK("), rows[0]["title"]
         assert rows[1]["title"].startswith("'  -SUM("), rows[1]["title"]
-        assert csv_text.count("\\r\\n") >= 88
+        assert csv_text.count("\n") >= 88
         print("PASS CSV injection: leading formula and whitespace-prefixed formulas neutralised")
     finally:
         page.close()
