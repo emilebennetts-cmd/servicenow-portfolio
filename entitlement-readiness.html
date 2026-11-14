@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#091723">
+<meta name="description" content="ServiceNow Workbench deployment and entitlement readiness: an OOTB-first, source-bounded reviewer worksheet for custom apps, CMDB, ITSM, integrations and assurance.">
+<title>Entitlement &amp; Deployment Readiness | ServiceNow Portfolio</title>
+<link rel="canonical" href="https://emilebennetts-cmd.github.io/servicenow-portfolio/entitlement-readiness.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="ServiceNow Professional Portfolio">
+<meta property="og:title" content="ServiceNow Entitlement and Deployment Readiness Review">
+<meta property="og:description" content="Eight source-bounded checks for platform licensing, scopes, roles, CMDB, ITSM, integrations and native acceptance. No licence or deployment certification is implied.">
+<meta property="og:url" content="https://emilebennetts-cmd.github.io/servicenow-portfolio/entitlement-readiness.html">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="ServiceNow Entitlement and Deployment Readiness Review">
+<meta name="twitter:description" content="A public-safe, OOTB-first review worksheet distinguishing source evidence from licensing and native ServiceNow acceptance.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<style>
+:root{color-scheme:dark;--bg:#091723;--panel:#142c3d;--panel2:#193749;--line:#446477;--ink:#f2f8fb;--muted:#c7dce6;--mint:#8cf2d7;--amber:#ffda9a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% 0%,#144a5a,transparent 43%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--mint);text-underline-offset:4px}button{font:inherit}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--amber);outline-offset:4px}
+.wrap{width:min(1130px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:12px;top:-100px;background:#fff;color:#111;padding:.7rem;z-index:5}.skip:focus{top:12px}
+.topnav{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;padding:22px 0;font-size:.88rem;font-weight:800}.hero{padding:48px 0 58px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--mint);font-size:.76rem;text-transform:uppercase;letter-spacing:.16em;font-weight:900}
+h1,h2,h3{letter-spacing:-.04em;line-height:1.15}h1{font-size:clamp(2.6rem,6.4vw,5.7rem);max-width:860px;margin:16px 0 23px}h2{font-size:clamp(1.7rem,3.3vw,2.5rem);margin:0 0 15px}h3{font-size:1.24rem;margin:14px 0}
+p{color:var(--muted)}.lead{max-width:820px;font-size:1.18rem}.pills{display:flex;flex-wrap:wrap;gap:9px;margin:25px 0}.pill{border:1px solid #5b938a;border-radius:999px;padding:7px 13px;font-weight:800;font-size:.78rem;color:var(--mint)}
+main section{padding:51px 0;border-bottom:1px solid #2f4b60}.callout{padding:19px 23px;background:#302b23;color:#ffeed1;border-left:4px solid var(--amber);border-radius:0 12px 12px 0}.callout p{color:#ffeed1;margin:0}
+.story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px}.story article,.step,.entitlement-card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:clamp(19px,3vw,26px);min-width:0}
+.step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:25px}.step strong{display:block;color:var(--mint);margin-bottom:9px}.step p{font-size:.87rem;margin:0}
+.filterbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:25px 0}.filterbar button,.export{background:#1c4052;border:1px solid #82acbb;color:#f0fbff;border-radius:10px;min-height:44px;padding:10px 16px;cursor:pointer;font-weight:800}
+.filterbar button[aria-pressed="true"],.export{background:var(--mint);border-color:var(--mint);color:#08272d}.filterbar button:hover,.export:hover{filter:brightness(1.08)}
+.statusline{font-weight:750;color:#d7e9f0;min-height:24px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.entitlement-card[hidden]{display:none}.card-head{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}
+.ref{font-size:.8rem;font-weight:900;letter-spacing:.08em;color:var(--mint)}.state{border:1px solid #9e815b;color:var(--amber);border-radius:50px;padding:3px 9px;font-size:.69rem;letter-spacing:.02em;font-weight:800}
+.entitlement-card details{border-top:1px solid var(--line);padding-top:11px;margin:13px 0 19px}.entitlement-card summary{cursor:pointer;font-weight:800;color:#b9ffe9}.entitlement-card dl{margin-top:15px}.entitlement-card dt{font-weight:850;color:#e8f6fc}.entitlement-card dd{margin:4px 0 16px;color:var(--muted)}.entitlement-card a{font-size:.88rem;font-weight:800}
+.actions{display:flex;flex-wrap:wrap;gap:13px;align-items:center}.note{font-size:.88rem;max-width:850px}.sources{display:flex;flex-wrap:wrap;gap:12px 24px}.sources a{font-weight:750}
+footer{padding:31px 0;color:var(--muted);font-size:.88rem}
+@media(max-width:800px){.step-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.story,.cards,.step-grid{grid-template-columns:1fr}.filterbar button{flex:1 1 45%}.hero{padding:30px 0 48px}.topnav{gap:12px}main section{padding:37px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff;color:#111;font-size:11pt}.topnav,.filterbar,.actions,.skip{display:none}p,.entitlement-card dd{color:#222}.entitlement-card,.story article,.step{background:white;border-color:#999;break-inside:avoid}.cards{display:block}.entitlement-card{margin:8px 0}.entitlement-card[hidden]{display:block}details>*{display:block!important}a{color:#075b65}h1{font-size:28pt}main section{padding:20px 0}}
+</style></head>
+<body><a class="skip" href="#main">Skip to review</a>
+<header class="wrap"><nav class="topnav" aria-label="Portfolio navigation"><a href="./">← Portfolio home</a><a href="portfolio-review-guide.html">90-second overview</a><a href="implementation-boundaries.html">Implementation boundaries</a><a href="evidence-assurance-worklist.html">Evidence assurance</a></nav></header>
+<main id="main">
+<div class="hero"><div class="wrap"><p class="eyebrow">Deployment architecture / independent review / source-bounded</p>
+<h1>Entitlement &amp; deployment readiness.</h1>
+<p class="lead">Before a Workbench demo becomes a production commitment, confirm the actual contracted rights, installed dependencies, user access and witnessed native acceptance. This interactive review is a planning aid, not a licensing opinion or a ServiceNow deployment certificate.</p>
+<div class="pills"><span class="pill">8 capability checks</span><span class="pill">OOTB-first design</span><span class="pill">No account connection</span><span class="pill">No verification promotions</span></div>
+<div class="callout"><p><strong>Hard evidence boundary:</strong> Delivery source 4.22.2 and historical DEV 4.20.0 reports are not interchangeable. Diagnostic source and demo7 application scopes are distinct. Public diagrams and worksheet exports are illustrative and do not verify customer entitlements, active modules, DEV acceptance or Production.</p></div>
+</div></div>
+<section class="wrap" aria-labelledby="pain"><h2 id="pain">1 · The client's pain &amp; history</h2>
+<div class="story"><article><h3>The inherited problem</h3><p>Consultants inherit ServiceNow instances with uneven module adoption, custom tables that are poorly mapped to subscriptions, untested roles and integration assumptions embedded in proposals. A successful UI demo can be mistaken for a licensed, supported and deployable product.</p></article>
+<article><h3>The delivery consequence</h3><p>Gaps surface during implementation: failed app installs, missing plugin rights, unsuitable production access or premium integration features outside the contract. Scope and target identity mismatches also invalidate otherwise credible source demonstrations. This is a representative consulting scenario, not a claim about any named customer.</p></article></div></section>
+<section class="wrap" aria-labelledby="solution"><h2 id="solution">2 · The ServiceNow solution</h2>
+<p class="lead">A source-informed entitlement gate for technical architects, commercial owners and platform leads. Select a domain below, inspect each control and download a neutral independent-review worksheet that cannot confer approval.</p>
+<div class="step-grid"><div class="step"><strong>01 · Contract</strong><p>Check purchased products, custom-table allocations, user rights and legal schedules.</p></div><div class="step"><strong>02 · Platform</strong><p>Read actual installed scopes, plugin versions, roles, ACLs and application dependencies.</p></div><div class="step"><strong>03 · Native test</strong><p>Witness a controlled DEV execution, confirm target identity and preserve traceable evidence.</p></div><div class="step"><strong>04 · Approve</strong><p>Obtain named client security, licensing and change/release sign-offs separately.</p></div></div>
+<div class="filterbar" role="group" aria-label="Filter by capability domain">
+<button type="button" data-domain-filter="all" aria-pressed="true">All capabilities</button>
+<button type="button" data-domain-filter="platform" aria-pressed="false">Platform &amp; apps</button>
+<button type="button" data-domain-filter="operations" aria-pressed="false">ITSM &amp; CMDB</button>
+<button type="button" data-domain-filter="extension" aria-pressed="false">Integrations &amp; assurance</button></div>
+<p class="statusline" id="filter-status" aria-live="polite" role="status">Showing 8 of 8 review areas.</p>
+<div class="cards" id="entitlement-cards">
+<article class="entitlement-card" data-id="WEB-001" data-domain="platform">
+  <div class="card-head"><span class="ref">WEB-001</span><span class="state">WEBSITE ONLY</span></div>
+  <h3>Public portfolio &amp; evidence review tools</h3>
+  <p>No ServiceNow subscription is required for the static GitHub Pages website. Website access is not a test of a ServiceNow instance.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Confirm HTTPS delivery, keyboard navigation, local-only exports, safe links and public-source classification.</dd><dt>Proof still required</dt><dd>A browser and accessibility test receipt tied to the deployed website commit; never a native application sign-off.</dd></dl>
+  </details>
+  <a href="technical-evidence-register.html">Examine related public evidence: Public evidence register &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="APP-002" data-domain="platform">
+  <div class="card-head"><span class="ref">APP-002</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>Scoped Delivery &amp; Diagnostic applications</h3>
+  <p>Confirm the host's App Engine/custom-application rights, table allotment or exemptions and user licensing against the actual contract. No SKU or table quota is inferred.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Inventory deployed scope names, table mappings, installed version, roles, ACLs, target environment and upgrade path. Keep x_1577958_vdf, x_1577958_dw2 and demo7 x_eitsp_vdf identities distinct.</dd><dt>Proof still required</dt><dd>Subscription Management evidence, reviewed ACL tests, scoped-app install inventory and witnessed role-based non-production walkthrough.</dd></dl>
+  </details>
+  <a href="source-target-compatibility.html">Examine related public evidence: Source-to-target compatibility &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="DWB-003" data-domain="operations">
+  <div class="card-head"><span class="ref">DWB-003</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>Diagnostic Workbench &amp; Knowledge Intelligence</h3>
+  <p>Confirm custom-app/table use rights for the Diagnostic scope. Collector access also depends on underlying source modules, roles and data authority.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Default to read-only inspection, least privilege, provenance links and explicit authority for any offline collection. Never treat generated findings as approved customer records.</dd><dt>Proof still required</dt><dd>Independent collector and ACL tests with permitted test identities; synthetic read-only tests remain MOCK-ONLY until witnessed in the target DEV instance.</dd></dl>
+  </details>
+  <a href="knowledge-intelligence-acceptance-matrix.html">Examine related public evidence: Knowledge Intelligence acceptance &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="ITSM-004" data-domain="operations">
+  <div class="card-head"><span class="ref">ITSM-004</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>ITSM &amp; Major Incident workflows</h3>
+  <p>Check the customer's contracted ITSM rights, associated fulfiller roles and any premium feature before configuring the applicable incident, change or major-incident process.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Prefer OOTB Incident, Problem, Change, Request and Knowledge patterns where supported; govern configuration changes and verify exception workflows.</dd><dt>Proof still required</dt><dd>Approved module-by-module acceptance cases, operational personas and a witnessed native incident or MIM walkthrough.</dd></dl>
+  </details>
+  <a href="major-incident-implementation-lab.html">Examine related public evidence: Major Incident implementation lab &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="CMDB-005" data-domain="operations">
+  <div class="card-head"><span class="ref">CMDB-005</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>CMDB, IRE and discovery ingestion</h3>
+  <p>Confirm rights for the intended CMDB, ITOM Visibility/Discovery, Service Graph connectors and any external data-source licence. A CMDB design alone does not establish Discovery entitlement.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Use CMDB Identification and Reconciliation Engine (IRE), trusted sources, identification rules, reconciliation precedence, audit trails and controlled remediation.</dd><dt>Proof still required</dt><dd>Witnessed non-production ingestion, IRE preview, duplicate handling, role checks and source-to-CI traceability with a safe test dataset.</dd></dl>
+  </details>
+  <a href="cmdb-ire-assurance.html">Examine related public evidence: CMDB and IRE assurance &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="INT-006" data-domain="extension">
+  <div class="card-head"><span class="ref">INT-006</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>IntegrationHub &amp; third-party handoffs</h3>
+  <p>Confirm applicable IntegrationHub transaction capacity, spoke/connector licence and external provider subscriptions before enabling a live integration.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Design idempotency, scoped credentials, retry/replay safety, API rate limits, correlation IDs, failure queues and source-of-truth boundaries.</dd><dt>Proof still required</dt><dd>Authorised test connection, credential review, controlled failure/replay test and approved external-write acceptance.</dd></dl>
+  </details>
+  <a href="integration-contract-lab.html">Examine related public evidence: Integration contract lab &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="ANA-007" data-domain="extension">
+  <div class="card-head"><span class="ref">ANA-007</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>Performance Analytics &amp; AI functions</h3>
+  <p>Confirm Analytics/Performance Analytics, predictive or generative AI rights and model/provider usage terms for each activated capability; availability differs by subscription.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Define data minimisation, access control, human review, logging, retention and an OOTB reporting fallback when premium features are unavailable.</dd><dt>Proof still required</dt><dd>A licensed plugin/feature check, approved AI data-flow review, reproducible measurement and human acceptance; public mockups do not count.</dd></dl>
+  </details>
+  <a href="engineering-evidence.html">Examine related public evidence: Engineering evidence &rarr;</a>
+</article>
+<article class="entitlement-card" data-id="ATF-008" data-domain="extension">
+  <div class="card-head"><span class="ref">ATF-008</span><span class="state">ENTITLEMENT UNCONFIRMED</span></div>
+  <h3>Automated Test Framework &amp; release controls</h3>
+  <p>Verify ATF/plugin availability, authorised test roles and environment-specific use rights. Do not presume a separate licence or zero incremental cost.</p>
+  <details><summary>Technical control and acceptance evidence</summary>
+  <dl><dt>OOTB-first control</dt><dd>Run ATF in a permitted non-production instance; include negative ACL, upgrade, rollback, dependency and release-readiness cases.</dd><dt>Proof still required</dt><dd>Target-instance run IDs, version-pinned evidence, negative-case results and explicit change/release approval. CI for a static website is not ATF.</dd></dl>
+  </details>
+  <a href="workbench-acceptance-playbook.html">Examine related public evidence: Workbench acceptance playbook &rarr;</a>
+</article>
+</div>
+<div class="actions"><button type="button" class="export" id="export-packet">Export selected review worksheet (JSON)</button><a href="evidence-assurance-worklist.html">Open native evidence gaps →</a></div>
+<p class="note">Exported values always state <strong>UNREVIEWED / NOT VERIFIED / HOLD</strong>. The export contains only public category labels and review questions, not customer or subscription details. No results are stored or submitted.</p>
+</section>
+<section class="wrap" aria-labelledby="architecture"><h2 id="architecture">3 · Architectural best practices</h2>
+<p>Prefer native ServiceNow capabilities, documented configuration and upgrade-safe extension points. Map custom tables to the authorised subscription, use ACL and negative-role testing, separate Tier-0/offline consulting from installed operations, and never equate CI or a simulated demo with deployment evidence.</p>
+<div class="callout"><p><strong>Release decision:</strong> NOT VERIFIED / HOLD until a reviewer obtains a current contract interpretation, an approved target-instance inventory and independently witnessed acceptance. A licensed product is not automatically installed; an installed plugin is not automatically licensed. Approval of genuine screenshots is a separate, currently closed publication gate.</p></div>
+<h3>Authoritative context for reviewers</h3>
+<div class="sources"><a href="https://www.servicenow.com/docs/r/platform-administration/table-administration-and-data-management/custom-tables.html" rel="noopener noreferrer">ServiceNow custom-table entitlements</a>
+<a href="https://www.servicenow.com/docs/r/platform-administration/allocating-custom-tables-subscr-apps-v2.html" rel="noopener noreferrer">ServiceNow subscription mapping</a>
+<a href="technical-evidence-register.html">Portfolio technical evidence register</a>
+<a href="screenshot-publication-gate.html">Screenshot publication HOLD</a></div>
+<p class="note">ServiceNow documentation is general guidance; the executed agreement and the customer's ServiceNow account/licensing team determine applicable rights. No proprietary schedules, pricing, customer inventory or private repository data is reproduced.</p>
+</section></main>
+<footer class="wrap"><span>© 2026 · ServiceNow Professional Portfolio · Public SOURCE-ONLY review content, MOCK-ONLY interactive filters · No native verification or production approval.</span></footer>
+<script>
+(function () {
+'use strict';
+var buttons=Array.from(document.querySelectorAll('[data-domain-filter]'));
+var cards=Array.from(document.querySelectorAll('.entitlement-card'));
+var status=document.getElementById('filter-status');
+var current='all';
+function refresh(next) {
+ current=next;
+ buttons.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.domainFilter===next));});
+ var count=0;cards.forEach(function(c){c.hidden=next!=='all'&&c.dataset.domain!==next;if(!c.hidden)count++;});
+ status.textContent='Showing '+count+' of '+cards.length+' review areas. All entitlements remain unconfirmed.';
+}
+buttons.forEach(function(b){b.addEventListener('click',function(){refresh(b.dataset.domainFilter);});});
+document.getElementById('export-packet').addEventListener('click',function(){
+ var visible=cards.filter(function(c){return !c.hidden;});
+ var packet={schema_version:1,document_type:'independent-entitlement-readiness-review',published_context:'Public ServiceNow Professional Portfolio',source_classification:'SOURCE-ONLY',interaction_classification:'MOCK-ONLY',review_status:'UNREVIEWED',verification_status:'NOT VERIFIED',release_status:'HOLD',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,licence_approval:false,commercial_decision:'NOT DETERMINED',target_instance_approved:false,created_utc:new Date().toISOString(),items:visible.map(function(c){return {id:c.dataset.id,domain:c.dataset.domain,title:c.querySelector('h3').textContent,licence_entitlement_review:'REQUIRED',independent_native_test:'NOT RUN',approval:'HOLD'};})};
+ var blob=new Blob([JSON.stringify(packet,null,2)+'\n'],{type:'application/json'});
+ var u=URL.createObjectURL(blob);var a=document.createElement('a');a.href=u;a.download='servicenow-entitlement-review-unverified.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1000);
+});
+refresh('all');
+})();
+</script></body></html>
