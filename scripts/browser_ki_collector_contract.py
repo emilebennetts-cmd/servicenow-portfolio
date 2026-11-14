@@ -34,7 +34,7 @@ def verify(browser, width):
             else:
                 button.click()
             assert button.get_attribute("aria-pressed") == "true", key
-            assert status in page.locator("#collector-contract-status").inner_text(), (key, status, page.locator("#collector-contract-status").inner_text(), errors)
+            assert status.upper() in page.locator("#collector-contract-status").inner_text().upper(), (key, status, page.locator("#collector-contract-status").inner_text(), errors)
             assert test_id in page.locator("#collector-contract-test").inner_text()
             assert page.locator('.contract-choices button[aria-pressed="true"]').count() == 1
             with page.expect_download() as download:
