@@ -34,6 +34,16 @@
 .persona-state{color:#ffdeb0;font-weight:800;font-size:.79rem;letter-spacing:.06em;text-transform:uppercase}
 @media(max-width:780px){.persona-columns{grid-template-columns:1fr}.persona-steps button{flex-basis:155px}.persona-panel{min-height:0}}
 @media(prefers-reduced-motion:reduce){.persona-steps{scroll-behavior:auto}}
+
+/* Shareable public persona deep links; links encode only a fixed role key. */
+.persona-share-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.persona-share-tools a{font-weight:800;text-underline-offset:4px}
+.persona-share-tools button{min-height:44px;padding:10px 15px;background:#203f50;color:#e8f5f6;border:1px solid #8ebbc7;border-radius:9px;font:700 .9rem system-ui,sans-serif;cursor:pointer}
+.persona-share-tools button:focus-visible,.persona-share-tools input:focus-visible{outline:3px solid #ffcf85;outline-offset:3px}
+.persona-share-tools input{width:100%;font:inherit;background:#091d2a;color:#e5f3f8;border:1px solid #7b9fac;border-radius:8px;padding:11px;overflow-wrap:anywhere}
+.persona-share-tools input[hidden]{display:none}
+.persona-share-status{flex-basis:100%;margin:0;color:#e4d2a8;font-size:.85rem}
+@media(max-width:580px){.persona-share-tools button,.persona-share-tools a{width:100%;text-align:center}}
 </style></head><body><a class="skip" href="#main-content">Skip to main content</a>
 <header><div class="wrap"><div class="eyebrow">ServiceNow / Engineering evidence</div><h1>Workbench architecture gallery</h1><p class="lead">A visual explanation of the assessment-to-delivery lifecycle, supported by public source records. These are <strong>architecture diagrams, not instance screenshots</strong>; no customer records or private code are included.</p><nav aria-label="Page navigation"><a href="./">Portfolio home</a><a href="#journey">Architecture</a><a href="#baseline">Version evidence</a><a href="#persona-tour">Role walkthrough</a><a href="#verification">Verification</a><a href="#inspection">Reviewer checklist</a><a href="#licensing">Licensing</a><a href="workbench-evidence-ledger.html">Evidence ledger</a></nav></div></header>
 <main class="wrap" id="main-content" tabindex="-1"><section id="journey"><h2>From finding to controlled release</h2><div class="grid">
@@ -76,6 +86,12 @@
 <article><strong>03 / Release gate</strong><p id="persona-gate">No native execution or approval is inferred.</p></article>
 </div>
 <button class="persona-export" type="button" id="persona-export">Download review checklist (JSON)</button>
+<div class="persona-share-tools" aria-label="Share this public role walkthrough">
+<a id="persona-share-link" href="?role=presales#persona-tour">Open direct link to this role</a>
+<button type="button" id="persona-copy-link">Copy role link</button>
+<input id="persona-share-url" aria-label="Select and copy this role link" type="text" readonly hidden>
+<p class="persona-share-status" id="persona-share-status" role="status" aria-live="polite">Only a public role key is included; no evidence or approvals are shared.</p>
+</div>
 <p class="persona-foot">Browser-only downloadable preparation checklist. No customer details, persistence, provider calls, approvals or genuine ServiceNow screenshots.</p>
 </div>
 </div>
@@ -105,13 +121,43 @@ const tabs=Array.from(document.querySelectorAll('#persona-tabs [role="tab"]'));
 const fields={name:document.getElementById('persona-name'),explain:document.getElementById('persona-explain'),approach:document.getElementById('persona-approach'),proof:document.getElementById('persona-proof'),gate:document.getElementById('persona-gate')};
 const panel=document.getElementById('persona-panel');
 let selected='presales';
-function activate(key,focus){if(!Object.prototype.hasOwnProperty.call(data,key))return;selected=key;const d=data[key];Object.keys(fields).forEach(k=>fields[k].textContent=d[k]);tabs.forEach(t=>{const active=t.dataset.role===key;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;if(active){panel.setAttribute('aria-labelledby',t.id);if(focus)t.focus();}});}
+const directLink=document.getElementById('persona-share-link');
+const copyButton=document.getElementById('persona-copy-link');
+const backupUrl=document.getElementById('persona-share-url');
+const shareStatus=document.getElementById('persona-share-status');
+function directUrl(key){
+ const url=new URL(window.location.href);
+ url.search='';
+ url.searchParams.set('role',key);
+ url.hash='persona-tour';
+ return url.href;
+}
+function activate(key,focus){if(!Object.prototype.hasOwnProperty.call(data,key))return;selected=key;const d=data[key];Object.keys(fields).forEach(k=>fields[k].textContent=d[k]);tabs.forEach(t=>{const active=t.dataset.role===key;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;if(active){panel.setAttribute('aria-labelledby',t.id);if(focus)t.focus();}});
+ directLink.href=directUrl(key);
+ backupUrl.value=directLink.href;
+ backupUrl.hidden=true;
+ shareStatus.textContent='Only a public role key is included; no evidence or approvals are shared.';
+}
 tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab.dataset.role,false));tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;else return;e.preventDefault();activate(tabs[n].dataset.role,true);});});
 document.getElementById('persona-export').addEventListener('click',()=>{
 const d=data[selected];
 const receipt={schema:'portfolio-persona-review-v1',source_basis:'30 September 2026 controlled-draft User Guides and Training; source 4.6.1',persona:selected,step:d.name,operating_approach:d.approach,required_evidence:d.proof,release_gate:d.gate,architecture_classification:'SOURCE-ONLY',interaction_classification:'MOCK-ONLY',historical_dev_baseline:'4.5.1 historical report only',native_dev_verified:false,production_verified:false,screenshot_publication_approved:false,review_state:'UNREVIEWED',verification_state:'NOT VERIFIED',release_state:'HOLD'};
 const blob=new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='workbench-persona-review-'+selected+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
 });
-activate('presales',false);
+copyButton.addEventListener('click',async()=>{
+ try{
+  if(!navigator.clipboard || !navigator.clipboard.writeText)throw Error('Clipboard unavailable');
+  await navigator.clipboard.writeText(directLink.href);
+  shareStatus.textContent='Public role link copied. It does not confer verification or screenshot approval.';
+  backupUrl.hidden=true;
+ }catch{
+  backupUrl.hidden=false;
+  backupUrl.focus();
+  backupUrl.select();
+  shareStatus.textContent='Clipboard unavailable. Select and copy the link in the field above.';
+ }
+});
+const requestedRole=new URLSearchParams(window.location.search).get('role');
+activate(requestedRole && Object.prototype.hasOwnProperty.call(data,requestedRole)?requestedRole:'presales',false);
 })();
 </script></body></html>
