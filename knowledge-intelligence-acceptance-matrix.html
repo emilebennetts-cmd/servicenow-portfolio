@@ -43,6 +43,24 @@ footer{padding:26px 0;color:var(--sub);font-size:.84rem}
 @media(max-width:650px){header .wrap{padding:34px 0}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.controls,.checklist{grid-template-columns:1fr}section{padding:30px 0}button{width:100%}.preset button{width:auto;flex:1 1 180px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:white;color:black}.stat,.card,.table-scroll{background:white;color:black}p,li,td small{color:#333}nav,.controls,.preset,button,.checklist{display:none}}
+
+/* Read-only collector fault contract: offline, synthetic, non-certifying. */
+.contract-lab{border:1px solid #6594a0;border-radius:17px;background:linear-gradient(140deg,#112f41,#0b2333);padding:clamp(16px,3vw,26px);margin:24px 0}
+.contract-layout{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.3fr);gap:18px;align-items:start}
+.contract-choices{display:grid;gap:10px}.contract-choices button{width:100%;text-align:left;background:#142e41;color:#e4f5f8;border:1px solid #587b8b;min-height:52px}
+.contract-choices button[aria-pressed="true"]{background:#8df5d7;color:#062932;border-color:#8df5d7}
+.contract-choices button:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.contract-detail{border:1px solid #567886;border-radius:12px;background:#071d2b;padding:20px;min-width:0}
+.contract-detail h3{margin:5px 0 12px;font-size:1.3rem}.contract-detail p{margin:10px 0}
+.contract-detail .contract-status{color:#ffdb9b;font-size:.82rem;font-weight:850;letter-spacing:.06em;text-transform:uppercase}
+.contract-detail dl{display:grid;grid-template-columns:140px 1fr;gap:8px 12px;margin:15px 0}
+.contract-detail dt{font-weight:800;color:#fff}.contract-detail dd{margin:0;color:var(--sub)}
+.contract-review{margin-top:20px;border-left:4px solid var(--amber);background:#32281d;border-radius:0 9px 9px 0;padding:15px 18px}
+.contract-review p{margin:0;color:#fce4c0}.contract-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+.contract-actions p{margin:0;flex:1;color:var(--sub);font-size:.86rem}
+@media(max-width:760px){.contract-layout{grid-template-columns:1fr}.contract-detail dl{grid-template-columns:1fr;gap:3px}.contract-detail dd{margin-bottom:9px}}
+@media print{.contract-choices,.contract-actions{display:none}.contract-lab,.contract-detail{background:#fff;color:#111}.contract-detail dt,.contract-detail dd,.contract-review p{color:#222}}
+
 </style></head><body><a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap"><nav aria-label="Related technical work"><a href="./">Portfolio home</a><a href="knowledge-intelligence.html">Knowledge Intelligence architecture</a><a href="diagnostic-coverage-explorer.html">Core Diagnostic catalogue</a><a href="verification-ledger.html">Evidence ledger</a></nav>
 <div class="eyebrow">Diagnostic Workbench 2 · Companion architecture</div>
@@ -133,6 +151,33 @@ footer{padding:26px 0;color:var(--sub);font-size:.84rem}
 <tr class="module" data-code="APPENG.GOV" data-pack="App Engine &amp; Custom Apps"><td><strong>APPENG.GOV</strong><small>App Engine &amp; Custom Apps</small></td><td>App Engine governance and custom applications</td><td><code>sys_app</code><small>Example source table; verify in target</small></td></tr>
 </tbody></table></div><p id="module-empty" hidden>No matching module. Adjust the search or product domain.</p>
 </section>
+
+<section id="collector-contract" aria-labelledby="collector-contract-heading">
+<div class="eyebrow">03 · Engineering failure-mode assurance</div>
+<h2 id="collector-contract-heading">Collector outcomes: never confuse missing evidence with a healthy estate.</h2>
+<p>This is a <strong>source-informed, synthetic contract gallery</strong>, not a captured ServiceNow screen or collector execution. Four fixed examples demonstrate how a consultant should handle evidence validity, unavailable tables or fields, and prohibited writes before any client-facing finding is confirmed. The source package describes marker-bounded <code>ki-evidence/1.0</code> output, read-only collector lint and human-reviewed findings; actual target behaviour remains untested here.</p>
+<div class="contract-lab">
+<div class="contract-layout">
+<div class="contract-choices" role="group" aria-label="Choose a synthetic collector outcome">
+<button type="button" data-contract="complete" aria-pressed="true">01 · Complete synthetic evidence</button>
+<button type="button" data-contract="table" aria-pressed="false">02 · Table unavailable</button>
+<button type="button" data-contract="field" aria-pressed="false">03 · Field unavailable</button>
+<button type="button" data-contract="mutation" aria-pressed="false">04 · Mutation rejected by lint</button>
+</div>
+<article class="contract-detail" id="collector-contract-detail" aria-live="polite" aria-atomic="true">
+<div class="contract-status" id="collector-contract-status">MOCK-ONLY · candidate evidence / HOLD</div>
+<h3 id="collector-contract-title">Complete illustrative evidence</h3>
+<p id="collector-contract-explanation">A fictional read-only collector produces a structurally valid metric. The rule may propose a finding, but it cannot confirm it.</p>
+<dl><dt>Expected handling</dt><dd id="collector-contract-handling">Record metric provenance; leave finding awaiting human review.</dd>
+<dt>Native check to run</dt><dd id="collector-contract-test">KI-COL-01 · Run in authorised non-production, validate envelope and metric references.</dd>
+<dt>Outcome boundary</dt><dd id="collector-contract-boundary">No DEV read-back, client data or production evidence is included.</dd></dl>
+</article>
+</div>
+<div class="contract-review"><p><strong>Native acceptance remains open:</strong> independently verify scope and ACLs; run each of the 45 read-only collectors on an authorised target PDI; establish a maximum two-minute duration; validate <code>table_unavailable</code> and <code>field_unavailable</code> behaviour; check evidence-to-rule-to-finding lineage; obtain reviewer approval before use. Historical source-reported lint is <strong>not</strong> end-to-end collector acceptance.</p></div>
+<div class="contract-actions"><button type="button" id="collector-contract-export">Export synthetic test contract (JSON)</button><p>All exports are <strong>MOCK-ONLY · NOT RUN · NOT VERIFIED · UNREVIEWED · HOLD</strong>. No form upload, storage, network calls or screenshots.</p></div>
+</div>
+</section>
+
 <section id="acceptance"><div class="eyebrow">03 · Architectural best practices</div><h2>Interactive acceptance decision — synthetic only.</h2>
 <p>The eight checks below model the minimum questions an architect should resolve, but checking a box is <strong>not evidence the action happened</strong>. Fixtures demonstrate blocking outcomes and export only a HOLD review packet. No form input is persisted or transmitted.</p>
 <div class="checklist" id="gate-list"><label class="gate"><input data-gate="identity" type="checkbox"><span>Application identity, scope, release and installed package read-back reconciled</span></label>
@@ -178,4 +223,60 @@ gates.forEach(g=>g.addEventListener('change',()=>{fixture='manual';buttons.forEa
 $('download-packet').addEventListener('click',()=>{const blob=new Blob([$('readiness-receipt').textContent+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='knowledge-intelligence-review-HOLD.json';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);});
 setFixture('unreviewed');
 })();
+
+/* Fixed public fixtures only. Deliberately never parse or receive customer evidence. */
+(function(){
+"use strict";
+const outcomes=Object.freeze({
+ complete:Object.freeze({title:"Complete illustrative evidence",status:"candidate evidence / HOLD",
+   explanation:"A fictional read-only collector produces a structurally valid metric. The rule may propose a finding, but it cannot confirm it.",
+   handling:"Preserve envelope and metric provenance; leave the proposed finding awaiting independent human review.",
+   test:"KI-COL-01 · Authorised non-production run, marker envelope and evidence-to-rule lineage.",
+   boundary:"No DEV read-back, client data or production evidence is included.",expected_code:"ok"}),
+ table:Object.freeze({title:"Missing table must not mean zero defects",status:"unavailable data / HOLD",
+   explanation:"A collector reaches a table that is not installed or is unavailable to the authorised context.",
+   handling:"Record table_unavailable. Exclude this metric from passing thresholds; check installed plugin, subscription and ACL before rerun.",
+   test:"KI-COL-02 · Negative test for unavailable table, safe return and no false healthy score.",
+   boundary:"The missing table is synthetic; no target-specific product absence is asserted.",expected_code:"table_unavailable"}),
+ field:Object.freeze({title:"Missing field invalidates a metric",status:"incomplete coverage / HOLD",
+   explanation:"A collector expects a field not present in the target release or available schema.",
+   handling:"Record field_unavailable and capture the schema mismatch; hold the affected rule and review the query on the actual target.",
+   test:"KI-COL-03 · Negative field test; validate graceful handling and controlled metric suppression.",
+   boundary:"This fixture does not assert a real instance schema or data-quality defect.",expected_code:"field_unavailable"}),
+ mutation:Object.freeze({title:"Mutating collector is rejected before execution",status:"security control / HOLD",
+   explanation:"A synthetic collector contains a forbidden data-writing operation and does not meet the read-only safety contract.",
+   handling:"Fail collector lint; do not execute. Require peer review and a separately approved change before any replacement.",
+   test:"KI-COL-04 · Mutating call rejection in offline lint, zero execution and safe error reporting.",
+   boundary:"No script is executed or transmitted by this web page.",expected_code:"lint_rejected"})
+});
+const buttons=Array.from(document.querySelectorAll("[data-contract]"));
+const el=id=>document.getElementById(id);
+let chosen="complete";
+function render(key){
+ if(!Object.hasOwn(outcomes,key))return;
+ chosen=key;const value=outcomes[key];
+ for(const button of buttons)button.setAttribute("aria-pressed",String(button.dataset.contract===key));
+ el("collector-contract-status").textContent="MOCK-ONLY · "+value.status;
+ el("collector-contract-title").textContent=value.title;
+ el("collector-contract-explanation").textContent=value.explanation;
+ el("collector-contract-handling").textContent=value.handling;
+ el("collector-contract-test").textContent=value.test;
+ el("collector-contract-boundary").textContent=value.boundary;
+}
+for(const button of buttons)button.addEventListener("click",()=>render(button.dataset.contract));
+el("collector-contract-export").addEventListener("click",()=>{
+ const fixture=outcomes[chosen];
+ const packet={schema:"portfolio-ki-collector-fault-contract/1.0",fixture_id:chosen,
+  expected_code:fixture.expected_code,expected_handling:fixture.handling,
+  native_test_id:fixture.test.split(" · ")[0],evidence_classification:"MOCK-ONLY",
+  historical_dev_classification:"DEV-REPORTED",collector_runtime:"NOT RUN",
+  dev_verified:false,production_verified:false,review_approved:false,
+  actual_collector_output:null,customer_information:null,publication_approval:"HOLD"};
+ const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="ki-synthetic-collector-"+chosen+"-HOLD.json";
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+})();
+
 </script></body></html>
