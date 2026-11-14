@@ -1,3 +1,10 @@
+## 15 November 2026 — CSDM 5 native acceptance preparation desk (MOCK-ONLY / HOLD)
+
+- Added [CSDM 5 Native Acceptance Desk](csdm-native-acceptance.html), with three synthetic CMDB ownership/IRE/service-offering scenarios, six OOTB-first evidence preparation gates, per-scenario local state, live counts, reset and a downloadable non-certifying JSON packet. All exports remain **MOCK-ONLY / NOT RUN / NOT VERIFIED / UNREVIEWED / HOLD** with false approvals. This is not a live native ServiceNow feature.
+- Connected the source-reviewed [CMDB architecture case study](cmdb-ire-assurance.html#csdm-ownership), homepage, searchable 77-page Explorer and deterministic sitemap; added one MOCK-ONLY public claim (register now 90 claims) without changing historical DEV-REPORTED assertions.
+- Added static guardrails and four-viewport Chromium tests, with offline-only CSP and no private source, customer data or original screenshots. Browser CI validates synthetic website behaviour only. [Technical release and licensing boundary](releases/2026-11-15-csdm-native-acceptance-preparation.md).
+- Static website requires no ServiceNow licence; customer rights for CMDB/IRE, Service Portfolio Management, ITOM, IntegrationHub/Service Graph, App Engine, ATF, roles and third-party services remain unverified. Native DEV and Production evidence are not established; original screenshot approvals remain **0 / HOLD**. Final CI/Pages must be checked against final commit.
+
 ## 15 November 2026 — offline pattern architecture draft resume (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Improved the [Reusable Delivery Patterns Architecture Decision Desk](reusable-delivery-patterns-case-study.html#pattern-fit-desk): previously exported JSON decisions can now be re-imported locally with the six preparation declarations and scenario/approach selections restored; no browser storage or network transmission.
