@@ -95,5 +95,28 @@ class CollectorFaultContractTests(unittest.TestCase):
         self.assertIn('id="taxonomy"', self.html)
 
 
+    def test_source_module_acceptance_export_is_plan_only(self):
+        for key in ("ki-test-matrix", "ki-test-matrix-heading", "ki-export-all",
+                    "ki-export-filtered", "matrix-export-status"):
+            self.assertIn(key, self.page.ids)
+        self.assertEqual(len(re.findall(r'<tr class="module" data-code=', self.html)), 45)
+        self.assertIn("180 executable acceptance questions", self.html)
+        self.assertIn("PROPOSED", self.html)
+        self.assertIn("never delete real tables", self.html.lower())
+        script = self.html.split("/* Native test matrix exporter:", 1)[1].split("/* Fixed public fixtures only.", 1)[0]
+        for required in ('"SOURCE-ONLY","PROPOSED","NOT RUN","false","false","HOLD","",""',
+                         'test.id', 'ki-evidence/1.0', 'table_unavailable', 'field_unavailable',
+                         'row.hidden', 'text/csv;charset=utf-8', 'safeCell', '120',
+                         'replace(/"/g', 'connect'):
+            if required == 'connect':
+                self.assertNotRegex(script, r"(?i)\b(?:fetch|XMLHttpRequest|localStorage|sessionStorage)\s*\(")
+            else:
+                self.assertIn(required, script)
+        self.assertIn("no native execution or approval is asserted", script.lower())
+        self.assertIn("ki-source-acceptance-all-45-modules-HOLD.csv", script)
+        self.assertIn("ki-source-acceptance-filtered-HOLD.csv", script)
+
+
+
 if __name__ == "__main__":
     unittest.main()
