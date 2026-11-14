@@ -57,6 +57,7 @@ try{
   // Tampering with a native approval/status flag must not be accepted.
   const tampered=subset.replace('"NOT RUN"','"PASS"');
   await page.locator("#matrix-file").setInputFiles({name:"ki-tampered.csv",mimeType:"text/csv",buffer:Buffer.from(tampered)});
+  assert.equal(await page.locator("#receipt").isDisabled(),true,"stale receipt must be invalidated on selection");
   await page.locator("#check").click();
   assert.match(await page.locator("#status").innerText(),/Structural exceptions detected/);
   assert.match(await page.locator("#issues").innerText(),/unreviewed plan flags were changed/);
