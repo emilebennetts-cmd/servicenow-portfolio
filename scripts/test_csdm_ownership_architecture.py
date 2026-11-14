@@ -39,6 +39,13 @@ class OwnershipContract(unittest.TestCase):
         self.assertIn(".csdm-grid,.csdm-gates{grid-template-columns:1fr}", self.html)
         self.assertIn(".csdm-cases{grid-template-columns:1fr}", self.html)
         self.assertIn("summary:focus-visible", self.html)
+    def test_recruiter_navigation_discovers_csdm(self):
+        homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+        explorer = (ROOT / "portfolio-explorer.html").read_text(encoding="utf-8")
+        self.assertIn('href="cmdb-ire-assurance.html#csdm-ownership"', homepage)
+        self.assertIn('csdm 5 service ownership architecture', explorer.lower())
+        self.assertIn('href="cmdb-ire-assurance.html"', explorer)
+
     def test_publication_boundaries(self):
         self.assertIn("SOURCE-ONLY / PROPOSED", self.html)
         self.assertIn("no ServiceNow licence", self.html)
