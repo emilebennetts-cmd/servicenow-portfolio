@@ -140,7 +140,7 @@ footer{padding:32px 0;color:var(--muted)}footer .wrap{display:flex;flex-wrap:wra
   exportButton.addEventListener("click",()=>{
     try{
       const packet=selectedRoutePacket();
-      const blob=new Blob([JSON.stringify(packet,null,2)+"\\n"],{type:"application/json"});
+      const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json"});
       const url=URL.createObjectURL(blob),link=document.createElement("a");
       link.href=url;link.download="servicenow-review-"+packet.audience+"-HOLD.json";
       document.body.append(link);link.click();link.remove();
