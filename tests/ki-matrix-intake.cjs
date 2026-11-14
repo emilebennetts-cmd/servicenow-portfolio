@@ -11,6 +11,12 @@ const browser=await chromium.launch({headless:true});
 const pages=["knowledge-intelligence-acceptance-matrix.html","ki-matrix-intake.html"];
 const urls=Object.fromEntries(pages.map(x=>[x,pathToFileURL(path.join(root,x)).href]));
 let checked=0;
+// File.text() resolves asynchronously after the click handler returns. Wait for
+// the completed assessment, not merely the click event, to avoid false failures.
+async function assessFile(page, expectedText){
+ await page.locator("#check").click();
+ await page.waitForFunction(text=>(document.getElementById("status")?.textContent||"").includes(text),expectedText,{timeout:10000});
+}
 try{
  for(const width of [390,768,1024,1440]){
   const page=await browser.newPage({viewport:{width,height:900},acceptDownloads:true});
@@ -28,7 +34,7 @@ try{
   assert.equal(await page.locator("h1").count(),1);
   assert.equal(await page.locator("#receipt").isDisabled(),true);
   await page.locator("#matrix-file").setInputFiles({name:"ki-matrix.csv",mimeType:"text/csv",buffer:content});
-  await page.locator("#check").click();
+  await assessFile(page,"Full plan structurally aligned");
   assert.match(await page.locator("#status").innerText(),/Full plan structurally aligned: 180 cases/);
   assert.equal(await page.locator("#row-count").innerText(),"180");
   assert.equal(await page.locator("#module-count").innerText(),"45");
@@ -45,29 +51,29 @@ try{
   assert(!JSON.stringify(receipt).includes("evidence_reference"));
   // BOM-prefixed UTF-8 CSVs from common spreadsheet tools are also accepted.
   await page.locator("#matrix-file").setInputFiles({name:"ki-bom.csv",mimeType:"text/csv",buffer:Buffer.concat([Buffer.from([0xEF,0xBB,0xBF]),content])});
-  await page.locator("#check").click();
+  await assessFile(page,"Full plan structurally aligned");
   assert.match(await page.locator("#status").innerText(),/Full plan structurally aligned: 180 cases/);
   // Filtered export with exactly four scenarios for one module.
   const lines=csv.trim().split(/\r?\n/);
   const subset=lines.slice(0,5).join("\r\n")+"\r\n";
   await page.locator("#matrix-file").setInputFiles({name:"ki-filtered.csv",mimeType:"text/csv",buffer:Buffer.from(subset)});
-  await page.locator("#check").click();
+  await assessFile(page,"Filtered plan structurally aligned");
   assert.match(await page.locator("#status").innerText(),/Filtered plan structurally aligned: 1\/45 modules/);
   assert.equal(await page.locator("#gap-count").innerText(),"44");
   // Tampering with a native approval/status flag must not be accepted.
   const tampered=subset.replace('"NOT RUN"','"PASS"');
   await page.locator("#matrix-file").setInputFiles({name:"ki-tampered.csv",mimeType:"text/csv",buffer:Buffer.from(tampered)});
   assert.equal(await page.locator("#receipt").isDisabled(),true,"stale receipt must be invalidated on selection");
-  await page.locator("#check").click();
+  await assessFile(page,"Structural exceptions detected");
   assert.match(await page.locator("#status").innerText(),/Structural exceptions detected/);
   assert.match(await page.locator("#issues").innerText(),/unreviewed plan flags were changed/);
   // Duplicate ID, missing scenario and malformed quotes are rejected or held.
   const duplicate=lines.slice(0,4).concat(lines[1]).join("\r\n");
   await page.locator("#matrix-file").setInputFiles({name:"duplicate.csv",mimeType:"text/csv",buffer:Buffer.from(duplicate)});
-  await page.locator("#check").click();
+  await assessFile(page,"Structural exceptions detected");
   assert.match(await page.locator("#status").innerText(),/Structural exceptions detected/);
   await page.locator("#matrix-file").setInputFiles({name:"malformed.csv",mimeType:"text/csv",buffer:Buffer.from('"unclosed')});
-  await page.locator("#check").click();
+  await assessFile(page,"Unable to assess");
   assert.match(await page.locator("#status").innerText(),/Unable to assess/);
   assert.equal(await page.locator("#receipt").isDisabled(),true);
   // Synthetic demo must never imply full coverage.

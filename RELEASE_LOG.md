@@ -1,3 +1,10 @@
+## 15 November 2026 — Restore publication quality gates for Knowledge Intelligence CSV intake (MOCK-ONLY / HOLD)
+
+- Investigated final-head GitHub Actions failures rather than treating the successful Pages deployment as evidence of release quality. The quality audit found an out-of-date Portfolio Explorer count; the quality gate found the new page absent from the verification register; Chromium reported a test race while waiting for browser File.text() after CSV selection.
+- Reconciled the 78 curated Explorer entries with 79 root HTML pages (Explorer itself excluded), added a non-certifying MOCK-ONLY public register claim for the offline intake gate (91 claims total), and made six browser regression steps await completed asynchronous CSV assessment before assertions.
+- **Verification boundary:** Fixes are SOURCE-ONLY until source/Actions checks independently succeed. A passing Chromium check validates only the public planning CSV review, never an installed ServiceNow collector. DEV-VERIFIED and PRODUCTION-VERIFIED remain unestablished; screenshot release approval remains 0 / HOLD.
+- [Release notes and test contract](releases/2026-11-15-ki-intake-ci-recovery.md). Public site licensing: none. Native implementation requires scoped App Engine/custom-table and access rights plus applicable underlying product and optional IntegrationHub, Knowledge, AI and ATF entitlements.
+
 ## 15 November 2026 — Knowledge Intelligence read-only collector failure-mode contract (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Enhanced the [45-module Knowledge Intelligence acceptance matrix](knowledge-intelligence-acceptance-matrix.html#collector-contract) with a four-fixture, mobile-responsive gallery distinguishing synthetic complete evidence from `table_unavailable`, `field_unavailable` and blocked mutation. Target-specific negative-test IDs, safe handling guidance and non-certifying JSON exports preserve `NOT RUN / HOLD` and false DEV/production approvals.

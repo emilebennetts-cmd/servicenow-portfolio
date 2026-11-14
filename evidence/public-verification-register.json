@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-14T15:15:00Z",
+  "updated_utc": "2026-11-14T19:23:54Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -820,6 +820,15 @@
       "runtime_verification": "No native CMDB query, IRE preview, ServiceNow DEV/Production read-back, licensed-feature test or owner attestation. Browser selections are preparation stages only; all JSON exports preserve MOCK-ONLY / NOT RUN / NOT VERIFIED / UNREVIEWED / HOLD and false approval/production flags.",
       "public_screenshot_status": "No original ServiceNow capture, customer record or private file linked or embedded. Original screenshot approvals remain zero / HOLD.",
       "page": "csdm-native-acceptance.html"
+    },
+    {
+      "id": "KI-MATRIX-INTAKE-STRUCTURAL-REVIEW-20261115",
+      "title": "Knowledge Intelligence matrix CSV intake — offline structural integrity review",
+      "classification": "mock-only",
+      "basis": "Public 45-module Knowledge Intelligence taxonomy and proposed 180-case CSV export. This website-only intake interface checks module codes, four planning scenarios, status flags, schema and coverage; it does not authenticate authors or runtime evidence.",
+      "runtime_verification": "Synthetic or locally supplied public planning CSV is reviewed only in the browser; native ServiceNow collectors, DEV/PDI and Production are NOT RUN and NOT VERIFIED. Downloaded JSON receipt remains HOLD and cannot grant independent acceptance. Browser CI is website functionality testing only.",
+      "public_screenshot_status": "No original ServiceNow screen captures are embedded. Image-specific publication approvals remain zero / HOLD.",
+      "page": "ki-matrix-intake.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
