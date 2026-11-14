@@ -61,8 +61,22 @@ footer{padding:26px 0;color:var(--sub);font-size:.84rem}
 @media(max-width:760px){.contract-layout{grid-template-columns:1fr}.contract-detail dl{grid-template-columns:1fr;gap:3px}.contract-detail dd{margin-bottom:9px}}
 @media print{.contract-choices,.contract-actions{display:none}.contract-lab,.contract-detail{background:#fff;color:#111}.contract-detail dt,.contract-detail dd,.contract-review p{color:#222}}
 
+
+/* Source-derived KI acceptance export: operational plan, never runtime evidence. */
+.test-matrix{background:linear-gradient(145deg,#123448,#0b2233);border:1px solid #648a98;border-radius:16px;padding:clamp(18px,3.2vw,28px)}
+.test-matrix .matrix-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 10px}
+.test-matrix .matrix-actions button{flex:1 1 230px}
+.test-matrix .matrix-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.test-matrix .matrix-summary div{background:#071d2b;border:1px solid #4a7283;border-radius:10px;padding:15px}
+.test-matrix .matrix-summary strong{font-size:1.6rem;display:block;color:var(--mint)}
+.test-matrix .matrix-summary span{font-size:.77rem;color:var(--sub)}
+.test-matrix .matrix-note{border-left:3px solid var(--amber);padding:10px 15px;background:#30291f;color:#ffe6bf}
+#matrix-export-status{min-height:1.7em;font-weight:700;color:var(--mint)}
+@media(max-width:650px){.test-matrix .matrix-summary{grid-template-columns:1fr}.test-matrix .matrix-actions button{flex-basis:100%}}
+@media print{.test-matrix{background:white;color:black}.test-matrix .matrix-actions{display:none}}
+
 </style></head><body><a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap"><nav aria-label="Related technical work"><a href="./">Portfolio home</a><a href="knowledge-intelligence.html">Knowledge Intelligence architecture</a><a href="diagnostic-coverage-explorer.html">Core Diagnostic catalogue</a><a href="verification-ledger.html">Evidence ledger</a><a href="#collector-contract">Collector failure modes</a></nav>
+<header><div class="wrap"><nav aria-label="Related technical work"><a href="./">Portfolio home</a><a href="knowledge-intelligence.html">Knowledge Intelligence architecture</a><a href="diagnostic-coverage-explorer.html">Core Diagnostic catalogue</a><a href="verification-ledger.html">Evidence ledger</a><a href="#ki-test-matrix">45-module acceptance CSV</a><a href="#collector-contract">Collector failure modes</a></nav>
 <div class="eyebrow">Diagnostic Workbench 2 · Companion architecture</div>
 <h1>Knowledge Intelligence: from 45 source modules to credible runtime acceptance.</h1>
 <p class="lead">Explore a sanitised source-defined taxonomy and test a hypothetical installation's readiness controls. The interactive checklist is a <strong>MOCK-ONLY</strong> review aid — it does not connect to, inspect or certify any ServiceNow instance.</p>
@@ -152,6 +166,26 @@ footer{padding:26px 0;color:var(--sub);font-size:.84rem}
 </tbody></table></div><p id="module-empty" hidden>No matching module. Adjust the search or product domain.</p>
 </section>
 
+<section id="ki-test-matrix" aria-labelledby="ki-test-matrix-heading">
+<div class="eyebrow">Native acceptance handoff · Source-informed test planning</div>
+<h2 id="ki-test-matrix-heading">45 modules. 180 executable acceptance questions — none marked executed.</h2>
+<p>Turn the source-defined module inventory into a practical, editable <strong>CSV test plan</strong> for an authorised ServiceNow non-production test team. Each module receives four distinct proposed checks: a read-only envelope/lineage run, table-unavailable handling, field-unavailable handling, and offline mutation-lint rejection. These are <strong>PROPOSED</strong> test procedures derived from <strong>SOURCE-ONLY</strong> taxonomy — not ATF cases installed in an instance or tests already passed.</p>
+<div class="test-matrix">
+<div class="matrix-summary">
+<div><strong>45</strong><span>Source-defined modules</span></div>
+<div><strong>180</strong><span>Proposed module × test cases</span></div>
+<div><strong>0</strong><span>Independent DEV or production executions supplied</span></div>
+</div>
+<p class="matrix-note"><strong>Safety and entitlement gate:</strong> Check each product's subscription, plugin/table availability, KI roles and table ACLs before execution. Perform unavailable-table/field tests using isolated PDI fixtures or test doubles; <strong>never delete real tables, modify target dictionary or execute a mutating collector</strong>. A missing product dependency is a blocked test, never a passing result.</p>
+<div class="matrix-actions">
+<button type="button" id="ki-export-all">Download all 180 planned tests (CSV)</button>
+<button type="button" class="secondary" id="ki-export-filtered">Download currently filtered tests (CSV)</button>
+</div>
+<p id="matrix-export-status" role="status" aria-live="polite">Use the capability search or product-domain filter above to narrow the second export.</p>
+<p>Exports include unique test IDs, representative source table, expected outcome, evidence contract, time limit and empty execution/evidence columns. Every row is <strong>SOURCE-ONLY / PROPOSED / NOT RUN / HOLD</strong> with DEV and production verification false. This worksheet never uploads, stores or fetches customer data.</p>
+</div>
+</section>
+
 <section id="collector-contract" aria-labelledby="collector-contract-heading">
 <div class="eyebrow">03 · Engineering failure-mode assurance</div>
 <h2 id="collector-contract-heading">Collector outcomes: never confuse missing evidence with a healthy estate.</h2>
@@ -222,6 +256,55 @@ buttons.forEach(b=>b.addEventListener('click',()=>setFixture(b.dataset.fixture))
 gates.forEach(g=>g.addEventListener('change',()=>{fixture='manual';buttons.forEach(b=>b.setAttribute('aria-pressed','false'));redraw();}));
 $('download-packet').addEventListener('click',()=>{const blob=new Blob([$('readiness-receipt').textContent+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='knowledge-intelligence-review-HOLD.json';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);});
 setFixture('unreviewed');
+})();
+
+
+/* Native test matrix exporter: 45 source modules x four PROPOSED checks. */
+(function(){
+"use strict";
+const tableRows=Array.from(document.querySelectorAll("tr.module[data-code][data-pack]"));
+const scenarios=Object.freeze([
+ {id:"RUN",instruction:"Authorised non-production read-only collector run; verify marker-bounded ki-evidence/1.0, metric/lineage and elapsed time.",expected:"Valid envelope and metric references; candidate finding remains awaiting human review.",precondition:"Licensed product and table/field ACLs available; approved PDI demo data"},
+ {id:"TABLE",instruction:"Simulate unavailable table in an isolated PDI fixture or test double; never delete a real table.",expected:"table_unavailable; no passing score or zero-defect inference.",precondition:"Approved non-production test double; never alter installed tables"},
+ {id:"FIELD",instruction:"Simulate missing field in a test double without modifying a real dictionary.",expected:"field_unavailable; suppress invalid metric and hold affected rule.",precondition:"Approved test double; keep production and installed dictionary unchanged"},
+ {id:"LINT",instruction:"Run offline lint against a test-only forbidden-write fixture; never execute the fixture.",expected:"Read-only lint rejects mutation; no script execution.",precondition:"Offline test runner and safe, synthetic mutation fixture"}
+]);
+const headers=["test_id","module_code","product_domain","capability","representative_source_table","test_case","precondition","test_instruction","expected_result","evidence_contract","timeout_seconds","source_classification","test_plan_classification","runtime_status","dev_verified","production_verified","review_approval","executed_at_utc","evidence_reference"];
+function safeCell(value){
+ const raw=String(value==null?"":value);
+ const neutral=/^[\s]*[=+\-@\t\r]/.test(raw)?"'"+raw:raw;
+ return '"'+neutral.replace(/"/g,'""')+'"';
+}
+function collect(onlyVisible){
+ const selected=onlyVisible?tableRows.filter(row=>!row.hidden):tableRows;
+ const out=[headers];
+ for(const row of selected){
+  const tds=row.querySelectorAll("td");
+  const code=row.dataset.code;
+  const domain=tds[0].querySelector("small").textContent.trim();
+  const capability=tds[1].textContent.trim();
+  const sourceTable=tds[2].querySelector("code").textContent.trim();
+  for(const test of scenarios){
+   out.push(["KI-"+code.replace(/[^A-Za-z0-9]/g,"-")+"-"+test.id,code,domain,capability,sourceTable,test.id,
+    test.precondition,test.instruction,test.expected,"ki-evidence/1.0 (expected; not observed)",120,
+    "SOURCE-ONLY","PROPOSED","NOT RUN","false","false","HOLD","",""]);
+  }
+ }
+ return {rows:out,cases:out.length-1,modules:selected.length};
+}
+function download(onlyVisible){
+ const packet=collect(onlyVisible);
+ const status=document.getElementById("matrix-export-status");
+ if(!packet.cases){status.textContent="No modules match the current filter; no file exported.";return;}
+ const csv=packet.rows.map(r=>r.map(safeCell).join(",")).join("\r\n")+"\r\n";
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=onlyVisible?"ki-source-acceptance-filtered-HOLD.csv":"ki-source-acceptance-all-45-modules-HOLD.csv";
+ document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+ status.textContent="Exported "+packet.cases+" PROPOSED test cases for "+packet.modules+" SOURCE-ONLY modules. No native execution or approval is asserted.";
+}
+document.getElementById("ki-export-all").addEventListener("click",()=>download(false));
+document.getElementById("ki-export-filtered").addEventListener("click",()=>download(true));
 })();
 
 /* Fixed public fixtures only. Deliberately never parse or receive customer evidence. */
