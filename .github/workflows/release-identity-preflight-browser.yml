@@ -1,0 +1,29 @@
+name: Release identity preflight browser safety
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'delivery-release-evolution.html'
+      - 'scripts/test_release_identity_preflight.py'
+      - 'scripts/browser_release_identity_preflight.py'
+      - '.github/workflows/release-identity-preflight-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight-four-width:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline publication safeguards
+        run: python -m unittest scripts.test_release_identity_preflight -v
+      - name: Install pinned browser testing package
+        run: python -m pip install playwright==1.55.0
+      - name: Install Chromium headless shell
+        run: python -m playwright install chromium --only-shell
+      - name: Test status and redacted receipts at four screen widths
+        run: python scripts/browser_release_identity_preflight.py
