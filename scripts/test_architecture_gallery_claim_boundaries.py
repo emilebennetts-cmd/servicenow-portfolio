@@ -10,7 +10,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 HTML = (ROOT / "workbench-architecture-gallery.html").read_text(encoding="utf-8")
-BOUNDARY = HTML.split('<section id="baseline"', 1)[1].split('<section id="verification">', 1)[0]
+BOUNDARY = HTML.split('<section id="baseline"', 1)[1].split('<section id="persona-tour"', 1)[0]
 
 
 class BaselineCards(HTMLParser):
