@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081624">
+<meta name="description" content="Interactive, evidence-bounded CSDM 5 native acceptance preparation: six controls, three synthetic scenarios, and a non-certifying JSON worksheet.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CSDM 5 Native Acceptance Desk | ServiceNow Technical Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071521;--panel:#112b3c;--line:#466878;--text:#edf8f8;--muted:#bfdae3;--mint:#83ebd0;--gold:#ffd18a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.skip{position:absolute;top:-120px;left:15px;padding:10px;background:white;color:#071521;z-index:10}.skip:focus{top:10px}
+.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+header{background:radial-gradient(ellipse at 95% 10%,#195970,transparent 56%),linear-gradient(140deg,#102d41,#071521);border-bottom:1px solid var(--line)}
+header .wrap{padding:60px 0}.eyebrow{color:var(--mint);font-weight:850;text-transform:uppercase;letter-spacing:.15em;font-size:.76rem}
+h1,h2,h3{line-height:1.2;letter-spacing:-.03em}h1{font-size:clamp(2.25rem,6vw,4.3rem);max-width:900px;margin:17px 0}h2{font-size:clamp(1.6rem,3vw,2.35rem)}h3{font-size:1.1rem}
+p,li{color:var(--muted)}.lead{font-size:1.12rem;max-width:840px}.nav{display:flex;flex-wrap:wrap;gap:16px;margin-top:25px}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.chip{font-size:.75rem;font-weight:850;padding:5px 11px;border:1px solid #6e929d;border-radius:90px}.chip:first-child{color:var(--mint)}.chip:nth-child(2){color:var(--gold)}
+section{padding:45px 0;border-bottom:1px solid #315263}.summary{border-left:4px solid var(--gold);padding:16px 22px;background:#302b26;border-radius:0 10px 10px 0;margin-top:24px}.summary p{margin:0;color:#f4ddba}
+.panel,.gate,.scenario{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px}
+.review-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
+select,button{background:#193b4c;color:var(--text);border:1px solid #7795a5;border-radius:9px;font:inherit;padding:10px 12px;min-height:46px}
+select{max-width:100%;width:100%;cursor:pointer}button{cursor:pointer;font-weight:750}button:hover{background:#286174}
+label{display:block;color:var(--text);font-weight:800;margin-bottom:7px}small,.help{color:var(--muted)}.gate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
+.gate{display:flex;flex-direction:column;min-width:0}.gate h3{margin:7px 0}.gate p{font-size:.91rem;flex:1}.gate label{margin-top:9px;font-size:.9rem}
+.gate .num{font-size:.76rem;letter-spacing:.1em;color:var(--mint);font-weight:800}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:19px 0}
+.metric{border:1px solid var(--line);border-radius:11px;text-align:center;padding:12px 4px;background:#09212f}
+.metric strong{display:block;font-size:clamp(1.4rem,3vw,2rem);line-height:1.1}.metric span{font-size:.78rem;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap}.actions button{flex:1;min-width:155px}
+a.linkcard{display:block;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:12px 15px}
+a.linkcard:hover{background:#193b4c}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.note{font-size:.87rem}
+footer{padding:32px 0 55px;display:flex;gap:20px;flex-wrap:wrap}footer small{color:var(--muted)}
+@media(max-width:830px){.review-layout,.grid{grid-template-columns:1fr}.gate-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){header .wrap{padding:45px 0}section{padding:33px 0}.gate-grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.panel,.gate,.scenario{padding:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;color:#111}header{background:#fff;border-color:#888}p,li,small{color:#333}.panel,.gate,.scenario{background:#fff;border-color:#888;color:#111}select,button{color:#111;background:#fff}.actions{display:none}}
+</style><script src="csdm-native-acceptance.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to main content</a>
+<header><div class="wrap"><div class="eyebrow">CMDB · CSDM 5 · Architecture assurance</div>
+<h1>CSDM 5 Native Acceptance Desk</h1><p class="lead">Prepare an evidence-led ServiceNow ownership, identity and dependency review without turning checkboxes into false release approval. Three fictional scenarios, six acceptance controls and a portable preparation worksheet.</p>
+<nav class="nav" aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="cmdb-ire-assurance.html#csdm-ownership">CSDM architecture deep dive</a><a href="verification-ledger.html">Verification boundary</a><a href="#worksheet">Review worksheet</a></nav>
+<div class="chips"><span class="chip">SOURCE-INFORMED DESIGN</span><span class="chip">MOCK-ONLY INTERACTION</span><span class="chip">DEV / PRODUCTION NOT VERIFIED</span><span class="chip">SCREENSHOTS: HOLD</span></div></div></header>
+<main class="wrap" id="main" tabindex="-1">
+<section><div class="eyebrow">01 / The client's pain &amp; history</div><h2>Good-looking service maps can still be unverifiable</h2><p>A representative organisation has multiple discovery feeds, conflicting CI identifiers, services with no accountable owner and offering records that cannot be reconciled to operational dependency evidence. A slide or a green dashboard does not prove the native class model, IRE decisions, relationship semantics or a signed-off production change. These are <strong>fictional reference problems</strong>, not a measured customer result.</p></section>
+<section id="worksheet"><div class="eyebrow">02 / The ServiceNow solution</div><h2>Practice the acceptance conversation</h2>
+<div class="review-layout">
+<div class="panel"><label for="scenario">Select a synthetic scenario</label>
+<select id="scenario"><option value="ownership">Unowned service instance</option><option value="identity">Conflicting Discovery identities</option><option value="offering">Unsubstantiated service offering</option></select>
+<div id="scenario-detail" role="region" aria-live="polite" aria-label="Selected scenario">
+<h3 id="scenario-name">Unowned service instance</h3><p id="scenario-pain">Ownership evidence is missing for a proposed service instance.</p><p><strong>OOTB-first test:</strong> <span id="scenario-ootb">Validate class semantics, owning group, service relationships and independent owner attestation.</span></p><p><strong>Native acceptance expectation:</strong> <span id="scenario-test">Record a negative test for null ownership and an approved relationship query read-back.</span></p></div>
+</div>
+<div class="panel"><h3>Preparation status, never an approval</h3><p>Choose a preparation stage for each gate. “Materials staged” means a reviewer packet may be ready; it <strong>does not mean a ServiceNow test ran</strong>.</p>
+<div class="metrics" role="group" aria-label="Preparation counts">
+<div class="metric"><strong id="count-open">6</strong><span>Not assessed</span></div><div class="metric"><strong id="count-request">0</strong><span>Requested</span></div><div class="metric"><strong id="count-gap">0</strong><span>Gap</span></div><div class="metric"><strong id="count-staged">0</strong><span>Staged</span></div>
+</div><p id="review-state" role="status" aria-live="polite">Six gates not assessed. Native verification NOT VERIFIED; publication HOLD.</p>
+<div class="actions"><button type="button" id="export">Export draft (JSON)</button><button type="button" id="reset">Reset this scenario</button></div><p class="note">No account, local storage, uploads, external requests or ServiceNow connection. Save the downloaded file yourself. Never enter customer data into this public demonstration.</p></div></div>
+<div class="gate-grid" id="gate-grid" aria-label="Six native acceptance preparation gates">
+<article class="gate" data-gate="target"><span class="num">G01 / MODEL</span><h3>Release, plugins and class metadata</h3><p>Pin the target release and validate classes, relationship types, installed capabilities and permitted customisations.</p><label for="stage-target">Evidence preparation</label><select id="stage-target"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+<article class="gate" data-gate="ire"><span class="num">G02 / IDENTITY</span><h3>IRE identification &amp; source precedence</h3><p>Validate stable identifiers, reconciliation authority and positive/negative collision fixtures with observable decisions.</p><label for="stage-ire">Evidence preparation</label><select id="stage-ire"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+<article class="gate" data-gate="owner"><span class="num">G03 / ACCOUNTABILITY</span><h3>Attested business &amp; technical owners</h3><p>Separate real owner attestation from inferred assignment and exercise the null-owner negative path.</p><label for="stage-owner">Evidence preparation</label><select id="stage-owner"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+<article class="gate" data-gate="relation"><span class="num">G04 / TOPOLOGY</span><h3>Approved CI relationship evidence</h3><p>Check supported direction and relationship types, traced paths, unmatched edges and evidence provenance; never infer sys_ids.</p><label for="stage-relation">Evidence preparation</label><select id="stage-relation"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+<article class="gate" data-gate="health"><span class="num">G05 / HEALTH</span><h3>Complete and bounded health measures</h3><p>Reconcile with CMDB Health, record denominators/exclusions, nulls, aggregate caps and unavailable measurements.</p><label for="stage-health">Evidence preparation</label><select id="stage-health"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+<article class="gate" data-gate="release"><span class="num">G06 / CONTROL</span><h3>Approved change, rollback &amp; rescan</h3><p>Prepare reproducible fixtures, ACL checks, bounded reruns, rollback and independent reviewer evidence tied to source version.</p><label for="stage-release">Evidence preparation</label><select id="stage-release"><option value="not-assessed">Not assessed</option><option value="requested">Evidence requested</option><option value="gap">Gap / decision required</option><option value="staged">Materials staged for independent review</option></select></article>
+</div>
+<div class="summary"><p><strong>Immutable safety boundary:</strong> exported records are MOCK-ONLY / UNREVIEWED / NOT VERIFIED / HOLD, even when all six preparation stages are “staged.” Browser exercise is not DEV-VERIFIED, PRODUCTION-VERIFIED, a live CMDB query, a human approval, or an entitlement assessment.</p></div>
+</section>
+<section><div class="eyebrow">03 / Architectural best practices</div><h2>OOTB first, with explicit entitlements and limits</h2><div class="grid">
+<article class="scenario"><h3>Prefer supported platform controls</h3><p>Use CI Class Manager, Identification and Reconciliation Engine, CMDB Health, CSDM and Service Portfolio Management rather than a bespoke duplicate engine or assumed service hierarchy.</p></article>
+<article class="scenario"><h3>Protect the evidence envelope</h3><p>Use synthetic fixtures here. In native DEV, log source SHA, instance/release alias, executing role, case ID, expected/actual, absence/partial states, retention and independently reviewed receipts. Keep customer identifiers in controlled storage.</p></article>
+<article class="scenario"><h3>Licence and plugin checks</h3><p>This static site needs <strong>no ServiceNow licence</strong>. Native scope depends on subscription and roles for CMDB/IRE/Health, SPM, Discovery/Service Mapping, Service Graph, IntegrationHub, App Engine/custom tables, ATF and third-party systems.</p></article></div>
+<p class="note">Source boundary: architecture draws from source-described Delivery/Diagnostic workbench lifecycles and the reviewed portfolio CSDM 5 technical case study. Neither private code nor original screenshots are embedded. Historical DEV-REPORTED material is not independent current-version read-back. No original screenshot publication has been authorised.</p>
+<nav class="nav" aria-label="More engineering evidence"><a href="cmdb-ire-assurance.html#csdm-ownership">CSDM source review</a><a href="cmdb-source-onboarding-lab.html">Source onboarding lab</a><a href="screenshot-publication-gate.html">Screenshot review policy</a></nav></section>
+</main><footer class="wrap"><small>Customer-neutral, offline-first technical review. No live entitlement or native approval.</small><a href="./">Return to portfolio</a></footer></body></html>
