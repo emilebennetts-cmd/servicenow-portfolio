@@ -1,0 +1,37 @@
+name: CSDM 5 Native Acceptance Desk browser contract
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'csdm-native-acceptance.html'
+      - 'csdm-native-acceptance.js'
+      - 'scripts/test_csdm_native_acceptance_desk.py'
+      - 'scripts/browser_csdm_native_acceptance_desk.py'
+      - '.github/workflows/csdm-native-acceptance-browser.yml'
+  pull_request:
+    paths:
+      - 'csdm-native-acceptance.html'
+      - 'csdm-native-acceptance.js'
+      - 'scripts/test_csdm_native_acceptance_desk.py'
+      - 'scripts/browser_csdm_native_acceptance_desk.py'
+      - '.github/workflows/csdm-native-acceptance-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright and headless Chromium
+        run: |
+          python -m pip install --disable-pip-version-check 'playwright==1.55.0'
+          python -m playwright install chromium
+      - name: Source contract and four responsive browser widths
+        run: |
+          python -m unittest scripts/test_csdm_native_acceptance_desk.py -v
+          python scripts/browser_csdm_native_acceptance_desk.py
