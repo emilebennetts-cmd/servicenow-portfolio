@@ -118,10 +118,12 @@ function assess(raw,demo){
  el("receipt").disabled=false;
  setStatus(valid?(missing?"Filtered plan structurally aligned: "+complete+"/45 modules. Remaining modules unassessed · HOLD.":"Full plan structurally aligned: 180 cases. No native execution or approval · HOLD."):"Structural exceptions detected: "+issues.length+". Quarantine and compare with original source CSV · HOLD.",valid?"success":"error");
 }
+file.addEventListener("change",()=>{receipt=null;results.classList.add("hidden");el("receipt").disabled=true;setStatus("New file selected. Review it before relying on any structural summary · HOLD.");});
 el("check").addEventListener("click",async()=>{
  try{if(!file.files||file.files.length!==1)throw Error("Choose one CSV to review.");const f=file.files[0];if(f.size>262144)throw Error("Maximum permitted file size is 256 KB.");assess(await f.text(),false);}catch(e){receipt=null;results.classList.add("hidden");el("receipt").disabled=true;setStatus("Unable to assess: "+e.message+" · HOLD.","error");}
 });
 el("example").addEventListener("click",()=>{
+ file.value="";
  const code="PLAT.APPDEV",meta=catalogue.get(code);
  const r=[columns];for(const test of cases){const o={test_id:"KI-PLAT-APPDEV-"+test,module_code:code,product_domain:meta[0],capability:"Synthetic example only",representative_source_table:meta[1],test_case:test,precondition:"Synthetic",test_instruction:"Plan-only",expected_result:"Not run",evidence_contract:"ki-evidence/1.0 (expected; not observed)",timeout_seconds:"120",source_classification:"SOURCE-ONLY",test_plan_classification:"PROPOSED",runtime_status:"NOT RUN",dev_verified:"false",production_verified:"false",review_approval:"HOLD",executed_at_utc:"",evidence_reference:""};r.push(columns.map(x=>o[x]));}
  const quote=x=>'"'+x.replace(/"/g,'""')+'"';
