@@ -15,6 +15,8 @@ def source_contract():
         "production_verified:false", "screenshot_publication_approved:false",
         "review_state:'UNREVIEWED'", "verification_state:'NOT VERIFIED'",
         "release_state:'HOLD'", "30 September 2026",
+        'id="persona-share-link"', 'id="persona-copy-link"', 'id="persona-share-url"',
+        "Object.prototype.hasOwnProperty.call(data,requestedRole)",
     ):
         assert text in HTML, f"Missing required source boundary: {text}"
     assert HTML.count('data-role="') == 6, "Expected six fixed public personas"
@@ -49,8 +51,27 @@ def run(browser, width):
         page.locator("#role-support").press("Home")
         assert page.locator("#role-presales").get_attribute("aria-selected")=="true"
 
+        # A recruiter can open a version-neutral, public persona URL directly.
+        page.goto(URL+"?role=architect#persona-tour",wait_until="domcontentloaded")
+        assert page.locator("#role-architect").get_attribute("aria-selected")=="true"
+        assert "requirements" in page.locator("#persona-name").inner_text().lower()
+        assert page.locator("#persona-panel").get_attribute("aria-labelledby")=="role-architect"
+        page.goto(URL+"?role=%3Cscript%3E#persona-tour",wait_until="domcontentloaded")
+        assert page.locator("#role-presales").get_attribute("aria-selected")=="true"
+        page.goto(URL+"?role=__proto__#persona-tour",wait_until="domcontentloaded")
+        assert page.locator("#role-presales").get_attribute("aria-selected")=="true"
         page.locator("#role-deployer").click()
         assert "preview" in page.locator("#persona-gate").inner_text().lower()
+        direct=page.locator("#persona-share-link").get_attribute("href")
+        assert "?role=deployer#persona-tour" in direct
+        assert "servicenow-portfolio-control" not in direct
+        page.locator("#persona-copy-link").click()
+        status=page.locator("#persona-share-status").inner_text().lower()
+        assert ("copied" in status or "unavailable" in status),status
+        if "unavailable" in status:
+            assert page.locator("#persona-share-url").is_visible()
+            assert page.locator("#persona-share-url").input_value()==direct
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"),width
         with page.expect_download() as download:
             page.locator("#persona-export").click()
         item=download.value
@@ -68,7 +89,7 @@ def run(browser, width):
         assert "x_1577958" not in json.dumps(payload)
         assert "customer" not in json.dumps(payload).lower()
         assert not errors,errors
-        print(f"PASS persona architecture {width}px: six roles, keyboard, conservative export")
+        print(f"PASS persona architecture {width}px: six roles, deep links, clipboard fallback, keyboard, conservative export")
     finally:
         page.close()
 
