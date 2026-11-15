@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#071522">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="description" content="Explore a source-informed, synthetic CMDB data-source onboarding design, identification/reconciliation controls, and acceptance test matrix. No customer data or ServiceNow connection.">
 <title>CMDB Source Onboarding Lab | ServiceNow Technical Portfolio</title>
 <style>
@@ -28,6 +28,14 @@ footer{padding:26px 0;color:var(--muted);font-size:.9rem}
 @media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr 1fr}.flow-item:after{display:none}}
 @media(max-width:630px){header .wrap{padding:40px 0}.grid,.grid-two,.gates,.facts,.toolbar,.flow{grid-template-columns:1fr}.card{padding:19px}section{padding:30px 0}.lab{padding:16px}.output{padding:16px}.flow-item{padding:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111}.card,.lab,.output{background:#fff;color:#111}p,dd,li{color:#222}button,.nav,.action-row{display:none}.outcome{color:#111}}
+.handoff-panel{border:1px solid #6c968f;border-radius:16px;background:linear-gradient(135deg,#123a46,#0b2536);padding:clamp(19px,3vw,31px);margin:22px 0}
+.handoff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:21px 0}
+.handoff-card{background:#0b2636;border:1px solid #436e76;border-radius:12px;padding:17px;min-width:0}
+.handoff-card b{display:block;color:var(--mint);font-size:1rem;margin-bottom:7px}
+.handoff-card span{color:var(--muted);font-size:.88rem}
+.handoff-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:19px 0}
+.handoff-actions button{min-height:48px}.handoff-foot{color:var(--amber);font-size:.9rem;margin:0}
+@media(max-width:690px){.handoff-grid{grid-template-columns:1fr}.handoff-actions button{width:100%}}
 </style>
 </head>
 <body>
@@ -75,6 +83,21 @@ footer{padding:26px 0;color:var(--muted);font-size:.9rem}
 </div>
 </div>
 </section>
+<section id="native-handoff" aria-labelledby="native-handoff-heading">
+<div class="kicker">Native execution handoff / not a verification claim</div>
+<h2 id="native-handoff-heading">18 native checks, zero fabricated approvals.</h2>
+<p class="intro">Convert the source design review into a private, reproducible DEV acceptance pack. Each of the three fictional ingestion scenarios has six concrete tests for identification, attribute authority, security and operational ownership. The exports are <strong>synthetic planning worksheets</strong>, not IRE results.</p>
+<div class="handoff-panel">
+<div class="handoff-grid" aria-label="Acceptance coverage">
+<div class="handoff-card"><b>Stable identity · 6 tests</b><span>CI update, replay/idempotency, class and dependent identification, field precedence and denied access.</span></div>
+<div class="handoff-card"><b>Missing identity · 6 tests</b><span>Collision, mapping and insert restrictions, ambiguity ownership and repair/retest evidence.</span></div>
+<div class="handoff-card"><b>Attribute conflict · 6 tests</b><span>Authority, lower-priority denial, null/freshness rules, incomplete payloads and ACL denial.</span></div>
+</div>
+<p>CSV columns include the scenario, test ID, native action and expected evidence, followed by immutable <strong>NOT RUN / HOLD / MOCK-ONLY</strong> classifications. Instance, installed-scope version, executor, execution time, private evidence receipt and independent reviewer start blank. Never upload populated private receipts to this public website.</p>
+<div class="handoff-actions"><button id="native-matrix-all" type="button">Download complete 18-test DEV CSV</button><button id="native-matrix-selected" type="button" class="secondary">Download selected scenario (6 tests)</button></div>
+<p id="native-matrix-status" role="status" aria-live="polite" class="handoff-foot">No ServiceNow write, IRE execution, approval or publication action occurs here. Native tests remain NOT RUN / HOLD.</p>
+</div>
+</section>
 <section id="acceptance"><div class="kicker">03 / Architectural best practices</div><h2>The minimum target validation matrix</h2>
 <div class="table-scroll"><table><thead><tr><th>Test</th><th>Expected proof from a real ServiceNow environment</th><th>Failure condition</th></tr></thead><tbody>
 <tr><td>Known CI update</td><td>Identification Simulation matches the expected class/record with a complete permitted payload; record IDs stay private.</td><td>Unexpected insertion, skipped dependency or ambiguous identifier.</td></tr>
@@ -95,6 +118,7 @@ footer{padding:26px 0;color:var(--muted);font-size:.9rem}
 </section>
 </main>
 <footer class="wrap">ServiceNow Professional Portfolio · Public-safe, synthetic controls demonstration · No customer records or native test results</footer>
+<script src="cmdb-source-acceptance.js" defer></script>
 <script>
 (function(){
 'use strict';
