@@ -63,6 +63,21 @@ test("page is offline, accessibly labelled and never renders a real screenshot",
   assert.doesNotMatch(page,/\blocalStorage\b|\bsessionStorage\b|\bfetch\s*\(|XMLHttpRequest/);
 });
 
+test("three CSS-only interface storyboards are individually labelled and map to held native gates",()=>{
+  assert.equal((page.match(/data-storyboard="/g)||[]).length,3);
+  for(const role of ["Delivery","Diagnostic","Cross-workbench"]){
+    assert.ok(page.includes('data-storyboard="'+role+'"'),role);
+  }
+  assert.equal((page.match(/class="story-screen" role="img"/g)||[]).length,3);
+  for(const code of ["DEL-04","DEL-05","DIA-02","DIA-03","XWB-01","XWB-02"]){
+    assert.ok(page.includes('href="#gate-'+code+'"'),code);
+  }
+  assert.ok(page.includes('MOCK-ONLY diagrams'));
+  assert.ok(page.includes('Native screenshots published: 0'));
+  assert.doesNotMatch(page,/<(?:img|picture|iframe)\\b/i);
+  assert.doesNotMatch(page,/<script[^>]+src=/i);
+});
+
 test("five-row release reconciliation exports an unresolved conflict, never a DEV certification",()=>{
   const h=harness();
   assert.equal(h.nodes["lineage-download"].disabled,false);
