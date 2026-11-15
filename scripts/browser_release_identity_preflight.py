@@ -22,9 +22,14 @@ def verify(browser, width):
 
         page.locator('[data-preflight-preset="scope"]').click()
         assert "MISMATCH" == page.locator("#scope-result").inner_text()
-        assert "HOLD — divergent" in page.locator("#preflight-status").inner_text()
+        assert "HOLD — technical scope differs" == page.locator("#preflight-status").inner_text()
         page.locator('[data-preflight-preset="version"]').click()
         assert "MISMATCH" == page.locator("#version-result").inner_text()
+        assert "HOLD — release version differs" == page.locator("#preflight-status").inner_text()
+        page.locator("#target-scope").fill("x_eitsp_vdf")
+        assert "HOLD — scope and version both differ" == page.locator("#preflight-status").inner_text()
+        page.locator('[data-preflight-preset="unknown"]').click()
+        assert "HOLD — insufficient target metadata" == page.locator("#preflight-status").inner_text()
 
         page.locator('[data-preflight-preset="aligned"]').click()
         assert "TEXT MATCH · NOT VERIFIED" == page.locator("#scope-result").inner_text()
@@ -46,6 +51,8 @@ def verify(browser, width):
         assert "customer_secret_marker" not in raw.lower()
         assert packet["schema"] == "portfolio.release-identity-preflight.v1"
         assert packet["comparison_results"]["scope"] == "MISMATCH"
+        assert packet["discrepancy_category"] == "scope"
+        assert "x_customer_secret_marker" not in raw
         assert packet["observed_values_included"] is False
         assert packet["native_execution"] == "NOT RUN"
         assert packet["release_decision"] == "HOLD"
