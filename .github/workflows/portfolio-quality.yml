@@ -29,6 +29,8 @@ jobs:
         run: node --test tests/incident_management_lab.test.cjs
       - name: Test CMDB source onboarding native IRE acceptance handoff
         run: node --test tests/cmdb_source_native_handoff.test.cjs
+      - name: Test CMDB Data Manager preflight and HOLD-only DEV CSV
+        run: node --test tests/cmdb_data_manager_policy.test.cjs
       - name: Test Workbench source-to-DEV filters and HOLD-only export
         run: node --test tests/workbench_gap_board.test.cjs
       - name: Test quality gate
