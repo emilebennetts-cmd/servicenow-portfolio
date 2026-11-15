@@ -92,6 +92,21 @@ class DecisionPageTests(unittest.TestCase):
             if href.startswith("./"):
                 self.assertTrue((ROOT / href[2:].split("#",1)[0]).is_file(), href)
 
+    def test_hold_only_worksheet_source_contract(self):
+        self.assertIn('id="export-review"', self.html)
+        self.assertIn('id="export-feedback" role="status" aria-live="polite"', self.html)
+        self.assertIn('architecture-acceptance-HOLD.csv', self.html)
+        self.assertIn('"source_classification","native_test_state","dev_verified","production_verified","publication_state"', self.html)
+        self.assertIn('"SOURCE-ONLY","NOT RUN","false","false","HOLD"', self.html)
+        self.assertIn('visible=cards.filter(card=>!card.hidden)', self.html)
+        self.assertIn('exportButton.disabled=count===0', self.html)
+        self.assertIn('safe.replace(/"/g', self.html)
+        self.assertIn('const safe=/^[=+\\-@]/.test(plain)', self.html)
+        self.assertNotIn('localStorage', self.html)
+        self.assertNotIn('sessionStorage', self.html)
+        self.assertNotIn('fetch(', self.html)
+        self.assertNotIn('XMLHttpRequest', self.html)
+
     def test_navigation_and_discovery(self):
         self.assertIn("architecture-decision-register.html", (ROOT / "index.html").read_text(encoding="utf-8"))
         self.assertIn("architecture-decision-register.html", (ROOT / "architecture-atlas.html").read_text(encoding="utf-8"))

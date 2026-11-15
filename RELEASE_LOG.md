@@ -1,3 +1,6 @@
+## 15 November 2026 — Architecture acceptance CSV (SOURCE-ONLY / HOLD)
+Added Excel-compatible export of visible architecture decisions and native acceptance gates with enforced NOT RUN, DEV/Production unverified, HOLD-only claims. Browser and contract regression tests plus focused CI workflow added. No native execution, private source or screenshots published. [Release record](releases/2026-11-15-architecture-acceptance-csv.md).
+
 ## 15 November 2026 — Eight source-derived architecture decisions published (NATIVE HOLD)
 
 - Published a responsive, print-ready [Architecture Decision Register](architecture-decision-register.html) containing eight design choices, explicit rejected shortcuts, controlled risks and independent ServiceNow native acceptance gates. Local search and domain filters do not transmit or store data.

@@ -1,0 +1,29 @@
+name: Architecture Decision Acceptance Export Browser
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'architecture-decision-register.html'
+      - 'scripts/test_architecture_decision_register.py'
+      - 'scripts/browser_architecture_decision_export.py'
+      - '.github/workflows/architecture-decision-export-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check source disclosures and HOLD worksheet contract
+        run: python -m unittest discover -s scripts -p 'test_architecture_decision_register.py' -v
+      - name: Install pinned browser and headless shell
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Exercise CSV download at four viewport widths
+        run: python scripts/browser_architecture_decision_export.py
