@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081521">
+<meta name="description" content="An evidence-labelled, offline ServiceNow CMDB Data Manager policy design and native acceptance lab: retire, archive, delete, attest. Synthetic cases, no DEV connection.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="canonical" href="https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-data-manager-governance-lab.html">
+<meta property="og:title" content="CMDB Data Manager Governance Lab | ServiceNow Portfolio">
+<meta property="og:description" content="Four synthetic CI lifecycle decisions, honest HOLD controls and a 20-gate non-production acceptance handoff.">
+<meta property="og:url" content="https://emilebennetts-cmd.github.io/servicenow-portfolio/cmdb-data-manager-governance-lab.html">
+<title>CMDB Data Manager Governance Lab | ServiceNow Technical Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#081521;--panel:#102c3c;--panel2:#14384b;--line:#4b7180;--ink:#eef9fb;--muted:#bed2dc;--mint:#87efd3;--gold:#ffd59c;--danger:#ffbaa8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 65% 440px at 82% 0%,#1c63734d,transparent),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{width:min(1170px,calc(100% - 40px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:15px;top:10px;background:white;color:#081521;padding:11px;z-index:20}
+.top{border-bottom:1px solid var(--line);background:#071622ee}.top .wrap{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:10px;padding:14px 0}.brand{font-weight:850;text-decoration:none;color:var(--ink)}.nav{display:flex;gap:18px;flex-wrap:wrap}.nav a{font-size:.88rem}
+header{padding:clamp(44px,7vw,91px) 0 46px;border-bottom:1px solid #365b6e}.eyebrow{color:var(--mint);font-size:.76rem;letter-spacing:.17em;font-weight:850;text-transform:uppercase}h1{font-size:clamp(2.35rem,6.5vw,5.1rem);line-height:1.07;letter-spacing:-.06em;margin:15px 0;max-width:940px}h2{font-size:clamp(1.55rem,3.5vw,2.35rem);line-height:1.17}h3{font-size:1.14rem;margin:0 0 8px}p,li,dd{color:var(--muted)}.lead{max-width:810px;font-size:1.15rem}.chips,.quick{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.chip{border:1px solid #779aa9;border-radius:100px;padding:5px 12px;font-size:.77rem;font-weight:800}.chip.warn{border-color:#cfa36c;color:var(--gold)}.quick a{border:1px solid var(--line);border-radius:9px;padding:8px 13px;text-decoration:none}
+section{padding:42px 0;border-bottom:1px solid #274959}.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:22px;min-width:0}.card small{color:var(--mint);font-size:.77rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.card p:last-child{margin-bottom:0}
+.warning{border-left:4px solid var(--gold);background:#352b21;border-radius:7px 12px 12px 7px;padding:17px 22px;margin:20px 0}.warning p{color:#f6dfc0;margin:0}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:25px 0}.step{border:1px solid #5e8a9c;background:#15384c;border-radius:12px;padding:16px}.step b{display:block;color:var(--mint);font-size:.84rem}.step span{font-size:.83rem;color:var(--muted)}
+.lab{border:1px solid #77a5a3;background:linear-gradient(140deg,#12394b,#0b2434);border-radius:19px;padding:clamp(16px,3vw,32px);margin-top:20px}.filters{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0 22px}button{cursor:pointer;font:inherit;border:1px solid #96c2c7;border-radius:10px;background:#21495b;color:#effaff;font-weight:750;padding:11px 15px;min-height:44px}button[aria-pressed="true"],button.primary{background:var(--mint);color:#06262c;border-color:var(--mint)}button:hover{filter:brightness(1.08)}button:disabled{opacity:.6;cursor:not-allowed}
+.preview{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:15px}.screen{border:1px solid #6a8c9a;border-radius:13px;background:#071d2a;overflow:hidden}.screen-head{background:#193d50;border-bottom:1px solid #537b8c;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 17px;font-size:.78rem;font-weight:800;color:#e8fcfb}.dots{display:inline-flex;gap:5px}.dots i{width:7px;height:7px;display:block;border-radius:50%;background:#81afc1}.screen-body{padding:20px}.screen-body h3{font-size:1.4rem}.mock-label{font-size:.72rem;font-weight:850;color:var(--gold);letter-spacing:.05em;text-transform:uppercase}.screen-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{padding:10px 12px;border:1px solid #375d71;border-radius:9px}.field dt{font-size:.7rem;color:var(--mint);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.field dd{margin:4px 0 0;font-size:.89rem;color:var(--ink);overflow-wrap:anywhere}
+.decision{border:1px solid #6998a2;border-radius:13px;background:#0b2939;padding:22px}.decision .state{font-weight:900;letter-spacing:.09em;font-size:.93rem;color:var(--gold)}.decision h3{margin-top:8px;font-size:1.43rem}.decision ol,.decision ul{padding-left:20px}.decision li{margin:6px 0;font-size:.93rem}.decision strong{color:var(--ink)}
+.gates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}.gate{border:1px solid #4d7182;border-radius:12px;background:#0b2738;padding:16px}.gate b{display:block;color:var(--mint)}.gate p{font-size:.88rem;margin:8px 0}.gate small{color:var(--gold);font-weight:850}
+.meta{font-size:.86rem;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.receipt{border:1px solid #496e7b;background:#071e2b;border-radius:10px;padding:15px;margin-top:20px}.receipt p{margin:5px 0;font-size:.91rem}.table-scroll{max-width:100%;overflow:auto;border:1px solid #4c7280;border-radius:12px}table{border-collapse:collapse;min-width:710px;width:100%}th,td{text-align:left;border-bottom:1px solid #335365;padding:12px;vertical-align:top;font-size:.88rem}th{background:#1a4455;color:#c1ffeb}tr:last-child td{border:0}
+footer{padding:30px 0;font-size:.88rem;color:var(--muted)}@media(max-width:930px){.preview,.split{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}@media(max-width:640px){.wrap{width:min(100% - 28px,1170px)}.cards,.steps,.gates,.screen-grid{grid-template-columns:1fr}section{padding:32px 0}.card,.decision{padding:18px}.nav{gap:10px}header{padding:48px 0 36px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:white;color:#111}.card,.lab,.screen,.decision{background:white;color:#111}p,li,dd{color:#222}.nav,.filters,.actions{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="top"><div class="wrap"><a class="brand" href="./">ServiceNow / Engineering Portfolio</a><nav class="nav" aria-label="Page navigation"><a href="#problem">Context</a><a href="#lab">Policy lab</a><a href="#acceptance">DEV handoff</a><a href="./portfolio-explorer.html">All work</a></nav></div></div>
+<header><div class="wrap">
+<div class="eyebrow">CMDB Governance · Lifecycle Control · Offline demonstration</div>
+<h1>Don't delete the CI until the evidence can survive the decision.</h1>
+<p class="lead">A source-informed CMDB Data Manager case study: decide when to <strong>retire</strong>, <strong>archive</strong>, <strong>delete</strong> or <strong>attest</strong> a Configuration Item, without confusing a convincing preview with an authorised change.</p>
+<div class="chips"><span class="chip">SOURCE-ONLY design</span><span class="chip">MOCK-ONLY interaction</span><span class="chip warn">Native DEV NOT RUN · HOLD</span><span class="chip warn">Screenshot approval 0 · HOLD</span></div>
+<div class="quick"><a href="#lab">Explore four scenarios</a><a href="#acceptance">Download 20 native controls</a><a href="./cmdb-source-onboarding-lab.html">Related: IRE onboarding</a></div>
+</div></header>
+<main class="wrap" id="main">
+<section id="problem">
+<div class="eyebrow">01 / The client's pain &amp; history</div>
+<h2>Old discovery data should not become a permanent liability.</h2>
+<div class="split"><div><p>In a representative, <strong>fictional</strong> multi-source CMDB, infrastructure changes faster than ownership, attestations and retention controls. Stale servers remain counted as active; discovery may rehydrate retired records; unresolved relationships still feed service maps; and deletion requests arrive before records-management approval.</p><p>The legacy response is often a bulk cleanup spreadsheet. It may reduce row counts but can erase a CI that is still referenced by a service or subject to an audit hold.</p></div><div class="card"><small>The governance question</small><h3>Can we prove the entire disposition path?</h3><p>A useful policy needs verified class rules, filters, owner assignments, exclusions, dependent-CI checks, approval separation, retention authority and audit evidence. A DEV preview is necessary, but not sufficient, to claim safety.</p></div></div>
+</section>
+<section id="solution">
+<div class="eyebrow">02 / The ServiceNow solution</div>
+<h2>Policy-led retirement, with deliberate separation of duties.</h2>
+<p>ServiceNow CMDB Data Manager provides policy types for Retire, Archive, Delete, Attestation, Certification and related-entry cleanup. In the Australia release, retire/archive/delete policies require active retirement definitions for the target classes. Published policies generate tasks and subflows; depending on policy settings, approvals are required before processing.</p>
+<div class="steps" aria-label="Governed lifecycle path"><div class="step"><b>01 · Qualify</b><span>Identify source and owner</span></div><div class="step"><b>02 · Preview</b><span>Scope class and exclusions</span></div><div class="step"><b>03 · Protect</b><span>Check dependencies and holds</span></div><div class="step"><b>04 · Approve</b><span>Separate maker and checker</span></div><div class="step"><b>05 · Reconcile</b><span>Record evidence and rollback</span></div></div>
+<div class="cards"><div class="card"><small>Retire</small><h3>Stop treating a CI as current</h3><p>Apply class retirement definitions while retaining the record. Investigate source reactivation and downstream processes.</p></div><div class="card"><small>Archive</small><h3>Preserve a temporary recovery window</h3><p>Archive already-retired records with a documented retention period. Verify relationships and restoration responsibilities.</p></div><div class="card"><small>Delete</small><h3>Require explicit disposition authority</h3><p>Confirm retired state, legal holds and exclusions first. Permanent deletion cannot be presented as a reversible cleanup.</p></div></div>
+</section>
+<section id="lab">
+<div class="eyebrow">Interactive policy decision / MOCK-ONLY</div>
+<h2>Four decisions. Four distinct reasons to stop or review.</h2>
+<p>Choose a synthetic policy scenario. The worksheet changes locally in your browser; it never connects to ServiceNow, reads a customer record or alters a CI.</p>
+<div class="lab">
+<p class="mock-label">Illustrative policy console · Not a captured ServiceNow screen</p>
+<div class="filters" id="scenarios" role="group" aria-label="Synthetic policy scenario"></div>
+<div class="preview"><div class="screen" aria-label="Illustrative policy preview"><div class="screen-head"><span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> &nbsp; CMDB Governance / Policy Preview</span><span>MOCK ONLY</span></div><div class="screen-body"><h3 id="scenario-name">Select a policy</h3><p id="scenario-story"></p><dl class="screen-grid" id="fields"></dl></div></div>
+<div class="decision" aria-live="polite"><div class="state" id="state">HOLD</div><h3>Evidence before action</h3><p class="meta">A planning assessment only — not an approval, policy execution or DEV verification.</p><strong>Blocking conditions</strong><ul id="blockers"></ul><strong>Still required</strong><ul id="reviews"></ul></div></div>
+<div class="receipt"><strong>Classification boundary</strong><p id="receipt">MOCK-ONLY preview · Native execution NOT RUN · Release decision HOLD</p></div>
+</div>
+</section>
+<section id="acceptance">
+<div class="eyebrow">Non-production handoff</div>
+<h2>20 native acceptance gates; zero invented test results.</h2>
+<p>The selected policy displays five practical native controls. Export all 20 to plan DEV testing privately. The CSV intentionally leaves instance, installed version, executor, execution time, evidence receipt and reviewer blank.</p>
+<div class="actions"><button class="primary" type="button" id="download-current">Download selected 5-gate CSV</button><button type="button" id="download-all">Download complete 20-gate DEV CSV</button></div>
+<p class="meta" id="gate-count" role="status" aria-live="polite">Five native controls for the selected policy.</p>
+<div class="gates" id="gates"></div>
+<div class="warning"><p><strong>HOLD cannot be cleared in this webpage.</strong> Every exported case is NOT RUN / HOLD / MOCK-ONLY. Only an authorised ServiceNow DEV execution with independent approval and private evidence can change the real-world acceptance status.</p></div>
+</section>
+<section id="architecture">
+<div class="eyebrow">03 / Architectural best practices</div>
+<h2>OOTB lifecycle rules before custom remediation scripts.</h2>
+<div class="cards"><div class="card"><small>Data controls</small><h3>Class-specific retirement</h3><p>Validate active <code>cmdb_retirement_custom_definitions</code> and the configured lifecycle semantics. Reconcile ingest authority, duplicate tasks, relationship impact and exclusions before publishing a policy.</p></div><div class="card"><small>Operational controls</small><h3>10,000 CIs per task limit</h3><p>The published documentation describes policy-task batching up to 10,000 target CIs each. Do not infer a safe production bulk-release size from that technical limit; stage and reconcile deliberately.</p></div><div class="card"><small>Security &amp; records</small><h3>Retain evidence outside the public site</h3><p>Use role-based task assignment and approval, legal-hold review, retention schedules and negative-persona tests. Keep record IDs and approval receipts in private release evidence.</p></div></div>
+<div class="split" style="margin-top:16px"><div class="card"><h3>ServiceNow documentation, Australia release</h3><ul><li><a target="_blank" rel="noopener noreferrer" href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/data-manager-create-policy-wrkspc.html">Create a CMDB Data Manager policy</a> (12 March 2026)</li><li><a target="_blank" rel="noopener noreferrer" href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/data-manager-manage-ret-def-wrkspc.html">Manage retirement definitions</a></li><li><a target="_blank" rel="noopener noreferrer" href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/manage-dependent-ci.html">Dependent CI management</a></li><li><a target="_blank" rel="noopener noreferrer" href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/cmdb-data-management.html">Policy and task lifecycle</a></li></ul></div><div class="card"><h3>Evidence and licensing boundary</h3><p>Source-informed design draws on controlled Delivery and Diagnostic Workbench documentation and the historical 30 September 2026 Universal Delivery Workbench As-Built, without copying private source, customer records or screenshots.</p><p>Static HTML and CSV require no ServiceNow licence. Native CMDB Data Manager access depends on installed CMDB/Workspace capabilities, <code>sn_cmdb_admin</code> / Data Manager roles and target entitlements. Discovery, Service Graph Connectors, CMDB 360, ATF and integrations may require additional licence, activation or privileges.</p></div></div>
+<div class="warning"><p><strong>Original images remain on HOLD.</strong> This page contains only authored HTML/CSS, no ServiceNow screenshots. Current DEV installation, TEST/UAT, production acceptance and live policy processing have not been verified for this lab.</p></div>
+</section>
+</main>
+<footer><div class="wrap">ServiceNow Engineering Portfolio · Synthetic decision training · SOURCE-ONLY / MOCK-ONLY · <a href="./technical-evidence-register.html">Evidence register</a> · <a href="./">Home</a></div></footer>
+<script src="cmdb-data-manager-policy-model.js"></script>
+<script>
+(function(){
+"use strict";
+var model=globalThis.CMDBPolicyLab;
+var selection="retire";
+function node(tag,cls,content){var el=document.createElement(tag);if(cls)el.className=cls;if(content!==undefined)el.textContent=String(content);return el;}
+function showList(id,items,empty){var root=document.getElementById(id);root.replaceChildren();var all=items.length?items:[empty];all.forEach(function(v){root.appendChild(node("li","",v));});}
+function render(){
+  var result=model.assess(selection),s=result.scenario;
+  document.getElementById("scenario-name").textContent=s.label;
+  document.getElementById("scenario-story").textContent=s.story;
+  document.getElementById("state").textContent="PLAN: "+result.readiness;
+  document.getElementById("receipt").textContent=result.evidenceClass+" preview · Native execution "+result.nativeStatus+" · Release decision HOLD";
+  showList("blockers",result.blockers,"No modelled blocker in this fixture; independent approval still required");
+  showList("reviews",result.review,"DEV evidence and independent approval required");
+  var fields=document.getElementById("fields");fields.replaceChildren();
+  [["Policy type",s.policy],["Target class",s.className],["Known owner",s.ownerKnown?"Yes":"No"],["Retired",s.retired?"Yes":"No"],["Active retirement definition",s.retirementDefinitionActive?"Yes":"No / not applicable"],["Preservation hold",s.legalHold?"Yes":"No"],["Dependent impact reviewed",s.dependentReview?"Fixture says yes":"Unreviewed"],["Exclusions checked",s.exclusionChecked?"Fixture says yes":"Unreviewed"]].forEach(function(pair){var f=node("div","field"),dt=node("dt","",pair[0]),dd=node("dd","",pair[1]);f.append(dt,dd);fields.appendChild(f);});
+  var gates=document.getElementById("gates");gates.replaceChildren();
+  model.checks.filter(function(c){return c.scenario===selection;}).forEach(function(c){var box=node("article","gate"),head=node("b","",c.id+" · "+c.step),desc=node("p","",c.evidence),state=node("small","","NOT RUN / HOLD · MOCK-ONLY");box.append(head,desc,state);gates.appendChild(box);});
+  document.getElementById("gate-count").textContent=model.rows(selection).length+" native controls for "+s.policy+"; all NOT RUN / HOLD.";
+  Array.from(document.querySelectorAll("[data-policy]")).forEach(function(btn){btn.setAttribute("aria-pressed",String(btn.dataset.policy===selection));});
+}
+var controls=document.getElementById("scenarios");
+model.scenarios.forEach(function(s){var b=node("button","",s.policy);b.type="button";b.dataset.policy=s.id;b.setAttribute("aria-pressed","false");b.addEventListener("click",function(){selection=s.id;render();});controls.appendChild(b);});
+function download(which){var content="\ufeff"+model.toCsv(which),blob=new Blob([content],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="cmdb-data-manager-"+(which==="all"?"all-20-gates":which+"-5-gates")+"-NOT-RUN.csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
+document.getElementById("download-current").addEventListener("click",function(){download(selection);});
+document.getElementById("download-all").addEventListener("click",function(){download("all");});
+render();
+})();
+</script>
+</body>
+</html>
