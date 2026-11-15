@@ -18,6 +18,14 @@ TARGETS = {
     "delivery-release-evolution.html": 'id="package-fingerprint"',
     "diagnostic-workbench-case-study.html": 'id="diagnostic-operator"',
     "visual-evidence.html": 'id="gallery"',
+    "delivery-case-study.html": 'id="delivery-plan-lab"',
+    "reusable-delivery-patterns-case-study.html": 'id="pattern-fit-desk"',
+    "diagnostic-delivery-handoff-contract.html": 'id="handoff-controls"',
+    "cmdb-ire-assurance.html": 'id="acceptance"',
+    "itsm-greenfield-build-sequencer.html": 'id="readiness"',
+    "ki-matrix-intake.html": 'id="matrix-file"',
+    "technical-evidence-register.html": 'id="source-lineage"',
+    "portfolio-review-guide.html": 'id="review-route"',
 }
 RECEIPT = "public-https-smoke-receipt.json"
 MAX_BYTES = 1_500_000
@@ -26,11 +34,20 @@ MAX_BYTES = 1_500_000
 def validate_response(url, final_url, status, content_type, raw, required):
     """Confirm an anonymous 200, same HTTPS origin/path and current HTML."""
     requested, final = urlparse(url), urlparse(final_url)
+    # Strictly pin anonymous public responses to a canonical URL. A matching
+    # hostname alone cannot exclude a different port, credentials or query.
+    if (requested.scheme != "https" or requested.hostname != urlparse(BASE).hostname
+            or requested.port is not None or requested.username is not None
+            or requested.password is not None or requested.query or requested.fragment):
+        raise ValueError("noncanonical requested URL")
+    if (final.port is not None or final.username is not None or final.password is not None
+            or final.query or final.fragment):
+        raise ValueError("unexpected redirect URL metadata")
     if status != 200:
         raise ValueError(f"HTTP status {status}")
     if final.scheme != "https" or final.hostname != requested.hostname or final.path != requested.path:
         raise ValueError("HTTPS host or path changed unexpectedly")
-    if "text/html" not in content_type.lower():
+    if content_type.split(";", 1)[0].strip().lower() != "text/html":
         raise ValueError("response is not HTML")
     if len(raw) > MAX_BYTES:
         raise ValueError("response exceeds safe inspection size")
@@ -41,7 +58,7 @@ def validate_response(url, final_url, status, content_type, raw, required):
 
 def live_check(name, required):
     url = BASE if name == "index.html" else BASE + name
-    request = Request(url, headers={"User-Agent": "ServiceNow-Portfolio-Public-URL-Smoke/1.0",
+    request = Request(url, headers={"User-Agent": "ServiceNow-Portfolio-Public-URL-Smoke/1.1",
                                     "Accept": "text/html", "Cache-Control": "no-cache"})
     with urlopen(request, timeout=15, context=ssl.create_default_context()) as response:
         raw = response.read(MAX_BYTES + 1)
