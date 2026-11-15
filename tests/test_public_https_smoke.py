@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline contracts for public URL smoke and non-certifying receipts."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import sys
@@ -36,6 +37,42 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             with self.subTest(final=final, code=code, mime=mime):
                 with self.assertRaises((ValueError, UnicodeError)):
                     smoke.validate_response(url, final, code, mime, body, 'id="gallery"')
+
+    def test_exact_deployed_bytes_rejects_stale_content_with_valid_marker(self):
+        url = smoke.BASE + "visual-evidence.html"
+        current = b'<html><div id="gallery">new release</div></html>'
+        stale = b'<html><div id="gallery">old release</div></html>'
+        expected_sha256 = hashlib.sha256(current).hexdigest()
+        smoke.validate_response(url, url, 200, "text/html", current,
+                                'id="gallery"', expected_sha256=expected_sha256)
+        with self.assertRaisesRegex(ValueError, "bytes differ"):
+            smoke.validate_response(url, url, 200, "text/html", stale,
+                                    'id="gallery"', expected_sha256=expected_sha256)
+
+    def test_exact_deployed_receipt_requires_every_route_match(self):
+        with tempfile.TemporaryDirectory() as directory:
+            original = Path.cwd()
+            try:
+                os.chdir(directory)
+                rows = [{"route": name, "status": "PASS",
+                         "bytes_match_checkout": True}
+                        for name in smoke.TARGETS]
+                smoke.write_summary(rows, True, "live")
+                doc = json.loads(Path(smoke.RECEIPT).read_text())
+                self.assertTrue(doc["verified_exact_deployed_bytes"])
+                self.assertFalse(doc["native_dev_verified"])
+                self.assertFalse(doc["production_servicenow_verified"])
+                self.assertFalse(doc["screenshot_publication_approved"])
+                rows[0]["bytes_match_checkout"] = False
+                smoke.write_summary(rows, True, "live")
+                doc = json.loads(Path(smoke.RECEIPT).read_text())
+                self.assertFalse(doc["verified_exact_deployed_bytes"])
+                rows[0]["bytes_match_checkout"] = True
+                smoke.write_summary(rows, True, "local")
+                doc = json.loads(Path(smoke.RECEIPT).read_text())
+                self.assertFalse(doc["verified_exact_deployed_bytes"])
+            finally:
+                os.chdir(original)
 
     def test_local_fixture_markers_and_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -75,6 +112,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
                     smoke.write_summary([{"route": "index.html", "status": "PASS"}], True, "live")
                     doc = json.loads(Path(smoke.RECEIPT).read_text())
                     self.assertTrue(doc["verified_live_public_website"])
+                    self.assertFalse(doc["verified_exact_deployed_bytes"])
                     self.assertFalse(doc["native_dev_verified"])
                     self.assertFalse(doc["production_servicenow_verified"])
             finally:
