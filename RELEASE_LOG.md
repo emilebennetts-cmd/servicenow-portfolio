@@ -1,3 +1,10 @@
+## 15 November 2026 — Exact-byte public deployment identity (PENDING live receipt; native HOLD)
+
+- Strengthened the existing twelve-route public HTTPS gate to compare **SHA-256 of the exact deployed HTML bytes** with the corresponding checked-out repository HTML at `GITHUB_SHA`. A stale page with an otherwise-valid marker now fails.
+- Added two negative/receipt tests, a strict full-route `verified_exact_deployed_bytes` result and source-byte digests in redacted public delivery receipts. The same-host, TLS, MIME, route and marker controls remain.
+- [Technical release and verification boundaries](releases/2026-11-15-exact-byte-publication-provenance.md). As of authoring, the new workflow has not been independently confirmed; an older twelve-route pass is not proof of this stronger check. SOURCE-ONLY checker, MOCK-ONLY demos; historical DEV-REPORTED statements remain distinct. No new DEV-VERIFIED or PRODUCTION-VERIFIED claim; original screenshots stay on HOLD.
+- No ServiceNow licence is required for the public website checks. Native custom applications, relevant ServiceNow products, ATF and optional integration/AI/analytics features require environment-specific entitlement verification.
+
 ## 15 November 2026 — Twelve-route public deep-link delivery assurance (LIVE WEB DELIVERY VERIFIED; native HOLD)
 
 - Expanded the independent anonymous GitHub Pages smoke from 4 to **12 source-backed public review routes**, covering Delivery, reusable patterns, Diagnostic handoff, CMDB/IRE, ITSM, Knowledge Intelligence, evidence and recruiter/architect review. Tightened canonical URL and MIME validation; added route-set and negative URL regression tests.
