@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-15T10:24:39.687Z",
+  "updated_utc": "2026-11-16",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -856,6 +856,15 @@
       "runtime_verification": "Browser-only selection, reading marks and CSV export are not native REQ/RITM/task creation, approval, ACL/ATF results or ServiceNow instance verification. All exported acceptance gates are NOT RUN / HOLD. No new independently DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
       "public_screenshot_status": "No original ServiceNow screenshots, customer records or unpublished source. Genuine screenshot approvals remain zero / HOLD.",
       "page": "request-management-implementation-lab.html"
+    },
+    {
+      "id": "KNOWLEDGE-MANAGEMENT-LAB-20261116",
+      "title": "Knowledge Management OOTB implementation and native acceptance rehearsal",
+      "classification": "mock-only",
+      "basis": "Customer-neutral, independently authored static HTML/JavaScript tutorial with three synthetic author/publish, reader/criteria and review/retire journeys plus 24 unrun DEV controls. Informed by ServiceNow Australia Knowledge Management documentation; not part of the native Diagnostic Knowledge Intelligence companion.",
+      "runtime_verification": "Browser-local reading marks and CSV export are not ServiceNow KB/article creation, workflow approvals, user criteria security tests, production acceptance or an independently witnessed installation. All exported controls are NOT RUN / HOLD / MOCK-ONLY. No DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
+      "public_screenshot_status": "Illustrative HTML only. No original ServiceNow screenshots, customer records, private source or credentials; original screenshot approvals remain zero / HOLD.",
+      "page": "knowledge-management-implementation-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
