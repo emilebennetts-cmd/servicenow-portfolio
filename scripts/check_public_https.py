@@ -113,17 +113,38 @@ def run_live(attempts, delay):
 
 
 def write_summary(results, success, mode):
+    # Receipt integrity is a separate contract from the loop's success flag.
+    # Never promote an incomplete/forged set of rows into a website-verified claim.
+    route_names = [row.get("route") for row in results]
+    full_live_set = bool(
+        mode == "live" and success
+        and len(results) == len(TARGETS)
+        and len(set(route_names)) == len(TARGETS)
+        and set(route_names) == set(TARGETS)
+        and all(
+            row.get("status") == "PASS"
+            and row.get("http_status") == 200
+            and row.get("url") == (BASE if row.get("route") == "index.html"
+                                  else BASE + row.get("route", ""))
+            for row in results
+        )
+    )
+    exact_deployed_set = bool(
+        full_live_set and all(
+            row.get("bytes_match_checkout") is True
+            and isinstance(row.get("sha256"), str)
+            and len(row["sha256"]) == 64
+            and all(ch in "0123456789abcdef" for ch in row["sha256"])
+            for row in results
+        )
+    )
     output = {
         "schema_version": "1.0",
         "probe": "anonymous_public_https",
         "source_commit": os.environ.get("GITHUB_SHA", "unknown"),
         "execution": mode,
-        "verified_live_public_website": bool(success and mode == "live"),
-        "verified_exact_deployed_bytes": bool(success and mode == "live"
-            and len(results) == len(TARGETS)
-            and {row.get("route") for row in results} == set(TARGETS)
-            and all(row.get("status") == "PASS"
-                    and row.get("bytes_match_checkout") is True for row in results)),
+        "verified_live_public_website": full_live_set,
+        "verified_exact_deployed_bytes": exact_deployed_set,
         "native_dev_verified": False,
         "production_servicenow_verified": False,
         "screenshot_publication_approved": False,
@@ -136,7 +157,7 @@ def write_summary(results, success, mode):
             handle.write(f"- Check type: **{mode}** (not native ServiceNow acceptance)\n")
             for row in results:
                 handle.write(f"- {row['route']}: **{row['status']}**\n")
-            handle.write(f"- Anonymous public URL: **{'CONFIRMED' if success and mode == 'live' else 'UNCONFIRMED'}**\n")
+            handle.write(f"- Anonymous public URL: **{'CONFIRMED' if output['verified_live_public_website'] else 'UNCONFIRMED'}**\n")
             handle.write(f"- Exact deployed HTML bytes match checkout: **{'CONFIRMED' if output['verified_exact_deployed_bytes'] else 'UNCONFIRMED'}**\n")
             handle.write("- Native DEV, production and screenshot approval: **NOT VERIFIED / HOLD**\n")
     print(json.dumps({"live_public_website_confirmed": output["verified_live_public_website"],

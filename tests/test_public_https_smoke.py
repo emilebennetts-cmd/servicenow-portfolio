@@ -54,8 +54,10 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             original = Path.cwd()
             try:
                 os.chdir(directory)
-                rows = [{"route": name, "status": "PASS",
-                         "bytes_match_checkout": True}
+                rows = [{"route": name, "status": "PASS", "http_status": 200,
+                         "url": smoke.BASE if name == "index.html" else smoke.BASE + name,
+                         "bytes_match_checkout": True,
+                         "sha256": hashlib.sha256(name.encode()).hexdigest()}
                         for name in smoke.TARGETS]
                 smoke.write_summary(rows, True, "live")
                 doc = json.loads(Path(smoke.RECEIPT).read_text())
@@ -81,6 +83,49 @@ class PublicHttpsSmokeTests(unittest.TestCase):
                 smoke.write_summary(rows, True, "local")
                 doc = json.loads(Path(smoke.RECEIPT).read_text())
                 self.assertFalse(doc["verified_exact_deployed_bytes"])
+            finally:
+                os.chdir(original)
+
+
+    def test_live_receipts_fail_closed_for_missing_routes_or_forged_http_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            original = Path.cwd()
+            try:
+                os.chdir(directory)
+                rows = [
+                    {"route": name, "status": "PASS", "http_status": 200,
+                     "url": smoke.BASE if name == "index.html" else smoke.BASE + name,
+                     "bytes_match_checkout": True,
+                     "sha256": hashlib.sha256(name.encode()).hexdigest()}
+                    for name in smoke.TARGETS
+                ]
+                def verify(records, expected_live, expected_exact):
+                    smoke.write_summary(records, True, "live")
+                    receipt = json.loads(Path(smoke.RECEIPT).read_text())
+                    self.assertIs(receipt["verified_live_public_website"], expected_live)
+                    self.assertIs(receipt["verified_exact_deployed_bytes"], expected_exact)
+                verify(rows, True, True)
+                verify(rows[:-1], False, False)
+                cases = [
+                    ("http_status", 302),
+                    ("url", "https://another.example/"),
+                    ("url", smoke.BASE + "wrong.html"),
+                    ("status", "UNCONFIRMED"),
+                    ("bytes_match_checkout", False),
+                    ("sha256", "not-a-sha256-digest"),
+                ]
+                for field, invalid in cases:
+                    with self.subTest(field=field):
+                        altered = [dict(row) for row in rows]
+                        altered[0][field] = invalid
+                        # A digest/byte mismatch blocks exact identity, while
+                        # genuine HTTP delivery can still be separately true.
+                        delivery = field in ("bytes_match_checkout", "sha256")
+                        verify(altered, delivery, False)
+                duplicated = [dict(row) for row in rows]
+                duplicated[0]["route"] = duplicated[1]["route"]
+                verify(duplicated, False, False)
+                verify(rows, True, True)
             finally:
                 os.chdir(original)
 
@@ -121,7 +166,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
                         self.assertFalse(doc[name])
                     smoke.write_summary([{"route": "index.html", "status": "PASS"}], True, "live")
                     doc = json.loads(Path(smoke.RECEIPT).read_text())
-                    self.assertTrue(doc["verified_live_public_website"])
+                    self.assertFalse(doc["verified_live_public_website"])
                     self.assertFalse(doc["verified_exact_deployed_bytes"])
                     self.assertFalse(doc["native_dev_verified"])
                     self.assertFalse(doc["production_servicenow_verified"])
