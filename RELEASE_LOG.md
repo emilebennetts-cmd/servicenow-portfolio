@@ -1,3 +1,9 @@
+## 15 November 2026 — Delivery release preflight discrepancy triage (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Fixed a substantive reviewer-routing defect: a version-only mismatch had been labelled "divergent application identity", even when the technical scope matched the reviewed source. The interactive preflight now differentiates scope drift, version drift, combined drift, invalid inputs, unknown fields and non-certifying text alignment.
+- Extended the redacted HOLD-only JSON worksheet with a categorical discrepancy code, never entered scope/version values; strengthened static and four-width Chromium test scenarios. Existing public website, page and verification-register counts do not change.
+- [Implementation, security, verification boundaries and entitlement review](releases/2026-11-15-delivery-preflight-discrepancy-triage.md). Historical DEV statements remain DEV-REPORTED. No DEV-VERIFIED or PRODUCTION-VERIFIED promotion; original screenshots remain 0 approved / HOLD.
+
 ## 15 November 2026 — Delivery source-to-target release identity preflight (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Added a working local-only [Release Identity Preflight](delivery-release-evolution.html#release-identity-preflight) to the existing Release Evolution case study: exact source-scope/version comparison, four synthetic scenarios, invalid-input handling, mobile layout and a downloadable **redacted HOLD-only JSON worksheet**.
