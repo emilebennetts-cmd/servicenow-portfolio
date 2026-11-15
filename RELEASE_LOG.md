@@ -1,3 +1,9 @@
+## 15 November 2026 — Screenshot social-preview publication hardening (SOURCE-ONLY / HOLD)
+
+- Closed a preventive publication-guard gap: Open Graph, Twitter Card and legacy social preview metadata now require canonical same-origin screenshot URLs or approved relative assets bound to the existing SHA-256 image manifest. Cross-origin URLs, data URLs, altered paths, queries and alternative ports fail closed.
+- Added five social metadata security regression scenarios and extended the public screenshot publication checklist. No image, customer data, private source or claim of native ServiceNow verification was published; original screenshot approvals remain **0 / HOLD**.
+- [Security control, evidence boundaries and licensing](releases/2026-11-15-social-preview-image-publication-gate.md). CI validation is pending independent workflow completion.
+
 ## 15 November 2026 — Architecture acceptance CSV (SOURCE-ONLY / HOLD)
 Added Excel-compatible export of visible architecture decisions and native acceptance gates with enforced NOT RUN, DEV/Production unverified, HOLD-only claims. Browser and contract regression tests plus focused CI workflow added. No native execution, private source or screenshots published. [Release record](releases/2026-11-15-architecture-acceptance-csv.md).
 
