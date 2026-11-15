@@ -2,7 +2,7 @@
 "use strict";
 const assert=require("node:assert/strict");
 const {test}=require("node:test");
-const {getScenario,acceptanceRows,acceptanceCsv}=require("../request-management-implementation-lab.js");
+const {getScenario,acceptanceRows,acceptanceCsv,allAcceptanceRows,allAcceptanceCsv}=require("../request-management-implementation-lab.js");
 test("three request designs have eight stable and distinct native tests each",()=>{
 const all=[];
 for(const key of ["access","hardware","service"]){
@@ -24,3 +24,22 @@ for(const key of ["access","hardware","service"]){assert.equal(acceptanceRows(ke
 });
 test("CSV quoting preserves commas and quotes in fixed evidence strings",()=>{
 const csv=acceptanceCsv("access",[]);assert.ok(csv.startsWith('"Scenario","Test ID"'));assert.ok(csv.endsWith("\r\n"));assert.ok(csv.includes('"ACC-01"'));});
+
+test("complete native handoff includes all 24 unique acceptance gates with blank private receipt fields",()=>{
+ const csv=allAcceptanceCsv({access:new Set(getScenario("access").gates.map(g=>g[0]))});
+ const lines=csv.trim().split("\r\n");
+ assert.equal(lines.length,25);
+ assert.equal((csv.match(/"NOT RUN"/g)||[]).length,24);
+ assert.equal((csv.match(/"HOLD"/g)||[]).length,24);
+ assert.equal((csv.match(/"MOCK-ONLY"/g)||[]).length,24);
+ for(const key of ["access","hardware","service"]) for(const gate of getScenario(key).gates){
+   assert.equal((csv.match(new RegExp('"'+gate[0]+'"','g'))||[]).length,1);
+ }
+ const head=lines[0];
+ for(const field of ["Instance alias (private)","Execution date (private)","Evidence receipt alias (private)","Independent reviewer (private)"])assert.ok(head.includes('"'+field+'"'));
+ assert.ok(lines.slice(1).every(line=>line.endsWith(',"","","","","",""')));
+ assert.equal(allAcceptanceRows({}).length,24);
+ assert.equal(allAcceptanceRows({}).filter(row=>row.read).length,0);
+ assert.equal(allAcceptanceRows({access:["ACC-02"]}).filter(row=>row.read).length,1);
+ assert.doesNotMatch(csv,/"(?:PASSED|APPROVED|DEV-VERIFIED|PRODUCTION-VERIFIED)"/);
+});
