@@ -10,6 +10,7 @@ A customer-neutral example describes the risk of treating Normal, Standard and E
 - Implemented browser-local CSV acceptance export with formula-prefix protection. Every row is **NOT RUN / HOLD / MOCK-ONLY** regardless of reading state.
 - Added a three-layer evidence matrix and explicit source, DEV, release and Production acceptance boundaries.
 - Added `tests/test_change_management_lab.py` for structural regression, evidence fail-closed controls, offline operation, responsive affordances and entitlements.
+- Added `tests/change_management_dom_smoke.js` using dependency-free Node VM and a simulated DOM to execute the actual inline model switch, checkbox state, reset and CSV download logic. The existing quality workflow now runs this on every push using Node 22.
 - Indexed the new route in `sitemap.xml`, `portfolio-explorer.html` and the homepage. Registered `CHANGE-MANAGEMENT-LAB` in `evidence/public-verification-register.json`.
 
 ### Reference basis and limits
@@ -30,7 +31,7 @@ The **classic** and **Simplified Change Management** models differ; approval and
 - This release is **MOCK-ONLY** for browser interactions, **SOURCE-ONLY** for documentation/implementation provenance. Existing historic DEV claims stay **DEV-REPORTED**.
 - **No new DEV-VERIFIED or PRODUCTION-VERIFIED claim.** All 21 native acceptance tasks are **NOT RUN / HOLD**.
 - Original genuine screenshots remain 0 approved; no image files, customer names, customer records, credentials or restricted source were added.
-- Offline source and static tests are not browser integration or native ServiceNow acceptance. Final CI execution and external HTTPS retrieval must be recorded independently and must not be inferred from successful commits.
+- Offline structural and simulated-DOM regression checks are not a graphical browser or native ServiceNow acceptance. Final CI execution and external HTTPS retrieval must be recorded independently and must not be inferred from successful commits.
 
 ### Licensing and entitlement dependencies
 The static web page, offline CSV and standard-library test require no ServiceNow licence. A target implementation requires the customer's ITSM/Change Management rights, licensed fulfiller access, roles/ACLs, selected change model configuration and approved instance access. CAB Workbench, IntegrationHub, Advanced Analytics/PA, ATF, Now Assist, ITOM/Discovery and external providers may have additional SKU, plugin and access dependencies; confirm the specific subscription before build or deployment.
