@@ -135,7 +135,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             for name, marker in smoke.TARGETS.items():
                 (root / name).write_text(f"<html>{marker}</html>", encoding="utf-8")
             result = smoke.local_check(root)
-            self.assertEqual(len(result), 12)
+            self.assertEqual(len(result), 13)
             self.assertTrue(all(r["verification"] == "LOCAL-ONLY" for r in result))
             (root / "index.html").write_text("<html></html>", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "required marker missing"):
@@ -149,6 +149,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             "diagnostic-delivery-handoff-contract.html", "cmdb-ire-assurance.html",
             "itsm-greenfield-build-sequencer.html", "ki-matrix-intake.html",
             "technical-evidence-register.html", "portfolio-review-guide.html",
+            "problem-management-implementation-lab.html",
         }
         self.assertEqual(set(smoke.TARGETS), expected)
 

@@ -27,6 +27,7 @@ TARGETS = {
     "ki-matrix-intake.html": 'id="matrix-file"',
     "technical-evidence-register.html": 'id="source-lineage"',
     "portfolio-review-guide.html": 'id="review-route"',
+    "problem-management-implementation-lab.html": 'id="lab"',
 }
 RECEIPT = "public-https-smoke-receipt.json"
 MAX_BYTES = 1_500_000
