@@ -1,3 +1,8 @@
+## 15 November 2026 — Offline native DEV target compatibility gate (SOURCE-ONLY / NATIVE HOLD)
+
+- Implemented a private, offline fail-closed target scope/package/metadata preflight with synthetic regression CI; published a customer-neutral architecture explanation under [source-target compatibility](source-target-compatibility.html#native-preflight). It does not connect to ServiceNow, approve deployment or certify DEV.
+- Verified private preflight regression and control-check workflows; original screenshots remain **0 approved / HOLD**, no customer source or native instance data published. [Release evidence and entitlement boundaries](releases/2026-11-15-offline-native-target-gate.md).
+
 ## 15 November 2026 — Screenshot social-preview publication hardening (SOURCE-ONLY / HOLD)
 
 - Closed a preventive publication-guard gap: Open Graph, Twitter Card and legacy social preview metadata now require canonical same-origin screenshot URLs or approved relative assets bound to the existing SHA-256 image manifest. Cross-origin URLs, data URLs, altered paths, queries and alternative ports fail closed.
