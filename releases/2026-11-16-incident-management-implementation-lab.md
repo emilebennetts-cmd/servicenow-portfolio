@@ -29,3 +29,6 @@ Prior Delivery and Diagnostic repository material and accessible Google Drive As
 
 ## Public deployment delivery assurance
 The anonymous GitHub Pages smoke workflow now includes the exact Incident Management HTML route (14 routes total) and compares deployed UTF-8 bytes to the checked-out source SHA-256. Its result is delivery evidence only, not native DEV or production execution. External browser access remains a separate observation.
+
+## Browser acceptance
+Four-viewport (390, 768, 1024, 1440 px) Chromium test added for scenario switching, independent reading marks, responsive overflow, mock screen transitions, eight- and 24-gate CSV export and immutable NOT RUN/HOLD statuses. This is browser acceptance of the public synthetic UI, not native ServiceNow testing.

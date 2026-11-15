@@ -6,6 +6,9 @@ on:
       - 'index.html'
       - 'problem-management-implementation-lab.html'
       - 'problem-management-implementation-lab.js'
+      - 'incident-management-implementation-lab.html'
+      - 'incident-management-implementation-lab.js'
+      - 'scripts/browser_incident_management_lab.py'
       - 'scripts/browser_problem_management_lab.py'
       - 'workbench-architecture-gallery.html'
       - 'scripts/test_architecture_gallery_claim_boundaries.py'
@@ -165,3 +168,5 @@ jobs:
         run: python scripts/browser_navigation_smoke.py
       - name: Exercise Problem Management scenario switching and HOLD exports at four widths
         run: python scripts/browser_problem_management_lab.py
+      - name: Exercise Incident Management scenarios and 24-gate HOLD export at four widths
+        run: python scripts/browser_incident_management_lab.py
