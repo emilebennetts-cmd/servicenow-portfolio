@@ -1,3 +1,10 @@
+## 15 November 2026 — Eight source-derived architecture decisions published (NATIVE HOLD)
+
+- Published a responsive, print-ready [Architecture Decision Register](architecture-decision-register.html) containing eight design choices, explicit rejected shortcuts, controlled risks and independent ServiceNow native acceptance gates. Local search and domain filters do not transmit or store data.
+- Linked the register from the [home page](index.html), [architecture atlas](architecture-atlas.html) and sitemap; added structural, evidence-boundary, navigation and no-private-image/source regression tests.
+- [Technical release record](releases/2026-11-15-architecture-decision-register.md). Evidence: SOURCE-ONLY design interpretations, MOCK-ONLY public filtering, historical DEV-REPORTED unchanged; no new DEV-VERIFIED or PRODUCTION-VERIFIED status. No original screenshot approval or publication: **0 approved — HOLD**.
+- No ServiceNow licence for the public page. Native acceptance requires target-specific custom-app/App Engine rights, relevant product subscriptions, roles/ACLs, optional IntegrationHub, ATF, AI and analytics entitlements. Automated CI and published HTTPS validation must be confirmed on this commit separately.
+
 ## 15 November 2026 — Fail-closed public receipt assurance and reviewer proof (LIVE HTTPS verified; native HOLD)
 
 - Fixed a genuine false-positive reporting path: a partial one-route record with a caller-provided success flag could previously set `verified_live_public_website=true`. Live promotion now requires all twelve unique canonical URLs, HTTP 200 and PASS results; exact byte identity further requires all matching SHA-256 results.
