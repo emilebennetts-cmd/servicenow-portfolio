@@ -29,6 +29,16 @@ class WorkbenchGapBoardTests(unittest.TestCase):
         self.assertNotRegex(self.html, r"<(?:img|iframe|picture)\\b")
         self.assertNotIn("servicenow-portfolio-control", self.html)
 
+    def test_later_asbuilt_conflict_remains_held(self):
+        for marker in ('id="asbuilt-conflict"', '6 OCT 2026', '19 OCT 2026',
+                       '0.4.2', 'not represented as installed', 'DEV-REPORTED',
+                       'conflict open', 'id="lineage-download"', 'buildLineageCsv',
+                       '"NOT RUN","HOLD"', 'independent_reviewer'):
+            with self.subTest(marker=marker):
+                self.assertIn(marker.lower(), self.html.lower())
+        self.assertNotIn('drive.google.com/file/d/', self.html)
+        self.assertNotIn('docs.google.com/document/d/', self.html)
+
     def test_twelve_unique_native_controls(self):
         matches = re.findall(r'<article class="gate" data-group="([^"]+)" aria-labelledby="gate-([^"]+)"', self.html)
         self.assertEqual(len(matches), 12)

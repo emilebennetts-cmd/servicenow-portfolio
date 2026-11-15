@@ -1,3 +1,10 @@
+## 16 November 2026 — Workbench historical release-claim conflict reconciliation (SOURCE-ONLY / native HOLD)
+
+- Inspected the later controlled As-Built (19 October evidence cutoff): its claimed 6 October DEV read-back for Delivery 4.22.2 and Diagnostic 0.4.2 conflicts with its front-matter disclaimer about 4.22.2 not being installed. Recorded this as unresolved DEV-REPORTED, never current DEV-VERIFIED.
+- Updated the responsive Workbench gap board with conflict provenance and a second, five-row browser-local HOLD-only reconciliation CSV with blank private receipt fields.
+- Expanded executable Node and Python regression tests; preserved all 12 earlier native acceptance gates and screenshot-publication HOLD.
+- [Evidence and release boundaries](releases/2026-11-16-workbench-claim-conflict-reconciliation.md).
+
 ## 16 November 2026 — Workbench release source-to-DEV gap board (SOURCE-ONLY / native HOLD)
 
 - Reconciled the controlled 30 September Delivery As-Built (source 4.6.1, older DEV 4.5.1) with historical repository-reported Delivery 4.20.0 DEV observation and current 4.22.2 source declaration; kept the Diagnostic KI 0.1.0 observation in its own application lineage.

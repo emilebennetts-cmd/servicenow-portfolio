@@ -12,7 +12,7 @@ function harness(){
     addEventListener(k,fn){assert.equal(k,"click");this.click=fn;}
   }));
   const cards=[...page.matchAll(/<article class="gate" data-group="([^"]+)"/g)].map(x=>({dataset:{group:x[1]},hidden:false}));
-  const nodes={results:{textContent:""},download:{disabled:true,addEventListener(k,fn){assert.equal(k,"click");this.click=fn;}}, "export-status":{textContent:""}};
+  const nodes={results:{textContent:""},download:{disabled:true,addEventListener(k,fn){assert.equal(k,"click");this.click=fn;}}, "export-status":{textContent:""},"lineage-status":{textContent:""},"lineage-download":{disabled:true,addEventListener(k,fn){assert.equal(k,"click");this.click=fn;}}};
   const document={
     querySelectorAll(sel){if(sel==="[data-filter]")return buttons;if(sel===".gate")return cards;throw Error(sel);},
     getElementById(id){if(!nodes[id])throw Error(id);return nodes[id];},
@@ -61,4 +61,21 @@ test("page is offline, accessibly labelled and never renders a real screenshot",
   }
   assert.doesNotMatch(page,/<(?:img|iframe|picture)\b/i);
   assert.doesNotMatch(page,/\blocalStorage\b|\bsessionStorage\b|\bfetch\s*\(|XMLHttpRequest/);
+});
+
+test("five-row release reconciliation exports an unresolved conflict, never a DEV certification",()=>{
+  const h=harness();
+  assert.equal(h.nodes["lineage-download"].disabled,false);
+  h.nodes["lineage-download"].click();
+  const rows=h.captured.blob.trim().split("\r\n");
+  assert.equal(rows.length,6);
+  assert.ok(rows[0].includes("independent_reviewer"));
+  assert.ok(rows.slice(1).every(row=>row.includes('"NOT RUN","HOLD"')));
+  assert.ok(rows.slice(1).every(row=>row.endsWith(',"","","","",""')));
+  assert.ok(rows.some(row=>row.includes('OBS-OCT06-DEL')&&row.includes('4.22.2')));
+  assert.ok(rows.some(row=>row.includes('OBS-OCT06-DIA')&&row.includes('0.4.2')));
+  assert.ok(rows.some(row=>row.includes('contradicts')));
+  assert.doesNotMatch(h.captured.blob,/DEV-VERIFIED|PRODUCTION-VERIFIED|APPROVED|PASSED/);
+  assert.ok(h.captured.clicked&&h.captured.revoked);
+  assert.match(h.nodes["lineage-status"].textContent,/no native acceptance certified/);
 });
