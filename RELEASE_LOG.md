@@ -1,3 +1,10 @@
+## 16 November 2026 — Workbench release source-to-DEV gap board (SOURCE-ONLY / native HOLD)
+
+- Reconciled the controlled 30 September Delivery As-Built (source 4.6.1, older DEV 4.5.1) with historical repository-reported Delivery 4.20.0 DEV observation and current 4.22.2 source declaration; kept the Diagnostic KI 0.1.0 observation in its own application lineage.
+- Delivered an accessible, responsive, browser-local gap board with 12 distinct Delivery, Diagnostic and cross-workbench native acceptance controls, filterable on-page and exportable as an offline HOLD-only CSV with blank private receipt fields.
+- Indexed homepage, Explorer, sitemap and architecture gallery; added static and executable browser-model regression coverage. Neither current DEV acceptance nor production verification is claimed; no screenshot approvals were changed.
+- [Release, source boundaries and entitlement dependencies](releases/2026-11-16-workbench-source-dev-gap-board.md).
+
 ## 16 November 2026 — Problem Management implementation lab (MOCK-ONLY / native HOLD)
 
 - Released OOTB-first, accessible, mobile-friendly Problem Management case study covering recurrent incidents, RCA/problem tasks, workarounds, known errors and change-governed permanent fixes.
