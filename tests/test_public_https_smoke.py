@@ -68,6 +68,16 @@ class PublicHttpsSmokeTests(unittest.TestCase):
                 doc = json.loads(Path(smoke.RECEIPT).read_text())
                 self.assertFalse(doc["verified_exact_deployed_bytes"])
                 rows[0]["bytes_match_checkout"] = True
+                rows[0]["route"] = rows[1]["route"]
+                smoke.write_summary(rows, True, "live")
+                doc = json.loads(Path(smoke.RECEIPT).read_text())
+                self.assertFalse(doc["verified_exact_deployed_bytes"])
+                rows[0]["route"] = next(iter(smoke.TARGETS))
+                rows[0]["status"] = "UNCONFIRMED"
+                smoke.write_summary(rows, True, "live")
+                doc = json.loads(Path(smoke.RECEIPT).read_text())
+                self.assertFalse(doc["verified_exact_deployed_bytes"])
+                rows[0]["status"] = "PASS"
                 smoke.write_summary(rows, True, "local")
                 doc = json.loads(Path(smoke.RECEIPT).read_text())
                 self.assertFalse(doc["verified_exact_deployed_bytes"])
