@@ -1,3 +1,9 @@
+## 15 November 2026 — Actual local candidate-package bytes verified by private offline gate (SOURCE-ONLY / native HOLD)
+
+- Extended the private DEV preflight with optional SHA-256 computation over local candidate-package bytes, comparing against both declared digests, and fail-closed allowlists for every receipt section. The public [source-to-target case study](source-target-compatibility.html#native-preflight) now distinguishes declarations from byte verification.
+- **26 private synthetic tests passed** ([run 43714117768](https://github.com/emilebennetts-cmd/servicenow-portfolio-control/actions/runs/43714117768)). A passing local comparison remains REVIEW_REQUIRED, not authenticated DEV acceptance or installation authorisation. [Release boundaries](releases/2026-11-15-native-candidate-byte-provenance.md).
+- No current DEV-VERIFIED or PRODUCTION-VERIFIED result; original screenshots **0 approved — HOLD**. No ServiceNow licence for offline tool or website; native App Engine, ITSM/ITOM, integrations, ATF, AI and analytics require target-specific entitlements.
+
 ## 15 November 2026 — Offline native DEV target compatibility gate (SOURCE-ONLY / NATIVE HOLD)
 
 - Implemented a private, offline fail-closed target scope/package/metadata preflight with synthetic regression CI; published a customer-neutral architecture explanation under [source-target compatibility](source-target-compatibility.html#native-preflight). It does not connect to ServiceNow, approve deployment or certify DEV.
