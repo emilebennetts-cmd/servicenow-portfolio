@@ -874,6 +874,15 @@
       "runtime_verification": "Design checklist, simulated selection and offline CSV export are not live Problem/Problem Task creation, change/known-error integration, security tests, ATF results or independent DEV/Production verification. Native outcomes fixed to NOT RUN / HOLD / MOCK-ONLY.",
       "public_screenshot_status": "Illustrative CSS/HTML architecture only; no original ServiceNow screenshot, customer records, private source or credentials. Genuine screenshot approvals remain 0 / HOLD.",
       "page": "problem-management-implementation-lab.html"
+    },
+    {
+      "id": "WORKBENCH-SOURCE-DEV-GAP-BOARD-20261116",
+      "title": "Workbench source-to-DEV release provenance and 12-gate acceptance handoff",
+      "classification": "source-only",
+      "basis": "Sanitised reconciliation of controlled 30 September Delivery Workbench As-Built 4.6.1 / historical DEV 4.5.1, dated repository-reported 4.20.0 DEV result and latest Delivery README 4.22.2 source declaration; Diagnostic Workbench 2 and KI companion checked as independent source lineage. Authored responsive HTML and browser-local native acceptance worksheet with twelve unique gates.",
+      "runtime_verification": "This is SOURCE-ONLY design and document provenance. Historical DEV records are DEV-REPORTED, version/date bounded, not independently re-executed. Browser filter and CSV are MOCK-ONLY. All twelve exported native controls remain NOT RUN / HOLD / SOURCE-ONLY, with private receipt fields blank. No new DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
+      "public_screenshot_status": "No genuine ServiceNow screens, restricted source, customer records, or credentials included; individual screenshot publication approvals remain zero / HOLD.",
+      "page": "workbench-source-dev-gap-board.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
