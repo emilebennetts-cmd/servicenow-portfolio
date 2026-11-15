@@ -106,6 +106,56 @@ class PublicationTests(unittest.TestCase):
                 "div{background-image:url('https://example.test/secret.png')}", encoding="utf-8")
             self.assertTrue(any("remote CSS background image" in x for x in check(root, root / "missing.txt")))
 
+    def test_css_image_selection_blocks_quoted_remote_pixels(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "style.css").write_text(
+                'header{background-image:image-set("https://example.invalid/private.png" 1x)}',
+                encoding="utf-8")
+            findings = check(root, root / "missing.txt")
+            self.assertTrue(any("unreviewed CSS image selection" in item for item in findings))
+
+    def test_prefixed_css_image_selection_blocks_local_pixels(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "index.html").write_text(
+                '<div style="-webkit-image-set(\'screenshot.png\' 1x)"></div>',
+                encoding="utf-8")
+            findings = check(root, root / "missing.txt")
+            self.assertTrue(any("unreviewed CSS image selection" in item for item in findings))
+
+    def test_duplicate_input_type_cannot_hide_image_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "index.html").write_text(
+                '<input type="image" type="text" src="https://example.invalid/private.png">',
+                encoding="utf-8")
+            findings = check(root, root / "missing.txt")
+            self.assertTrue(any("ambiguous image input type" in item for item in findings))
+            self.assertTrue(any("unapproved responsive image origin" in item for item in findings))
+
+    def test_duplicate_preload_attributes_cannot_hide_image_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "index.html").write_text(
+                '<link rel="preload" rel="stylesheet" as="image" as="script" '
+                'href="https://example.invalid/private.png">',
+                encoding="utf-8")
+            findings = check(root, root / "missing.txt")
+            self.assertTrue(any("ambiguous image preload attributes" in item for item in findings))
+            self.assertTrue(any("unapproved responsive image origin" in item for item in findings))
+
+    def test_normal_gradient_and_nonimage_input_are_not_flagged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "style.css").write_text(
+                "body{background-image:linear-gradient(90deg,red,blue)}",
+                encoding="utf-8")
+            (root / "index.html").write_text(
+                '<input type="text" src="ignored.png"><link rel="stylesheet" href="style.css">',
+                encoding="utf-8")
+            self.assertEqual([], check(root, root / "missing.txt"))
+
     def test_inline_svg_image_and_external_use_are_blocked(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

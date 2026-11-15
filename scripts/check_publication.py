@@ -28,6 +28,10 @@ SENSITIVE = [
 # not pixel analysis or an authorisation mechanism.
 VISUAL_EMBED_PATTERNS = [
     ("embedded image data URL", re.compile(r"(?i)\bdata\s*:\s*image\s*/")),
+    # CSS source-selection functions can fetch image pixels from quoted URLs
+    # without using url(). Require a separately reviewed implementation rather
+    # than treating this syntax as an approved screenshot rendering route.
+    ("unreviewed CSS image selection", re.compile(r"(?i)(?<![a-z0-9_-])(?:-webkit-)?image-set\s*\(")),
     ("remote image element", re.compile(
         r"(?is)<(?:img|source|image)\b[^>]*\b(?:src|srcset|href|xlink:href)\s*=\s*['\"]?\s*(?:https?:)?//"
     )),
@@ -238,22 +242,32 @@ class ResponsiveImageInspector(HTMLParser):
             self._url(tokens[0])
 
     def handle_starttag(self, tag, attrs):
-        props = dict(attrs)
         if tag == "img":
             self._attr(attrs, "src")
             self._attr(attrs, "srcset", srcset=True)
         elif tag == "source":
-            # Source.src may be an audio/video resource, while srcset is images.
+            # source.src may be media; srcset enumerates image candidates.
             self._attr(attrs, "srcset", srcset=True)
         elif tag == "video":
             self._attr(attrs, "poster")
-        elif tag == "input" and (props.get("type") or "").lower() == "image":
-            self._attr(attrs, "src")
-        elif (tag == "link"
-              and "preload" in (props.get("rel") or "").lower().split()
-              and (props.get("as") or "").lower() == "image"):
-            self._attr(attrs, "href")
-            self._attr(attrs, "imagesrcset", srcset=True)
+        elif tag == "input":
+            # HTML consumers disagree on duplicate attributes. Never collapse
+            # with dict(attrs), which silently discards an earlier type=image.
+            types = [(value or "").strip().lower() for key, value in attrs if key == "type"]
+            if "image" in types:
+                if len(types) != 1:
+                    self.issues.append("ambiguous image input type")
+                self._attr(attrs, "src")
+        elif tag == "link":
+            rels = [(value or "").lower().split() for key, value in attrs if key == "rel"]
+            kinds = [(value or "").strip().lower() for key, value in attrs if key == "as"]
+            # Reject ambiguity if ANY original attribute value selects an image
+            # preload. Crawlers and browsers can resolve duplicates differently.
+            if any("preload" in rel for rel in rels) and "image" in kinds:
+                if len(rels) != 1 or len(kinds) != 1:
+                    self.issues.append("ambiguous image preload attributes")
+                self._attr(attrs, "href")
+                self._attr(attrs, "imagesrcset", srcset=True)
 
 
 def check(root=ROOT, allowlist=ALLOWLIST):

@@ -1,3 +1,9 @@
+## 16 November 2026 — Screenshot render-path ambiguity guard (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+- Deny browser CSS image selection constructs that can fetch image pixels without the conventional URL token. Refuse duplicate image-control type and preload rel/as attributes that different browsers/parsers may interpret differently.
+- Added five synthetic regression scenarios and updated the public screenshot-review narrative. No candidate screenshot published, no new native DEV/Production verification and no instance writes.
+- [Security release, evidence and entitlement boundaries](releases/2026-11-16-screenshot-render-path-ambiguity.md).
+
 ## 15 November 2026 — Actual local candidate-package bytes verified by private offline gate (SOURCE-ONLY / native HOLD)
 
 - Extended the private DEV preflight with optional SHA-256 computation over local candidate-package bytes, comparing against both declared digests, and fail-closed allowlists for every receipt section. The public [source-to-target case study](source-target-compatibility.html#native-preflight) now distinguishes declarations from byte verification.
