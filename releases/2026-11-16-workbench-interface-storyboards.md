@@ -9,7 +9,7 @@ Updated [Workbench Source-to-DEV Gap Board](../workbench-source-dev-gap-board.ht
 2. Diagnostic — read-only evidence, rule evaluation and held draft finding; linked to DIA-02/03.
 3. Cross-workbench — reference-only Diagnostic-to-Delivery intake subject to reviewer decision and access checks; linked to XWB-01/02.
 
-Every scene explicitly says **MOCK-ONLY**. No live screenshot, customer or synthetic instance record, API call, external image, external script or third-party tracking is used. The existing 12 native gates and five conflicting historical observations remain **NOT RUN / HOLD**. Gallery discoverability was added to the portfolio homepage.
+Every scene explicitly says **MOCK-ONLY**. No live screenshot, customer or synthetic instance record, API call, external image, external script or third-party tracking is used. The existing 12 native gates and five conflicting historical observations remain **NOT RUN / HOLD**. Gallery discoverability was added to the portfolio homepage and searchable Explorer.
 
 ## 3. Architectural best practices
 The storyboards separate concerns by scope, preserve review and approval boundaries, and illustrate an OOTB-first ServiceNow delivery process without implying direct data synchronisation. An illustrative diagram is not an installation receipt; the native tests still require authorised target identity, technical scope, installed version, synthetic transaction trace, negative-persona ACL evidence and independent approval.
