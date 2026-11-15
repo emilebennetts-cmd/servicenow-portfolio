@@ -115,5 +115,20 @@ class ScreenshotGateSecurityTests(unittest.TestCase):
         self.assertTrue(any("lacks byte-bound publication approval" in x for x in issues))
 
 
+    def test_rejects_duplicate_social_metadata_attributes(self):
+        page = self.root / "share.html"
+        page.write_text('<meta property="og:image" property="og:title" '
+                        'content="assets/screenshots/unreviewed.png">')
+        self.assertTrue(any("ambiguous social preview" in x
+                            for x in check(self.root, self.manifest)))
+
+    def test_reports_malformed_social_preview_url(self):
+        page = self.root / "share.html"
+        page.write_text('<meta property="og:image" content="https://[bad-host/img.png">'
+                        '<meta name="twitter:image" content="https://example.org:invalid/a.png">')
+        issues = check(self.root, self.manifest)
+        self.assertEqual(sum("malformed social preview" in x for x in issues), 2)
+
+
 if __name__ == "__main__":
     unittest.main()
