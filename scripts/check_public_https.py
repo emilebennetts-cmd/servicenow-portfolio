@@ -121,7 +121,9 @@ def write_summary(results, success, mode):
         "verified_live_public_website": bool(success and mode == "live"),
         "verified_exact_deployed_bytes": bool(success and mode == "live"
             and len(results) == len(TARGETS)
-            and all(row.get("bytes_match_checkout") is True for row in results)),
+            and {row.get("route") for row in results} == set(TARGETS)
+            and all(row.get("status") == "PASS"
+                    and row.get("bytes_match_checkout") is True for row in results)),
         "native_dev_verified": False,
         "production_servicenow_verified": False,
         "screenshot_publication_approved": False,
