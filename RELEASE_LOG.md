@@ -1,3 +1,9 @@
+## 16 November 2026 — Request Management implementation case study (MOCK-ONLY / native HOLD)
+
+- Added an OOTB-first, mobile-friendly Service Catalog & Request Management implementation lab with 3 synthetic request journeys, 24 distinct native acceptance controls, accessible reading marks and a conservative CSV export (NOT RUN / HOLD / MOCK-ONLY).
+- Integrated public navigation, searchable catalogue, sitemap, evidence register and Node/Python regression contracts. No native instance access, customer data, private source or unreviewed screenshots.
+- [Implementation, tests and entitlement boundaries](releases/2026-11-16-request-management-implementation-lab.md).
+
 ## 16 November 2026 — Screenshot render-path ambiguity guard (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Deny browser CSS image selection constructs that can fetch image pixels without the conventional URL token. Refuse duplicate image-control type and preload rel/as attributes that different browsers/parsers may interpret differently.

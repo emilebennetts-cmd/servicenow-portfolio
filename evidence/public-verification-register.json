@@ -847,6 +847,15 @@
       "runtime_verification": "Browser-local scenario selection and CSV export are not ServiceNow Change Management execution, native model configuration, CAB approval, ACL/ATF results or production acceptance. Every exported gate is NOT RUN / HOLD.",
       "public_screenshot_status": "No original ServiceNow images or customer data. Illustrative HTML only; original screenshot candidate approvals remain 0 / HOLD.",
       "page": "change-management-implementation-lab.html"
+    },
+    {
+      "id": "REQUEST-MANAGEMENT-LAB-20261116",
+      "title": "Request Management and Service Catalog OOTB acceptance rehearsal",
+      "classification": "mock-only",
+      "basis": "Independent customer-neutral public HTML/JavaScript case study with three request journeys and 24 acceptance gates, aligned with ServiceNow Australia Service Catalog, Request Management and Workflow Studio reference material. This is design and synthetic rehearsal, not an installed Delivery Workbench module.",
+      "runtime_verification": "Browser-only selection, reading marks and CSV export are not native REQ/RITM/task creation, approval, ACL/ATF results or ServiceNow instance verification. All exported acceptance gates are NOT RUN / HOLD. No new independently DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
+      "public_screenshot_status": "No original ServiceNow screenshots, customer records or unpublished source. Genuine screenshot approvals remain zero / HOLD.",
+      "page": "request-management-implementation-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
