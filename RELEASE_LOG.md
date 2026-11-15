@@ -1,3 +1,10 @@
+## 16 November 2026 — Workbench interface storyboards (MOCK-ONLY / native HOLD)
+
+- Added three responsive, accessible, CSS-rendered Workbench interface storyboards: Delivery engagement, Diagnostic evidence-to-finding and controlled cross-workbench intake. All are explicitly illustrative, not screenshots or live UI claims.
+- Linked each reconstruction to the existing DEL/DIA/XWB native acceptance gates; preserved 12 NOT RUN/HOLD controls, five conflicting historical observations and both CSV handoffs.
+- Added a homepage gallery shortcut and regression assertions for mock-only classification, accessible scene descriptions and no original images or remote dependencies.
+- [Release and evidence boundaries](releases/2026-11-16-workbench-interface-storyboards.md).
+
 ## 16 November 2026 — Workbench historical release-claim conflict reconciliation (SOURCE-ONLY / native HOLD)
 
 - Inspected the later controlled As-Built (19 October evidence cutoff): its claimed 6 October DEV read-back for Delivery 4.22.2 and Diagnostic 0.4.2 conflicts with its front-matter disclaimer about 4.22.2 not being installed. Recorded this as unresolved DEV-REPORTED, never current DEV-VERIFIED.
