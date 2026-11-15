@@ -43,7 +43,18 @@ function getScenario(key){return Object.prototype.hasOwnProperty.call(controls,k
 function acceptanceRows(key,readIds){const s=getScenario(key);if(!s)return [];const seen=new Set(readIds||[]);return s.gates.map(g=>({id:g[0],control:g[1],evidence:g[2],read:seen.has(g[0]),native:"NOT RUN",release:"HOLD",classification:"MOCK-ONLY"}))}
 function quote(value){return '"'+String(value).replace(/"/g,'""')+'"'}
 function acceptanceCsv(key,readIds){const s=getScenario(key);if(!s)return "";const header=["Scenario","Test ID","Acceptance control","Evidence required","Read in rehearsal","Native execution","Release decision","Evidence class"];const rows=acceptanceRows(key,readIds).map(r=>[s.title,r.id,r.control,r.evidence,r.read?"READ":"UNREAD",r.native,r.release,r.classification]);return [header,...rows].map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"}
-if(typeof module!=="undefined" && module.exports){module.exports={getScenario,acceptanceRows,acceptanceCsv}}
+
+/* Unified, private-review-ready handoff: fixed statuses cannot claim native execution. */
+function allAcceptanceRows(readByScenario){
+ const marks=readByScenario||{};
+ return Object.keys(controls).flatMap(key=>acceptanceRows(key,marks[key]||[]).map(row=>({scenario:controls[key].title,...row})));
+}
+function allAcceptanceCsv(readByScenario){
+ const header=["Scenario","Test ID","Acceptance control","Evidence required","Read in rehearsal","Native execution","Release decision","Evidence class","Instance alias (private)","Build version (private)","Executor role (private)","Execution date (private)","Evidence receipt alias (private)","Independent reviewer (private)"];
+ const rows=allAcceptanceRows(readByScenario).map(r=>[r.scenario,r.id,r.control,r.evidence,r.read?"READ":"UNREAD",r.native,r.release,r.classification,"","","","","",""]);
+ return [header,...rows].map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+if(typeof module!=="undefined" && module.exports){module.exports={getScenario,acceptanceRows,acceptanceCsv,allAcceptanceRows,allAcceptanceCsv}}
 if(typeof document==="undefined")return;
 const title=document.getElementById("scenario-title"),desc=document.getElementById("scenario-description"),list=document.getElementById("gates"),progress=document.getElementById("progress");
 if(!title||!desc||!list||!progress)return;
@@ -61,10 +72,17 @@ list.addEventListener("change",event=>{const node=event.target;if(!node||node.ty
 if(!getScenario(current).gates.some(g=>g[0]===code))return;if(node.checked)read.get(current).add(code);else read.get(current).delete(code);
 progress.textContent=read.get(current).size+" of 8 design gates read · Native acceptance NOT RUN · HOLD"});
 document.getElementById("reset").addEventListener("click",()=>{for(const s of read.values())s.clear();render()});
+function download(csv,filename){
+ const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ const a=document.createElement("a");a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+document.getElementById("export-all").addEventListener("click",()=>{
+ const marks=Object.fromEntries(Array.from(read.entries()).map(([key,values])=>[key,values]));
+ download(allAcceptanceCsv(marks),"request-management-24-gates-NOT-RUN-HOLD.csv");
+});
 document.getElementById("export").addEventListener("click",()=>{
 const data=acceptanceCsv(current,read.get(current));if(!data)return;
-const url=URL.createObjectURL(new Blob([data],{type:"text/csv;charset=utf-8"}));
-const a=document.createElement("a");a.href=url;a.download="request-management-"+current+"-NOT-RUN-HOLD.csv";document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+download(data,"request-management-"+current+"-NOT-RUN-HOLD.csv");
 });
 render();
 })(this);
