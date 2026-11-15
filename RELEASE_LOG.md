@@ -1,3 +1,10 @@
+## 15 November 2026 — Offline release-package fingerprint gate (MOCK-ONLY / HOLD)
+
+- Implemented an optional browser-local SHA-256 package comparison in the Delivery release-identity preflight: independent reference validation, digest-only/match/mismatch outcomes, 25 MiB bound, stale-result invalidation and local hash copying.
+- Redacted all package bytes, filenames and digests from the existing HOLD-only JSON evidence worksheet; metadata alignment, digest equality and export never promote native DEV or production claims.
+- Added security contract tests, four-width Chromium regression and dedicated browser CI workflow. Source, historical DEV and mock evidence remain distinct; image publication approval remains HOLD.
+- See [release evidence and entitlements](releases/2026-11-15-offline-package-fingerprint-preflight.md) and [the live preparation page](delivery-release-evolution.html#package-fingerprint). **No native ServiceNow verification or authorised screenshot publication performed.**
+
 ## 15 November 2026 — Delivery release preflight discrepancy triage (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 - Fixed a substantive reviewer-routing defect: a version-only mismatch had been labelled "divergent application identity", even when the technical scope matched the reviewed source. The interactive preflight now differentiates scope drift, version drift, combined drift, invalid inputs, unknown fields and non-certifying text alignment.
