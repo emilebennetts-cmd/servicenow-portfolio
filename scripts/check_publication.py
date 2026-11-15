@@ -142,25 +142,39 @@ class SocialPreviewImageInspector(HTMLParser):
         self.issues = []
 
     def handle_starttag(self, tag, attrs):
-        fields = dict(attrs)
-        value = None
+        # Duplicate HTML attributes are ambiguous across parsers and crawlers.
+        # Inspect every name/property rather than trusting dict(attrs)'s last.
         if tag == "meta":
-            key = (fields.get("property") or fields.get("name")
-                   or fields.get("itemprop") or "").strip().lower()
-            if key in SOCIAL_IMAGE_KEYS:
-                value = fields.get("content", "")
+            selectors = [v.strip().lower() for k, v in attrs
+                         if k in {"property", "name", "itemprop"} and v]
+            if not any(k in SOCIAL_IMAGE_KEYS for k in selectors):
+                return
+            values = [v for k, v in attrs if k == "content"]
         elif tag == "link":
-            rels = (fields.get("rel") or "").lower().split()
-            if "image_src" in rels:
-                value = fields.get("href", "")
-        if value is None:
+            selectors = [v.lower() for k, v in attrs if k == "rel" and v]
+            if not any("image_src" in value.split() for value in selectors):
+                return
+            values = [v for k, v in attrs if k == "href"]
+        else:
             return
+        if len(selectors) != 1 or len(values) != 1 or values[0] is None:
+            self.issues.append("ambiguous social preview image metadata")
+            return
+        self.inspect_image_url(values[0])
+
+    def inspect_image_url(self, value):
         raw = value.strip()
-        parsed = urlsplit(raw)
+        try:
+            parsed = urlsplit(raw)
+            host = parsed.hostname
+            port = parsed.port
+        except ValueError:
+            self.issues.append("malformed social preview image URL")
+            return
         if parsed.scheme or parsed.netloc:
-            if (parsed.scheme != "https" or parsed.hostname != PUBLIC_IMAGE_ORIGIN
+            if (parsed.scheme != "https" or host != PUBLIC_IMAGE_ORIGIN
                     or parsed.username is not None or parsed.password is not None
-                    or parsed.port is not None or not parsed.path.startswith(PUBLIC_IMAGE_PREFIX)):
+                    or port is not None or not parsed.path.startswith(PUBLIC_IMAGE_PREFIX)):
                 self.issues.append("unapproved social preview image origin")
                 return
             relative = parsed.path[len(PUBLIC_IMAGE_PREFIX):]
