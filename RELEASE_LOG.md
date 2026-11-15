@@ -1,3 +1,9 @@
+## 15 November 2026 — Twelve-route public deep-link delivery assurance (LIVE WEB DELIVERY VERIFIED; native HOLD)
+
+- Expanded the independent anonymous GitHub Pages smoke from 4 to **12 source-backed public review routes**, covering Delivery, reusable patterns, Diagnostic handoff, CMDB/IRE, ITSM, Knowledge Intelligence, evidence and recruiter/architect review. Tightened canonical URL and MIME validation; added route-set and negative URL regression tests.
+- [Live GitHub Actions run 43672363794](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43672363794) passed **12/12 local markers, 12/12 anonymous public HTTPS routes and 4 offline unit tests**. The verified public delivery channel is not DEV-VERIFIED or PRODUCTION-VERIFIED ServiceNow execution. Original screenshot approval remains HOLD.
+- [Release proof and licensing boundaries](releases/2026-11-15-public-deep-link-assurance.md). Public site needs no ServiceNow licence; native scoped applications and related ServiceNow product/feature entitlements require separate validation.
+
 ## 15 November 2026 — Anonymous public HTTPS delivery smoke (STATIC WEB DELIVERY, not native ServiceNow proof)
 
 - Added a source-version marker, four-route anonymous TLS/HTTP 200 HTML smoke with propagation retries, fail-closed unit tests and a redacted Actions JSON receipt. This addresses the longstanding gap between a successful GitHub Pages deployment job and proof that the public website itself serves the expected content.
