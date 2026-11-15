@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'problem-management-implementation-lab.html'
+      - 'problem-management-implementation-lab.js'
+      - 'scripts/browser_problem_management_lab.py'
       - 'workbench-architecture-gallery.html'
       - 'scripts/test_architecture_gallery_claim_boundaries.py'
       - 'scripts/browser_architecture_gallery_boundaries.py'
@@ -160,3 +163,5 @@ jobs:
         run: python scripts/browser_evidence_reviewer_routes.py
       - name: Exercise navigation and case-study evidence boundaries at four viewport widths
         run: python scripts/browser_navigation_smoke.py
+      - name: Exercise Problem Management scenario switching and HOLD exports at four widths
+        run: python scripts/browser_problem_management_lab.py
