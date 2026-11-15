@@ -40,6 +40,16 @@ class RequestManagementLabTests(unittest.TestCase):
         self.assertNotIn("fetch(", self.js)
         self.assertNotIn("innerHTML", self.js)
 
+    def test_complete_native_handoff_is_visible_and_fail_closed(self):
+        self.assertIn('id="export-all"', self.html)
+        self.assertIn('24-gate DEV handoff', self.html)
+        self.assertIn('allAcceptanceCsv(marks)', self.js)
+        self.assertIn('native:"NOT RUN"', self.js)
+        self.assertIn('release:"HOLD"', self.js)
+        self.assertIn('classification:"MOCK-ONLY"', self.js)
+        self.assertNotIn("fetch(", self.js)
+        self.assertNotIn("localStorage", self.js)
+
     def test_export_cannot_auto_certify_native_service_now(self):
         for marker in ('native:"NOT RUN"', 'release:"HOLD"', 'classification:"MOCK-ONLY"',
                        'acceptanceCsv(current,read.get(current))',
