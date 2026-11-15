@@ -1,0 +1,29 @@
+name: Package fingerprint preflight browser safety
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'delivery-release-evolution.html'
+      - 'scripts/test_package_fingerprint_preflight.py'
+      - 'scripts/browser_package_fingerprint_preflight.py'
+      - '.github/workflows/package-fingerprint-preflight-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fingerprint-four-width:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check source and redaction contracts
+        run: python -m unittest scripts.test_package_fingerprint_preflight -v
+      - name: Install pinned Playwright
+        run: python -m pip install playwright==1.55.0
+      - name: Install Chromium headless shell
+        run: python -m playwright install chromium --only-shell
+      - name: Verify local hashing, privacy and mobile widths
+        run: python scripts/browser_package_fingerprint_preflight.py
