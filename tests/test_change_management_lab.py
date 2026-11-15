@@ -38,7 +38,7 @@ class ChangeManagementLabContracts(unittest.TestCase):
         self.assertIn("form-action 'none'", self.html)
         self.assertIn("img-src 'none'", self.html)
         self.assertNotRegex(self.html, r"<script[^>]+src=")
-        self.assertNotRegex(self.html, r"\\bfetch\\s*\\(")
+        self.assertNotRegex(self.html, r"\bfetch\s*\(")
         self.assertIn("No user data is collected or transmitted.", self.html)
 
     def test_responsive_accessible_and_evidence_boundaries(self):
