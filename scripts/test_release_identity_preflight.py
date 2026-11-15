@@ -14,6 +14,9 @@ class ReleaseIdentityPreflightContract(unittest.TestCase):
             'id="target-version"', 'id="preflight-export"',
             'x_1577958_vdf', '4.22.2', '4.20.0', 'x_eitsp_vdf',
             'TEXT MATCH · NOT VERIFIED', 'MISMATCH', 'INVALID INPUT',
+            'scope-and-version', 'text-aligned-not-verified', 'discrepancy_category:discrepancy(result)',
+            'HOLD — technical scope differs', 'HOLD — release version differs',
+            'HOLD — scope and version both differ',
             'release_decision:"HOLD"', 'native_execution:"NOT RUN"',
             'independent_dev_verified:false', 'production_verified:false',
             'target_package_hash_verified:false', 'image_publication_approved:false',
@@ -37,6 +40,7 @@ class ReleaseIdentityPreflightContract(unittest.TestCase):
         self.assertNotIn("scope.value", packet)
         self.assertNotIn("version.value", packet)
         self.assertIn("comparison_results:result", packet)
+        self.assertIn("discrepancy_category:discrepancy(result)", packet)
         for prohibited in ("drive.google.com/file/d/", "docs.google.com/document/d/",
                            "servicenow-portfolio-control", "token="):
             self.assertNotIn(prohibited, HTML)
