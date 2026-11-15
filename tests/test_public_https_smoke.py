@@ -25,7 +25,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             (url, 404, "text/html", raw),
             (url, 200, "application/json", raw),
             (url, 200, "text/html", b"<html></html>"),
-            (url, 200, "text/html", b"\\xff"),
+            (url, 200, "text/html", b"\xff"),
         ]
         for final, code, mime, body in failures:
             with self.subTest(final=final, code=code, mime=mime):
