@@ -5,6 +5,8 @@ This deliberately checks only tracked web assets, not private repositories.
 It is a heuristic guardrail, not a substitute for human screenshot review.
 """
 from pathlib import Path
+from html.parser import HTMLParser
+from urllib.parse import urlsplit
 import hashlib
 import re
 import sys
@@ -123,6 +125,51 @@ def scan_visual_embeds(text, suffix):
               + (SVG_UNSAFE_PATTERNS if suffix == ".svg" else []))
     return [label for label, pattern in checks if pattern.search(text)]
 
+# Social preview tags are fetched by crawlers outside the browser's CSP. They
+# must not become a bypass for the same human-approved screenshot allowlist.
+SOCIAL_IMAGE_KEYS = {
+    "og:image", "og:image:url", "og:image:secure_url",
+    "twitter:image", "twitter:image:src", "image",
+}
+PUBLIC_IMAGE_ORIGIN = "emilebennetts-cmd.github.io"
+PUBLIC_IMAGE_PREFIX = "/servicenow-portfolio/"
+
+class SocialPreviewImageInspector(HTMLParser):
+    """Reject unreviewed image metadata regardless of HTML attribute order."""
+    def __init__(self, approved):
+        super().__init__(convert_charrefs=True)
+        self.approved = approved
+        self.issues = []
+
+    def handle_starttag(self, tag, attrs):
+        fields = dict(attrs)
+        value = None
+        if tag == "meta":
+            key = (fields.get("property") or fields.get("name")
+                   or fields.get("itemprop") or "").strip().lower()
+            if key in SOCIAL_IMAGE_KEYS:
+                value = fields.get("content", "")
+        elif tag == "link":
+            rels = (fields.get("rel") or "").lower().split()
+            if "image_src" in rels:
+                value = fields.get("href", "")
+        if value is None:
+            return
+        raw = value.strip()
+        parsed = urlsplit(raw)
+        if parsed.scheme or parsed.netloc:
+            if (parsed.scheme != "https" or parsed.hostname != PUBLIC_IMAGE_ORIGIN
+                    or parsed.username is not None or parsed.password is not None
+                    or parsed.port is not None or not parsed.path.startswith(PUBLIC_IMAGE_PREFIX)):
+                self.issues.append("unapproved social preview image origin")
+                return
+            relative = parsed.path[len(PUBLIC_IMAGE_PREFIX):]
+        else:
+            relative = parsed.path
+        if (not raw or parsed.query or parsed.fragment or "%" in relative
+                or relative not in self.approved):
+            self.issues.append("social preview image lacks byte-bound publication approval")
+
 def check(root=ROOT, allowlist=ALLOWLIST):
     issues = []
     approved = {}
@@ -181,6 +228,10 @@ def check(root=ROOT, allowlist=ALLOWLIST):
                 issues.append(f"{relative}: potential {label} in public asset")
             for label in scan_visual_embeds(contents, path.suffix.lower()):
                 issues.append(f"{relative}: unapproved visual embed ({label})")
+            if path.suffix.lower() in {".html", ".htm"}:
+                inspector = SocialPreviewImageInspector(approved)
+                inspector.feed(contents)
+                issues.extend(f"{relative}: {finding}" for finding in inspector.issues)
     for relative in approved:
         target = root / relative
         if (not target.is_file() or target.suffix.lower() not in IMAGE_EXTENSIONS
