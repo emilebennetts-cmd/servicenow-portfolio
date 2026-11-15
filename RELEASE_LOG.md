@@ -2,7 +2,7 @@
 
 - Added three responsive, accessible, CSS-rendered Workbench interface storyboards: Delivery engagement, Diagnostic evidence-to-finding and controlled cross-workbench intake. All are explicitly illustrative, not screenshots or live UI claims.
 - Linked each reconstruction to the existing DEL/DIA/XWB native acceptance gates; preserved 12 NOT RUN/HOLD controls, five conflicting historical observations and both CSV handoffs.
-- Added a homepage gallery shortcut and regression assertions for mock-only classification, accessible scene descriptions and no original images or remote dependencies.
+- Added a homepage gallery shortcut, searchable Explorer keywords and regression assertions for mock-only classification, accessible scene descriptions and no original images or remote dependencies.
 - [Release and evidence boundaries](releases/2026-11-16-workbench-interface-storyboards.md).
 
 ## 16 November 2026 — Workbench historical release-claim conflict reconciliation (SOURCE-ONLY / native HOLD)
