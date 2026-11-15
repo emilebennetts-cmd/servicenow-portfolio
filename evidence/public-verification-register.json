@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-14T19:23:54Z",
+  "updated_utc": "2026-11-15T06:21:08Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -829,6 +829,15 @@
       "runtime_verification": "Synthetic or locally supplied public planning CSV is reviewed only in the browser; native ServiceNow collectors, DEV/PDI and Production are NOT RUN and NOT VERIFIED. Downloaded JSON receipt remains HOLD and cannot grant independent acceptance. Browser CI is website functionality testing only.",
       "public_screenshot_status": "No original ServiceNow screen captures are embedded. Image-specific publication approvals remain zero / HOLD.",
       "page": "ki-matrix-intake.html"
+    },
+    {
+      "id": "ARCH-DECISION-REVIEW-20261115",
+      "title": "Architecture decision register — eight source-derived controls",
+      "classification": "source-only",
+      "basis": "Reviewed restricted Delivery Workbench and Diagnostic Workbench 2 source documentation plus controlled Workbench Architecture and historical As-Built. The public register presents paraphrased design choices, rejected shortcuts, operational risks and required native acceptance gates. It is not a signed ADR or installed feature inventory.",
+      "runtime_verification": "SOURCE-ONLY for design rationale; page filters and search are MOCK-ONLY browser interactions. Historical DEV-REPORTED documentation is not newly witnessed. No independent current DEV-VERIFIED or PRODUCTION-VERIFIED native execution, ACL acceptance or customer sign-off.",
+      "public_screenshot_status": "No original ServiceNow screenshot, customer data or private source published. Per-image publication approvals remain 0 / HOLD.",
+      "page": "architecture-decision-register.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
