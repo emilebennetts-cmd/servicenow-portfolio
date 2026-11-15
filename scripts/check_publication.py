@@ -184,6 +184,78 @@ class SocialPreviewImageInspector(HTMLParser):
                 or relative not in self.approved):
             self.issues.append("social preview image lacks byte-bound publication approval")
 
+class ResponsiveImageInspector(HTMLParser):
+    """Deny image references not covered by the byte-bound approval manifest."""
+    def __init__(self, approved):
+        super().__init__(convert_charrefs=True)
+        self.approved = approved
+        self.issues = []
+
+    def _url(self, value):
+        raw = (value or "").strip()
+        try:
+            parsed = urlsplit(raw)
+            host, port = parsed.hostname, parsed.port
+        except ValueError:
+            self.issues.append("malformed responsive image URL")
+            return
+        if parsed.scheme or parsed.netloc:
+            if (parsed.scheme != "https" or host != PUBLIC_IMAGE_ORIGIN
+                    or parsed.username is not None or parsed.password is not None
+                    or port is not None or not parsed.path.startswith(PUBLIC_IMAGE_PREFIX)):
+                self.issues.append("unapproved responsive image origin")
+                return
+            relative = parsed.path[len(PUBLIC_IMAGE_PREFIX):]
+        elif parsed.path.startswith("/"):
+            if not parsed.path.startswith(PUBLIC_IMAGE_PREFIX):
+                self.issues.append("unapproved responsive image origin")
+                return
+            relative = parsed.path[len(PUBLIC_IMAGE_PREFIX):]
+        else:
+            relative = parsed.path
+        if (not raw or parsed.query or parsed.fragment or "%" in relative
+                or relative not in self.approved):
+            self.issues.append("responsive image lacks byte-bound publication approval")
+
+    def _attr(self, attrs, name, srcset=False):
+        values = [value for key, value in attrs if key == name]
+        if not values:
+            return
+        if len(values) != 1 or values[0] is None:
+            self.issues.append("ambiguous responsive image attribute")
+            return
+        if not srcset:
+            self._url(values[0])
+            return
+        # Publication paths are canonical and cannot contain commas or spaces.
+        for candidate in values[0].split(","):
+            tokens = candidate.strip().split()
+            if (not tokens or len(tokens) > 2
+                    or (len(tokens) == 2 and not re.fullmatch(
+                        r"(?:[1-9][0-9]*w|[0-9]+(?:[.][0-9]+)?x)", tokens[1]))):
+                self.issues.append("malformed responsive srcset candidate")
+                continue
+            self._url(tokens[0])
+
+    def handle_starttag(self, tag, attrs):
+        props = dict(attrs)
+        if tag == "img":
+            self._attr(attrs, "src")
+            self._attr(attrs, "srcset", srcset=True)
+        elif tag == "source":
+            # Source.src may be an audio/video resource, while srcset is images.
+            self._attr(attrs, "srcset", srcset=True)
+        elif tag == "video":
+            self._attr(attrs, "poster")
+        elif tag == "input" and (props.get("type") or "").lower() == "image":
+            self._attr(attrs, "src")
+        elif (tag == "link"
+              and "preload" in (props.get("rel") or "").lower().split()
+              and (props.get("as") or "").lower() == "image"):
+            self._attr(attrs, "href")
+            self._attr(attrs, "imagesrcset", srcset=True)
+
+
 def check(root=ROOT, allowlist=ALLOWLIST):
     issues = []
     approved = {}
@@ -246,6 +318,9 @@ def check(root=ROOT, allowlist=ALLOWLIST):
                 inspector = SocialPreviewImageInspector(approved)
                 inspector.feed(contents)
                 issues.extend(f"{relative}: {finding}" for finding in inspector.issues)
+                responsive = ResponsiveImageInspector(approved)
+                responsive.feed(contents)
+                issues.extend(f"{relative}: {finding}" for finding in responsive.issues)
     for relative in approved:
         target = root / relative
         if (not target.is_file() or target.suffix.lower() not in IMAGE_EXTENSIONS

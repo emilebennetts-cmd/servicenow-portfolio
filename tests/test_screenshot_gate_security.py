@@ -130,5 +130,61 @@ class ScreenshotGateSecurityTests(unittest.TestCase):
         self.assertEqual(sum("malformed social preview" in x for x in issues), 2)
 
 
+    def test_rejects_second_remote_srcset_candidate(self):
+        page = self.root / "responsive.html"
+        page.write_text('<picture><source srcset="assets/screenshots/ok.png 1x, https://other.invalid/private.png 2x"></picture>')
+        self.assertTrue(any("unapproved responsive image origin" in x for x in check(self.root, self.manifest)))
+
+    def test_rejects_unapproved_relative_img_src(self):
+        (self.root / "case.html").write_text('<img src="assets/screenshots/private.png" alt="Example">')
+        self.assertTrue(any("responsive image lacks byte-bound publication approval" in x for x in check(self.root, self.manifest)))
+
+    def test_rejects_remote_image_preload_and_imagesrcset(self):
+        (self.root / "case.html").write_text(
+            '<link rel="preload" as="image" href="assets/screenshots/unknown.png" '
+            'imagesrcset="assets/screenshots/unknown.png 1x, https://other.invalid/hidden.png 2x">')
+        issues = check(self.root, self.manifest)
+        self.assertTrue(any("lacks byte-bound publication approval" in x for x in issues))
+        self.assertTrue(any("unapproved responsive image origin" in x for x in issues))
+
+    def test_rejects_query_params_and_alternate_ports(self):
+        (self.root / "case.html").write_text(
+            '<img src="assets/screenshots/ok.png?token=accidental">'
+            '<img src="https://emilebennetts-cmd.github.io:8443/servicenow-portfolio/assets/screenshots/ok.png">')
+        issues = check(self.root, self.manifest)
+        self.assertTrue(any("lacks byte-bound publication approval" in x for x in issues))
+        self.assertTrue(any("unapproved responsive image origin" in x for x in issues))
+
+    def test_rejects_duplicate_src_and_bad_srcset_descriptor(self):
+        (self.root / "case.html").write_text(
+            '<img src="a.png" src="b.png"><img srcset="assets/screenshots/ok.png 999q">')
+        issues = check(self.root, self.manifest)
+        self.assertTrue(any("ambiguous responsive image attribute" in x for x in issues))
+        self.assertTrue(any("malformed responsive srcset candidate" in x for x in issues))
+
+    def test_rejects_image_input_and_local_video_poster(self):
+        (self.root / "case.html").write_text(
+            '<input type="image" src="assets/screenshots/private.png">'
+            '<video poster="assets/screenshots/private.png"></video>')
+        issues = check(self.root, self.manifest)
+        self.assertGreaterEqual(sum("responsive image lacks byte-bound" in x for x in issues), 2)
+
+    def test_approved_srcset_and_preload_are_accepted(self):
+        image = self.root / "assets" / "screenshots" / "approved.png"
+        image.write_bytes(bytes([137, 80, 78, 71, 13, 10, 26, 10]) + b"synthetic-no-metadata")
+        digest = hashlib.sha256(image.read_bytes()).hexdigest()
+        self.manifest.write_text(f"assets/screenshots/approved.png {digest}\n")
+        (self.root / "case.html").write_text(
+            '<picture><source srcset="assets/screenshots/approved.png 1x, '
+            'https://emilebennetts-cmd.github.io/servicenow-portfolio/assets/screenshots/approved.png 2x">'
+            '<img src="assets/screenshots/approved.png"></picture>'
+            '<link rel="preload" as="image" href="assets/screenshots/approved.png">')
+        self.assertEqual(check(self.root, self.manifest), [])
+
+    def test_rejects_data_url_in_srcset(self):
+        (self.root / "case.html").write_text('<img srcset="data:image/png;base64,AA== 1x">')
+        self.assertTrue(any("responsive image" in x for x in check(self.root, self.manifest)))
+
+
 if __name__ == "__main__":
     unittest.main()
