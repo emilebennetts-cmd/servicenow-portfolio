@@ -1,3 +1,9 @@
+## 16 November 2026 — Knowledge Management implementation lab (MOCK-ONLY / native HOLD)
+
+- Added an OOTB-first, responsive Knowledge Management case study with 3 synthetic article workflows (author/publish, reader and access restrictions, review/retire), 24 native DEV handoff gates, private receipt placeholders and conservative offline CSV export.
+- Indexed homepage, portfolio Explorer, canonical sitemap and public evidence register; added Node and Python regression coverage. No new DEV or Production verification, private source, credentials, customer data or original screenshots.
+- [Implementation, test contract and licensing boundaries](releases/2026-11-16-knowledge-management-implementation-lab.md).
+
 ## 16 November 2026 — Request Management implementation case study (MOCK-ONLY / native HOLD)
 
 - Added an OOTB-first, mobile-friendly Service Catalog & Request Management implementation lab with 3 synthetic request journeys, 24 distinct native acceptance controls, accessible reading marks and a conservative CSV export (NOT RUN / HOLD / MOCK-ONLY).
