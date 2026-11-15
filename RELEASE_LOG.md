@@ -1,3 +1,10 @@
+# 16 November 2026 — Incident Management implementation lab (MOCK-ONLY / native HOLD)
+
+- Published a client-neutral, responsive Incident Management case study with three interactive synthetic journeys (intake/priority, restoration/communication, and closure/improvement), 24 native acceptance gates, and a complete fail-closed CSV handoff.
+- Indexed homepage, portfolio Explorer, sitemap and public evidence register; added independent Node/Python contracts and quality workflow command.
+- All native controls remain NOT RUN / HOLD, original screenshots stay withheld; no new DEV-VERIFIED or PRODUCTION-VERIFIED claims.
+- [Release record](releases/2026-11-16-incident-management-implementation-lab.md).
+
 ## 16 November 2026 — Workbench interface storyboards (MOCK-ONLY / native HOLD)
 
 - Added three responsive, accessible, CSS-rendered Workbench interface storyboards: Delivery engagement, Diagnostic evidence-to-finding and controlled cross-workbench intake. All are explicitly illustrative, not screenshots or live UI claims.

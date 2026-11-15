@@ -25,6 +25,8 @@ jobs:
         run: node --test tests/knowledge_management_lab.test.cjs
       - name: Test Problem Management synthetic state and HOLD-only CSV
         run: node --test tests/problem_management_lab.test.cjs
+      - name: Test Incident Management native handoff and HOLD-only CSV
+        run: node --test tests/incident_management_lab.test.cjs
       - name: Test Workbench source-to-DEV filters and HOLD-only export
         run: node --test tests/workbench_gap_board.test.cjs
       - name: Test quality gate
