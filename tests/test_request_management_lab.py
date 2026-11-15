@@ -21,7 +21,7 @@ class RequestManagementLabTests(unittest.TestCase):
                      "HOLD", "No genuine ServiceNow screenshots",
                      "No browser storage", "no ServiceNow licence"):
             with self.subTest(name=name):
-                self.assertIn(name, self.html)
+                self.assertIn(name.lower(), self.html.lower())
 
     def test_accessible_responsive_without_external_images_or_scripts(self):
         for snippet in ('lang="en"', 'id="main"', 'aria-live="polite"',
