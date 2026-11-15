@@ -865,6 +865,15 @@
       "runtime_verification": "Browser-local reading marks and CSV export are not ServiceNow KB/article creation, workflow approvals, user criteria security tests, production acceptance or an independently witnessed installation. All exported controls are NOT RUN / HOLD / MOCK-ONLY. No DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
       "public_screenshot_status": "Illustrative HTML only. No original ServiceNow screenshots, customer records, private source or credentials; original screenshot approvals remain zero / HOLD.",
       "page": "knowledge-management-implementation-lab.html"
+    },
+    {
+      "id": "PROBLEM-MANAGEMENT-LAB-20261116",
+      "title": "Problem Management OOTB implementation and native DEV acceptance rehearsal",
+      "classification": "mock-only",
+      "basis": "Independently authored, customer-neutral HTML/JavaScript static lab with 3 synthetic Problem Management journeys and 24 unrun native acceptance controls, informed by official ServiceNow Problem Management documentation. Not a native deployed Workbench module.",
+      "runtime_verification": "Design checklist, simulated selection and offline CSV export are not live Problem/Problem Task creation, change/known-error integration, security tests, ATF results or independent DEV/Production verification. Native outcomes fixed to NOT RUN / HOLD / MOCK-ONLY.",
+      "public_screenshot_status": "Illustrative CSS/HTML architecture only; no original ServiceNow screenshot, customer records, private source or credentials. Genuine screenshot approvals remain 0 / HOLD.",
+      "page": "problem-management-implementation-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."

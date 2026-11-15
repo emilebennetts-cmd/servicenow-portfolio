@@ -1,3 +1,10 @@
+## 16 November 2026 — Problem Management implementation lab (MOCK-ONLY / native HOLD)
+
+- Released OOTB-first, accessible, mobile-friendly Problem Management case study covering recurrent incidents, RCA/problem tasks, workarounds, known errors and change-governed permanent fixes.
+- Added three fictional journeys and 24 separate native DEV acceptance gates, fail-closed eight/all gate CSV exports, independent reviewer placeholders, and Node/Python regression coverage.
+- Updated homepage, explorer, sitemap and public evidence register. No current DEV or Production verification; no private source, customer data or original screenshots.
+- [Implementation, acceptance boundaries and entitlement note](releases/2026-11-16-problem-management-implementation-lab.md).
+
 ## 16 November 2026 — Knowledge Management implementation lab (MOCK-ONLY / native HOLD)
 
 - Added an OOTB-first, responsive Knowledge Management case study with 3 synthetic article workflows (author/publish, reader and access restrictions, review/retire), 24 native DEV handoff gates, private receipt placeholders and conservative offline CSV export.
