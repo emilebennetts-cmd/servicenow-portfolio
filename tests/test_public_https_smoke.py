@@ -24,6 +24,11 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             (smoke.BASE, 200, "text/html", raw),
             (url, 404, "text/html", raw),
             (url, 200, "application/json", raw),
+            (url + "?debug=true", 200, "text/html", raw),
+            (url + "#gallery", 200, "text/html", raw),
+            (url.replace("github.io", "github.io:443"), 200, "text/html", raw),
+            (url.replace("https://", "https://reviewer@"), 200, "text/html", raw),
+            (url, 200, "text/html-injected", raw),
             (url, 200, "text/html", b"<html></html>"),
             (url, 200, "text/html", b"\xff"),
         ]
@@ -38,11 +43,22 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             for name, marker in smoke.TARGETS.items():
                 (root / name).write_text(f"<html>{marker}</html>", encoding="utf-8")
             result = smoke.local_check(root)
-            self.assertEqual(len(result), 4)
+            self.assertEqual(len(result), 12)
             self.assertTrue(all(r["verification"] == "LOCAL-ONLY" for r in result))
             (root / "index.html").write_text("<html></html>", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "required marker missing"):
                 smoke.local_check(root)
+
+    def test_release_route_set_covers_core_consulting_journey(self):
+        expected = {
+            "index.html", "delivery-release-evolution.html",
+            "diagnostic-workbench-case-study.html", "visual-evidence.html",
+            "delivery-case-study.html", "reusable-delivery-patterns-case-study.html",
+            "diagnostic-delivery-handoff-contract.html", "cmdb-ire-assurance.html",
+            "itsm-greenfield-build-sequencer.html", "ki-matrix-intake.html",
+            "technical-evidence-register.html", "portfolio-review-guide.html",
+        }
+        self.assertEqual(set(smoke.TARGETS), expected)
 
     def test_local_receipt_never_promotes_native_claims(self):
         with tempfile.TemporaryDirectory() as directory:
