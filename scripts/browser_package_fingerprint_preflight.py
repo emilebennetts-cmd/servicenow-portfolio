@@ -31,7 +31,7 @@ def verify(browser, width):
         page.locator("#expected-package-sha").fill(SHA.upper())
         assert page.locator("#fingerprint-status").inner_text() == "NOT RUN · HOLD"
         page.locator("#fingerprint-run").click()
-        page.locator("#fingerprint-status").get_by_text("HASH MATCH — NOT VERIFIED · HOLD").wait_for()
+        page.wait_for_function('document.querySelector("#fingerprint-status").textContent === "HASH MATCH — NOT VERIFIED · HOLD"')
         assert not page.locator("#fingerprint-copy").is_disabled()
         with page.expect_download() as info:
             page.locator("#preflight-export").click()
@@ -51,7 +51,7 @@ def verify(browser, width):
         page.locator("#expected-package-sha").fill("0" * 64)
         assert page.locator("#fingerprint-status").inner_text() == "NOT RUN · HOLD"
         page.locator("#fingerprint-run").click()
-        page.locator("#fingerprint-status").get_by_text("HASH MISMATCH · HOLD").wait_for()
+        page.wait_for_function('document.querySelector("#fingerprint-status").textContent === "HASH MISMATCH · HOLD"')
         page.locator("#fingerprint-clear").click()
         assert page.locator("#package-file").input_value() == ""
         assert page.locator("#expected-package-sha").input_value() == ""
