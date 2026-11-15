@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-16",
+  "updated_utc": "2026-11-15T23:30:00Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -892,6 +892,15 @@
       "runtime_verification": "Mock interface and CSV design review only. Native Incident records, role security, SLA timing, prioritisation data lookup, state transitions and closure have NOT RUN / HOLD results. No new DEV-VERIFIED or PRODUCTION-VERIFIED claims.",
       "public_screenshot_status": "Illustrative CSS/HTML interface only. No original ServiceNow screenshot, private source, customer data or credentials; individual screenshot approvals remain 0 / HOLD.",
       "page": "incident-management-implementation-lab.html"
+    },
+    {
+      "id": "CMDB-DATA-MANAGER-GOVERNANCE-20261116",
+      "title": "CMDB Data Manager retire/archive/delete/attestation policy planning lab",
+      "classification": "mock-only",
+      "basis": "Customer-neutral, authored browser-local Data Manager lifecycle fixtures, five unrun native controls for each of four policy scenarios (20 total), grounded in official Australia 2026 ServiceNow documentation and controlled historical Delivery/Diagnostic source review.",
+      "runtime_verification": "All previews are MOCK-ONLY; no native CI, policy, retirement definition, approval, archived data, scheduled-job or task processing has been executed. CSV outcomes are fixed NOT RUN / HOLD / MOCK-ONLY, and private execution receipt fields are blank. No DEV-VERIFIED or PRODUCTION-VERIFIED claim.",
+      "public_screenshot_status": "CSS/HTML synthetic policy preview; no ServiceNow screenshot or customer data. Original screenshot approvals zero / HOLD.",
+      "page": "cmdb-data-manager-governance-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
