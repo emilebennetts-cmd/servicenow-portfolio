@@ -1,3 +1,9 @@
+## 15 November 2026 — Anonymous public HTTPS delivery smoke (STATIC WEB DELIVERY, not native ServiceNow proof)
+
+- Added a source-version marker, four-route anonymous TLS/HTTP 200 HTML smoke with propagation retries, fail-closed unit tests and a redacted Actions JSON receipt. This addresses the longstanding gap between a successful GitHub Pages deployment job and proof that the public website itself serves the expected content.
+- Live URL reachability remains UNCONFIRMED until this workflow runs successfully; no DEV-VERIFIED, PRODUCTION-VERIFIED or screenshot publication claim follows from a static-site response. Private repositories and customer evidence remain protected.
+- See [public release contract](releases/2026-11-15-public-https-live-smoke.md) and [deployment verification workflow](.github/workflows/public-url-smoke.yml).
+
 ## 15 November 2026 — Offline release-package fingerprint gate (MOCK-ONLY / HOLD)
 
 - Implemented an optional browser-local SHA-256 package comparison in the Delivery release-identity preflight: independent reference validation, digest-only/match/mismatch outcomes, 25 MiB bound, stale-result invalidation and local hash copying.
