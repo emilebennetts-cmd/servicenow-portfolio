@@ -39,6 +39,21 @@ class WorkbenchGapBoardTests(unittest.TestCase):
         self.assertNotIn('drive.google.com/file/d/', self.html)
         self.assertNotIn('docs.google.com/document/d/', self.html)
 
+    def test_visual_storyboards_are_mock_only(self):
+        scenes = re.findall(r'<article class="story"[^>]*data-storyboard="([^"]+)"', self.html)
+        self.assertEqual(scenes, ["Delivery", "Diagnostic", "Cross-workbench"])
+        for marker in ('id="evidence-gallery"', 'MOCK-ONLY diagrams',
+                       'No native engagement or record', 'No collector has been run',
+                       'does not represent live synchronisation', 'Image approvals: 0',
+                       'aria-label="Illustrative', 'href="#gate-DEL-04"',
+                       'href="#gate-DIA-03"', 'href="#gate-XWB-02"'):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, self.html)
+        self.assertEqual(len(re.findall(r'<div class="story-screen" role="img"', self.html)), 3)
+        self.assertNotRegex(self.html, r'<(?:img|picture|iframe)\\b')
+        self.assertIn("max-width:650px", self.html)
+        self.assertIn("prefers-reduced-motion", self.html)
+
     def test_twelve_unique_native_controls(self):
         matches = re.findall(r'<article class="gate" data-group="([^"]+)" aria-labelledby="gate-([^"]+)"', self.html)
         self.assertEqual(len(matches), 12)
