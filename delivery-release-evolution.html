@@ -102,17 +102,31 @@ if(kind==="version"&&!/^[0-9]{1,5}(\.[0-9]{1,5}){2}$/.test(value))return "INVALI
 return value===expected[kind]?"TEXT MATCH · NOT VERIFIED":"MISMATCH";
 }
 function current(){return {scope:classify(scope.value,"scope"),version:classify(version.value,"version")};}
+/* Treat scope and version separately. A version drift is not proof of an incorrect app scope;
+   a planned target-specific scope is not automatically an unauthorised installation. */
+function discrepancy(result){
+if(Object.values(result).includes("INVALID INPUT"))return "invalid-format";
+if(result.scope==="MISMATCH"&&result.version==="MISMATCH")return "scope-and-version";
+if(result.scope==="MISMATCH")return "scope";
+if(result.version==="MISMATCH")return "version";
+if(Object.values(result).every(value=>value==="TEXT MATCH · NOT VERIFIED"))return "text-aligned-not-verified";
+return "insufficient-metadata";
+}
 function refresh(){
-const result=current();
+const result=current(),reason=discrepancy(result);
 byId("scope-result").textContent=result.scope;
 byId("version-result").textContent=result.version;
 byId("preflight-origin").textContent="Scenario: "+origin;
-let title="HOLD — insufficient target metadata",detail="Target metadata is missing. This preparation aid cannot read a ServiceNow instance.";
-if(Object.values(result).includes("INVALID INPUT")){
-title="HOLD — invalid metadata format";detail="Use a technical scope beginning x_ and a numeric three-part app version; no raw values are retained in exported worksheets.";
-}else if(Object.values(result).includes("MISMATCH")){
-title="HOLD — divergent application identity";detail="Stop release promotion. Verify scoped application identity, immutable package receipt, target-specific migration requirements and native tests.";
-}else if(Object.values(result).every(x=>x==="TEXT MATCH · NOT VERIFIED")){
+let title="HOLD — insufficient target metadata",detail="Target metadata is missing or incomplete. This preparation aid cannot read a ServiceNow instance.";
+if(reason==="invalid-format"){
+title="HOLD — invalid metadata format";detail="Use a technical scope beginning x_ and a numeric three-part app version; entered values are never retained in exported worksheets.";
+}else if(reason==="scope-and-version"){
+title="HOLD — scope and version both differ";detail="Investigate source-to-target identity and release lineage separately. A deliberately migrated scope requires an approved mapping, build receipt and native tests.";
+}else if(reason==="scope"){
+title="HOLD — technical scope differs";detail="Compare application sys_id and scope against an approved migration or target-fork record. A matching version alone cannot establish package identity.";
+}else if(reason==="version"){
+title="HOLD — release version differs";detail="Confirm the installed package/build receipt and target-version compatibility. Version drift alone does not imply a different application scope.";
+}else if(reason==="text-aligned-not-verified"){
 title="HOLD — labels align, runtime unverified";detail="A text match is not a package hash, independently witnessed DEV check, ACL test, UAT or production approval.";
 }
 byId("preflight-status").textContent=title;
@@ -133,7 +147,7 @@ const packet={
 schema:"portfolio.release-identity-preflight.v1",
 tool_status:"MOCK-ONLY",source_evidence:"SOURCE-ONLY",origin:origin.startsWith("Synthetic")?"synthetic fixture":"untrusted manual input",
 source_release:"4.22.2 (source declaration only)",
-comparison_results:result,
+comparison_results:result,discrepancy_category:discrepancy(result),
 observed_values_included:false,
 native_execution:"NOT RUN",target_package_hash_verified:false,independent_dev_verified:false,production_verified:false,
 image_publication_approved:false,approval_status:"UNREVIEWED",release_decision:"HOLD",
