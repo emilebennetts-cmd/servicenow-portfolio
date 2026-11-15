@@ -7,6 +7,14 @@ on:
       - 'delivery-release-evolution.html'
       - 'diagnostic-workbench-case-study.html'
       - 'visual-evidence.html'
+      - 'delivery-case-study.html'
+      - 'reusable-delivery-patterns-case-study.html'
+      - 'diagnostic-delivery-handoff-contract.html'
+      - 'cmdb-ire-assurance.html'
+      - 'itsm-greenfield-build-sequencer.html'
+      - 'ki-matrix-intake.html'
+      - 'technical-evidence-register.html'
+      - 'portfolio-review-guide.html'
       - 'scripts/check_public_https.py'
       - 'tests/test_public_https_smoke.py'
       - '.github/workflows/public-url-smoke.yml'
@@ -25,11 +33,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test strict same-origin and non-certifying receipt contract
+      - name: Test strict HTTPS URL identity, twelve routes and non-certifying receipt
         run: python -m unittest discover -s tests -p 'test_public_https_smoke.py' -v
       - name: Check published markers exist in the source
         run: python scripts/check_public_https.py --mode local
-      - name: Inspect anonymous public HTTPS after Pages propagation
+      - name: Inspect twelve anonymous public HTTPS routes after Pages propagation
         run: python scripts/check_public_https.py --mode live --attempts 12 --retry-seconds 20
       - name: Keep a redacted machine-readable delivery receipt
         if: always()
