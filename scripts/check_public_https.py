@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Anonymous post-deploy HTTPS verification. No ServiceNow access or credentials."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -31,8 +32,8 @@ RECEIPT = "public-https-smoke-receipt.json"
 MAX_BYTES = 1_500_000
 
 
-def validate_response(url, final_url, status, content_type, raw, required):
-    """Confirm an anonymous 200, same HTTPS origin/path and current HTML."""
+def validate_response(url, final_url, status, content_type, raw, required, expected_sha256=None):
+    """Confirm canonical delivery; optionally require byte equality with checked-out HTML."""
     requested, final = urlparse(url), urlparse(final_url)
     # Strictly pin anonymous public responses to a canonical URL. A matching
     # hostname alone cannot exclude a different port, credentials or query.
@@ -54,17 +55,27 @@ def validate_response(url, final_url, status, content_type, raw, required):
     html = raw.decode("utf-8", errors="strict")
     if required not in html:
         raise ValueError("required published marker missing (deployment may be stale)")
+    if expected_sha256 is not None and hashlib.sha256(raw).hexdigest() != expected_sha256:
+        raise ValueError("published HTML bytes differ from checked-out source")
 
 
 def live_check(name, required):
+    # Compare GitHub Pages bytes to the exact file checked out at GITHUB_SHA,
+    # not just a stable HTML marker that an outdated page could also contain.
+    source = (Path(__file__).resolve().parents[1] / name).read_bytes()
+    if len(source) > MAX_BYTES or required.encode("utf-8") not in source:
+        raise ValueError("checked-out source is missing marker or exceeds size limit")
+    source_digest = hashlib.sha256(source).hexdigest()
     url = BASE if name == "index.html" else BASE + name
     request = Request(url, headers={"User-Agent": "ServiceNow-Portfolio-Public-URL-Smoke/1.1",
                                     "Accept": "text/html", "Cache-Control": "no-cache"})
     with urlopen(request, timeout=15, context=ssl.create_default_context()) as response:
         raw = response.read(MAX_BYTES + 1)
         validate_response(url, response.geturl(), response.status,
-                          response.headers.get("Content-Type", ""), raw, required)
-    return {"route": name, "url": url, "status": "PASS", "http_status": 200}
+                          response.headers.get("Content-Type", ""), raw, required,
+                          expected_sha256=source_digest)
+    return {"route": name, "url": url, "status": "PASS", "http_status": 200,
+            "bytes_match_checkout": True, "sha256": source_digest}
 
 
 def local_check(root):
@@ -108,6 +119,9 @@ def write_summary(results, success, mode):
         "source_commit": os.environ.get("GITHUB_SHA", "unknown"),
         "execution": mode,
         "verified_live_public_website": bool(success and mode == "live"),
+        "verified_exact_deployed_bytes": bool(success and mode == "live"
+            and len(results) == len(TARGETS)
+            and all(row.get("bytes_match_checkout") is True for row in results)),
         "native_dev_verified": False,
         "production_servicenow_verified": False,
         "screenshot_publication_approved": False,
@@ -121,8 +135,10 @@ def write_summary(results, success, mode):
             for row in results:
                 handle.write(f"- {row['route']}: **{row['status']}**\n")
             handle.write(f"- Anonymous public URL: **{'CONFIRMED' if success and mode == 'live' else 'UNCONFIRMED'}**\n")
+            handle.write(f"- Exact deployed HTML bytes match checkout: **{'CONFIRMED' if output['verified_exact_deployed_bytes'] else 'UNCONFIRMED'}**\n")
             handle.write("- Native DEV, production and screenshot approval: **NOT VERIFIED / HOLD**\n")
     print(json.dumps({"live_public_website_confirmed": output["verified_live_public_website"],
+                      "exact_deployed_bytes_confirmed": output["verified_exact_deployed_bytes"],
                       "routes_passed": sum(x["status"] == "PASS" for x in results),
                       "routes_total": len(results)}))
 
