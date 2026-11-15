@@ -37,6 +37,17 @@
 .preflight .privacy{font-size:.88rem;color:#cde0e9}
 @media(max-width:650px){.preflight .field-grid,.preflight .result-grid{grid-template-columns:1fr}.preflight button{flex:1 1 auto}}
 @media print{.preflight{background:#fff;color:#111}.preflight .decision-panel,.preflight .reference,.preflight .result{background:#fff;color:#111}.preflight p,.preflight strong,.preflight .decision-panel p{color:#222!important}.preflight .presets,.preflight .toolbar{display:none}}
+
+/* Client-side SHA-256 fingerprint preparation: never a native or approval attestation. */
+.preflight .fingerprint{border:1px solid #5c8297;background:#0a2030;border-radius:14px;padding:clamp(16px,3vw,24px);margin:24px 0}
+.preflight .fingerprint h3{margin:0 0 7px;color:#fff;font-size:1.3rem}
+.preflight .fingerprint input[type=file]{padding:12px;cursor:pointer}
+.preflight .fingerprint input[type=file]::file-selector-button{font:inherit;font-weight:700;padding:8px 12px;margin-right:14px;color:#09202e;background:#9cf0d8;border:0;border-radius:7px}
+.preflight .fingerprint .fingerprint-status{border:1px solid #826d54;border-left:4px solid #ffd09c;padding:13px 15px;border-radius:8px;color:#ffe1b8;background:#2d281f;overflow-wrap:anywhere}
+.preflight .fingerprint .fingerprint-status strong{color:#fff}
+.preflight .fingerprint button:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:650px){.preflight .fingerprint .toolbar button{flex:1 1 100%}}
+@media print{.preflight .fingerprint{background:#fff;color:#111}.preflight .fingerprint .fingerprint-status{background:#fff;color:#111}}
 </style></head><body><header><nav class="wrap" aria-label="Primary"><a href="index.html">← Portfolio</a><a href="pattern-library.html">Pattern library</a><a href="verification-ledger.html">Verification ledger</a><a href="visual-evidence.html">Visual evidence</a></nav></header><main class="wrap"><span class="badge">Source-traced engineering case study · reviewed 15 November 2026</span><h1>From delivery records to a governed lifecycle engine.</h1><p class="lead">An evidence-conscious account of how the Universal Delivery Workbench evolved into a single guided ServiceNow delivery product—without conflating repository capabilities, instance validation, mock integrations or production deployment.</p><section><h2>01 · The client's pain &amp; history</h2><p>Delivery knowledge spread across legacy workbenches, diagnostic investigations, pattern references and document-generation workflows creates duplicate effort and weak traceability. The engineering objective was to bring discovery, design, build, assurance and handover into one controlled journey while preserving the original evidence systems of record.</p></section><section><h2>02 · The ServiceNow solution</h2><div class="grid"><article class="card"><h3>One canonical delivery shell</h3><p>Source documentation describes Solution Lifecycle Studio as the lifecycle engine inside the Universal Delivery Workbench, with legacy Delivery Workbench retained read-only. Diagnostic investigations remain separately owned; delivery carries reviewed references rather than copying writable findings.</p></article><article class="card"><h3>Pattern-led implementation</h3><p>Scope selection previews source-traced implementation drafts. Generation can reconcile linked scope, workshops, requirements, decisions, build guidance, unrun tests and handover actions while preserving existing edits and approvals. Other modules receive a review-required scaffold—not invented OOTB defaults.</p></article><article class="card"><h3>Governed documentation</h3><p>The source README describes a first-class Delivery Plan, eight narrative document types, and controlled HTML/Word output with Executive, Client and Technical depths. Acceptance and issue gates remain in place.</p></article><article class="card"><h3>Integration truthfulness</h3><p>Jira, Confluence and Notion contracts have mock-only correlation and replay checks. Live authentication, external writes and production sync are not verified; provider activation remains gated.</p></article></div></section><section><h2>Release and evidence timeline</h2><div class="timeline"><article><h3>4.20.0 · Instance baseline</h3><p>The repository README reports DEV instance read-back for the canonical and compatibility UI clients, including recovery and record-preservation evidence on 5 October 2026. This is <strong>repository-reported DEV evidence</strong>, not independent verification by this website.</p></article><article><h3>4.21.x · Context and planning</h3><p>Source release notes describe Delivery Plan navigation, a contextual Next Best Action rail and integration status visibility. Deployment/read-back for later versions is tracked separately.</p></article><article><h3>4.22.2 · Current README declaration</h3><p>The latest reviewed README identifies version 4.22.2 and a presentation-only context-rail patch. This is a <strong>source declaration</strong>; it does not prove that the same build is deployed in DEV or production.</p></article></div></section>
 <section class="claim-review" id="release-evidence-reconciliation" aria-labelledby="claim-review-title">
 <span class="badge">Evidence conflict review · 15 November 2026</span>
@@ -82,6 +93,19 @@
 <div class="result"><span>Release version comparison</span><strong id="version-result">UNAVAILABLE</strong></div>
 </div>
 <div class="decision-panel" role="status" aria-live="polite" aria-atomic="true"><strong id="preflight-status">HOLD — insufficient target metadata</strong><p id="preflight-detail">Enter source-matched fields or load a synthetic scenario; this is not a live instance check.</p></div>
+
+<section class="fingerprint" id="package-fingerprint" aria-labelledby="fingerprint-title">
+<span class="badge">Local SHA-256 · optional preparation · HOLD-only</span>
+<h3 id="fingerprint-title">Package fingerprint comparison</h3>
+<p>Inspect a <strong>local release artefact</strong> against an independently obtained, trusted SHA-256 reference. A scope/version text match is not enough to establish that the inspected package is the approved build. This comparison does <strong>not</strong> read the ServiceNow instance or verify an installed application.</p>
+<div class="field-grid">
+<div><label for="package-file">Local package (maximum 25 MiB)</label><input id="package-file" type="file" accept=".xml,.zip,.json,.txt,.tar,.gz,.tgz" aria-describedby="package-guidance"><p id="package-guidance" class="hint">Files are read in this browser tab only. Never select an artefact you are not authorised to inspect. No file name or contents enter the worksheet.</p></div>
+<div><label for="expected-package-sha">Trusted expected SHA-256 (optional)</label><input id="expected-package-sha" type="text" inputmode="text" autocomplete="off" spellcheck="false" autocapitalize="off" maxlength="64" placeholder="64 hexadecimal characters" aria-describedby="sha-guidance"><p id="sha-guidance" class="hint">Obtain from an independent, authorised release manifest. A value copied from the same untrusted file is not independent provenance.</p></div>
+</div>
+<div class="toolbar"><button type="button" id="fingerprint-run">Compute and compare locally</button><button type="button" id="fingerprint-copy" disabled>Copy computed SHA-256</button><button type="button" id="fingerprint-clear">Clear package review</button></div>
+<div class="fingerprint-status" role="status" aria-live="polite" aria-atomic="true"><strong id="fingerprint-status">NOT RUN · HOLD</strong><p id="fingerprint-detail" style="color:#f7e0c4;margin:5px 0">No package was inspected. Digest matching never constitutes ServiceNow runtime acceptance or independent release approval.</p></div>
+<p class="hint">The existing HOLD-only JSON worksheet includes only a categorical fingerprint-review status. It deliberately excludes filename, file bytes, actual digest and entered expected digest. Local comparison does not change the native-verified or production-verified flags.</p>
+</section>
 <p class="privacy">Privacy boundary: all comparisons run in your browser with no server request, analytics or storage. The downloadable worksheet contains <strong>comparison statuses only</strong>, never entered values. An exact text match does not authenticate a package or establish DEV-VERIFIED or PRODUCTION-VERIFIED operation.</p>
 <p><a href="deployment-identity-gates.html">Scope identity and migration gate</a> · <a href="workbench-acceptance-playbook.html">Native acceptance playbook</a> · <a href="screenshot-review-packet.html">Image-by-image approval workflow</a></p>
 </section>
@@ -141,6 +165,56 @@ refresh();
 }));
 [scope,version].forEach(el=>el.addEventListener("input",()=>{origin="Untrusted manual entry — not a witnessed target read-back";refresh();}));
 form.addEventListener("reset",()=>{origin="No target observations";scope.value="";version.value="";refresh();});
+
+/* This review never uploads, persists or exports file contents, names or digests. */
+const localFile=byId("package-file"),trustedHash=byId("expected-package-sha");
+const hashButton=byId("fingerprint-run"),copyHashButton=byId("fingerprint-copy");
+let fingerprintState="NOT RUN",computedDigest="",fingerprintSequence=0;
+function fingerprintMessage(state,detail){
+fingerprintState=state;
+byId("fingerprint-status").textContent=state+" · HOLD";
+byId("fingerprint-detail").textContent=detail;
+}
+function invalidateFingerprint(){
+fingerprintSequence++;
+computedDigest="";
+copyHashButton.disabled=true;
+fingerprintMessage("NOT RUN","Package or trusted reference changed. Recompute before relying on any comparison.");
+}
+localFile.addEventListener("change",invalidateFingerprint);
+trustedHash.addEventListener("input",invalidateFingerprint);
+byId("fingerprint-clear").addEventListener("click",()=>{
+localFile.value="";trustedHash.value="";invalidateFingerprint();
+});
+hashButton.addEventListener("click",async()=>{
+const sequence=++fingerprintSequence,file=localFile.files?.[0],reference=trustedHash.value.trim();
+computedDigest="";copyHashButton.disabled=true;
+if(!file){fingerprintMessage("NO FILE","Select a local package to inspect. No ServiceNow execution is performed.");return;}
+if(file.size>25*1024*1024){fingerprintMessage("FILE TOO LARGE","The browser-only safeguard limits a single file to 25 MiB; no bytes were inspected.");return;}
+if(reference&&!/^[0-9a-f]{64}$/i.test(reference)){fingerprintMessage("INVALID REFERENCE","Expected SHA-256 must be exactly 64 hexadecimal characters. Nothing was compared.");return;}
+if(!crypto?.subtle?.digest){fingerprintMessage("CRYPTO UNAVAILABLE","WebCrypto SHA-256 is unavailable in this browser context. Use a secure HTTPS session.");return;}
+fingerprintMessage("COMPUTING","Processing local file in memory. No bytes leave this browser.");
+try{
+const buffer=await file.arrayBuffer();
+const digest=await crypto.subtle.digest("SHA-256",buffer);
+if(sequence!==fingerprintSequence)return;
+computedDigest=Array.from(new Uint8Array(digest),v=>v.toString(16).padStart(2,"0")).join("");
+copyHashButton.disabled=false;
+if(!reference)fingerprintMessage("DIGEST ONLY — NO TRUSTED REFERENCE","A local SHA-256 was computed, but there is no independent reference for comparison.");
+else if(computedDigest===reference.toLowerCase())fingerprintMessage("HASH MATCH — NOT VERIFIED","File bytes match the entered hash text. Trust in the reference, target installation, ACLs and approval remain unverified.");
+else fingerprintMessage("HASH MISMATCH","The local package differs from the supplied expected digest. Investigate before any release activity.");
+}catch(e){
+if(sequence!==fingerprintSequence)return;
+computedDigest="";copyHashButton.disabled=true;
+fingerprintMessage("READ FAILURE","Browser could not read the selected file. No result is available.");
+}
+});
+copyHashButton.addEventListener("click",async()=>{
+if(!computedDigest||!navigator.clipboard?.writeText)return;
+try{await navigator.clipboard.writeText(computedDigest);}
+catch(e){fingerprintMessage(fingerprintState,"Clipboard access is unavailable. The local comparison remains unchanged.");}
+});
+
 byId("preflight-export").addEventListener("click",()=>{
 const result=current();
 const packet={
@@ -148,6 +222,7 @@ schema:"portfolio.release-identity-preflight.v1",
 tool_status:"MOCK-ONLY",source_evidence:"SOURCE-ONLY",origin:origin.startsWith("Synthetic")?"synthetic fixture":"untrusted manual input",
 source_release:"4.22.2 (source declaration only)",
 comparison_results:result,discrepancy_category:discrepancy(result),
+local_package_fingerprint_status:fingerprintState,package_file_bytes_included:false,package_filename_included:false,package_digests_included:false,
 observed_values_included:false,
 native_execution:"NOT RUN",target_package_hash_verified:false,independent_dev_verified:false,production_verified:false,
 image_publication_approved:false,approval_status:"UNREVIEWED",release_decision:"HOLD",
