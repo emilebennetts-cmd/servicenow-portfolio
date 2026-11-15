@@ -33,11 +33,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test strict HTTPS URL identity, twelve routes and non-certifying receipt
+      - name: Test route identity, stale-byte rejection and non-certifying receipts
         run: python -m unittest discover -s tests -p 'test_public_https_smoke.py' -v
       - name: Check published markers exist in the source
         run: python scripts/check_public_https.py --mode local
-      - name: Inspect twelve anonymous public HTTPS routes after Pages propagation
+      - name: Match twelve anonymous public HTML routes byte-for-byte to checkout
         run: python scripts/check_public_https.py --mode live --attempts 12 --retry-seconds 20
       - name: Keep a redacted machine-readable delivery receipt
         if: always()
