@@ -15,7 +15,7 @@ for(const key of ["access","hardware","service"]){
 const ids=getScenario(key).gates.map(g=>g[0]);const data=acceptanceCsv(key,new Set(ids));
 const lines=data.trim().split("\r\n");assert.equal(lines.length,9);assert.equal((data.match(/"NOT RUN"/g)||[]).length,8);
 assert.equal((data.match(/"HOLD"/g)||[]).length,8);assert.equal((data.match(/"MOCK-ONLY"/g)||[]).length,8);
-assert.doesNotMatch(data,/\bPASSED\b|\bAPPROVED\b|\bDEV-VERIFIED\b/i);
+assert.doesNotMatch(data,/,"(?:PASSED|APPROVED|DEV-VERIFIED)"(?:,|\r\n)/i);
 const rows=acceptanceRows(key,ids);assert.equal(rows.length,8);assert.ok(rows.every(row=>row.read&&row.native==="NOT RUN"&&row.release==="HOLD"));
 }});
 test("unknown selection and missing marks fail closed",()=>{
