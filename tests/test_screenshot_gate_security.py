@@ -69,5 +69,51 @@ class ScreenshotGateSecurityTests(unittest.TestCase):
         self.assertTrue(any("image bytes changed" in x for x in check(self.root, self.manifest)))
 
 
+    def test_blocks_remote_social_preview_even_without_image_element(self):
+        page = self.root / "share.html"
+        page.write_text('<meta content="https://other.invalid/private.png" property="og:image">')
+        self.assertTrue(any("social preview image origin" in x for x in check(self.root, self.manifest)))
+
+    def test_blocks_unapproved_twitter_and_schema_image(self):
+        page = self.root / "share.html"
+        page.write_text('<meta name="twitter:image" content="assets/screenshots/unknown.png">'
+                        '<meta content="data:image/png;base64,AA==" itemprop="image">')
+        issues = check(self.root, self.manifest)
+        self.assertTrue(any("lacks byte-bound publication approval" in x for x in issues))
+        self.assertTrue(any("social preview image origin" in x for x in issues))
+
+    def test_approved_bytes_allow_same_origin_social_preview(self):
+        image = self.root / "assets" / "screenshots" / "approved.png"
+        image.write_bytes(b"\x89PNG\r\n\x1a\nsynthetic-no-metadata")
+        digest = hashlib.sha256(image.read_bytes()).hexdigest()
+        self.manifest.write_text(f"assets/screenshots/approved.png {digest}\n")
+        page = self.root / "share.html"
+        page.write_text(
+            '<meta property="og:image" '
+            'content="https://emilebennetts-cmd.github.io/servicenow-portfolio/assets/screenshots/approved.png">'
+            '<meta name="twitter:image" content="assets/screenshots/approved.png">')
+        self.assertEqual(check(self.root, self.manifest), [])
+
+    def test_blocks_legacy_image_src_link_without_approval(self):
+        page = self.root / "share.html"
+        page.write_text('<link href="https://example.invalid/capture.png" rel="image_src">')
+        self.assertTrue(any("social preview image origin" in x for x in check(self.root, self.manifest)))
+
+    def test_blocks_alternate_port_and_query_on_approved_preview(self):
+        image = self.root / "assets" / "screenshots" / "approved.png"
+        image.write_bytes(b"\x89PNG\r\n\x1a\nsynthetic-no-metadata")
+        self.manifest.write_text(
+            "assets/screenshots/approved.png "
+            + hashlib.sha256(image.read_bytes()).hexdigest() + "\n")
+        page = self.root / "share.html"
+        page.write_text(
+            '<meta property="og:image" '
+            'content="https://emilebennetts-cmd.github.io:8443/servicenow-portfolio/assets/screenshots/approved.png">'
+            '<meta property="og:image:url" content="assets/screenshots/approved.png?token=test">')
+        issues = check(self.root, self.manifest)
+        self.assertTrue(any("social preview image origin" in x for x in issues))
+        self.assertTrue(any("lacks byte-bound publication approval" in x for x in issues))
+
+
 if __name__ == "__main__":
     unittest.main()
