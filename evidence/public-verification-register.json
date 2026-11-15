@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-15T06:21:08Z",
+  "updated_utc": "2026-11-15T10:24:39.687Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -838,6 +838,15 @@
       "runtime_verification": "SOURCE-ONLY for design rationale; page filters and search are MOCK-ONLY browser interactions. Historical DEV-REPORTED documentation is not newly witnessed. No independent current DEV-VERIFIED or PRODUCTION-VERIFIED native execution, ACL acceptance or customer sign-off.",
       "public_screenshot_status": "No original ServiceNow screenshot, customer data or private source published. Per-image publication approvals remain 0 / HOLD.",
       "page": "architecture-decision-register.html"
+    },
+    {
+      "id": "CHANGE-MANAGEMENT-LAB",
+      "title": "Change Management OOTB implementation and acceptance rehearsal",
+      "classification": "mock-only",
+      "basis": "Customer-neutral public interactive HTML implementation with three synthetic Change models and 21 implementation acceptance criteria, informed by the private Delivery Workbench source overview and official ServiceNow Australia release Change Management documentation",
+      "runtime_verification": "Browser-local scenario selection and CSV export are not ServiceNow Change Management execution, native model configuration, CAB approval, ACL/ATF results or production acceptance. Every exported gate is NOT RUN / HOLD.",
+      "public_screenshot_status": "No original ServiceNow images or customer data. Illustrative HTML only; original screenshot candidate approvals remain 0 / HOLD.",
+      "page": "change-management-implementation-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
