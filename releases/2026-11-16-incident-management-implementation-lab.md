@@ -26,3 +26,6 @@ Static portfolio and CSV: no ServiceNow licence. Native Incident execution: appl
 - https://www.servicenow.com/docs/r/it-service-management/service-operations-workspace/create-incident-sow.html
 
 Prior Delivery and Diagnostic repository material and accessible Google Drive As-Built document titles were reviewed for claim-boundary context; no private source or unapproved Drive screenshot was exported to public site.
+
+## Public deployment delivery assurance
+The anonymous GitHub Pages smoke workflow now includes the exact Incident Management HTML route (14 routes total) and compares deployed UTF-8 bytes to the checked-out source SHA-256. Its result is delivery evidence only, not native DEV or production execution. External browser access remains a separate observation.

@@ -5,6 +5,8 @@ on:
     paths:
       - 'index.html'
       - 'problem-management-implementation-lab.html'
+      - 'incident-management-implementation-lab.html'
+      - 'incident-management-implementation-lab.js'
       - 'delivery-release-evolution.html'
       - 'diagnostic-workbench-case-study.html'
       - 'visual-evidence.html'
@@ -38,7 +40,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_public_https_smoke.py' -v
       - name: Check published markers exist in the source
         run: python scripts/check_public_https.py --mode local
-      - name: Match thirteen anonymous public HTML routes byte-for-byte to checkout
+      - name: Match fourteen anonymous public HTML routes byte-for-byte to checkout
         run: python scripts/check_public_https.py --mode live --attempts 12 --retry-seconds 20
       - name: Keep a redacted machine-readable delivery receipt
         if: always()

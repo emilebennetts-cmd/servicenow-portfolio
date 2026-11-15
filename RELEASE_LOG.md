@@ -2,6 +2,7 @@
 
 - Published a client-neutral, responsive Incident Management case study with three interactive synthetic journeys (intake/priority, restoration/communication, and closure/improvement), 24 native acceptance gates, and a complete fail-closed CSV handoff.
 - Indexed homepage, portfolio Explorer, sitemap and public evidence register; added independent Node/Python contracts and quality workflow command.
+- Extended anonymous exact-byte GitHub Pages smoke from 13 to 14 canonical routes, including the new Incident lab; deployed HTML is checked against source checkout independently of native acceptance.
 - All native controls remain NOT RUN / HOLD, original screenshots stay withheld; no new DEV-VERIFIED or PRODUCTION-VERIFIED claims.
 - [Release record](releases/2026-11-16-incident-management-implementation-lab.md).
 
