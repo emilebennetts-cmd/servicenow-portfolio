@@ -8,7 +8,7 @@ const exported=()=>tower.planCsv(rows);
 const encode=table=>table.map(row=>row.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\r\n")+"\r\n";
 const edited=fn=>{const table=preflight.parseCsv(exported());fn(table);return encode(table);};
 const candidate=(table)=>{
-  const row=table[1],date=new Date(Date.now()-86400000).toISOString().replace(".000","");
+  const row=table[1],date=new Date(Date.now()-86400000).toISOString().slice(0,19)+"Z";
   row.splice(10,9,"PASS","HOLD","DEV-REPORTED","syntheticdev","Zurich","builder01",date,"EV-TEST-0001","reviewer01");
 };
 test("exact 117-row default HOLD export passes metadata structure but never certifies DEV",()=>{
@@ -51,7 +51,7 @@ test("changed native source action, duplicate ID, missing row and extra row are 
 test("release GO, unsupported class and future timestamp cannot be laundering into verified",()=>{
   assert.equal(preflight.audit(edited(t=>{t[1][11]="GO";}),tower,rows).valid,false);
   assert.equal(preflight.audit(edited(t=>{candidate(t);t[1][12]="DEV-VERIFIED";}),tower,rows).valid,false);
-  assert.equal(preflight.audit(edited(t=>{candidate(t);t[1][16]=new Date(Date.now()+86400000).toISOString().replace(".000","");}),tower,rows).valid,false);
+  assert.equal(preflight.audit(edited(t=>{candidate(t);t[1][16]=new Date(Date.now()+86400000).toISOString().slice(0,19)+"Z";}),tower,rows).valid,false);
   assert.equal(preflight.audit(edited(t=>{t[0][1]="Different domain";}),tower,rows).valid,false);
 });
 test("malformed and oversized CSV fail safely without exposing input",()=>{
