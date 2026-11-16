@@ -37,6 +37,8 @@ jobs:
         run: node --test tests/cmdb_health_cohort.test.cjs
       - name: Test Tag Governance source and policy review with 25 HOLD-only DEV gates
         run: node --test tests/cmdb_tag_governance.test.cjs
+      - name: Test CMDB relationship integrity synthetic graph and 30 native HOLD gates
+        run: node --test tests/cmdb_relationship_assurance.test.cjs
       - name: Test Workbench source-to-DEV filters and HOLD-only export
         run: node --test tests/workbench_gap_board.test.cjs
       - name: Test quality gate

@@ -919,6 +919,15 @@
       "runtime_verification": "Five interactive synthetic policy decisions and 25 blank native acceptance controls; all exported rows remain NOT RUN / HOLD / MOCK-ONLY. No actual Tag Governance policy run, IRE/discovery test, Service Mapping membership check, DEV execution or Production verification.",
       "public_screenshot_status": "Illustrative CSS mock console only; no original ServiceNow images or customer data. All real screenshot candidates still require individual sanitisation and approval (HOLD).",
       "page": "cmdb-tag-governance-lab.html"
+    },
+    {
+      "id": "CMDB-RELATIONSHIP-ASSURANCE-20261116",
+      "title": "CMDB relationship health and governance source-only interactive lab",
+      "classification": "mock-only",
+      "basis": "Five independently authored fictional CI/relationship fixtures, offline deterministic JavaScript, 30 native acceptance controls. Aligned with ServiceNow Australia relationship governance and health documentation updated March 2026. Historical Workbench source readme and controlled Delivery As-Built were reviewed for provenance only.",
+      "runtime_verification": "No cmdb_rel_ci read-back, relationship processor execution, class rule verification, DEV/Production acceptance or service impact test. Synthetic findings are NOT native ServiceNow scores. All 30 exports are NOT RUN / HOLD / MOCK-ONLY, with blank executor/evidence/reviewer fields. DEV-VERIFIED 0; PRODUCTION-VERIFIED 0.",
+      "public_screenshot_status": "CSS/text illustrative review only. No actual ServiceNow screenshot. Original screenshot approvals: zero / HOLD.",
+      "page": "cmdb-relationship-assurance-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
