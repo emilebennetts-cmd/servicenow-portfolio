@@ -18,6 +18,7 @@ TARGETS = {
     "index.html": MARKER,
     "delivery-release-evolution.html": 'id="package-fingerprint"',
     "diagnostic-workbench-case-study.html": 'id="diagnostic-operator"',
+    "diagnostic-envelope-assurance-lab.html": 'id="download-gates"',
     "visual-evidence.html": 'id="gallery"',
     "delivery-case-study.html": 'id="delivery-plan-lab"',
     "reusable-delivery-patterns-case-study.html": 'id="pattern-fit-desk"',
