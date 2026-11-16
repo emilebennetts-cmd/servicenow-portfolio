@@ -933,8 +933,8 @@
       "id": "CMDB-ASSURANCE-CONTROL-TOWER-20261116",
       "title": "CMDB cross-domain assurance control tower",
       "classification": "mock-only",
-      "basis": "Browser-only source-derived crosswalk of existing 117 native acceptance prompts: IRE 18, Tag Governance 25, CMDB Health 24, Relationship Assurance 30 and Data Manager 20. Source-only implementation, mock-only interaction and CSV exports.",
-      "runtime_verification": "All 117 references remain NOT RUN / HOLD / MOCK-ONLY with blank target instance, installed build, executor, date, private evidence receipt and reviewer. No native DEV or Production execution. DEV-VERIFIED 0; PRODUCTION-VERIFIED 0.",
+      "basis": "Browser-only source-derived crosswalk of existing 117 native acceptance prompts: IRE 18, Tag Governance 25, CMDB Health 24, Relationship Assurance 30 and Data Manager 20. Source-only implementation, mock-only interaction and CSV exports. Offline receipt preflight checks 117-row source/schema integrity and shape of operator-reported candidate metadata; it never certifies platform behaviour.",
+      "runtime_verification": "The original 117 exported controls remain NOT RUN / HOLD / MOCK-ONLY with blank native execution and private fields. The new browser-only CSV preflight may inspect sanitised DEV-REPORTED candidate metadata but always returns HOLD, stores nothing and does not validate evidence authenticity. No independent native DEV or Production execution. DEV-VERIFIED 0; PRODUCTION-VERIFIED 0.",
       "public_screenshot_status": "CSS/text illustration only; no captured ServiceNow screens. Original screenshot approvals 0/HOLD.",
       "page": "cmdb-assurance-control-tower.html"
     }
