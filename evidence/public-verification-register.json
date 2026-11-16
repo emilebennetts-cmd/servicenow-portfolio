@@ -910,6 +910,15 @@
       "runtime_verification": "Browser-only scenario selection and CSV generation. Native health job execution, class denominator reconciliation, rule changes, ACL negative personas, independent DEV read-back and production release have NOT RUN / HOLD status. All 24 CSV rows immutable NOT RUN / HOLD / MOCK-ONLY, private executor and receipts blank; zero DEV-VERIFIED or PRODUCTION-VERIFIED.",
       "public_screenshot_status": "CSS-only illustrative console, not a ServiceNow capture. No customer records, secrets, private source or original screenshots. Individual screenshot approvals zero / HOLD.",
       "page": "cmdb-health-assurance-lab.html"
+    },
+    {
+      "id": "CMDB-TAG-GOVERNANCE",
+      "title": "CMDB Tag Governance and key-value source assurance lab",
+      "classification": "mock-only",
+      "basis": "Source-informed public HTML and deterministic offline JavaScript with five fictional cloud tag fixtures. ServiceNow documentation confirms cmdb_key_value, native Tag Governance policy families, and tag-based Service Mapping. No customer source records or private code are published.",
+      "runtime_verification": "Five interactive synthetic policy decisions and 25 blank native acceptance controls; all exported rows remain NOT RUN / HOLD / MOCK-ONLY. No actual Tag Governance policy run, IRE/discovery test, Service Mapping membership check, DEV execution or Production verification.",
+      "public_screenshot_status": "Illustrative CSS mock console only; no original ServiceNow images or customer data. All real screenshot candidates still require individual sanitisation and approval (HOLD).",
+      "page": "cmdb-tag-governance-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
