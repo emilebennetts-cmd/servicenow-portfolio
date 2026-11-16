@@ -17,6 +17,9 @@ on:
       - 'diagnostic-workbench-case-study.html'
       - 'reusable-delivery-patterns-case-study.html'
       - 'cmdb-ire-assurance.html'
+      - 'cmdb-tag-governance-lab.html'
+      - 'cmdb-tag-governance-model.js'
+      - 'scripts/browser_cmdb_tag_governance.py'
       - 'cmdb-health-assurance-lab.html'
       - 'cmdb-health-assurance-model.js'
       - 'scripts/browser_cmdb_health_cohort.py'
@@ -133,6 +136,8 @@ jobs:
         run: python scripts/test_delivery_plan_lab.py
       - name: Exercise Delivery Plan at four viewport widths
         run: python scripts/browser_delivery_plan_lab.py
+      - name: Exercise Tag Governance cases and fail-closed 25-gate CSV at four widths
+        run: python scripts/browser_cmdb_tag_governance.py
       - name: Exercise CMDB Health denominator drift, CSV and HOLD gates at four widths
         run: python scripts/browser_cmdb_health_cohort.py
       - name: Verify CMDB remediation decision contract
