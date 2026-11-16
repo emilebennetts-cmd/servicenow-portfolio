@@ -1,3 +1,9 @@
+# 16 November 2026 — CMDB Assurance Control Tower: 117 native HOLD references
+
+- New [cross-domain CMDB control tower](cmdb-assurance-control-tower.html) connects 18 IRE, 25 Tag Governance, 24 CMDB Health, 30 Relationship Integrity and 20 Data Manager native acceptance prompts directly from their current public JavaScript models.
+- Browser-local filtering and complete/filtered CSV exports preserve NOT RUN / HOLD / MOCK-ONLY and blank private evidence fields. Model drift or missing dependencies fails closed.
+- Updated homepage, Explorer (90 pages), sitemap, public evidence claims, native contract tests and release provenance. No native DEV or Production run, no approved screenshot and no private source publication. [Release details](releases/2026-11-16-cmdb-assurance-control-tower.md).
+
 # 16 November 2026 — CMDB Relationship Integrity Assurance Lab (MOCK-ONLY / 30 native HOLD gates)
 
 - Added a responsive [CMDB Relationship Integrity Lab](cmdb-relationship-assurance-lab.html) with five fictional relationship fixtures, a CSS-only operator illustration and explicit source/DEV/Production/screenshot boundaries.
