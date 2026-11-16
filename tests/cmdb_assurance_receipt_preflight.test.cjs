@@ -106,6 +106,8 @@ test("source changes and unknown IDs are counted without reflecting imported ide
   assert.equal(r.stages[0].drift,1);
   assert.equal(r.stages[0].missing,2);
   assert.equal(r.unmapped,1);
+  assert.ok(r.inspected.issues.some(x=>x.id==="ROW-2"));
+  assert.doesNotMatch(JSON.stringify(r.inspected.issues),/SECRET-CANARY/);
   const out=preflight.stageCsv(r);
   assert.doesNotMatch(out,/SECRET-CANARY|UNREVIEWED SOURCE ACTION/);
   assert.match(out,/REVIEW ISSUES/);
