@@ -49,8 +49,11 @@ class CMDBSourceOnboardingLab(unittest.TestCase):
     def test_structure_and_navigation(self):
         self.assertEqual(self.page.lang, "en")
         self.assertEqual(self.page.images, 0, "No real or simulated captures should be embedded")
-        self.assertEqual(self.page.scripts, 1)
-        self.assertEqual(self.page.external_scripts, 0)
+        # A separate dependency-free acceptance model is now loaded alongside
+        # the page-local controller; both are public static files, not APIs.
+        self.assertEqual(self.page.scripts, 2)
+        self.assertEqual(self.page.external_scripts, 1)
+        self.assertIn('src="cmdb-source-acceptance.js"', self.html)
         for id_ in ("main", "scenario-select", "gate-count", "gate-status",
                     "missing-controls", "download-receipt", "receipt-preview"):
             self.assertIn(id_, self.page.ids)
