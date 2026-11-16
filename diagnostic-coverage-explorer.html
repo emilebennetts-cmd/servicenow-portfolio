@@ -26,10 +26,28 @@ footer{color:var(--muted);padding:24px 0;font-size:.85rem}
 @media(max-width:940px){.grid{grid-template-columns:repeat(2,1fr)}.stat-grid{grid-template-columns:repeat(3,1fr)}.chain{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:630px){header .wrap{padding:38px 0}.grid,.controls,.lab,.chain{grid-template-columns:1fr}.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}section{padding:30px 0}.lab{padding:17px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:white;color:black}.record,.box,.stat{background:white;color:black}.lab,.controls,nav,button{display:none}p,li{color:#333}}
-</style></head><body><a class="skip" href="#main">Skip to main content</a>
+
+/* Source-informed, wholly synthetic ten-pack coverage gate. */
+.coverage-shell{margin:25px 0 5px;padding:clamp(17px,3vw,30px);background:linear-gradient(155deg,#15384a,#0c2737);border:1px solid #6eacaa;border-radius:18px}
+.coverage-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:end}
+.coverage-controls label{display:block;font-weight:800}
+.coverage-callout{background:#302d28;border-left:4px solid var(--warn);padding:14px 18px;color:#ffe3b9;border-radius:0 8px 8px 0}
+.coverage-metrics{background:#0a2030;border:1px solid #507a86;border-radius:12px;padding:14px 18px;margin:16px 0;color:#f7e1b4;font-weight:800}
+.coverage-scroller{max-width:100%;overflow-x:auto;border:1px solid #507a86;border-radius:10px}
+.coverage-scroller table{min-width:760px;width:100%;border-collapse:collapse}
+.coverage-scroller th,.coverage-scroller td{padding:13px 15px;text-align:left;vertical-align:top;border-bottom:1px solid #405e6c}
+.coverage-scroller thead th{background:#20485a;color:#d2ffef}
+.coverage-scroller tbody tr:nth-child(even){background:#163848}
+.coverage-scroller tbody th{color:#e4fff5;font-size:.92rem;width:23%}
+.coverage-scroller tbody td{color:#d1dfe6;font-size:.87rem}
+.coverage-footer{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:18px 0 4px}
+.coverage-footer p{margin:0}
+#coverage-description{color:#d6e5e9}
+@media(max-width:660px){.coverage-controls{grid-template-columns:1fr}.coverage-shell{padding:17px}.coverage-footer button{width:100%}}
+</style><script src="diagnostic-coverage-gate.js" defer></script></head><body><a class="skip" href="#main">Skip to main content</a>
 <header><div class="wrap"><div class="overline">Diagnostic Workbench 2 · Source-reviewed technical showcase</div><h1>Twenty collector families. One defensible evidence chain.</h1>
 <p class="lead">Search the reviewed source catalogue, inspect native acceptance questions and see why a missing table or partial aggregate must never become a green health score. This is not a running ServiceNow collector.</p>
-<nav aria-label="Related pages"><a href="./">Portfolio home</a><a href="diagnostic-case-study.html">Diagnostic case study</a><a href="cmdb-ire-assurance.html">CMDB assurance</a><a href="verification-ledger.html">Verification ledger</a><a href="#catalogue">Browse catalogue</a><a href="#examples">Review evidence</a></nav>
+<nav aria-label="Related pages"><a href="./">Portfolio home</a><a href="diagnostic-case-study.html">Diagnostic case study</a><a href="cmdb-ire-assurance.html">CMDB assurance</a><a href="verification-ledger.html">Verification ledger</a><a href="#catalogue">Browse catalogue</a><a href="#examples">Review evidence</a><a href="#coverage-gate">Coverage gate</a></nav>
 <div class="badges"><span class="badge">SOURCE-ONLY · source definitions</span><span class="badge">MOCK-ONLY · synthetic scenarios</span><span class="badge">DEV-VERIFIED · none new</span><span class="badge">PRODUCTION-VERIFIED · not established</span></div>
 </div></header>
 <main id="main" class="wrap">
@@ -67,6 +85,28 @@ footer{color:var(--muted);padding:24px 0;font-size:.85rem}
 <article class="record" data-domain="Integrations" data-key="integrations interface health rest configuration, failed calls and import sets. never export urls, tokens, raw messages or secret values."><div class="small">SOURCE FAMILY 19 · Integrations</div><h3>Interface health</h3><p>REST configuration, failed calls and import sets.</p><details><summary>Native verification</summary><p>Never export URLs, tokens, raw messages or secret values.</p></details></article>
 <article class="record" data-domain="Platform Flows" data-key="platform flows flow executions recent flow designer execution outcomes. check execution visibility, permissions and retention."><div class="small">SOURCE FAMILY 20 · Platform Flows</div><h3>Flow executions</h3><p>Recent Flow Designer execution outcomes.</p><details><summary>Native verification</summary><p>Check execution visibility, permissions and retention.</p></details></article></div>
 <p>Topic summaries and acceptance prompts are paraphrased for public review; no private implementation code, rule thresholds or sensitive identifiers are reproduced.</p></section>
+
+<section id="coverage-gate" aria-labelledby="coverage-gate-heading"><div class="overline">New · ten-pack evidence gating</div>
+<h2 id="coverage-gate-heading">Coverage is not health. Reconcile every pack before a release claim.</h2>
+<p>Explore four <strong>fully synthetic</strong> assessment snapshots using the ten module-pack categories documented in Diagnostic Workbench 2. The source model informs the categories; no collector has been executed here. The dashboard demonstrates what a consultant should investigate before calling a module healthy.</p>
+<div class="coverage-shell" aria-label="Illustrative Diagnostic Workbench assessment console">
+<div class="badge">ILLUSTRATIVE CONSOLE · NOT A SERVICENOW SCREENSHOT</div>
+<div class="coverage-controls">
+<div><label for="coverage-scenario">Synthetic assessment snapshot</label><select id="coverage-scenario">
+<option value="unassessed">No evidence collected</option><option value="mixed">Partial and contradictory evidence</option>
+<option value="denominator">Nine reviewed, one capped</option><option value="complete">All ten synthetically reviewed</option>
+</select></div>
+<div><label for="coverage-filter">Show pack categories</label><select id="coverage-filter"><option value="all">All ten</option><option value="attention">Still need action or exclusion review</option><option value="reviewed">Synthetically reviewed only</option></select></div>
+</div>
+<p id="coverage-description">No native evidence submitted. Every area remains not assessed.</p>
+<div class="coverage-metrics" id="coverage-summary" role="status" aria-live="polite">0 synthetic reviewed · 10 blocked · 0 proposed exclusions · 0 native verified · RELEASE HOLD</div>
+<p class="coverage-callout"><strong>Independent acceptance boundary:</strong> A synthetically reviewed pack is still not DEV-VERIFIED, PRODUCTION-VERIFIED, or approved for publication. A proposed exclusion is not counted as a healthy result. No data is uploaded or retained.</p>
+<div class="coverage-scroller"><table><caption class="visually-hidden">Public-safe synthetic coverage decision matrix</caption><thead><tr><th scope="col">Pack</th><th scope="col">Synthetic disposition</th><th scope="col">Required next action</th><th scope="col">Native status</th></tr></thead><tbody id="coverage-rows"><tr><th scope="row">ITSM</th><td>Not assessed</td><td>Confirm applicability and evidence.</td><td>NOT RUN · HOLD</td></tr></tbody></table></div>
+<div class="coverage-footer"><p class="count" id="coverage-count" aria-live="polite">Showing ten public-safe source-informed pack categories.</p><button type="button" id="coverage-download">Download synthetic HOLD-only CSV</button></div>
+</div>
+<p><strong>Source and history:</strong> The private Diagnostic Workbench 2 source catalogue and its 1 September 2026 build notes describe guided assessment, read-only collectors, envelope checks, human-reviewed findings and pack health. These mock outputs are <strong>not native ServiceNow's CMDB Health or PA scores</strong>. Native acceptance requires scope, plugin/entitlement and ACL read-back, permitted execution, complete denominators, privacy validation, separate reviewer and dated evidence receipts.</p>
+<p><strong>Licensing:</strong> This offline portfolio demonstration requires no ServiceNow subscription. Native assessment of ITSM, ITOM/Discovery, SecOps, IRM, CSM, HRSD, ITAM, IntegrationHub and other scoped features requires the applicable installed products, commercial entitlements and authorised permissions. Do not assume entitlement from a catalogue entry.</p>
+</section>
 <section id="examples"><div class="overline">Synthetic evidence intake</div><h2>Missing data is not a pass.</h2>
 <div class="lab"><div><label for="scenario">Select a hypothetical evidence condition</label><select id="scenario"><option value="review">Aggregate-only envelope</option><option value="absent">Unavailable product table (-1)</option><option value="capped">Truncated or capped group results</option><option value="sensitive">Sensitive group value or case content</option></select>
 <h3 id="scenario-title"></h3><p id="scenario-explanation"></p><p class="status" id="decision" role="status" aria-live="polite"></p>
