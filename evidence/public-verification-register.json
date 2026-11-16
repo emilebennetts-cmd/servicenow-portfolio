@@ -147,6 +147,15 @@
       "page": "cmdb-source-onboarding-lab.html"
     },
     {
+      "id": "DIAGNOSTIC-ENVELOPE-ASSURANCE",
+      "title": "Diagnostic Workbench DIAG wrapper and safety assurance training lab",
+      "classification": "source-only",
+      "basis": "Diagnostic-Workbench2 README_BUILD.md and tools/wb2_catalog.json; source-informed educational subset with nine fixed MOCK-ONLY examples and eight unexecuted native acceptance gates.",
+      "runtime_verification": "Source inspected 2026-11-16; not a parser replica, not a running ServiceNow instance. New DEV-VERIFIED 0; PRODUCTION-VERIFIED 0; release HOLD.",
+      "public_screenshot_status": "No genuine screenshots; CSS/HTML mock labelled illustrative, originals remain image-specific publication HOLD.",
+      "page": "diagnostic-envelope-assurance-lab.html"
+    },
+    {
       "id": "DIAGNOSTIC-COVERAGE",
       "title": "Diagnostic Workbench 2 source collector coverage explorer",
       "classification": "source-only",
