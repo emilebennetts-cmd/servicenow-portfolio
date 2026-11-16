@@ -69,9 +69,10 @@
     const names=new Map(tower.METADATA.map(m=>[m.title,m.key]));
     for(let i=1;i<parsed.length;i++){
       const cells=parsed[i];
-      const id=String(cells[6]||"").replace(/[^A-Za-z0-9._-]/g,"").slice(0,64)||"ROW-"+i;
       const key=names.get(cells[1]);
       const marker=key+":"+cells[6];
+      // Unknown identifiers are untrusted input: show a row number, never echo them.
+      const id=key&&expected.has(marker)?cells[6]:"ROW-"+i;
       if(!key||!expected.has(marker)){issue(result.issues,id,"Unexpected control domain or ID");continue;}
       if(seen.has(marker)){issue(result.issues,id,"Duplicate control");continue;}
       seen.add(marker);
