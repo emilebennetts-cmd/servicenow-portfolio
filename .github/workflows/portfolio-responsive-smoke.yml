@@ -46,6 +46,8 @@ on:
       - 'scripts/browser_review_packet.py'
       - 'scripts/test_review_packet_contract.py'
       - 'diagnostic-coverage-explorer.html'
+      - 'diagnostic-coverage-gate.js'
+      - 'scripts/browser_diagnostic_coverage_gate.py'
       - 'knowledge-intelligence-acceptance-matrix.html'
       - 'portfolio-review-guide.html'
       - 'engineering-case-studies.html'
@@ -159,6 +161,8 @@ jobs:
         run: python scripts/browser_cmdb_remediation_decision_lab.py
       - name: Exercise CSDM 5 ownership architecture, disclosures and mobile layout
         run: python scripts/browser_csdm_ownership_architecture.py
+      - name: Exercise Diagnostic ten-pack coverage, filters and HOLD CSV at four widths
+        run: python scripts/browser_diagnostic_coverage_gate.py
       - name: Verify synthetic diagnostic rescan publication contract
         run: python scripts/test_diagnostic_rescan_lab.py
       - name: Exercise diagnostic rescan fixtures at four viewport widths
