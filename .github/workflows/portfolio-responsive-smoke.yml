@@ -20,6 +20,7 @@ on:
       - 'cmdb-tag-governance-lab.html'
       - 'cmdb-tag-governance-model.js'
       - 'scripts/browser_cmdb_tag_governance.py'
+      - 'tests/cmdb_tag_governance.test.cjs'
       - 'cmdb-health-assurance-lab.html'
       - 'cmdb-health-assurance-model.js'
       - 'scripts/browser_cmdb_health_cohort.py'
