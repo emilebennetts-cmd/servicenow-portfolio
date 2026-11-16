@@ -1,3 +1,7 @@
+## 2026-11-16 — Public evidence library confidentiality and dated proof boundaries (SOURCE-ONLY / HOLD)
+
+Rebuilt [the public evidence library](evidence.html) into a responsive, keyboard-accessible source-summary hub, replacing direct links to controlled Drive PDFs and unreviewed screenshot candidates with public-safe case studies and the text-only visual review gallery. Reconciled the 30 September controlled As-Built/Architecture/Training drafts, historical Delivery DEV 4.5.1 and 4.20.0 observations, and the Delivery repository's newer source 4.22.2 declaration without upgrading any runtime claim. Added CI-discovered privacy, route and evidence-tier regressions. No new DEV or Production validation, screenshot publication or private repository visibility change. [Release](releases/2026-11-16-evidence-library-private-link-containment.md).
+
 ## 2026-11-16 — DIAG envelope collector count semantics and hostile-fixture guardrails (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 Corrected the synthetic Incident envelope so `record_count` is emitted result-group count, not the incident-table population `metrics.total`, matching the source `ITSM-INC-001` collector. Expanded to 15 fixed scenarios with strict aggregate-group privacy and count-shape checks, updated exports, source tests and responsive browser checks. All eight native controls remain NOT RUN / HOLD; no new DEV or Production verification or genuine screenshot approval. [Release](releases/2026-11-16-diagnostic-collector-count-semantics.md).
