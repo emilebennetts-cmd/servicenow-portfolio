@@ -25,7 +25,7 @@ class Parser(HTMLParser):
             self.cards.append(a.get("data-domain"))
         if tag == "script":
             src = a.get("src")
-            assert src in (None, "diagnostic-coverage-gate.js"), "Unexpected external script"
+            assert src in (None, "diagnostic-coverage-gate.js", "diagnostic-lineage-review.js"), "Unexpected external script"
             self.scripts.append(src or "<inline>")
         if tag in ("img", "video", "canvas", "iframe", "picture"):
             self.media += 1
@@ -36,7 +36,7 @@ class DiagnosticExplorerTests(unittest.TestCase):
         p.feed(HTML)
         self.assertEqual(len(p.cards), 20)
         self.assertEqual(len(set(p.cards)), 10)
-        self.assertEqual(p.scripts, ["diagnostic-coverage-gate.js", "<inline>"])
+        self.assertEqual(p.scripts, ["diagnostic-coverage-gate.js", "diagnostic-lineage-review.js", "<inline>"])
         self.assertEqual(p.media, 0)
         for marker in ("search", "domain", "count", "reset", "records", "scenario", "decision",
                        "receipt", "download", "coverage-gate", "coverage-rows",
