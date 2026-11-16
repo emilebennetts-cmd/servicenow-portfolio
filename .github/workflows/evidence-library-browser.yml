@@ -1,0 +1,34 @@
+name: Evidence library responsive and publication boundary
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'evidence.html'
+      - 'scripts/test_evidence_library_public_boundary.py'
+      - 'scripts/browser_evidence_library.py'
+      - '.github/workflows/evidence-library-browser.yml'
+  pull_request:
+    paths:
+      - 'evidence.html'
+      - 'scripts/test_evidence_library_public_boundary.py'
+      - 'scripts/browser_evidence_library.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify private-link containment and dated evidence boundaries
+        run: python -m unittest discover -s scripts -p 'test_evidence_library_public_boundary.py' -v
+      - name: Install Chromium for local-only viewport verification
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Validate four mobile and desktop widths, keyboard disclosures and public gallery route
+        run: python scripts/browser_evidence_library.py
