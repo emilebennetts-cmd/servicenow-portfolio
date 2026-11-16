@@ -12,6 +12,7 @@ on:
       - 'diagnostic-envelope-assurance-lab.html'
       - 'diagnostic-envelope-assurance-model.js'
       - 'visual-evidence.html'
+      - 'evidence.html'
       - 'delivery-case-study.html'
       - 'reusable-delivery-patterns-case-study.html'
       - 'diagnostic-delivery-handoff-contract.html'
@@ -46,7 +47,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_public_https_smoke.py' -v
       - name: Check published markers exist in the source
         run: python scripts/check_public_https.py --mode local
-      - name: Match eighteen anonymous public HTML routes byte-for-byte to checkout
+      - name: Match nineteen anonymous public HTML routes byte-for-byte to checkout
         run: python scripts/check_public_https.py --mode live --attempts 12 --retry-seconds 20
       - name: Keep a redacted machine-readable delivery receipt
         if: always()
