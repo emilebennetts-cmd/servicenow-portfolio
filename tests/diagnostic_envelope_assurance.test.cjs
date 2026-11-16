@@ -45,7 +45,8 @@ test('adversarial payloads fail closed without publishing or certifying records'
  assert.equal(model.assess('open-over-total').decision,'INCOMPLETE');
  const env=model.parse(model.fixture('valid'));
  env.results.push({kind:'state_breakdown',field:'state',value:'person@example.invalid',count:1});
- const wrap=x=>'DIAG_ENVELOPE_BEGIN\\n'+JSON.stringify(x)+'\\nDIAG_ENVELOPE_END';
+ const wrap=x=>'DIAG_ENVELOPE_BEGIN\n'+JSON.stringify(x)+'\nDIAG_ENVELOPE_END';
+ assert.equal(model.parse(wrap(env)).record_count,1);
  assert.equal(model.evaluate(wrap(env)).decision,'REJECT');
 });
 test('denominator drift and non-finite or malformed metrics cannot be accepted',()=>{
