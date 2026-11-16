@@ -191,7 +191,7 @@
         if(report.parsed&&stageBody){
           report.stages.forEach(s=>{
             const tr=doc.createElement("tr");
-            [s.step+" · "+s.title,String(s.matched)+"/"+s.expected,String(s.pending),String(s.passReported),String(s.failReported),String(s.blockedReported),String(s.missing+s.drift),"HOLD"].forEach(value=>{
+            [s.step+" · "+s.title,String(s.matched)+"/"+s.expected,String(s.pending),String(s.passReported),String(s.failReported),String(s.blockedReported),String(s.missing)+" / "+String(s.drift),"HOLD"].forEach(value=>{
               const td=doc.createElement("td");td.textContent=value;tr.append(td);
             });
             stageBody.append(tr);
