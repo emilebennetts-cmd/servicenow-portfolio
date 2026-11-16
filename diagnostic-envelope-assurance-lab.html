@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ServiceNow Diagnostic Workbench 2: source-informed DIAG envelope safety, applicability and denominator assurance with synthetic cases and HOLD-only native acceptance worksheets.">
+<meta name="theme-color" content="#091825">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Diagnostic Envelope Assurance Lab — ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071522;--panel:#102a39;--panel2:#17394a;--ink:#f1f8fb;--muted:#c1d2df;--mint:#9af7d4;--line:#476d7e;--amber:#ffda96}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}
+button,select{font:inherit}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-100px;background:white;color:black;padding:10px;z-index:9}.skip:focus{top:10px}
+.wrap{width:min(1120px,calc(100% - 34px));margin:auto}header{border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 80% 15%,#1a6170 0%,transparent 48%),#0b2333}
+header .wrap{padding:60px 0 47px}.eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:850;color:var(--mint)}
+h1{font-size:clamp(2.25rem,6vw,4.7rem);line-height:1.07;letter-spacing:-.048em;max-width:850px;margin:12px 0 20px}h2{font-size:clamp(1.5rem,3.7vw,2.55rem);line-height:1.15;margin:10px 0 20px}h3{font-size:1.15rem;margin:0 0 10px}p,li{color:var(--muted)}.lead{max-width:780px;font-size:1.15rem}
+nav,.tags,.buttons{display:flex;gap:10px;flex-wrap:wrap}nav a,.tag{border:1px solid var(--line);border-radius:100px;padding:8px 13px;font-size:.83rem;text-decoration:none}.tags{margin-top:22px}.tag{font-weight:750;color:var(--amber)}
+section{padding:44px 0;border-bottom:1px solid #294553}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:21px}.card p{margin-bottom:0}
+.lab{border:1px solid #6fa8a2;border-radius:19px;background:linear-gradient(144deg,#163d4c,#0a2535);padding:clamp(17px,3.4vw,32px)}
+.labgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px}
+label{font-weight:800;display:block;margin-bottom:9px}select{width:100%;padding:13px;border-radius:9px;background:white;color:#122d3b;border:2px solid #a9d9d3}
+.mock{background:#061826;border:1px solid #426879;border-radius:13px;overflow:hidden}.mockhead{background:#1b394b;padding:10px 16px;color:#bce8e0;font-size:.73rem;letter-spacing:.08em;font-weight:800}
+.mockbody{padding:20px}.mockbody .code{display:block;color:#91d9cd;font:12px/1.75 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.decision{display:inline-block;margin:16px 0 7px;font-size:1.2rem;font-weight:900;color:var(--amber)}.decision[data-decision="CAN_REVIEW"]{color:var(--mint)}
+.summary{border-left:4px solid var(--amber);background:#332e25;color:#fff0cb;padding:13px 17px;margin-top:18px;border-radius:0 9px 9px 0}
+.steps{padding-left:22px}.steps li{padding-bottom:4px}
+button{background:var(--mint);color:#07303a;border:2px solid var(--mint);padding:13px 18px;border-radius:9px;font-weight:800;cursor:pointer}.buttons{margin-top:20px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:14px;border-bottom:1px solid var(--line)}th{color:var(--mint)}td{color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}.tablewrap table{min-width:690px}
+.notice{background:#302b25;border-left:4px solid var(--amber);padding:18px;border-radius:0 12px 12px 0;color:#ffe4b9}
+footer{padding:30px 0;color:var(--muted);font-size:.83rem}
+@media(max-width:760px){.grid,.labgrid{grid-template-columns:1fr}header .wrap{padding:38px 0 34px}}
+@media(max-width:500px){section{padding:32px 0}.card{padding:17px}.buttons button{width:100%}.mockbody{padding:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;color:black}p,li,td{color:#333}.lab,.card{background:white;color:black}.buttons,nav{display:none}}
+</style><script src="diagnostic-envelope-assurance-model.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to main content</a><header><div class="wrap">
+<div class="eyebrow">ServiceNow · Diagnostic Workbench 2 · Source-informed assurance</div>
+<h1>Can the diagnostic evidence be trusted?</h1>
+<p class="lead">A real collector response is not a validated finding. Explore the DIAG envelope's safety declarations, applicability and population integrity using fixed synthetic examples — without collecting or uploading any instance information.</p>
+<nav aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="diagnostic-coverage-explorer.html#lineage-review">Catalogue lineage</a><a href="diagnostic-evidence-lifecycle.html">Evidence lifecycle</a><a href="verification-ledger.html">Verification standards</a><a href="#lab">Interactive lab</a><a href="#native-gates">Native acceptance</a></nav>
+<div class="tags"><span class="tag">SOURCE-ONLY · contract model</span><span class="tag">MOCK-ONLY · all example data</span><span class="tag">DEV-VERIFIED · 0 new</span><span class="tag">PRODUCTION-VERIFIED · 0</span><span class="tag">RELEASE · HOLD</span></div>
+</div></header><main id="main" class="wrap">
+<section><div class="eyebrow">01 · The client's pain &amp; history</div><h2>Healthy-looking numbers can conceal missing evidence.</h2>
+<p>In this representative client scenario, a legacy ServiceNow estate runs multiple collectors across partially licensed products. A table is unavailable in one environment, a grouped query reaches its cap in another, and a third export arrives without its complete wrapper. Treating all three as successful zero findings would undermine the entire assessment. This is an illustrative consulting problem, not a customer incident claim.</p>
+<div class="grid"><article class="card"><h3>Unclear applicability</h3><p>Unavailable product tables should be recorded as <strong>Not Applicable</strong>, never silently counted as zero.</p></article><article class="card"><h3>Unreliable denominator</h3><p>Truncated aggregations distort scorecards, ageing ratios and impact estimates even when the payload parses.</p></article><article class="card"><h3>Ungoverned authority</h3><p>Passing a parser does not establish collection permission, privacy compliance, reviewer approval or fitness for delivery.</p></article></div></section>
+<section id="lab"><div class="eyebrow">02 · The ServiceNow solution</div><h2>Source-traced envelope assurance. No hidden execution.</h2>
+<p>The Diagnostic Workbench 2 source catalogue declares <code>DIAG_ENVELOPE_BEGIN</code> and <code>DIAG_ENVELOPE_END</code>, a <code>schema_version</code>, <code>read_only</code>, <code>contains_pii</code>, metric arrays and a notes channel. This lab models an intentionally conservative subset of that contract. It does <strong>not</strong> replicate the private application's complete validation engine or run scripts in ServiceNow.</p>
+<div class="lab"><div class="labgrid"><div>
+<label for="scenario">Choose a synthetic collector outcome</label>
+<select id="scenario"><option value="valid">Bounded aggregate candidate</option><option value="markers">Missing wrapper marker</option><option value="schema">Unsupported schema</option><option value="write">Write safety declaration false</option><option value="pii">Consumer-data flag raised</option><option value="not-applicable">Missing product table</option><option value="capped">Capped group population</option><option value="zero">Zero-record observation</option><option value="sensitive">Sensitive-content note</option></select>
+<div class="decision" id="decision" role="status" aria-live="polite">HOLD</div>
+<p id="reason"></p><p id="next"></p>
+<div id="summary" class="summary" role="status" aria-live="polite">MOCK-ONLY · NOT RUN · HOLD</div>
+<div class="buttons"><button id="download-examples" type="button">Export nine synthetic outcomes (CSV)</button><button id="download-gates" type="button">Export eight native acceptance gates (CSV)</button></div>
+</div><div><div class="mock" aria-label="Illustrative text console, not a ServiceNow screenshot">
+<div class="mockhead">ILLUSTRATIVE HTML CONSOLE · NOT A SERVICENOW SCREENSHOT</div>
+<div class="mockbody"><span class="code">DIAG_ENVELOPE_BEGIN
+{
+  "collector": "ITSM_INC_001",
+  "schema_version": "1.0",
+  "read_only": true,
+  "contains_pii": false,
+  "record_count": 120,
+  "metrics": { "total": 120 }
+}
+DIAG_ENVELOPE_END</span></div></div>
+<h3 style="margin-top:20px">What the review still needs</h3><ul id="steps" class="steps" aria-label="Assurance signal checks"></ul></div></div></div>
+<p class="notice"><strong>Privacy and permission boundary:</strong> The selector uses only fabricated in-code fixtures. There is no upload, paste, API call, instance connection or persistent browser storage. Do not submit real ServiceNow output to this public demonstration. Running read-only Scripts – Background collectors still requires explicit platform approval and an assessed execution impact.</p></section>
+<section id="native-gates"><div class="eyebrow">Native DEV acceptance</div><h2>Eight independent checks before a finding can leave the assessment.</h2>
+<p>The downloadable worksheet is a preparation artifact, not an execution receipt. All eight gates are <strong>NOT RUN / UNREVIEWED / HOLD</strong>, and evidence and reviewer fields remain intentionally empty.</p>
+<div class="tablewrap"><table><thead><tr><th>Gate</th><th>Control objective</th><th>Authority</th></tr></thead><tbody>
+<tr><th scope="row">DEA-N01–N03</th><td>Version and source, role authority and entitlements</td><td>Platform and licence owners</td></tr>
+<tr><th scope="row">DEA-N04–N05</th><td>Wrapper integrity and sensitive-data rejection</td><td>Technical and security reviewers</td></tr>
+<tr><th scope="row">DEA-N06–N07</th><td>Full denominator and N/A versus genuine zero</td><td>CMDB/ITSM data owners</td></tr>
+<tr><th scope="row">DEA-N08</th><td>Human finding approval and governed Delivery handoff</td><td>Independent reviewer</td></tr></tbody></table></div></section>
+<section><div class="eyebrow">03 · Architectural best practices</div><h2>OOTB-first, least privilege, honest proof.</h2>
+<div class="grid"><article class="card"><h3>Read-only is not risk-free</h3><p>Prefer native role-controlled read and aggregate APIs; assess large-table query cost, index use, group caps and access in DEV before any approved production run.</p></article>
+<article class="card"><h3>Separate identities</h3><p>The original Diagnostic module-pack DIAG envelope is distinct from the Knowledge Intelligence companion's KI-EVIDENCE format. No interchangeability, adapter or native interoperability is asserted.</p></article>
+<article class="card"><h3>Trace to human acceptance</h3><p>ITIL 4 continual improvement demands reproducible evidence and accountable decisions. Candidate findings stay draft until owners verify population, root cause, impact and delivery authority.</p></article></div>
+<p><strong>Licensing and entitlements:</strong> The static website requires no ServiceNow licence. Real collector execution requires approved script authority, correct roles and custom-app hosting rights where applicable; ITSM, ITOM Visibility/Discovery, SecOps, IRM, CSM, HRSD, ITAM/HAM/SAM, IntegrationHub and analytic capabilities must be checked against installed products and contracts. No entitlement is inferred from source presence.</p>
+<p><strong>Evidence boundary:</strong> SOURCE-ONLY model based on private Diagnostic Workbench 2 catalogue and historical documentation; all interactive examples MOCK-ONLY. No newly DEV-VERIFIED or PRODUCTION-VERIFIED outcomes and no approved genuine screenshots. Existing source/DEV historical reports remain date-bounded. Public release is HOLD pending native validation and independent evidence review.</p></section>
+</main><footer class="wrap">© 2026 ServiceNow Professional Portfolio · No customer data, private source, original instance images or credentials published.</footer></body></html>
