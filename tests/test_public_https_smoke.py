@@ -145,6 +145,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
         expected = {
             "index.html", "delivery-release-evolution.html",
             "diagnostic-workbench-case-study.html", "visual-evidence.html",
+            "diagnostic-envelope-assurance-lab.html",
             "delivery-case-study.html", "reusable-delivery-patterns-case-study.html",
             "diagnostic-delivery-handoff-contract.html", "cmdb-ire-assurance.html",
             "itsm-greenfield-build-sequencer.html", "ki-matrix-intake.html",
