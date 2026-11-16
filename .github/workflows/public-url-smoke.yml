@@ -16,6 +16,8 @@ on:
       - 'cmdb-ire-assurance.html'
       - 'cmdb-tag-governance-lab.html'
       - 'cmdb-relationship-assurance-lab.html'
+      - 'cmdb-assurance-control-tower.html'
+      - 'scripts/browser_cmdb_assurance_control_tower.py'
       - 'itsm-greenfield-build-sequencer.html'
       - 'ki-matrix-intake.html'
       - 'technical-evidence-register.html'
@@ -42,7 +44,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_public_https_smoke.py' -v
       - name: Check published markers exist in the source
         run: python scripts/check_public_https.py --mode local
-      - name: Match sixteen anonymous public HTML routes byte-for-byte to checkout
+      - name: Match seventeen anonymous public HTML routes byte-for-byte to checkout
         run: python scripts/check_public_https.py --mode live --attempts 12 --retry-seconds 20
       - name: Keep a redacted machine-readable delivery receipt
         if: always()

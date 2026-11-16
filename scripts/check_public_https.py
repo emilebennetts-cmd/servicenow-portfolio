@@ -25,6 +25,7 @@ TARGETS = {
     "cmdb-ire-assurance.html": 'id="acceptance"',
     "cmdb-tag-governance-lab.html": 'id="tag-lab"',
     "cmdb-relationship-assurance-lab.html": 'id="relationship-lab"',
+    "cmdb-assurance-control-tower.html": 'id="tower-controls"',
     "itsm-greenfield-build-sequencer.html": 'id="readiness"',
     "ki-matrix-intake.html": 'id="matrix-file"',
     "technical-evidence-register.html": 'id="source-lineage"',
