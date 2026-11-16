@@ -1,3 +1,10 @@
+# 16 November 2026 — CMDB Tag Governance key-value assurance lab
+
+- Added a new [responsive Tag Governance lab](cmdb-tag-governance-lab.html), five synthetic cloud tagging incidents, source-owner remediation boundaries and a CSS-illustrated console; not a genuine screenshot or native Tag Governance execution.
+- Implemented 25 immutable `NOT RUN / HOLD / MOCK-ONLY` native DEV test gates and safe downloadable CSV exports, five scenario model evaluations, Node regression tests and a four-width Chromium workflow.
+- Updated homepage, Explorer (88 pages), sitemap, publication evidence register and independent release documentation. No native verification, customer data, credentials or screenshot approvals.
+- Source release and entitlement boundaries: [technical record](releases/2026-11-16-cmdb-tag-governance-lab.md). CI and Pages should be read from actual GitHub Actions receipts.
+
 # 16 November 2026 — CMDB Health synthetic denominator-drift review
 
 - Extended the existing CMDB Health case study with four interactive, mobile-stacking before/after comparisons: controlled synthetic remediation, denominator shrinkage, changed rule revision and incomplete calculation.
