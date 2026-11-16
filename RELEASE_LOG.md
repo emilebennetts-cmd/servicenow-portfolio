@@ -1,3 +1,11 @@
+# 16 November 2026 — CMDB Health synthetic denominator-drift review
+
+- Extended the existing CMDB Health case study with four interactive, mobile-stacking before/after comparisons: controlled synthetic remediation, denominator shrinkage, changed rule revision and incomplete calculation.
+- Added deterministic comparison logic for cohort token, denominator, metric rule revision, job completion and timestamps; downloadable four-case **MOCK-ONLY / NOT RUN / HOLD** CSV. Ratios are sample passing fractions, **not actual native CMDB Health algorithms or results**.
+- Added five independent Node regression tests, a quality workflow enforcement step and source-traced [technical release](releases/2026-11-16-cmdb-health-denominator-lineage.md).
+- The original 24 native acceptance gates, zero approved screenshots and zero new DEV/Production verification remain unchanged. No public private-source, customer data or credentials were exposed.
+- [Open the interactive review](cmdb-health-assurance-lab.html#denominator-lab). Final CI and deployment outcomes must be read from GitHub Actions rather than inferred from source commits.
+
 # 16 November 2026 — CMDB Health KPI Assurance Lab — 24-gate synthetic DEV handoff
 
 - Implemented a mobile-first CMDB Health reliability case study spanning scheduled-job freshness, Correctness/IRE identity, Compliance scope drift and Relationship health, with a clearly labelled illustrative console and no customer or native data.
