@@ -47,6 +47,8 @@ jobs:
         run: node --test tests/diagnostic_coverage_gate.test.cjs
       - name: Test separated Diagnostic catalogue source lineage and native HOLD controls
         run: node --test tests/diagnostic_lineage_review.test.cjs
+      - name: Test Diagnostic envelope safety decisions and eight native HOLD gates
+        run: node --test tests/diagnostic_envelope_assurance.test.cjs
       - name: Test Workbench source-to-DEV filters and HOLD-only export
         run: node --test tests/workbench_gap_board.test.cjs
       - name: Test quality gate
