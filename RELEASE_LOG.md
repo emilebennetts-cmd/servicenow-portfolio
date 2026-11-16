@@ -1,3 +1,7 @@
+## 2026-11-16 — CMDB Assurance offline receipt preflight (SOURCE-ONLY / HOLD)
+
+Added a browser-local, 1 MiB-bounded, read-only CSV preflight to the [117-control native execution workpack](cmdb-assurance-control-tower.html#native-receipt-preflight). It rejects missing/duplicate/changed source controls, malformed CSV, GO claims, altered evidence class and insufficient candidate reviewer/receipt metadata. Even a structurally complete candidate remains HOLD; no DEV-VERIFIED, PRODUCTION-VERIFIED or screenshot publication is claimed. Node security and source-integrity regressions, quality workflow coverage, and four-width browser CSV import checks are included. [Release details](releases/2026-11-16-cmdb-assurance-offline-receipt-preflight.md).
+
 ## 2026-11-16 — CMDB Assurance native execution sequence (SOURCE-ONLY / MOCK-ONLY)
 
 Extended the CMDB Assurance Control Tower with a five-stage, mobile-responsive native execution planner and a 117-control HOLD-only CSV workpack. Added entry prerequisites, domain dependencies, accountable roles, exit criteria and source-integrity regression/browser checks. No native DEV or Production verification, independent test approval or screenshot publication is claimed. See [release](releases/2026-11-16-cmdb-assurance-native-execution-sequence.md) and [live page](cmdb-assurance-control-tower.html#native-execution-plan).
