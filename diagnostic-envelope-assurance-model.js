@@ -10,7 +10,9 @@ const common=Object.freeze({
  collector:'ITSM_INC_001',version:'1.0',schema_version:'1.0',
  module:'ITSM',category:'Incident',captured_at:'2026-09-01 10:00:00',
  read_only:true,classification:'Internal',contains_pii:false,
- record_count:120,metrics:{total:120,open:38},results:[],notes:[]
+ record_count:1,metrics:{total:120,open:38},
+ results:[{kind:'state_breakdown',field:'state',value:'In Progress',count:38}],
+ entities:[],relationships:[],notes:[]
 });
 const cases=Object.freeze([
  ['valid','Bounded aggregate candidate','CAN_REVIEW','A syntactically valid aggregate is still unverified and needs an authorised reviewer.'],
@@ -21,7 +23,13 @@ const cases=Object.freeze([
  ['not-applicable','Missing product table','NOT_APPLICABLE','A missing product table is not a passing zero-defect assessment.'],
  ['capped','Capped group population','INCOMPLETE','The denominator cannot be trusted after a cap or truncation.'],
  ['zero','Zero-record observation','REVIEW','Zero rows need entitlement, scope and completeness reconciliation.'],
- ['sensitive','Sensitive-content note','REJECT','Potential credential material is rejected rather than shown or exported.']
+ ['sensitive','Sensitive-content note','REJECT','Potential credential material is rejected rather than shown or exported.'],
+ ['no-groups','No groups but nonzero incident total','CAN_REVIEW','Collector record_count is the number of output groups, not the incident-table denominator.'],
+ ['count-drift','Declared group count disagrees','INCOMPLETE','The number of returned groups must reconcile with record_count.'],
+ ['open-over-total','Open count exceeds total','INCOMPLETE','Metric populations are inconsistent even if the wrapper is present.'],
+ ['payload-injection','Unexpected identity field','REJECT','Unknown properties are outside this sanitised example contract.'],
+ ['unsafe-result','Sensitive group label','REJECT','Unexpected free-text group labels cannot enter this public demonstration.'],
+ ['malformed-note','Non-text collector note','REJECT','Notes require bounded text rather than arbitrary nested objects.']
 ].map(v=>Object.freeze({id:v[0],title:v[1],expected:v[2],guidance:v[3]})));
 const nativeGates=Object.freeze([
  ['DEA-N01','Read back target app scope, installed version and catalogue lineage','Installed record and source fingerprint'],
@@ -35,13 +43,19 @@ const nativeGates=Object.freeze([
 ].map(r=>Object.freeze({id:r[0],action:r[1],evidence:r[2]})));
 function fixture(key){
  if(!cases.some(x=>x.id===key))throw Error('Unknown synthetic case');
- const env={...common,metrics:{...common.metrics},results:[],notes:[]};
+ const env={...common,metrics:{...common.metrics},results:common.results.map(r=>({...r})),entities:[],relationships:[],notes:[]};
  if(key==='schema')env.schema_version='99.0';
  if(key==='write')env.read_only=false;
  if(key==='pii')env.contains_pii=true;
- if(key==='not-applicable'){env.metrics.total=-1;env.notes=['incident table is not available on this instance.'];}
+ if(key==='not-applicable'){env.metrics.total=-1;env.metrics.open=-1;env.results=[];env.record_count=0;env.notes=['incident table is not available on this instance.'];}
  if(key==='capped')env.notes=['assignment grouping capped at 400 groups.'];
- if(key==='zero'){env.record_count=0;env.metrics.total=0;env.metrics.open=0;}
+ if(key==='zero'){env.record_count=0;env.results=[];env.metrics.total=0;env.metrics.open=0;}
+ if(key==='no-groups'){env.record_count=0;env.results=[];}
+ if(key==='count-drift')env.record_count=2;
+ if(key==='open-over-total')env.metrics.open=130;
+ if(key==='payload-injection')env.user_email='not-permitted@example.invalid';
+ if(key==='unsafe-result')env.results[0].value='person@example.invalid';
+ if(key==='malformed-note')env.notes=[{value:'nested data'}];
  if(key==='sensitive')env.notes=['credential material included'];
  const raw=BEGIN+'\n'+JSON.stringify(env)+'\n'+(key==='markers'?'DIAG_END_MISSING':END);
  return raw;
@@ -60,17 +74,37 @@ function parse(raw){
 function evaluate(raw){
  let env;
  try{env=parse(raw);}catch(_){return Object.freeze({decision:'REJECT',reason:'Missing, incomplete or invalid DIAG wrapper',checks:Object.freeze(['wrapper'])});}
- if(env.schema_version!=='1.0'||!/^ITSM_INC_001$/.test(env.collector||''))return Object.freeze({decision:'REJECT',reason:'Collector identity or schema mismatch',checks:Object.freeze(['schema'])});
- if(env.read_only!==true)return Object.freeze({decision:'REJECT',reason:'Read-only safety declaration failed',checks:Object.freeze(['read_only'])});
- if(env.contains_pii!==false||env.classification!=='Internal')return Object.freeze({decision:'REJECT',reason:'Privacy or classification check failed',checks:Object.freeze(['privacy'])});
- if(!Array.isArray(env.notes)||!Array.isArray(env.results)||!env.metrics||typeof env.metrics!=='object'||Array.isArray(env.metrics)||!Number.isSafeInteger(env.record_count)||env.record_count<0)return Object.freeze({decision:'REJECT',reason:'Required aggregate shape invalid',checks:Object.freeze(['shape'])});
- if(/credential|password|token|secret|bearer|api.key|authorization/i.test(JSON.stringify(env.notes)))return Object.freeze({decision:'REJECT',reason:'Sensitive-content signal detected',checks:Object.freeze(['privacy'])});
- if(Object.values(env.metrics).some(n=>typeof n!=='number'||!Number.isFinite(n)))return Object.freeze({decision:'REJECT',reason:'Metric value shape invalid',checks:Object.freeze(['metrics'])});
- if(Object.values(env.metrics).some(n=>n===-1)||env.notes.some(n=>/not available/i.test(n)))return Object.freeze({decision:'NOT_APPLICABLE',reason:'Unavailable product/table is not a zero finding',checks:Object.freeze(['applicability'])});
- if(env.notes.some(n=>/capp?ed|truncat/i.test(n)))return Object.freeze({decision:'INCOMPLETE',reason:'Capped or truncated result denominator',checks:Object.freeze(['denominator'])});
- if(env.record_count===0||env.metrics.total===0)return Object.freeze({decision:'REVIEW',reason:'Zero population requires independent scope review',checks:Object.freeze(['population'])});
- if(env.metrics.total!==env.record_count)return Object.freeze({decision:'INCOMPLETE',reason:'Population metrics and record count disagree',checks:Object.freeze(['denominator'])});
- return Object.freeze({decision:'CAN_REVIEW',reason:'Synthetic contract passes initial shape checks; native assurance remains HOLD',checks:Object.freeze(['wrapper','schema','read_only','privacy','population'])});
+ const outcome=(decision,reason,checks)=>Object.freeze({decision,reason,checks:Object.freeze(checks)});
+ // This public model permits only its synthetic sample subset; it is NOT the
+ // private intake parser and must never be used to ingest actual instance output.
+ const allowed=['collector','version','schema_version','module','category','captured_at','read_only','classification','contains_pii','record_count','metrics','results','entities','relationships','notes'];
+ if(Object.keys(env).some(k=>!allowed.includes(k)))return outcome('REJECT','Unexpected field outside the public fixture contract',['shape']);
+ if(env.schema_version!=='1.0'||env.collector!=='ITSM_INC_001')return outcome('REJECT','Collector identity or schema mismatch',['schema']);
+ if(env.read_only!==true)return outcome('REJECT','Read-only safety declaration failed',['read_only']);
+ if(env.contains_pii!==false||env.classification!=='Internal')return outcome('REJECT','Privacy or classification check failed',['privacy']);
+ if(!Array.isArray(env.notes)||env.notes.length>16||env.notes.some(n=>typeof n!=='string'||n.length>240))return outcome('REJECT','Collector notes require bounded text',['shape']);
+ if(!Array.isArray(env.results)||env.results.length>100||!Array.isArray(env.entities)||env.entities.length||!Array.isArray(env.relationships)||env.relationships.length)return outcome('REJECT','Public subset accepts aggregate groups only',['shape']);
+ if(!Number.isSafeInteger(env.record_count)||env.record_count<0)return outcome('REJECT','Invalid output group count',['shape']);
+ if(!env.metrics||typeof env.metrics!=='object'||Array.isArray(env.metrics)||
+    !Number.isSafeInteger(env.metrics.total)||!Number.isSafeInteger(env.metrics.open)||
+    Object.values(env.metrics).some(n=>typeof n!=='number'||!Number.isFinite(n)))return outcome('REJECT','Metric value shape invalid',['metrics']);
+ const states=['New','In Progress','On Hold','Resolved','Closed','(empty)'];
+ const groupSafe=r=>r&&typeof r==='object'&&!Array.isArray(r)&&
+    Object.keys(r).every(k=>['kind','field','value','count'].includes(k))&&
+    ((r.kind==='state_breakdown'&&r.field==='state'&&states.includes(r.value))||
+     (r.kind==='priority_breakdown'&&r.field==='priority'&&['1','2','3','4','5','(empty)'].includes(r.value)))&&
+    Number.isSafeInteger(r.count)&&r.count>=0;
+ if(!env.results.every(groupSafe))return outcome('REJECT','Unexpected or sensitive result-group content',['privacy','shape']);
+ if(/credential|password|token|secret|bearer|api.key|authorization/i.test(env.notes.join(' ')))return outcome('REJECT','Sensitive-content signal detected',['privacy']);
+ // Crucial source correction: ITSM-INC-001 sets record_count = results.length;
+ // metrics.total is a separate GlideAggregate incident-table population.
+ if(env.record_count!==env.results.length)return outcome('INCOMPLETE','Returned group count does not match record_count',['group_count']);
+ if(env.metrics.total===-1||env.metrics.open===-1||env.notes.some(n=>/not available/i.test(n)))return outcome('NOT_APPLICABLE','Unavailable product/table is not a zero finding',['applicability']);
+ if(env.metrics.total<0||env.metrics.open<0)return outcome('REJECT','Negative metric outside the explicit N/A sentinel',['metrics']);
+ if(env.notes.some(n=>/capp?ed|truncat/i.test(n)))return outcome('INCOMPLETE','Capped or truncated result denominator',['denominator']);
+ if(env.metrics.open>env.metrics.total)return outcome('INCOMPLETE','Open incidents exceed total incident population',['denominator']);
+ if(env.metrics.total===0)return outcome('REVIEW','Zero incident population requires independent scope review',['population']);
+ return outcome('CAN_REVIEW','Synthetic shape checks passed; source population and native assurance remain HOLD',['wrapper','schema','read_only','privacy','group_count','population']);
 }
 function assess(id){
  const item=cases.find(x=>x.id===id);

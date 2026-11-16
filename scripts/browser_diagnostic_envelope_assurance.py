@@ -11,11 +11,11 @@ def check(browser,width):
         page.goto((ROOT/"diagnostic-envelope-assurance-lab.html").as_uri(),wait_until="domcontentloaded")
         assert page.locator("#decision").inner_text()=="CAN_REVIEW"
         assert "RELEASE HOLD" in page.locator("#summary").inner_text()
-        for key,expected in [("markers","REJECT"),("schema","REJECT"),("write","REJECT"),("pii","REJECT"),("not-applicable","NOT_APPLICABLE"),("capped","INCOMPLETE"),("zero","REVIEW"),("sensitive","REJECT")]:
+        for key,expected in [("markers","REJECT"),("schema","REJECT"),("write","REJECT"),("pii","REJECT"),("not-applicable","NOT_APPLICABLE"),("capped","INCOMPLETE"),("zero","REVIEW"),("sensitive","REJECT"),("no-groups","CAN_REVIEW"),("count-drift","INCOMPLETE"),("open-over-total","INCOMPLETE"),("payload-injection","REJECT"),("unsafe-result","REJECT"),("malformed-note","REJECT")]:
             page.locator("#scenario").select_option(key)
             assert page.locator("#decision").inner_text()==expected,(width,key)
             assert "DEV-VERIFIED 0" in page.locator("#summary").inner_text()
-        for selector,rows in [("#download-examples",10),("#download-gates",9)]:
+        for selector,rows in [("#download-examples",16),("#download-gates",9)]:
             with page.expect_download() as dl: page.locator(selector).click()
             candidate=Path(dl.value.path()).read_text(encoding="utf-8-sig")
             assert len(candidate.splitlines())==rows

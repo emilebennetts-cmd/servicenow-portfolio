@@ -1,3 +1,7 @@
+## 2026-11-16 — DIAG envelope collector count semantics and hostile-fixture guardrails (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+Corrected the synthetic Incident envelope so `record_count` is emitted result-group count, not the incident-table population `metrics.total`, matching the source `ITSM-INC-001` collector. Expanded to 15 fixed scenarios with strict aggregate-group privacy and count-shape checks, updated exports, source tests and responsive browser checks. All eight native controls remain NOT RUN / HOLD; no new DEV or Production verification or genuine screenshot approval. [Release](releases/2026-11-16-diagnostic-collector-count-semantics.md).
+
 ## 2026-11-16 — Diagnostic Envelope Assurance Lab (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
 Added [Diagnostic envelope assurance](diagnostic-envelope-assurance-lab.html) based on the private Workbench 2 DIAG contract: nine fixed synthetic integrity, privacy, applicability and denominator scenarios; eight independent native gate worksheet rows; two local formula-safe CSV exports; responsive example console and tests. Static website only, no raw instance output import, script execution, real screenshots or customer data. New native DEV-VERIFIED 0 / PRODUCTION-VERIFIED 0. See the [technical release](releases/2026-11-16-diagnostic-envelope-assurance-lab.md). All native release decisions HOLD pending reviewer sign-off.

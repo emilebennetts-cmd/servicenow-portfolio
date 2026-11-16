@@ -44,14 +44,14 @@ footer{padding:30px 0;color:var(--muted);font-size:.83rem}
 <p>In this representative client scenario, a legacy ServiceNow estate runs multiple collectors across partially licensed products. A table is unavailable in one environment, a grouped query reaches its cap in another, and a third export arrives without its complete wrapper. Treating all three as successful zero findings would undermine the entire assessment. This is an illustrative consulting problem, not a customer incident claim.</p>
 <div class="grid"><article class="card"><h3>Unclear applicability</h3><p>Unavailable product tables should be recorded as <strong>Not Applicable</strong>, never silently counted as zero.</p></article><article class="card"><h3>Unreliable denominator</h3><p>Truncated aggregations distort scorecards, ageing ratios and impact estimates even when the payload parses.</p></article><article class="card"><h3>Ungoverned authority</h3><p>Passing a parser does not establish collection permission, privacy compliance, reviewer approval or fitness for delivery.</p></article></div></section>
 <section id="lab"><div class="eyebrow">02 · The ServiceNow solution</div><h2>Source-traced envelope assurance. No hidden execution.</h2>
-<p>The Diagnostic Workbench 2 source catalogue declares <code>DIAG_ENVELOPE_BEGIN</code> and <code>DIAG_ENVELOPE_END</code>, a <code>schema_version</code>, <code>read_only</code>, <code>contains_pii</code>, metric arrays and a notes channel. This lab models an intentionally conservative subset of that contract. It does <strong>not</strong> replicate the private application's complete validation engine or run scripts in ServiceNow.</p>
+<p>The Diagnostic Workbench 2 source catalogue declares <code>DIAG_ENVELOPE_BEGIN</code> and <code>DIAG_ENVELOPE_END</code>, a <code>schema_version</code>, <code>read_only</code>, <code>contains_pii</code>, aggregate <code>metrics</code>, result groups and a notes channel. Its ITSM Incident collector sets <code>record_count</code> to the length of the <code>results</code> array, <em>not</em> the incident-table total. This lab models an intentionally conservative subset of that contract. It does <strong>not</strong> replicate the private application's complete validation engine or run scripts in ServiceNow.</p>
 <div class="lab"><div class="labgrid"><div>
 <label for="scenario">Choose a synthetic collector outcome</label>
-<select id="scenario"><option value="valid">Bounded aggregate candidate</option><option value="markers">Missing wrapper marker</option><option value="schema">Unsupported schema</option><option value="write">Write safety declaration false</option><option value="pii">Consumer-data flag raised</option><option value="not-applicable">Missing product table</option><option value="capped">Capped group population</option><option value="zero">Zero-record observation</option><option value="sensitive">Sensitive-content note</option></select>
+<select id="scenario"><option value="valid">Bounded aggregate candidate</option><option value="markers">Missing wrapper marker</option><option value="schema">Unsupported schema</option><option value="write">Write safety declaration false</option><option value="pii">Consumer-data flag raised</option><option value="not-applicable">Missing product table</option><option value="capped">Capped group population</option><option value="zero">Zero-record observation</option><option value="sensitive">Sensitive-content note</option><option value="no-groups">No groups, nonzero total</option><option value="count-drift">Mismatched group count</option><option value="open-over-total">Open exceeds total</option><option value="payload-injection">Unexpected field</option><option value="unsafe-result">Sensitive group label</option><option value="malformed-note">Malformed collector note</option></select>
 <div class="decision" id="decision" role="status" aria-live="polite">HOLD</div>
 <p id="reason"></p><p id="next"></p>
 <div id="summary" class="summary" role="status" aria-live="polite">MOCK-ONLY · NOT RUN · HOLD</div>
-<div class="buttons"><button id="download-examples" type="button">Export nine synthetic outcomes (CSV)</button><button id="download-gates" type="button">Export eight native acceptance gates (CSV)</button></div>
+<div class="buttons"><button id="download-examples" type="button">Export 15 synthetic outcomes (CSV)</button><button id="download-gates" type="button">Export eight native acceptance gates (CSV)</button></div>
 </div><div><div class="mock" aria-label="Illustrative text console, not a ServiceNow screenshot">
 <div class="mockhead">ILLUSTRATIVE HTML CONSOLE · NOT A SERVICENOW SCREENSHOT</div>
 <div class="mockbody"><span class="code">DIAG_ENVELOPE_BEGIN
@@ -60,11 +60,13 @@ footer{padding:30px 0;color:var(--muted);font-size:.83rem}
   "schema_version": "1.0",
   "read_only": true,
   "contains_pii": false,
-  "record_count": 120,
-  "metrics": { "total": 120 }
+  "record_count": 1,
+  "metrics": { "total": 120, "open": 38 },
+  "results": [{ "kind": "state_breakdown", "field": "state", "value": "In Progress", "count": 38 }]
 }
 DIAG_ENVELOPE_END</span></div></div>
 <h3 style="margin-top:20px">What the review still needs</h3><ul id="steps" class="steps" aria-label="Assurance signal checks"></ul></div></div></div>
+<p class="notice"><strong>Source semantics and data safety:</strong> In the source collector, <code>record_count</code> counts emitted aggregate-group rows, whereas <code>metrics.total</code> counts incidents. A zero result-group count therefore is <em>not</em> a zero-incident population. This deliberately restrictive illustrative model rejects unexpected fields, free-text group values and incompatible count shapes; it cannot certify or parse arbitrary native envelopes.</p>
 <p class="notice"><strong>Privacy and permission boundary:</strong> The selector uses only fabricated in-code fixtures. There is no upload, paste, API call, instance connection or persistent browser storage. Do not submit real ServiceNow output to this public demonstration. Running read-only Scripts – Background collectors still requires explicit platform approval and an assessed execution impact.</p></section>
 <section id="native-gates"><div class="eyebrow">Native DEV acceptance</div><h2>Eight independent checks before a finding can leave the assessment.</h2>
 <p>The downloadable worksheet is a preparation artifact, not an execution receipt. All eight gates are <strong>NOT RUN / UNREVIEWED / HOLD</strong>, and evidence and reviewer fields remain intentionally empty.</p>
