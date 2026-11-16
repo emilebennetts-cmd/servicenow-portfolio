@@ -1,0 +1,39 @@
+name: Diagnostic envelope assurance browser validation
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'diagnostic-envelope-assurance-lab.html'
+      - 'diagnostic-envelope-assurance-model.js'
+      - 'tests/diagnostic_envelope_assurance.test.cjs'
+      - 'scripts/browser_diagnostic_envelope_assurance.py'
+      - '.github/workflows/diagnostic-envelope-assurance-browser.yml'
+  pull_request:
+    paths:
+      - 'diagnostic-envelope-assurance-lab.html'
+      - 'diagnostic-envelope-assurance-model.js'
+      - 'tests/diagnostic_envelope_assurance.test.cjs'
+      - 'scripts/browser_diagnostic_envelope_assurance.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  envelope-guardrails:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify deterministic safety and HOLD-only exports
+        run: node --test tests/diagnostic_envelope_assurance.test.cjs
+      - name: Install Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Verify four responsive interactive journeys and safe CSV downloads
+        run: python scripts/browser_diagnostic_envelope_assurance.py
