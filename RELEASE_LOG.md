@@ -3,7 +3,7 @@
 - Added a responsive [CMDB Relationship Integrity Lab](cmdb-relationship-assurance-lab.html) with five fictional relationship fixtures, a CSS-only operator illustration and explicit source/DEV/Production/screenshot boundaries.
 - Added a deterministic, browser-local policy model and Node source tests for duplicate, orphan, stale, invalid direction and no-finding cases. The sample policy is not native ServiceNow relationship governance or health scoring.
 - Added selected six-gate and full 30-gate CSV exports with immutable NOT RUN / HOLD / MOCK-ONLY outcomes and blank private evidence/reviewer fields; no platform mutation, network connection or screenshot publication.
-- Indexed homepage and Explorer (89 pages), regenerated complete sitemap, added a public claim record and release documentation, and wired the new tests into the public quality workflow. [Source and entitlement details](releases/2026-11-16-cmdb-relationship-assurance-lab.md).
+- Indexed homepage and Explorer (89 pages), regenerated complete sitemap, added a public claim record and release documentation, and wired the new tests into the public quality workflow. Added four-width Chromium scenario/CSV coverage and 16-route anonymous exact-byte HTTPS deployment assurance. [Source and entitlement details](releases/2026-11-16-cmdb-relationship-assurance-lab.md).
 
 # 16 November 2026 — CMDB Tag Governance key-value assurance lab
 

@@ -27,3 +27,7 @@ Static site: no ServiceNow licence. In-instance CMDB review and health configura
 
 ## Remaining acceptance
 Authorised non-production instance/version and processor read-back; actual execution of the 30 tests; sample population and source lineage; permitted and denied ACL personas; independent reviewer and image-specific publication approval. No source secrets, customer data, or private source published.
+
+## Browser and publication assurance extensions
+- Added `scripts/browser_cmdb_relationship_assurance.py` to the shared Playwright workflow, exercising all five cases and six/all-30-gate safe CSV downloads at 375/768/1024/1440 px, including overflow and JavaScript error assertions.
+- Added the page to the anonymous exact-byte GitHub Pages route verifier. Successful static-site delivery is separate from native DEV or Production acceptance.
