@@ -45,10 +45,27 @@ footer{color:var(--muted);padding:24px 0;font-size:.85rem}
 .coverage-footer p{margin:0}
 #coverage-description{color:#d6e5e9}
 @media(max-width:660px){.coverage-controls{grid-template-columns:1fr}.coverage-shell{padding:17px}.coverage-footer button{width:100%}}
-</style><script src="diagnostic-coverage-gate.js" defer></script></head><body><a class="skip" href="#main">Skip to main content</a>
+
+/* Two independent, source-informed Diagnostic catalogue lineage tracks. */
+.lineage-panel{margin:24px 0;padding:clamp(18px,3vw,30px);border:1px solid #78aaa8;border-radius:17px;background:linear-gradient(145deg,#15384a,#0a2737)}
+.lineage-picker{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:end}
+.lineage-picker label{font-weight:800}.lineage-status{color:#ffe0b4;font-weight:800;background:#302b25;border-left:4px solid var(--warn);padding:12px 16px;margin:20px 0}
+.lineage-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;margin:22px 0}
+.lineage-card{min-width:0;background:#0d2434;border:1px solid #507783;border-radius:13px;padding:clamp(18px,2.5vw,25px)}
+.lineage-card h3{color:#9cf2db}.lineage-card p{font-size:.88rem;overflow-wrap:anywhere}
+.lineage-card dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;border-top:1px solid #426572;padding-top:13px;font-size:.86rem}
+.lineage-card dt{color:#c8dce5}.lineage-card dd{margin:0;color:#a7f5e2;font-weight:800}
+.lineage-table{max-width:100%;overflow-x:auto;border:1px solid #507783;border-radius:12px}
+.lineage-table table{min-width:790px;width:100%;border-collapse:collapse}
+.lineage-table th,.lineage-table td{border-bottom:1px solid #41616d;text-align:left;vertical-align:top;padding:11px 13px;font-size:.87rem}
+.lineage-table th{color:#d0ffed}.lineage-table thead th{background:#214859;color:#e4fff7}
+#lineage-download{width:100%;margin-top:18px}
+@media(max-width:680px){.lineage-picker{grid-template-columns:1fr}.lineage-panel{padding:16px}}
+@media print{.lineage-picker,#lineage-download{display:none}.lineage-card{background:white;color:black;border-color:#888}.lineage-card p,.lineage-card dt,.lineage-card dd{color:#333}.lineage-panel{background:white;color:black;border:1px solid #999}}
+</style><script src="diagnostic-coverage-gate.js" defer></script><script src="diagnostic-lineage-review.js" defer></script></head><body><a class="skip" href="#main">Skip to main content</a>
 <header><div class="wrap"><div class="overline">Diagnostic Workbench 2 · Source-reviewed technical showcase</div><h1>Twenty collector families. One defensible evidence chain.</h1>
 <p class="lead">Search the reviewed source catalogue, inspect native acceptance questions and see why a missing table or partial aggregate must never become a green health score. This is not a running ServiceNow collector.</p>
-<nav aria-label="Related pages"><a href="./">Portfolio home</a><a href="diagnostic-case-study.html">Diagnostic case study</a><a href="cmdb-ire-assurance.html">CMDB assurance</a><a href="verification-ledger.html">Verification ledger</a><a href="#catalogue">Browse catalogue</a><a href="#examples">Review evidence</a><a href="#coverage-gate">Coverage gate</a></nav>
+<nav aria-label="Related pages"><a href="./">Portfolio home</a><a href="diagnostic-case-study.html">Diagnostic case study</a><a href="cmdb-ire-assurance.html">CMDB assurance</a><a href="verification-ledger.html">Verification ledger</a><a href="#catalogue">Browse catalogue</a><a href="#examples">Review evidence</a><a href="#coverage-gate">Coverage gate</a><a href="#lineage-review">Catalogue lineage</a></nav>
 <div class="badges"><span class="badge">SOURCE-ONLY · source definitions</span><span class="badge">MOCK-ONLY · synthetic scenarios</span><span class="badge">DEV-VERIFIED · none new</span><span class="badge">PRODUCTION-VERIFIED · not established</span></div>
 </div></header>
 <main id="main" class="wrap">
@@ -120,6 +137,30 @@ footer{color:var(--muted);padding:24px 0;font-size:.85rem}
 <p><strong>Acceptance requires</strong> product applicability; version and role evidence; negative ACL tests; controlled sample and scale checks; DIAG schema and privacy review; denominator reconciliation; human finding sign-off; change and rollback authorisation. A repository README describes historical 1 September 2026 DEV testing, but this site adds <strong>no new independently observed DEV or production execution</strong>.</p>
 <p><strong>Licensing and entitlements:</strong> no ServiceNow licence for the public static page. Native collectors require approved access and relevant installed product entitlements. ITSM, Discovery/ITOM, SecOps, IRM, CSM, HRSD, HAM/SAM, IntegrationHub and external provider licences vary by contract and feature; verify scope before running anything.</p>
 <p>Official ServiceNow references: <a href="https://www.servicenow.com/docs/r/api-reference/server-api-reference/c_GlideAggregateAPI.html" rel="noopener noreferrer">GlideAggregate</a> and <a href="https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/overview-cmdb-health.html" rel="noopener noreferrer">CMDB Health</a>. <a href="visual-evidence.html">Real screenshot candidates remain on publication HOLD.</a></p></section>
+
+<section id="lineage-review" aria-labelledby="lineage-review-heading">
+<div class="overline">Source lineage · architectural acceptance boundary</div>
+<h2 id="lineage-review-heading">Two Diagnostic catalogues. Two different evidence contracts.</h2>
+<p>The base Diagnostic Workbench module-pack catalogue and its later Knowledge Intelligence companion are <strong>separate versioned source inventories</strong>. Their collector, rule, runbook and pattern counts cannot be added together to assert a single deployed application. Compare the historical source assertions, the envelope contracts and the native steps still needed for an authorised instance.</p>
+<div class="lineage-panel">
+<div class="badge">SOURCE-INFORMED ARCHITECTURE · NOT A SERVICENOW SCREENSHOT</div>
+<div class="lineage-picker">
+<div><label for="lineage-track">Catalogue scope to inspect</label>
+<select id="lineage-track"><option value="both">Compare both source catalogues</option><option value="module">Base Diagnostic module-pack catalogue</option><option value="knowledge">Knowledge Intelligence companion</option></select></div>
+<div><p>Historical source observations are <strong>DEV-REPORTED</strong> only. The controls and downloadable worksheets are <strong>MOCK-ONLY / NOT RUN / HOLD</strong>.</p></div>
+</div>
+<p id="lineage-status" class="lineage-status" role="status" aria-live="polite">Loading source traceability…</p>
+<div id="lineage-facts" class="lineage-facts" aria-label="Historical source inventory comparison"></div>
+<h3>Native review controls for selected sources</h3>
+<p>These are proposed, OOTB-first acceptance questions—not executed tests or sign-offs. Real scripts, customer records, identifiers and screenshots are excluded.</p>
+<div class="lineage-table"><table><caption class="visually-hidden">Catalogue-separated native acceptance controls, all unrun and on hold</caption>
+<thead><tr><th scope="col">Control</th><th scope="col">Catalogue</th><th scope="col">Required independent evidence</th><th scope="col">Current status</th></tr></thead>
+<tbody id="lineage-gates"></tbody></table></div>
+<button type="button" id="lineage-download">Download source-separated NOT RUN / HOLD review CSV</button>
+</div>
+<p><strong>Architectural decision:</strong> keep DIAG envelope imports and KI evidence imports isolated until an approved adapter and negative-persona tests establish compatibility. A successful source build, historical DEV lint or synthetic worksheet must never mark an instance native-verified. The public website requires no ServiceNow licence; native checks require relevant roles, application entitlement, selected product subscriptions, approved script execution and licensed knowledge-content access.</p>
+<p><a href="diagnostic-case-study.html">Diagnostic case study</a> · <a href="knowledge-intelligence.html">Knowledge Intelligence architecture</a> · <a href="governed-handoff-contract.html">Governed Delivery handoff</a> · <a href="verification-ledger.html">Evidence verification ledger</a></p>
+</section>
 </main><footer class="wrap">Source inventory reviewed 12 November 2026 · SOURCE-ONLY public implementation · No production or screenshot approval asserted.</footer>
 <script>
 "use strict";
