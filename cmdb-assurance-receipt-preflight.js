@@ -107,15 +107,76 @@
     return result;
   }
 
+
+  /* Local-only aggregate triage. Derive display values solely from the five public
+     control models and numeric counts. Never return or export imported metadata. */
+  function stageTriage(input,tower,sourceRows,now=new Date()){
+    const inspected=audit(input,tower,sourceRows,now);
+    const output={hold:true,certified:false,parsed:false,inspected,unmapped:0,stages:[]};
+    if(!tower||!sourceRows)return output;
+    try{
+      const reference=tower.planRows(sourceRows);
+      const table=parseCsv(input);
+      if(table.length!==118||table[0].some((v,i)=>v!==HEADERS[i]))return output;
+      const meta=new Map(tower.METADATA.map(m=>[m.title,m.key]));
+      const stageMap=new Map(tower.STAGES.map(s=>[s.key,{
+        key:s.key,title:s.title,step:s.step,expected:reference.filter(r=>r.key===s.key).length,
+        matched:0,pending:0,passReported:0,failReported:0,blockedReported:0,drift:0,missing:0,
+        release:"HOLD"
+      }]));
+      const refs=new Map(reference.map(r=>[r.key+":"+r.id,expectedFields(r,tower)]));
+      const seen=new Set();
+      for(const cells of table.slice(1)){
+        const key=meta.get(cells[1]),marker=key+":"+cells[6];
+        if(!stageMap.has(key)||!refs.has(marker)){output.unmapped++;continue;}
+        const stage=stageMap.get(key);
+        if(seen.has(marker)||refs.get(marker).some((v,i)=>v!==cells[i])){stage.drift++;continue;}
+        seen.add(marker);stage.matched++;
+        if(cells[10]==="NOT RUN")stage.pending++;
+        if(cells[10]==="PASS")stage.passReported++;
+        if(cells[10]==="FAIL")stage.failReported++;
+        if(cells[10]==="BLOCKED")stage.blockedReported++;
+      }
+      stageMap.forEach(s=>{s.missing=s.expected-s.matched;output.stages.push(Object.freeze(s));});
+      output.parsed=true;
+    }catch(_){/* Fail closed: never derive an export from malformed or oversized input. */}
+    return output;
+  }
+  function stageCsv(report){
+    if(!report||!report.parsed||report.stages.length!==5)throw Error("HOLD — valid 117-row schema required");
+    const head=["Stage","Public control domain","Expected","Source-matched","NOT RUN reported","PASS reported","FAIL reported","BLOCKED reported","Missing source matches","Duplicate or changed source rows","Public preflight","Release decision","Evidence status"];
+    const esc=s=>'"'+String(s).replace(/"/g,'""')+'"';
+    const rows=report.stages.map(s=>[
+      s.step,s.title,s.expected,s.matched,s.pending,s.passReported,s.failReported,s.blockedReported,s.missing,s.drift,
+      report.inspected.valid?"FORMAT CHECK ONLY":"REVIEW ISSUES","HOLD","NOT INDEPENDENTLY VERIFIED"
+    ]);
+    return [head,...rows].map(r=>r.map(esc).join(",")).join("\r\n")+"\r\n";
+  }
+
   function attach(doc){
     const input=doc.getElementById("tower-receipt-file");
     if(!input)return;
     const status=doc.getElementById("tower-receipt-status");
     const counts=doc.getElementById("tower-receipt-counts");
     const issues=doc.getElementById("tower-receipt-issues");
+    const stageBody=doc.getElementById("tower-receipt-stage-body");
+    const stageExport=doc.getElementById("tower-receipt-stage-export");
+    const stageNote=doc.getElementById("tower-receipt-stage-status");
+    let lastStageReport=null;
+    if(stageExport)stageExport.addEventListener("click",()=>{
+      if(!lastStageReport||!lastStageReport.parsed)return;
+      const url=URL.createObjectURL(new Blob([stageCsv(lastStageReport)],{type:"text/csv;charset=utf-8"}));
+      const link=doc.createElement("a");link.href=url;link.download="cmdb-stage-triage-aggregate-HOLD.csv";
+      doc.body.append(link);link.click();link.remove();URL.revokeObjectURL(url);
+      stageNote.textContent="Five aggregate stage counts exported · HOLD. No private source fields or execution evidence included.";
+    });
     input.addEventListener("change",async ()=>{
       const f=input.files&&input.files[0];
       input.value="";issues.replaceChildren();counts.textContent="";
+      lastStageReport=null;
+      if(stageBody)stageBody.replaceChildren();
+      if(stageExport)stageExport.disabled=true;
+      if(stageNote)stageNote.textContent="HOLD — no stage summary available.";
       if(!f){status.textContent="No file selected. Release decision HOLD.";return;}
       if(f.size>MAX_BYTES){status.textContent="HOLD — CSV is larger than 1 MiB. No data retained.";return;}
       try{
@@ -123,7 +184,20 @@
           ire:root.CMDBSourceAcceptance,tags:root.CMDBTagGovernance,health:root.CMDBHealthAssurance,
           relationships:root.CMDBRelationshipAssurance,lifecycle:root.CMDBPolicyLab
         });
-        const result=audit(await f.text(),root.CMDBAssuranceTower,rows);
+        const report=stageTriage(await f.text(),root.CMDBAssuranceTower,rows);
+        const result=report.inspected;
+        lastStageReport=report;
+        if(report.parsed&&stageBody){
+          report.stages.forEach(s=>{
+            const tr=doc.createElement("tr");
+            [s.step+" · "+s.title,String(s.matched)+"/"+s.expected,String(s.pending),String(s.passReported),String(s.failReported),String(s.blockedReported),String(s.missing+s.drift),"HOLD"].forEach(value=>{
+              const td=doc.createElement("td");td.textContent=value;tr.append(td);
+            });
+            stageBody.append(tr);
+          });
+          if(stageExport)stageExport.disabled=false;
+          if(stageNote)stageNote.textContent=(result.valid?"Schema-consistent":"Issues detected")+" · "+report.unmapped+" unmatched input row(s). These are operator-reported counts, never independently verified. All stages HOLD.";
+        }
         status.textContent=result.message;
         counts.textContent="117 required · "+result.pending+" NOT RUN · "+result.passReported+" PASS reported · "+result.failReported+" FAIL reported · "+result.blockedReported+" BLOCKED reported · "+result.reviewMetadataComplete+" candidate reviewer fields complete. Native DEV-VERIFIED 0 · PRODUCTION-VERIFIED 0.";
         result.issues.slice(0,8).forEach(item=>{
@@ -134,5 +208,5 @@
     });
   }
   if(typeof document!=="undefined")document.addEventListener("DOMContentLoaded",()=>attach(document));
-  return Object.freeze({MAX_BYTES,HEADERS,parseCsv,audit,attach});
+  return Object.freeze({MAX_BYTES,HEADERS,parseCsv,audit,stageTriage,stageCsv,attach});
 });
