@@ -46,6 +46,7 @@
     return [columns.join(','),...buildRows(scenario).map(row=>columns.map(col=>csvCell(row[col])).join(','))].join('\r\n')+'\r\n';
   }
   const api=Object.freeze({columns,scenarioLabels,buildRows,toCsv});
+  root.CMDBSourceAcceptance=api;
   if (typeof module!=='undefined' && module.exports) module.exports=api;
   if (typeof document==='undefined') return;
   const all=document.getElementById('native-matrix-all');
