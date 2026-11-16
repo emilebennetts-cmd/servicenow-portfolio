@@ -23,6 +23,7 @@ TARGETS = {
     "reusable-delivery-patterns-case-study.html": 'id="pattern-fit-desk"',
     "diagnostic-delivery-handoff-contract.html": 'id="handoff-controls"',
     "cmdb-ire-assurance.html": 'id="acceptance"',
+    "cmdb-tag-governance-lab.html": 'id="tag-lab"',
     "itsm-greenfield-build-sequencer.html": 'id="readiness"',
     "ki-matrix-intake.html": 'id="matrix-file"',
     "technical-evidence-register.html": 'id="source-lineage"',
