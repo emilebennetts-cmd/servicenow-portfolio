@@ -83,5 +83,57 @@
     return '"'+x.replace(/"/g,'""')+'"';
   }
   function csv(selector){return [headers,...rows(selector)].map(r=>r.map(quote).join(",")).join("\r\n")+"\r\n";}
-  return Object.freeze({scenarios,gates,headers,scenario,assess,rows,csv});
+
+  // All before/after samples are deliberately synthetic passing fractions,
+  // NOT native ServiceNow CMDB Health scores or job outputs.
+  const cohortScenarios=Object.freeze([
+    Object.freeze({id:"remediated",label:"Controlled remediation",brief:"The same fictional CI cohort and rule definition are used on two completed runs.",
+      before:Object.freeze({passing:700,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:true,run:"2026-11-01T09:00:00Z"}),
+      after:Object.freeze({passing:820,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:true,run:"2026-11-02T09:00:00Z"}),
+      finding:"The illustrative fraction improves with matching scope and rule labels. Real DEV receipts and reviewer approval are still missing."}),
+    Object.freeze({id:"denominator",label:"Denominator shrinkage",brief:"The fictional passing count is unchanged, but excluded CIs make the percentage appear stronger.",
+      before:Object.freeze({passing:700,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:true,run:"2026-11-01T09:00:00Z"}),
+      after:Object.freeze({passing:700,total:800,cohort:"sample-cohort-b",rules:"sample-rules-v1",completed:true,run:"2026-11-02T09:00:00Z"}),
+      finding:"A higher fraction caused by excluding 200 sample CIs is not evidence of corrected configuration data."}),
+    Object.freeze({id:"rule-change",label:"Metric definition changed",brief:"The fictional CI set is the same but the acceptance rule changed between runs.",
+      before:Object.freeze({passing:700,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:true,run:"2026-11-01T09:00:00Z"}),
+      after:Object.freeze({passing:850,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v2",completed:true,run:"2026-11-02T09:00:00Z"}),
+      finding:"A rule revision breaks simple trend comparison even when the denominator happens to match."}),
+    Object.freeze({id:"incomplete",label:"Incomplete calculation",brief:"The second fictional calculation has no completed-run receipt.",
+      before:Object.freeze({passing:700,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:true,run:"2026-11-01T09:00:00Z"}),
+      after:Object.freeze({passing:820,total:1000,cohort:"sample-cohort-a",rules:"sample-rules-v1",completed:false,run:""}),
+      finding:"A percentage without a completed job cannot be used as a fresh, accepted health trend."})
+  ]);
+  function sampleFraction(sample){
+    if(!sample||!Number.isSafeInteger(sample.passing)||!Number.isSafeInteger(sample.total)||
+      sample.total<=0||sample.passing<0||sample.passing>sample.total)throw Error("Invalid synthetic cohort counts");
+    return Math.round(1000*sample.passing/sample.total)/10;
+  }
+  function compareCohort(id){
+    const fixture=cohortScenarios.find(s=>s.id===id);
+    if(!fixture)throw Error("Unknown comparison fixture");
+    const a=fixture.before,b=fixture.after,problems=[];
+    const prior=sampleFraction(a),next=sampleFraction(b);
+    if(a.total!==b.total)problems.push("Denominator changed: "+a.total+" to "+b.total+" sample CIs");
+    if(a.cohort!==b.cohort)problems.push("CI cohort membership token changed");
+    if(a.rules!==b.rules)problems.push("Metric rule version changed");
+    if(!a.completed||!b.completed||!a.run||!b.run)problems.push("A completed calculation receipt is missing");
+    if(a.run&&b.run&&(!Number.isFinite(Date.parse(a.run))||!Number.isFinite(Date.parse(b.run))||Date.parse(b.run)<=Date.parse(a.run)))
+      problems.push("Calculation timestamps do not establish chronological completion");
+    return Object.freeze({fixture,before:prior,after:next,delta:Math.round((next-prior)*10)/10,
+      comparable:problems.length===0,
+      reasons:Object.freeze(problems.length?problems:["Synthetic scope, rule and completed-run markers match; real CI membership and job receipts still require DEV proof"]),
+      evidence:"MOCK-ONLY",nativeStatus:"NOT RUN",releaseDecision:"HOLD"});
+  }
+  const cohortCsvHeaders=Object.freeze(["Synthetic scenario","Before passing","Before population","After passing","After population",
+    "Illustrative before %","Illustrative after %","Illustrative change (pp)","Like-for-like inputs","Reason","Native execution","Release decision","Evidence classification"]);
+  function cohortCsv(){
+    const data=cohortScenarios.map(function(s){
+      const result=compareCohort(s.id);return [s.label,s.before.passing,s.before.total,s.after.passing,s.after.total,
+        result.before,result.after,result.delta,result.comparable?"SYNTHETIC MATCH":"NO",
+        result.reasons.join("; "),result.nativeStatus,result.releaseDecision,result.evidence];
+    });
+    return [cohortCsvHeaders,...data].map(r=>r.map(quote).join(",")).join("\r\n")+"\r\n";
+  }
+  return Object.freeze({scenarios,gates,headers,scenario,assess,rows,csv,cohortScenarios,compareCohort,cohortCsv,cohortCsvHeaders});
 });
