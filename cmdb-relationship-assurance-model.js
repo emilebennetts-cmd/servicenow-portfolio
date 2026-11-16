@@ -46,6 +46,7 @@ function csv(id="all"){
 function attach(doc){
  if(!doc||!doc.getElementById)return;
  const buttons=Array.from(doc.querySelectorAll("[data-case]")),panel=doc.getElementById("inspection");
+ if(!panel)return; // Other portfolio pages may reuse the source-only model without the native lab UI.
  const el=(tag,klass,value)=>{const n=doc.createElement(tag);if(klass)n.className=klass;if(value!==undefined)n.textContent=String(value);return n;};
  function show(id){
   const r=assess(id),s=r.scenario;
