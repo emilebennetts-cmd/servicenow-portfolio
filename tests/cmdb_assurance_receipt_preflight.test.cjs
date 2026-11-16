@@ -63,7 +63,62 @@ test("malformed and oversized CSV fail safely without exposing input",()=>{
 test("offline UI discloses native HOLD, no network or persistent storage",()=>{
   const html=fs.readFileSync(path.join(__dirname,"..","cmdb-assurance-control-tower.html"),"utf8");
   const js=fs.readFileSync(path.join(__dirname,"..","cmdb-assurance-receipt-preflight.js"),"utf8");
-  for(const token of ['id="native-receipt-preflight"','id="tower-receipt-file"','id="tower-receipt-status"','id="tower-receipt-issues"','cmdb-assurance-receipt-preflight.js','connect-src \'none\'',"no upload","DEV-VERIFIED 0","PRODUCTION-VERIFIED 0"])assert.ok(html.includes(token),token);
+  for(const token of ['id="native-receipt-preflight"','id="tower-receipt-file"','id="tower-receipt-status"','id="tower-receipt-issues"','id="tower-receipt-stage-body"','id="tower-receipt-stage-export"','cmdb-assurance-receipt-preflight.js','connect-src \'none\'',"no upload","DEV-VERIFIED 0","PRODUCTION-VERIFIED 0"])assert.ok(html.includes(token),token);
   assert.doesNotMatch(js,/localStorage|sessionStorage|indexedDB|XMLHttpRequest|fetch\s*\(|sendBeacon|WebSocket|<script/i);
   assert.doesNotMatch(html,/<img\b|<iframe\b|<form\b/i);
+});
+
+
+test("five-stage aggregate triage reconciles all 117 public source controls without certification",()=>{
+  const r=preflight.stageTriage(exported(),tower,rows);
+  assert.equal(r.parsed,true);assert.equal(r.inspected.valid,true);
+  assert.equal(r.hold,true);assert.equal(r.certified,false);
+  assert.deepEqual(r.stages.map(s=>s.expected),[18,25,24,30,20]);
+  assert.deepEqual(r.stages.map(s=>s.matched),[18,25,24,30,20]);
+  assert.deepEqual(r.stages.map(s=>s.pending),[18,25,24,30,20]);
+  assert.ok(r.stages.every(s=>s.release==="HOLD"&&s.missing===0&&s.drift===0));
+  const csv=preflight.stageCsv(r);
+  assert.equal(csv.trim().split(/\r?\n/).length,6);
+  assert.match(csv,/NOT INDEPENDENTLY VERIFIED/);
+  assert.doesNotMatch(csv,/instance|syntheticdev|EV-TEST/i);
+});
+test("reported PASS, FAIL and BLOCKED never promote native acceptance",()=>{
+  const input=edited(t=>{
+    candidate(t);
+    t[2].splice(10,9,"FAIL","HOLD","DEV-REPORTED","syntheticdev","Zurich","builder01",t[1][16],"EV-TEST-0002","reviewer01");
+    t[3].splice(10,9,"BLOCKED","HOLD","DEV-REPORTED","syntheticdev","Zurich","builder01",t[1][16],"EV-TEST-0003","reviewer01");
+  });
+  const r=preflight.stageTriage(input,tower,rows);
+  assert.equal(r.parsed,true);
+  assert.equal(r.stages[0].passReported,1);
+  assert.equal(r.stages[0].failReported,1);
+  assert.equal(r.stages[0].blockedReported,1);
+  assert.equal(r.stages[0].pending,15);
+  assert.equal(r.inspected.certified,false);assert.ok(r.stages.every(s=>s.release==="HOLD"));
+  assert.match(preflight.stageCsv(r),/REVIEW ISSUES|FORMAT CHECK ONLY/);
+});
+test("source changes and unknown IDs are counted without reflecting imported identifiers",()=>{
+  const altered=edited(t=>{t[1][8]="UNREVIEWED SOURCE ACTION";t[2][6]="SECRET-CANARY-123";});
+  const r=preflight.stageTriage(altered,tower,rows);
+  assert.equal(r.parsed,true);
+  assert.equal(r.inspected.valid,false);
+  assert.equal(r.stages[0].matched,16);
+  assert.equal(r.stages[0].drift,1);
+  assert.equal(r.stages[0].missing,2);
+  assert.equal(r.unmapped,1);
+  const out=preflight.stageCsv(r);
+  assert.doesNotMatch(out,/SECRET-CANARY|UNREVIEWED SOURCE ACTION/);
+  assert.match(out,/REVIEW ISSUES/);
+});
+test("private candidate values cannot reach aggregate output and malformed imports cannot export",()=>{
+  const input=edited(t=>{candidate(t);t[1][13]="private.example.com/secret/CANARY-999";});
+  const r=preflight.stageTriage(input,tower,rows);
+  assert.equal(r.inspected.valid,false);
+  assert.equal(r.parsed,true);
+  assert.doesNotMatch(JSON.stringify(r.stages)+preflight.stageCsv(r),/CANARY-999|private.example.com|reviewer01|builder01|EV-TEST-0001/);
+  for(const malformed of ['"unterminated',exported().slice(0,100), "x".repeat(preflight.MAX_BYTES+1)]){
+    const bad=preflight.stageTriage(malformed,tower,rows);
+    assert.equal(bad.parsed,false);
+    assert.throws(()=>preflight.stageCsv(bad),/HOLD/);
+  }
 });
