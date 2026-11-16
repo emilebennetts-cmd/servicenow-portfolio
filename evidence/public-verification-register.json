@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-15T23:26:55.350Z",
+  "updated_utc": "2026-11-16",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -901,6 +901,15 @@
       "runtime_verification": "All previews are MOCK-ONLY; no native CI, policy, retirement definition, approval, archived data, scheduled-job or task processing has been executed. CSV outcomes are fixed NOT RUN / HOLD / MOCK-ONLY, and private execution receipt fields are blank. No DEV-VERIFIED or PRODUCTION-VERIFIED claim.",
       "public_screenshot_status": "CSS/HTML synthetic policy preview; no ServiceNow screenshot or customer data. Original screenshot approvals zero / HOLD.",
       "page": "cmdb-data-manager-governance-lab.html"
+    },
+    {
+      "id": "CMDB-HEALTH-KPI-ASSURANCE-20261116",
+      "title": "CMDB Health score reliability and 24-gate native acceptance rehearsal",
+      "classification": "mock-only",
+      "basis": "Independently authored client-neutral offline UI and deterministic model: four synthetic investigations (job freshness, correctness/IRE identity, compliance scope drift, relationship health) with 24 unrun native acceptance gates. Architecture grounded in official ServiceNow Australia CMDB Health documentation; source review of separate Delivery and Diagnostic workbench repositories. Fictional scores are neither native calculations nor customer results.",
+      "runtime_verification": "Browser-only scenario selection and CSV generation. Native health job execution, class denominator reconciliation, rule changes, ACL negative personas, independent DEV read-back and production release have NOT RUN / HOLD status. All 24 CSV rows immutable NOT RUN / HOLD / MOCK-ONLY, private executor and receipts blank; zero DEV-VERIFIED or PRODUCTION-VERIFIED.",
+      "public_screenshot_status": "CSS-only illustrative console, not a ServiceNow capture. No customer records, secrets, private source or original screenshots. Individual screenshot approvals zero / HOLD.",
+      "page": "cmdb-health-assurance-lab.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
