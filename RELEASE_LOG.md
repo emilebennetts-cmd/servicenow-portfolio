@@ -1,3 +1,13 @@
+# 16 November 2026 — CMDB Health KPI Assurance Lab — 24-gate synthetic DEV handoff
+
+- Implemented a mobile-first CMDB Health reliability case study spanning scheduled-job freshness, Correctness/IRE identity, Compliance scope drift and Relationship health, with a clearly labelled illustrative console and no customer or native data.
+- Added a deterministic four-scenario model, 24 immutable NOT RUN / HOLD / MOCK-ONLY acceptance gates, selected and complete offline CSV exports, Node contract tests and CI coverage.
+- Updated homepage, Explorer (87 indexed case-study pages), canonical sitemap, public evidence manifest and a private provenance record; kept all original screenshots unpublished.
+- Discovered and corrected a stale test assertion in the earlier CMDB Source Onboarding Lab after its acceptance model was moved to a separate static JavaScript file.
+- Final CI: [Portfolio quality gate](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43780200559) and [publication audit](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43780200513) **passed**; [GitHub Pages build/deployment](https://github.com/emilebennetts-cmd/servicenow-portfolio/actions/runs/43780199735) **succeeded**. Independent external HTTPS retrieval remains unconfirmed.
+- No DEV-VERIFIED or PRODUCTION-VERIFIED CMDB Health tests, no new ServiceNow deployment, no approved original screenshot and no change to private repository visibility.
+- [Source and acceptance details](releases/2026-11-16-cmdb-health-kpi-assurance-lab.md).
+
 # 16 November 2026 — Incident Management implementation lab (MOCK-ONLY / native HOLD)
 
 - Published a client-neutral, responsive Incident Management case study with three interactive synthetic journeys (intake/priority, restoration/communication, and closure/improvement), 24 native acceptance gates, and a complete fail-closed CSV handoff.
