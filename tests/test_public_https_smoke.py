@@ -153,6 +153,7 @@ class PublicHttpsSmokeTests(unittest.TestCase):
             "incident-management-implementation-lab.html",
             "cmdb-tag-governance-lab.html",
             "cmdb-relationship-assurance-lab.html",
+            "cmdb-assurance-control-tower.html",
         }
         self.assertEqual(set(smoke.TARGETS), expected)
 
