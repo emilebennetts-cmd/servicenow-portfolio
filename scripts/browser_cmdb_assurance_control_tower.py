@@ -59,6 +59,16 @@ def check(browser, width):
         assert "117 NOT RUN" in page.locator("#tower-receipt-counts").inner_text()
         assert "DEV-VERIFIED 0" in page.locator("#tower-receipt-counts").inner_text()
         assert page.locator("#tower-receipt-issues li").count() == 0
+        assert page.locator("#tower-receipt-stage-body tr").count() == 5
+        assert "18/18" in page.locator("#tower-receipt-stage-body tr").first.inner_text()
+        assert "HOLD" in page.locator("#tower-receipt-stage-body tr").first.inner_text()
+        with page.expect_download(timeout=15000) as summary:
+            page.locator("#tower-receipt-stage-export").click()
+        aggregate = Path(summary.value.path()).read_text(encoding="utf-8-sig")
+        assert len(aggregate.splitlines()) == 6
+        assert "NOT INDEPENDENTLY VERIFIED" in aggregate
+        assert "MOCK-ONLY" not in aggregate
+        assert "117 source controls exported" in page.locator("#tower-plan-status").inner_text()
         tampered = plan.replace('"NOT RUN","HOLD","MOCK-ONLY"',
                                 '"NOT RUN","GO","MOCK-ONLY"', 1)
         page.locator("#tower-receipt-file").set_input_files({
@@ -67,6 +77,14 @@ def check(browser, width):
         })
         page.get_by_text("integrity or candidate evidence metadata is incomplete", exact=False).wait_for(timeout=10000)
         assert page.locator("#tower-receipt-issues li").count() >= 1
+        assert page.locator("#tower-receipt-stage-body tr").count() == 5
+        assert "Issues detected" in page.locator("#tower-receipt-stage-status").inner_text()
+        with page.expect_download(timeout=15000) as rejected_summary:
+            page.locator("#tower-receipt-stage-export").click()
+        flagged = Path(rejected_summary.value.path()).read_text(encoding="utf-8-sig")
+        assert "REVIEW ISSUES" in flagged
+        assert "HOLD" in flagged
+        assert "GO" not in flagged
         assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"), f"{width}: plan overflow"
         assert not errors, f"{width}: page errors {errors}"
         print(f"PASS {width}px: 117 source-derived HOLD controls, 25 filtered, responsive")
