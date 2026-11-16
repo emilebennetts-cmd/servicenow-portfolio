@@ -51,6 +51,22 @@ def check(browser, width):
         assert '"1 / CI identity and source precedence"' in plan
         assert '"5 / Data Manager lifecycle and attestation"' in plan
         assert "117 source controls exported" in page.locator("#tower-plan-status").inner_text()
+        # The import is client-side and checks a sanitised HOLD-only workpack.
+        page.locator("#tower-receipt-file").set_input_files({
+            "name": "synthetic-hold.csv", "mimeType": "text/csv", "buffer": plan.encode("utf-8")
+        })
+        page.get_by_text("format and candidate metadata checks passed", exact=False).wait_for(timeout=10000)
+        assert "117 NOT RUN" in page.locator("#tower-receipt-counts").inner_text()
+        assert "DEV-VERIFIED 0" in page.locator("#tower-receipt-counts").inner_text()
+        assert page.locator("#tower-receipt-issues li").count() == 0
+        tampered = plan.replace('"NOT RUN","HOLD","MOCK-ONLY"',
+                                '"NOT RUN","GO","MOCK-ONLY"', 1)
+        page.locator("#tower-receipt-file").set_input_files({
+            "name": "synthetic-tampered.csv", "mimeType": "text/csv",
+            "buffer": tampered.encode("utf-8")
+        })
+        page.get_by_text("integrity or candidate evidence metadata is incomplete", exact=False).wait_for(timeout=10000)
+        assert page.locator("#tower-receipt-issues li").count() >= 1
         assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"), f"{width}: plan overflow"
         assert not errors, f"{width}: page errors {errors}"
         print(f"PASS {width}px: 117 source-derived HOLD controls, 25 filtered, responsive")
