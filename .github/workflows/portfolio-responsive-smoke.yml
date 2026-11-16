@@ -18,6 +18,10 @@ on:
       - 'reusable-delivery-patterns-case-study.html'
       - 'cmdb-ire-assurance.html'
       - 'cmdb-tag-governance-lab.html'
+      - 'cmdb-assurance-control-tower.html'
+      - 'cmdb-assurance-control-tower.js'
+      - 'scripts/browser_cmdb_assurance_control_tower.py'
+      - 'tests/cmdb_assurance_control_tower.test.cjs'
       - 'cmdb-relationship-assurance-lab.html'
       - 'cmdb-relationship-assurance-model.js'
       - 'scripts/browser_cmdb_relationship_assurance.py'
@@ -143,6 +147,8 @@ jobs:
         run: python scripts/browser_delivery_plan_lab.py
       - name: Exercise Tag Governance cases and fail-closed 25-gate CSV at four widths
         run: python scripts/browser_cmdb_tag_governance.py
+      - name: Exercise cross-domain CMDB control tower and 117 HOLD-only CSV at four widths
+        run: python scripts/browser_cmdb_assurance_control_tower.py
       - name: Exercise relationship graph, mock-only decisions and 30-gate HOLD CSV at four widths
         run: python scripts/browser_cmdb_relationship_assurance.py
       - name: Exercise CMDB Health denominator drift, CSV and HOLD gates at four widths
