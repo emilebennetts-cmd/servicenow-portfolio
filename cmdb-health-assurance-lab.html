@@ -23,11 +23,22 @@ section{padding:44px 0;border-bottom:1px solid #274b60}.split{display:grid;grid-
 .review{border:1px solid #628e9a;background:#0d2a3a;border-radius:14px;padding:22px}.state{display:inline-block;color:var(--gold);font-size:.75rem;text-transform:uppercase;font-weight:900;letter-spacing:.14em;border:1px solid #cf9d65;padding:3px 10px;border-radius:30px}.review h3{font-size:1.37rem}.review li{margin:7px 0}.review strong{color:var(--ink)}.mini{color:var(--gold);font-size:.82rem;font-weight:750}
 .gates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:20px 0}.gate{background:#0b2839;border:1px solid #4e7687;border-radius:12px;padding:16px}.gate strong{color:var(--mint)}.gate p{font-size:.9rem;margin:7px 0}.gate small{color:var(--gold);font-weight:850}.actions{margin-top:19px}.meta{font-size:.87rem}.tablewrap{overflow:auto;border:1px solid var(--border);border-radius:13px}table{width:100%;min-width:740px;border-collapse:collapse}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #3c5d70;padding:12px;font-size:.89rem}th{background:#194153;color:var(--mint)}footer{padding:35px 0;font-size:.85rem;color:var(--muted)}
 @media(max-width:940px){.screen,.split{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}}@media(max-width:660px){.wrap{width:calc(100% - 26px)}section{padding:32px 0}.cards,.flow,.gates,.kpis{grid-template-columns:1fr}.card,.fakebody,.review{padding:17px}header{padding:46px 0 36px}.nav{gap:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111}p,li,dd{color:#333}.lab,.fake,.review,.gate,.card{background:#fff;color:#111}.filters,.actions,.top{display:none}}
+
+.cohort-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:17px;margin-top:22px}
+.cohort-panel{background:#0e2b3a;border:1px solid #608b9a;border-radius:16px;padding:clamp(16px,2.5vw,25px);min-width:0}
+.cohort-panel h3{margin-top:0}.cohort-picks{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.cohort-bars{display:grid;gap:18px;margin:20px 0}.bar-label{display:flex;justify-content:space-between;gap:10px;font-size:.89rem;font-weight:800}
+.bar-track{height:22px;background:#244150;border:1px solid #86b2b9;border-radius:10px;overflow:hidden;margin-top:7px}
+.bar-fill{display:block;height:100%;max-width:100%;background:#80e8cd;border-radius:9px}
+.bar-fill.after{background:#ffd59c}
+.cohort-verdict{font-weight:850;color:var(--gold);font-size:1.15rem;margin:8px 0}.cohort-reasons{padding-left:19px;margin-bottom:0}
+.cohort-caption{font-size:.83rem;color:var(--muted)}
+@media(max-width:850px){.cohort-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
-<div class="top"><div class="wrap"><a class="brand" href="./">ServiceNow / Engineering Portfolio</a><nav class="nav" aria-label="Page navigation"><a href="#problem">The challenge</a><a href="#lab">Assurance lab</a><a href="#acceptance">DEV gates</a><a href="./portfolio-explorer.html">All work</a></nav></div></div>
+<div class="top"><div class="wrap"><a class="brand" href="./">ServiceNow / Engineering Portfolio</a><nav class="nav" aria-label="Page navigation"><a href="#problem">The challenge</a><a href="#lab">Assurance lab</a><a href="#acceptance">DEV gates</a><a href="#denominator-lab">Score comparison</a><a href="./portfolio-explorer.html">All work</a></nav></div></div>
 <header><div class="wrap">
 <div class="overline">CMDB Health / KPI trust / source-informed laboratory</div>
 <h1>A green health score is not proof of a healthy CMDB.</h1>
@@ -53,6 +64,37 @@ section{padding:44px 0;border-bottom:1px solid #274b60}.split{display:grid;grid-
 <div class="fake" aria-label="Illustrative CMDB Health console, not an actual ServiceNow screenshot"><div class="fakebar"><span>CMDB Workspace / Health assurance concept</span><span>MOCK ONLY</span></div><div class="fakebody"><div class="fakelabel">Illustrative interface reconstruction · Not a capture</div><h3 id="scenario-name">Choose a scenario</h3><p id="scenario-problem"></p><div class="kpis"><div class="kpi score"><span>Illustrative health score</span><strong id="score">—</strong></div><div class="kpi"><span>Health domain</span><strong id="theme">—</strong></div><div class="kpi"><span>Sample population</span><strong id="population">—</strong></div><div class="kpi"><span>Job state (fictional)</span><strong id="job">—</strong></div></div></div><div class="fakefoot">Not computed from native records · No API, network access or customer data</div></div>
 <div class="review" aria-live="polite"><span class="state" id="state">HOLD / NOT RUN</span><h3>Why the headline cannot yet be trusted</h3><ul id="risks"></ul><strong>Required next action</strong><p id="recommendation"></p><strong>Expected evidence</strong><p id="expected"></p></div>
 </div></div></section>
+
+<section id="denominator-lab">
+<div class="overline">Interactive score-provenance review / MOCK-ONLY</div>
+<h2>Did data improve, or did the denominator move?</h2>
+<p>A synthetic before/after visual makes the failure mode tangible. These percentages are <strong>simple passing-count fractions in invented examples</strong>; they are <strong>not ServiceNow CMDB Health scores</strong>, not native formula replicas and not observations from a customer or DEV instance.</p>
+<div class="cohort-picks" id="cohort-select" role="group" aria-label="Select synthetic score-comparison case"></div>
+<div class="cohort-layout">
+<div class="cohort-panel" aria-label="Synthetic comparison chart, not an instance screenshot">
+<div class="fakelabel">Illustrative quality ratio · synthetic input counts</div>
+<h3 id="cohort-title">Comparison scenario</h3>
+<p id="cohort-brief"></p>
+<div class="cohort-bars">
+<div><div class="bar-label"><span>Before / passing fraction</span><span id="cohort-before-label">—</span></div><div class="bar-track"><span id="cohort-before-bar" class="bar-fill"></span></div></div>
+<div><div class="bar-label"><span>After / passing fraction</span><span id="cohort-after-label">—</span></div><div class="bar-track"><span id="cohort-after-bar" class="bar-fill after"></span></div></div>
+</div>
+<p class="cohort-caption" id="cohort-delta"></p>
+<p class="cohort-caption">Bars compare invented numerator ÷ denominator, not the platform's calculation or a validated KPI trend.</p>
+</div>
+<div class="cohort-panel">
+<span class="state">NATIVE DEV · NOT RUN / HOLD</span>
+<h3>Read the difference, not just the percentage</h3>
+<p class="cohort-verdict" id="cohort-verdict" role="status" aria-live="polite"></p>
+<p id="cohort-detail"></p>
+<strong>Provenance review</strong>
+<ul class="cohort-reasons" id="cohort-reasons"></ul>
+<p class="cohort-caption">Even matching fictional cohort and rule labels cannot prove real CI membership, job completion, native calculation semantics or independently approved remediation.</p>
+</div>
+</div>
+<div class="actions"><button type="button" id="download-cohort">Download 4-case synthetic comparison CSV</button><a href="#acceptance">Continue to the 24 native acceptance gates</a></div>
+<div class="note" style="margin-top:19px"><p><strong>Fail-closed interpretation:</strong> All four comparisons remain MOCK-ONLY with native NOT RUN and release HOLD. No reader interaction can change native acceptance status.</p></div>
+</section>
 <section id="acceptance"><div class="overline">Native non-production handoff</div><h2>24 acceptance gates, ready for a real ServiceNow DEV review.</h2><p>Six native controls per scenario include job state, rule/scope provenance, recalculation, negative persona ACL tests and independent sign-off. The CSV is an offline execution worksheet — not a test run. All native outcomes are fixed to NOT RUN / HOLD / MOCK-ONLY and execution fields remain empty.</p>
 <div class="actions"><button type="button" class="primary" id="download-current">Download selected 6-gate CSV</button><button type="button" id="download-all">Download full 24-gate DEV CSV</button></div><p id="gate-count" class="meta" role="status" aria-live="polite"></p><div class="gates" id="gates"></div>
 <div class="note"><p><strong>Release cannot be approved here.</strong> Every exported row remains HOLD even when the reader switches scenarios. Only authorised native test evidence, current scope/version read-back and independent review can establish DEV-VERIFIED.</p></div>
@@ -86,6 +128,30 @@ function download(which){
 }
 document.getElementById("download-current").addEventListener("click",function(){download(current);});
 document.getElementById("download-all").addEventListener("click",function(){download("all");});
+
+var cohortId="remediated",cohortRoot=document.getElementById("cohort-select");
+model.cohortScenarios.forEach(function(s){
+ var b=item("button","",s.label);b.type="button";b.dataset.cohort=s.id;b.setAttribute("aria-pressed","false");
+ b.addEventListener("click",function(){cohortId=s.id;renderCohort();});cohortRoot.appendChild(b);
+});
+function renderCohort(){
+ var result=model.compareCohort(cohortId),s=result.fixture;
+ cohortRoot.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.cohort===cohortId));});
+ [["cohort-title",s.label],["cohort-brief",s.brief],["cohort-before-label",result.before+"% ("+s.before.passing+"/"+s.before.total+")"],
+ ["cohort-after-label",result.after+"% ("+s.after.passing+"/"+s.after.total+")"],
+ ["cohort-delta",(result.delta>=0?"+":"")+result.delta+" percentage points; synthetic arithmetic only"],
+ ["cohort-verdict",result.comparable?"LIKE-FOR-LIKE SYNTHETIC INPUTS · NATIVE HOLD":"NOT COMPARABLE · NATIVE HOLD"],
+ ["cohort-detail",s.finding]].forEach(function(p){document.getElementById(p[0]).textContent=p[1];});
+ document.getElementById("cohort-before-bar").style.width=result.before+"%";
+ document.getElementById("cohort-after-bar").style.width=result.after+"%";
+ var reasons=document.getElementById("cohort-reasons");reasons.replaceChildren();
+ result.reasons.forEach(function(t){reasons.appendChild(item("li","",t));});
+}
+document.getElementById("download-cohort").addEventListener("click",function(){
+ var raw="\ufeff"+model.cohortCsv(),blob=new Blob([raw],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="cmdb-health-synthetic-comparisons-NOT-RUN.csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+renderCohort();
 render();
 })();
 </script>
