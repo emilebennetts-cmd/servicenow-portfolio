@@ -22,7 +22,7 @@ const cases=Object.freeze([
  ['capped','Capped group population','INCOMPLETE','The denominator cannot be trusted after a cap or truncation.'],
  ['zero','Zero-record observation','REVIEW','Zero rows need entitlement, scope and completeness reconciliation.'],
  ['sensitive','Sensitive-content note','REJECT','Potential credential material is rejected rather than shown or exported.']
-].map(v=>Object.freeze({id:v[0],title:v[1],expected:v[2],guidance:v[3]}))));
+].map(v=>Object.freeze({id:v[0],title:v[1],expected:v[2],guidance:v[3]})));
 const nativeGates=Object.freeze([
  ['DEA-N01','Read back target app scope, installed version and catalogue lineage','Installed record and source fingerprint'],
  ['DEA-N02','Approve collector execution authority and least-privilege roles','Platform owner sign-off and negative persona test'],
@@ -32,7 +32,7 @@ const nativeGates=Object.freeze([
  ['DEA-N06','Reconcile result cap and metric denominators','Source query and complete population comparison'],
  ['DEA-N07','Validate missing-table and zero-row semantics','Independent N/A versus genuine zero test'],
  ['DEA-N08','Independently review findings before Delivery handoff','Named reviewer decision and authorised release receipt']
-].map(r=>Object.freeze({id:r[0],action:r[1],evidence:r[2]}))));
+].map(r=>Object.freeze({id:r[0],action:r[1],evidence:r[2]})));
 function fixture(key){
  if(!cases.some(x=>x.id===key))throw Error('Unknown synthetic case');
  const env={...common,metrics:{...common.metrics},results:[],notes:[]};
