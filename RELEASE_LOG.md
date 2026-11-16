@@ -1,3 +1,7 @@
+## 2026-11-16 — CMDB Assurance native execution sequence (SOURCE-ONLY / MOCK-ONLY)
+
+Extended the CMDB Assurance Control Tower with a five-stage, mobile-responsive native execution planner and a 117-control HOLD-only CSV workpack. Added entry prerequisites, domain dependencies, accountable roles, exit criteria and source-integrity regression/browser checks. No native DEV or Production verification, independent test approval or screenshot publication is claimed. See [release](releases/2026-11-16-cmdb-assurance-native-execution-sequence.md) and [live page](cmdb-assurance-control-tower.html#native-execution-plan).
+
 # 16 November 2026 — CMDB Assurance Control Tower: 117 native HOLD references
 
 - New [cross-domain CMDB control tower](cmdb-assurance-control-tower.html) connects 18 IRE, 25 Tag Governance, 24 CMDB Health, 30 Relationship Integrity and 20 Data Manager native acceptance prompts directly from their current public JavaScript models.

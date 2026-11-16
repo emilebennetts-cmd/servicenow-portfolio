@@ -37,3 +37,29 @@ test("responsive page uses local assets and discloses licence and evidence",()=>
  assert.match(html,/@media\(max-width:600px\)/);
  assert.doesNotMatch(html,/<img\b|<iframe\b|localStorage|sessionStorage|XMLHttpRequest/i);
 });
+
+test("native execution sequence binds all five source models without inventing approvals",()=>{
+ const rows=tower.createRows(deps),planned=tower.planRows(rows);
+ assert.equal(planned.length,117);
+ assert.deepEqual(tower.STAGES.map(s=>s.key),["identity","tags","health","relationships","lifecycle"]);
+ assert.deepEqual(tower.STAGES.map(s=>planned.filter(r=>r.key===s.key).length),[18,25,24,30,20]);
+ assert.deepEqual([...new Set(planned.map(r=>r.step))],[1,2,3,4,5]);
+ for(const r of planned){
+   assert.ok(r.entry&&r.dependency&&r.owner&&r.exit&&r.action&&r.expected);
+   assert.equal(r.native,"NOT RUN");assert.equal(r.decision,"HOLD");assert.equal(r.evidence,"MOCK-ONLY");
+ }
+ assert.throws(()=>tower.planRows(rows.slice(1)),/requires all 117/);
+ assert.throws(()=>tower.planRows(rows.map((r,i)=>i? r : {...r,native:"PASSED"})),/HOLD/);
+ assert.throws(()=>tower.planRows(rows.map((r,i)=>i? r : {...r,id:rows[1].id})),/HOLD/);
+});
+test("sequenced CSV preserves receipt blanks, formula protection and native HOLD claims",()=>{
+ const rows=tower.createRows(deps);
+ const output=tower.planCsv(rows);
+ assert.equal(output.split("\r\n").filter(Boolean).length,118);
+ assert.equal((output.match(/"NOT RUN","HOLD","MOCK-ONLY"/g)||[]).length,117);
+ assert.match(output,/"1 \/ CI identity and source precedence"/);
+ assert.match(output,/"5 \/ Data Manager lifecycle and attestation"/);
+ assert.doesNotMatch(output,/bearer\s|password|@gmail|dev[0-9]+\.service-now/i);
+ const html=fs.readFileSync(path.join(__dirname,"..","cmdb-assurance-control-tower.html"),"utf8");
+ for(const token of ["id=\"native-execution-plan\"","id=\"tower-plan-export\"","id=\"tower-plan-status\"","STAGE 5","approval","NOT RUN"]){assert.ok(html.includes(token),token);}
+});

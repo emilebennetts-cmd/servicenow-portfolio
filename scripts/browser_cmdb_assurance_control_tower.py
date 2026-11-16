@@ -42,6 +42,16 @@ def check(browser, width):
         exported = Path(all_controls.value.path()).read_text(encoding="utf-8-sig")
         assert len(exported.splitlines()) == 118, f"{width}: all CSV"
         assert exported.count('"NOT RUN","HOLD","MOCK-ONLY"') == 117
+        assert page.locator("#native-execution-plan .sequence li").count() == 5
+        with page.expect_download(timeout=15000) as sequence:
+            page.locator("#tower-plan-export").click()
+        plan = Path(sequence.value.path()).read_text(encoding="utf-8-sig")
+        assert len(plan.splitlines()) == 118, f"{width}: plan CSV"
+        assert plan.count('"NOT RUN","HOLD","MOCK-ONLY"') == 117
+        assert '"1 / CI identity and source precedence"' in plan
+        assert '"5 / Data Manager lifecycle and attestation"' in plan
+        assert "117 source controls exported" in page.locator("#tower-plan-status").inner_text()
+        assert page.evaluate("() => document.documentElement.scrollWidth <= innerWidth + 2"), f"{width}: plan overflow"
         assert not errors, f"{width}: page errors {errors}"
         print(f"PASS {width}px: 117 source-derived HOLD controls, 25 filtered, responsive")
     finally:
