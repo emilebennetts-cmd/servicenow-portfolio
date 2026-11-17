@@ -1,3 +1,7 @@
+## 2026-11-17 — Pattern item-consumption source-to-draft contract (SOURCE-ONLY / MOCK-ONLY / HOLD)
+
+Added a responsive [six-lane pattern consumption lab](pattern-library.html#consumption-contract) with four synthetic source/review boundary cases, fail-closed missing child mapping, no ServiceNow writes and a six-row local HOLD-only CSV. Source review distinguished Delivery's 96 parent-only mined references from missing historical child data and controlled As-Built historical DEV claims. Added seven deterministic Node regression tests and CI coverage. No current DEV or Production execution, approval or genuine screenshot publication. [Technical release](releases/2026-11-17-pattern-item-consumption-contract.md).
+
 ## 2026-11-16 — Public evidence library confidentiality and dated proof boundaries (SOURCE-ONLY / HOLD)
 
 Rebuilt [the public evidence library](evidence.html) into a responsive, keyboard-accessible source-summary hub, replacing direct links to controlled Drive PDFs and unreviewed screenshot candidates with public-safe case studies and the text-only visual review gallery. Reconciled the 30 September controlled As-Built/Architecture/Training drafts, historical Delivery DEV 4.5.1 and 4.20.0 observations, and the Delivery repository's newer source 4.22.2 declaration without upgrading any runtime claim. Added CI-discovered privacy, route and evidence-tier regressions. No new DEV or Production validation, screenshot publication or private repository visibility change. [Release](releases/2026-11-16-evidence-library-private-link-containment.md).
