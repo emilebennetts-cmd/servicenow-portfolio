@@ -1,6 +1,6 @@
 ## 2026-11-17 — Pattern item-consumption source-to-draft contract (SOURCE-ONLY / MOCK-ONLY / HOLD)
 
-Added a responsive [six-lane pattern consumption lab](pattern-library.html#consumption-contract) with four synthetic source/review boundary cases, fail-closed missing child mapping, no ServiceNow writes and a six-row local HOLD-only CSV. Source review distinguished Delivery's 96 parent-only mined references from missing historical child data and controlled As-Built historical DEV claims. Added seven deterministic Node regression tests and CI coverage. No current DEV or Production execution, approval or genuine screenshot publication. [Technical release](releases/2026-11-17-pattern-item-consumption-contract.md).
+Added a responsive [six-lane pattern consumption lab](pattern-library.html#consumption-contract) with four synthetic source/review boundary cases, fail-closed missing child mapping, no ServiceNow writes and a six-row local HOLD-only CSV. Source review distinguished Delivery's 96 parent-only mined references from missing historical child data and controlled As-Built historical DEV claims. Added seven deterministic Node regression tests, exact inline-source parity and four-width offline Chromium UI/CSV coverage. No current DEV or Production execution, approval or genuine screenshot publication. [Technical release](releases/2026-11-17-pattern-item-consumption-contract.md).
 
 ## 2026-11-16 — Public evidence library confidentiality and dated proof boundaries (SOURCE-ONLY / HOLD)
 

@@ -10,7 +10,7 @@ The 28 September historical read-only pattern assessment recorded 96 parent patt
 
 Implemented a no-network, mobile-friendly **six-lane pattern item-consumption contract** in [the existing pattern-library case study](../pattern-library.html#consumption-contract). Four immutable fictional input cases show (a) parent-only source gaps, (b) partial unapproved drafts, (c) design-reviewed synthetic candidates and (d) unresolved parent identity. Mapping lanes: workshop questions, requirements, decisions, build guidance, tests and handover. Missing linked items are explicitly blocked rather than filled with fabricated data. Complete hypothetical governance only makes **synthetic engagement drafts** eligible; tests remain NOT RUN and approval HOLD. A six-row CSV export is local, formula-safe and contains no target instance or private evidence fields.
 
-Added a deterministic UMD model, seven Node regression tests, a new quality-gate step and homepage navigation. The existing historic/export evidence claims were not promoted to current DEV verification.
+Added a deterministic UMD model, seven Node regression tests, an exact-source inline/offline regression, a four-viewport Chromium UI/CSV workflow, a new quality-gate step and homepage navigation. The static page deliberately makes no external JavaScript request. The existing historic/export evidence claims were not promoted to current DEV verification.
 
 ## 3. Architectural best practices
 

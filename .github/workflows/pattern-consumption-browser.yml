@@ -1,0 +1,43 @@
+name: Pattern consumption contract — offline Chromium assurance
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pattern-library.html'
+      - 'pattern-consumption-contract.js'
+      - 'tests/pattern_consumption_contract.test.cjs'
+      - 'scripts/test_pattern_consumption_inline.py'
+      - 'scripts/browser_pattern_consumption_contract.py'
+      - '.github/workflows/pattern-consumption-browser.yml'
+  pull_request:
+    paths:
+      - 'pattern-library.html'
+      - 'pattern-consumption-contract.js'
+      - 'tests/pattern_consumption_contract.test.cjs'
+      - 'scripts/test_pattern_consumption_inline.py'
+      - 'scripts/browser_pattern_consumption_contract.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert fail-closed model and offline inline source parity
+        run: |
+          node --test tests/pattern_consumption_contract.test.cjs
+          python -m unittest discover -s scripts -p 'test_pattern_consumption_inline.py' -v
+      - name: Install Playwright Chromium
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Exercise four source-to-draft journeys and HOLD-only CSV at four widths
+        run: python scripts/browser_pattern_consumption_contract.py
