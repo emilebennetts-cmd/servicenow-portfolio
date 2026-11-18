@@ -51,6 +51,8 @@ jobs:
         run: node --test tests/diagnostic_envelope_assurance.test.cjs
       - name: Test Workbench source-to-DEV filters and HOLD-only export
         run: node --test tests/workbench_gap_board.test.cjs
+      - name: Test CMDB ownership and business criticality synthetic HOLD gate
+        run: node --test tests/cmdb_ownership_attestation.test.cjs
       - name: Test six-lane pattern item-consumption integrity and HOLD export
         run: node --test tests/pattern_consumption_contract.test.cjs
       - name: Test quality gate
