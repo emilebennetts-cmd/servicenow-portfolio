@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071926">
+<meta name="description" content="ServiceNow CMDB ownership and business criticality assurance: a source-conscious, six-gate synthetic case study with offline review exports.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>CMDB Ownership &amp; Criticality Assurance | ServiceNow Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#071926;--panel:#102c3b;--panel2:#113446;--line:#4d7183;--ink:#f2fcff;--muted:#bdd3dc;--mint:#80efcf;--gold:#ffdc9d;--cyan:#9acaff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 85% 2%,#205e6950,transparent 52%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--mint);text-underline-offset:4px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{width:min(1170px,calc(100% - 36px));margin-inline:auto}.skip{position:absolute;top:-100px;left:12px;padding:10px;background:white;color:#111;z-index:10}.skip:focus{top:10px}
+header{border-bottom:1px solid var(--line);background:#071926ef}header nav{display:flex;align-items:center;flex-wrap:wrap;gap:1rem 1.6rem;padding:1rem 0;font-size:.9rem}
+.eyebrow{color:var(--mint);font-size:.78rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+h1,h2,h3{line-height:1.12;letter-spacing:-.035em}h1{font-size:clamp(2.5rem,6.5vw,5.3rem);margin:.7rem 0 1.2rem;max-width:1020px}h2{font-size:clamp(1.7rem,3vw,2.5rem)}h3{font-size:1.15rem}
+p,li,dd{color:var(--muted)}.lead{font-size:1.2rem;max-width:840px}.hero{padding:clamp(3rem,7vw,6rem) 0 3rem;border-bottom:1px solid var(--line)}
+.pills{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.5rem 0}.pill{border:1px solid #7ca4ad;border-radius:99px;padding:.32rem .76rem;font-size:.77rem;font-weight:760}
+.notice{background:#302a22;border-left:4px solid var(--gold);padding:1rem 1.3rem;color:#ffe8c6;border-radius:0 12px 12px 0;max-width:930px}
+section{padding:2.6rem 0}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.card,.console,.detail{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:1.3rem}
+.card p:last-child{margin:0}.sequence{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.5rem 0}.sequence span{border:1px solid #6e9ba0;background:#164456;border-radius:10px;padding:.8rem 1rem;font-size:.83rem;font-weight:800}
+.toolbar{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:1.3rem 0}.scenario{font:inherit;cursor:pointer;background:#163c4e;color:var(--ink);border:1px solid #79a3b3;border-radius:10px;min-height:46px;padding:.65rem .95rem;font-size:.86rem;font-weight:750}
+.scenario[aria-pressed=true]{background:var(--mint);color:#092e36;border-color:var(--mint)}
+.console{padding:0;overflow:hidden}.console-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;border-bottom:1px solid var(--line);padding:1rem 1.5rem;background:#173b4e}
+.flag{font-size:.75rem;font-weight:800;color:#ffe3ab;background:#51391d;padding:.3rem .6rem;border-radius:7px}
+.console-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.3rem;padding:1.5rem}.signal{font-size:2.1rem;line-height:1.1;color:var(--mint);font-weight:800}.signal small{display:block;font-size:.76rem;letter-spacing:.04em;color:var(--muted);margin-top:.5rem}
+.result{padding:1rem;border-left:4px solid var(--gold);background:#3b301f;color:#ffe7bf;border-radius:0 8px 8px 0;font-size:1rem;font-weight:800}.result[data-ready="true"]{border-color:var(--mint);background:#133e3d;color:#bdf9ed}
+.table-scroll{overflow-x:auto}.gate-table{width:100%;border-collapse:collapse;min-width:670px}.gate-table th{text-align:left;color:var(--mint);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}.gate-table th,.gate-table td{padding:.8rem;border-bottom:1px solid #39586a;vertical-align:top}.gate-table td{font-size:.9rem;color:#d7e8f0}.status{font-weight:900;color:#ffe1a7}.status.ready{color:var(--mint)}
+button.primary{background:var(--mint);color:#072834;border:1px solid var(--mint);border-radius:9px;padding:.8rem 1rem;font:inherit;font-weight:850;cursor:pointer;min-height:46px}
+.note{font-size:.85rem;color:var(--muted)}.foot{padding:2rem 0 3rem;border-top:1px solid var(--line);font-size:.86rem}
+@media(max-width:800px){.three,.console-body{grid-template-columns:1fr}.hero{padding-top:3rem}}@media(max-width:480px){.wrap{width:calc(100% - 28px)}.console-body,.card{padding:1rem}.scenario{flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><nav class="wrap" aria-label="Portfolio navigation"><a href="./">Portfolio home</a><a href="cmdb-assurance-control-tower.html">CMDB Assurance Tower</a><a href="evidence.html">Evidence Library</a><a href="diagnostic-delivery-handoff-contract.html">Diagnostic handoff</a></nav></header>
+<main id="main">
+<div class="hero"><div class="wrap"><p class="eyebrow">CMDB governance · accountable ownership · consulting case study</p>
+<h1>Know who owns the service <span style="color:var(--mint)">before trusting the data.</span></h1>
+<p class="lead">A six-gate decision lab showing how ownership, support accountability, criticality, data-source precedence and independent review determine whether a CI can even enter native acceptance.</p>
+<div class="pills"><span class="pill">SOURCE-ONLY consulting design</span><span class="pill">MOCK-ONLY interactive examples</span><span class="pill">Native acceptance NOT RUN</span><span class="pill">Production NOT VERIFIED</span></div>
+<div class="notice" role="note"><strong>Evidence boundary:</strong> No customer records, live screenshots or credentials are present. This is a browser-local illustration of a proposed governance control, not an installed ServiceNow feature. A fully green example never grants approval or DEV verification.</div>
+</div></div>
+<section class="wrap" aria-labelledby="pain"><h2 id="pain">1. The client's pain &amp; history</h2><div class="three">
+<article class="card"><h3>Multiple sources, competing owners</h3><p>Discovery, cloud connectors and manual updates may reconcile the same CI differently. Without source authority, a newer value is not necessarily the correct owner.</p></article>
+<article class="card"><h3>A healthy CI without accountability</h3><p>Completeness scores can coexist with missing business owners, stale attestations and ambiguous operational support. Incidents and change impact assessments then route to the wrong teams.</p></article>
+<article class="card"><h3>Approval mistaken for a checkbox</h3><p>When the record owner also acts as its sole reviewer, governance loses independence. A completed worksheet is not proof of environment configuration or operational acceptance.</p></article>
+</div><p class="note">Representative enterprise situation, not a statement about any named customer or production environment.</p></section>
+<section class="wrap" aria-labelledby="solution"><h2 id="solution">2. The ServiceNow solution — ownership assurance before certification</h2>
+<p>Use the CMDB/CSDM relationship model and existing CI reference attributes for accountability, reconcile competing feeds through authoritative source policies and Identification and Reconciliation Engine controls, then route evidence for a human review. The illustrative 90-day review interval below is a sample organisational policy, <strong>not</strong> an OOTB ServiceNow rule.</p>
+<div class="sequence" aria-label="Governance pipeline"><span>1. Identify CI</span><span>2. Reconcile sources</span><span>3. Resolve owners</span><span>4. Validate impact</span><span>5. Independent review</span><span>6. Native verification</span></div>
+<div class="toolbar" id="scenario-controls" role="group" aria-label="Choose synthetic ownership scenario">
+<button class="scenario" type="button" data-id="missing-owner" aria-pressed="true">Orphaned CI</button>
+<button class="scenario" type="button" data-id="source-conflict" aria-pressed="false">Source conflict</button>
+<button class="scenario" type="button" data-id="stale-attestation" aria-pressed="false">Stale review</button>
+<button class="scenario" type="button" data-id="criticality-gap" aria-pressed="false">Criticality gap</button>
+<button class="scenario" type="button" data-id="self-approval" aria-pressed="false">Self-approval</button>
+<button class="scenario" type="button" data-id="ready-candidate" aria-pressed="false">Reviewed candidate</button>
+</div>
+<figure class="console" aria-labelledby="console-title"><figcaption class="console-top"><strong id="console-title">Ownership control review · illustrative interface</strong><span class="flag">SYNTHETIC / NO LIVE DATA</span></figcaption>
+<div class="console-body"><div><p class="eyebrow">Scenario</p><h3 id="scenario-title">Orphaned application</h3><p id="scenario-description">Asset has a service mapping but no named accountability.</p></div><div><div class="signal" id="gate-count" aria-label="Simulated passed gates">3 / 6<small>Example prerequisites met</small></div><p class="note">Independent native evidence receipts: 0. Production approvals: 0.</p></div></div>
+<div style="padding:0 1.5rem 1.5rem"><div id="outcome" class="result" role="status" aria-live="polite" data-ready="false">HOLD — REMEDIATE</div><p id="reason" class="note">Ownership evidence is incomplete.</p></div>
+<div class="table-scroll"><table class="gate-table"><caption class="note" style="text-align:left;padding:1rem">Six advisory controls — synthetic results only</caption><thead><tr><th scope="col">Control</th><th scope="col">Model output</th><th scope="col">Next action if blocked</th></tr></thead><tbody id="gate-rows"></tbody></table></div>
+<div style="padding:1.4rem 1.5rem"><button class="primary" type="button" id="export">Export six-gate MOCK-ONLY / HOLD worksheet (CSV)</button><p class="note">Download includes fixed scenario classifications only. No user values, instance data or reviewer identities are collected. Works offline after the page loads.</p></div></figure>
+</section>
+<section class="wrap" aria-labelledby="architecture"><h2 id="architecture">3. Architectural best practices &amp; licensing</h2>
+<div class="three"><article class="card"><h3>OOTB-first</h3><p>Prefer existing CMDB ownership references, CSDM service relationships, IRE reconciliation and native audit before creating custom ownership tables or an independent CI master.</p></article>
+<article class="card"><h3>Fail-closed lifecycle</h3><p>Flag unmapped owners and evidence gaps, retain source provenance, avoid automatic re-ownership, and require role separation. Do not treat a simulation as an approval or a completed ATF run.</p></article>
+<article class="card"><h3>Entitlements are target-specific</h3><p>Core CMDB/CSDM features require a suitably licensed ServiceNow environment and roles. ITOM Discovery, Service Graph Connectors, Service Mapping, CMDB Data Manager, Performance Analytics and custom app capabilities may require additional entitlements; confirm contract and plugin availability.</p></article></div>
+<p class="note">Source context: the controlled Universal Delivery Workbench As-Built, Architecture and User Guides (30 September 2026) distinguish source 4.6.1 from historically verified DEV 4.5.1. Diagnostic Workbench 2 has a separate source and runtime boundary. Neither source demonstrates that this advisory gate is deployed. See <a href="evidence.html">public evidence boundaries</a> and <a href="cmdb-assurance-control-tower.html">the native acceptance workpack</a>.</p>
+</section></main><footer class="foot"><div class="wrap">ServiceNow Professional Portfolio · No external API, installation, collection or release is performed by this demonstration. <a href="./">Return home</a>.</div></footer>
+<script src="./cmdb-ownership-attestation-model.js"></script>
+<script>
+(function(){
+ "use strict";
+ const engine=window.CMDBOwnerGate;
+ const select=document.querySelectorAll("button[data-id]");
+ const tbody=document.getElementById("gate-rows");
+ let current="missing-owner";
+ function paint(id){
+   const review=engine.evaluate(id); current=id;
+   select.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.id===id)));
+   document.getElementById("scenario-title").textContent=review.title;
+   document.getElementById("scenario-description").textContent=review.caption;
+   document.getElementById("gate-count").firstChild.textContent=review.controls.filter(c=>c.passed).length+" / 6";
+   const status=document.getElementById("outcome");
+   status.textContent=review.result;status.dataset.ready=String(review.ready);
+   document.getElementById("reason").textContent=review.reason;
+   tbody.replaceChildren();
+   review.controls.forEach(c=>{
+      const row=document.createElement("tr");
+      const name=document.createElement("th");name.scope="row";name.textContent=c.title;
+      const result=document.createElement("td");const badge=document.createElement("span");badge.className="status"+(c.passed?" ready":"");badge.textContent=c.disposition;result.append(badge);
+      const action=document.createElement("td");action.textContent=c.passed?"Candidate evidence recorded (synthetic).":c.action;
+      row.append(name,result,action);tbody.append(row);
+   });
+ }
+ select.forEach(button=>button.addEventListener("click",()=>paint(button.dataset.id)));
+ document.getElementById("export").addEventListener("click",()=>{
+   const csv=engine.toCSV(current);const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+   const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="cmdb-ownership-"+current+"-hold.csv";
+   document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+ });
+ paint(current);
+})();
+</script></body></html>
