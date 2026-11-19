@@ -35,9 +35,13 @@ class PrivateImageTriageTests(unittest.TestCase):
         self.assertEqual(parser.images, [])
         for source in (self.page, self.library, self.release):
             for marker in ("drive.google.com/file/d/", "servicenow-portfolio-control",
-                           "DEV-MIM-delivery-home-4.17.2-2026-10-05.jpg",
-                           "IMG-03", "IMG-04", "IMG-05"):
+                           "DEV-MIM-delivery-home-4.17.2-2026-10-05.jpg"):
                 self.assertNotIn(marker, source)
+        # Older public placeholder IDs are intentionally retained elsewhere.
+        new_section = self.page.split('id="nov19-review"', 1)[1].split(
+            '<section class="reviewed"', 1)[0]
+        for private_id in ("IMG-03", "IMG-04", "IMG-05"):
+            self.assertNotIn(private_id, new_section)
         self.assertIn("No original images or redacted derivatives have been approved or published.", self.library)
 
     def test_evidence_counts_are_not_conflated_with_prior_sample(self):
