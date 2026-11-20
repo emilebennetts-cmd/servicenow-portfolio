@@ -1,0 +1,43 @@
+name: Screenshot receipt responsive and privacy assurance
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'screenshot-publication-gate.html'
+      - 'screenshot-review-safety.js'
+      - 'tests/screenshot-review-safety.test.cjs'
+      - 'tests/test_screenshot_review_receipt_integration.py'
+      - 'scripts/browser_screenshot_review_receipt.py'
+      - '.github/workflows/screenshot-review-receipt-browser.yml'
+  pull_request:
+    paths:
+      - 'screenshot-publication-gate.html'
+      - 'screenshot-review-safety.js'
+      - 'tests/screenshot-review-safety.test.cjs'
+      - 'tests/test_screenshot_review_receipt_integration.py'
+      - 'scripts/browser_screenshot_review_receipt.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshot-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate safe receipt model and UI integration
+        run: |
+          node --test tests/screenshot-review-safety.test.cjs
+          python -m unittest discover -s tests -p 'test_screenshot_review_receipt_integration.py' -v
+      - name: Install pinned offline Chromium test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Check four widths, SHA-bound HOLD export, privacy blocking and reset
+        run: python scripts/browser_screenshot_review_receipt.py
