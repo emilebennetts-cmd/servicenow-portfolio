@@ -14,7 +14,7 @@ Source review used the public publication workflow and 19 November [visual inspe
 - The updated [screenshot publication gate](../screenshot-publication-gate.html) links to the [local PNG receipt verifier](../screenshot-receipt-verifier.html). Draft export is disabled when the alias is unsafe or notes appear sensitive. A missing SHA-256 prevents a completed review, even with nine checkmarks.
 - Exports use `portfolio-screenshot-review-v2`, omit invalid identities and digests, and retain an explicit `blocked` or `review_complete_not_auto_authorised` status. There is **no** `approved` or `publish` state. The heuristic notes checker cannot certify privacy.
 - Reconciled the public notice: ten historical candidate slots and eight inspected private source images (possible overlap), zero public approvals. No image files, Drive IDs, controlled names, customer information or source code from the private repositories were published.
-- Added ten Node regressions to the main quality workflow for identity, digests, missing review controls, suspicious notes and non-authorising exports.
+- Added ten Node regressions to the main quality workflow for identity, digests, missing review controls, suspicious notes and non-authorising exports. Added a Playwright Chromium workflow exercising four viewport widths (375, 768, 1024, 1440 px), complete and blocked receipt states, safe JSON download, reset, horizontal overflow and network isolation.
 
 ## 3. Architectural best practices and verification
 
@@ -24,6 +24,6 @@ This release changes only GitHub Pages source code and tests. **New DEV-VERIFIED
 
 **Licensing and entitlements:** The offline gate and static website require no ServiceNow licence. Actual scoped Workbench operation requires appropriate application hosting rights, roles and ACLs; ITSM, ITOM/Discovery, Service Graph Connectors, IntegrationHub, SecOps, IRM, ITAM, AI and analytics must each be checked against the target instance and contracted capabilities when used.
 
-**Remaining blockers:** Final image-specific owner/independent reviewer approval, pixel/metadata review, authorised current DEV read-back and native test evidence. CI and live-URL status must be confirmed separately from committed source.
+**Remaining blockers:** Final image-specific owner/independent reviewer approval, pixel/metadata review, authorised current DEV read-back and native test evidence. CI and live-URL status must be confirmed separately from committed source. Browser contract source: `scripts/browser_screenshot_review_receipt.py` and `.github/workflows/screenshot-review-receipt-browser.yml`.
 
 **Implementation trail:** `screenshot-review-safety.js`, `screenshot-publication-gate.html`, `tests/screenshot-review-safety.test.cjs`, `.github/workflows/portfolio-quality.yml`.
