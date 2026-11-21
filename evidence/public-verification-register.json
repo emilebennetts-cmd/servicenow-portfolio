@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_utc": "2026-11-18T11:30:00Z",
+  "updated_utc": "2026-11-21T11:49:34.787Z",
   "purpose": "Public, non-sensitive verification register; not a deployment attestation",
   "classification_definitions": {
     "source-only": "Claim supported by source documentation or code, without independent runtime execution",
@@ -964,6 +964,15 @@
       "runtime_verification": "Six static synthetic cases, strict scenario enumeration and six-row CSV are MOCK-ONLY. Illustrative 90-day policy is not OOTB ServiceNow default. Green candidate stays HOLD and native NOT RUN; no CMDB read-back, ATF, instance validation, release approval or Production verification. Newly DEV-VERIFIED 0; PRODUCTION-VERIFIED 0.",
       "public_screenshot_status": "CSS-generated illustration only, not a captured ServiceNow screen. No private source, customer records or image assets. Authentic image publication remains HOLD pending per-image approval.",
       "page": "cmdb-ownership-attestation-lab.html"
+    },
+    {
+      "id": "DOC-CURRENCY-20261121",
+      "title": "Version-bound controlled-document currency comparison",
+      "classification": "source-only",
+      "basis": "Connected September 2026 Delivery As-Built and controlled Training snapshots declared source 4.6.1; 19 October Delivery Architecture declared source 4.22.2; independently retrieved Diagnostic showcase runbook is expressly fictional; current private Delivery main package manifest declares version 4.22.2. The public contract uses only four summarized document snapshots, not original files.",
+      "runtime_verification": "Browser-local selected-version comparison and HOLD-only CSV are illustrative. Dated 2026 DEV statements in underlying documents are historical, not independently rerun. Native DEV NOT RUN; current Production NOT RUN. Snapshot match is not deployed-package verification or training approval.",
+      "public_screenshot_status": "No original screenshots, restricted source or Drive links. Real screenshot publication approvals 0/HOLD.",
+      "page": "documentation-currency-gate.html"
     }
   ],
   "publication_policy": "No customer information, private source, secrets or unreviewed screenshots. Source-only and mock-only claims never imply DEV or production execution. Original Workbench captures remain HOLD until image-specific publication approval."
