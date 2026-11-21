@@ -1,0 +1,39 @@
+name: Documentation currency — responsive evidence and HOLD checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'documentation-currency-gate.html'
+      - 'documentation-currency-model.js'
+      - 'tests/documentation-currency-model.test.cjs'
+      - 'scripts/browser_documentation_currency.py'
+      - '.github/workflows/documentation-currency-browser.yml'
+  pull_request:
+    paths:
+      - 'documentation-currency-gate.html'
+      - 'documentation-currency-model.js'
+      - 'tests/documentation-currency-model.test.cjs'
+      - 'scripts/browser_documentation_currency.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test document snapshot version and fail-closed native HOLD
+        run: node --test tests/documentation-currency-model.test.cjs
+      - name: Install pinned Chromium test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install chromium --only-shell
+      - name: Verify 375 / 768 / 1024 / 1440px and privacy-safe CSV
+        run: python scripts/browser_documentation_currency.py
