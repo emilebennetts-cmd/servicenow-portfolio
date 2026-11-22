@@ -31,29 +31,39 @@ def main():
                 page.on("request", lambda req: outside.append(req.url) if urlsplit(req.url).netloc != urlsplit(base).netloc else None)
                 response = page.goto(base + "/documentation-currency-gate.html", wait_until="networkidle")
                 assert response and response.ok
-                assert page.locator("#records article.doc").count() == 4
-                assert page.locator("#matched").inner_text() == "1"
+                assert page.locator("#records article.doc").count() == 6
+                assert page.locator("#matched").inner_text() == "3"
                 assert page.locator("#drift").inner_text() == "2"
-                assert page.locator("#holds").inner_text() == "4"
+                assert page.locator("#holds").inner_text() == "6"
                 assert "HOLD" in page.locator("#summary").inner_text()
                 page.select_option("#target", "4.6.1")
                 assert page.locator("#matched").inner_text() == "2"
-                assert page.locator("#drift").inner_text() == "1"
+                assert page.locator("#drift").inner_text() == "3"
                 assert "UNVERSIONED / SHOWCASE" in page.locator("#records").inner_text()
+                assert "October DOCX" in page.locator("#records").inner_text()
+                assert "September PDF" in page.locator("#records").inner_text()
+                assert page.locator("#persona-result").inner_text().count("NOT RUN / HOLD") == 1
+                page.select_option("#persona","architect")
+                assert "segregation of duties" in page.locator("#persona-result").inner_text().lower()
+                assert "September PDF" in page.locator("#persona-result").inner_text()
+                page.select_option("#target","4.22.2")
+                assert "October DOCX" in page.locator("#persona-result").inner_text()
+                assert page.locator("#matched").inner_text() == "3"
+                page.select_option("#target","4.6.1")
                 with page.expect_download() as info:
                     page.locator("#export").click()
                 dl = info.value
                 assert dl.suggested_filename == "documentation-currency-4.6.1-hold.csv"
                 raw = Path(dl.path()).read_text("utf-8")
                 rows = list(csv.reader(io.StringIO(raw)))
-                assert len(rows) == 5 and len(rows[0]) == 9
-                assert all(row[6:8] == ["NOT RUN", "HOLD"] for row in rows[1:])
+                assert len(rows) == 7 and len(rows[0]) == 11
+                assert all(row[8:10] == ["NOT RUN", "HOLD"] for row in rows[1:])
                 assert not any(term in raw.lower() for term in ("sys_id", "dev438211", "service-now.com", "drive.google.com"))
                 assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1"), f"Horizontal overflow {width}"
                 assert not errors, (width, errors)
                 assert not outside, (width, outside)
                 context.close()
-                print(f"PASS: {width}px, 4 controlled snapshots, stable HOLD CSV, no network egress")
+                print(f"PASS: {width}px, 6 edition-bound snapshots, persona proof HOLD, stable CSV, no network egress")
             browser.close()
     finally:
         server.shutdown()
