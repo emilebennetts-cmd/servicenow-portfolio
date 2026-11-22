@@ -1,25 +1,25 @@
-/* Public, source-document snapshot crosswalk. Does not attest native ServiceNow execution. */
+/* Public, source-document edition crosswalk. Distinct PDF/DOCX editions are NOT interchangeable; no runtime attestation. */
 (function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;else root.DocCurrencyGate=api;})(typeof globalThis!=="undefined"?globalThis:this,function(){
-  "use strict";
-  const docs=Object.freeze([
-    Object.freeze({id:"ASBUILT-SEP30",name:"Delivery Solution As-Built",version:"4.6.1",cutoff:"2026-09-30",kind:"SOURCE DOCUMENT",scope:"Delivery lifecycle, controls and handover",next:"Reconcile procedures to authorised installed target, then obtain owner acceptance."}),
-    Object.freeze({id:"TRAINING-SEP30",name:"Delivery User Guides & Training",version:"4.6.1",cutoff:"2026-09-30",kind:"CONTROLLED DRAFT",scope:"Persona tasks, safety rules and unfilled screen-capture placeholders",next:"Rehearse on target DEV release; re-capture approved screens and secure trainer/owner sign-off."}),
-    Object.freeze({id:"ARCH-OCT19",name:"Delivery Architecture",version:"4.22.2",cutoff:"2026-10-19",kind:"SOURCE/HISTORICAL DEV DOCUMENT",scope:"Generator, role/ACL, integration and transport boundaries",next:"Reconfirm target package, scope, ACL, entitlement and current DEV read-back."}),
-    Object.freeze({id:"DIAG-DEMO",name:"Diagnostic Completion Runbook",version:null,cutoff:"historical controlled showcase",kind:"FICTIONAL SHOWCASE RUNBOOK",scope:"Finding-to-delivery reconciliation, G2 licensing and simulated deployment",next:"Do not transfer demo gates to live acceptance; map findings to authorised target evidence."})
-  ]);
-  const versions=Object.freeze(["4.6.1","4.22.2"]);
-  function rows(target){
-    if(!versions.includes(target))throw Error("Unsupported evidence target: choose a controlled snapshot.");
-    return docs.map(d=>{
-      const alignment=d.version===null?"UNVERSIONED / SHOWCASE":d.version===target?"SNAPSHOT MATCH":"DOCUMENT DRIFT";
-      return Object.freeze({...d,alignment,decision:"HOLD",nativeVerification:"NOT RUN",publication:"NOT AUTHORISED"});
-    });
-  }
-  function csv(target){
-    const fields=["Doc ID","Controlled document","Snapshot","Evidence cutoff","Target","Comparison","Native acceptance","Decision","Next evidence action"];
-    const records=rows(target).map(d=>[d.id,d.name,d.version||"none",d.cutoff,target,d.alignment,d.nativeVerification,d.decision,d.next]);
-    const esc=v=>'"'+String(v).replace(/"/g,'""').replace(/^([=+\-@\t\r])/,"'$1")+'"';
-    return [fields,...records].map(row=>row.map(esc).join(",")).join("\r\n")+"\r\n";
-  }
-  return Object.freeze({docs,versions,rows,csv});
+"use strict";
+const docs=Object.freeze([
+  Object.freeze({id:"ASBUILT-SEP30",name:"Delivery Solution As-Built",edition:"September PDF",format:"PDF",version:"4.6.1",cutoff:"2026-09-30",kind:"CONTROLLED DRAFT",scope:"September lifecycle and handover procedures; historical 4.5.1 DEV boundary",next:"Check target package and reconcile September procedures before use."}),
+  Object.freeze({id:"TRAINING-SEP30",name:"Delivery User Guides & Training",edition:"September PDF",format:"PDF",version:"4.6.1",cutoff:"2026-09-30",kind:"CONTROLLED DRAFT",scope:"September persona guides and unfilled live screenshot placeholders",next:"Rehearse procedures against authorised target and collect persona sign-off."}),
+  Object.freeze({id:"ASBUILT-OCT19",name:"Delivery Solution As-Built",edition:"October DOCX",format:"DOCX",version:"4.22.2",cutoff:"2026-10-19",kind:"CONTROLLED DRAFT",scope:"October source-defined delivery controls; dated DEV observations are not current target acceptance",next:"Confirm exact target commit, installed package, generated records and authorisation."}),
+  Object.freeze({id:"TRAINING-OCT19",name:"Delivery User Guides & Training",edition:"October DOCX",format:"DOCX",version:"4.22.2",cutoff:"2026-10-19",kind:"CONTROLLED DRAFT",scope:"October role-based guidance, exercises and competency sign-off; visual sign-off not supplied",next:"Revalidate persona permissions and routes; obtain approved screens and trainer sign-off."}),
+  Object.freeze({id:"ARCH-OCT19",name:"Delivery Architecture",edition:"October DOCX",format:"DOCX",version:"4.22.2",cutoff:"2026-10-19",kind:"SOURCE/HISTORICAL DEV DOCUMENT",scope:"Source architecture, generated metadata, ACL, integration and transport boundaries",next:"Reconfirm scope, package, roles, dependencies and current authorised DEV read-back."}),
+  Object.freeze({id:"DIAG-DEMO",name:"Diagnostic Completion Runbook",edition:"Fictional showcase",format:"DOCX",version:null,cutoff:"historical showcase",kind:"FICTIONAL SHOWCASE RUNBOOK",scope:"Simulated finding-to-delivery reconciliation and non-production release demonstration",next:"Exclude demo approvals from native acceptance; obtain separately authorised real evidence."})
+]);
+const versions=Object.freeze(["4.6.1","4.22.2"]);
+const personas=Object.freeze([
+ Object.freeze({id:"presales",label:"Presales & account lead",focus:"Engagement qualification, estimate and proposal baseline",proof:"Authorised target membership, scope and baseline review"}),
+ Object.freeze({id:"delivery",label:"Delivery lead",focus:"Guided journey, workshops, decisions and operational ownership",proof:"Linked records, independent approvals and open-exception review"}),
+ Object.freeze({id:"architect",label:"Solution architect",focus:"Design decision, build specification and segregation of duties",proof:"Approved decision lineage, no self-approval and tested ACLs"}),
+ Object.freeze({id:"test",label:"Test & release lead",focus:"Negative-path tests, defects, release and rollback evidence",proof:"Target-specific test results, approved change and rollback rehearsal"}),
+ Object.freeze({id:"platform",label:"Platform owner",focus:"Application identity, source manifest, roles and access",proof:"Current installed version/scope read-back and target entitlements"})
+]);
+function valid(target){if(!versions.includes(target))throw Error("Unsupported evidence target: choose a controlled snapshot.");}
+function rows(target){valid(target);return docs.map(d=>Object.freeze({...d,alignment:d.version===null?"UNVERSIONED / SHOWCASE":d.version===target?"SNAPSHOT MATCH":"DOCUMENT DRIFT",decision:"HOLD",nativeVerification:"NOT RUN",publication:"NOT AUTHORISED"}));}
+function training(target,id){valid(target);const persona=personas.find(p=>p.id===id);if(!persona)throw Error("Unsupported training persona");const edition=target==="4.22.2"?"October DOCX":"September PDF";return Object.freeze({...persona,edition,release:target,action:"Rehearse on authorised target, capture observed result and obtain independent reviewer approval.",nativeVerification:"NOT RUN",decision:"HOLD"});}
+function csv(target){const fields=["Doc ID","Controlled document","Edition","Format","Snapshot","Evidence cutoff","Target","Comparison","Native acceptance","Decision","Next evidence action"];const records=rows(target).map(d=>[d.id,d.name,d.edition,d.format,d.version||"none",d.cutoff,target,d.alignment,d.nativeVerification,d.decision,d.next]);const esc=v=>'"'+String(v).replace(/"/g,'""').replace(/^([=+\-@\t\r])/,"'$1")+'"';return [fields,...records].map(row=>row.map(esc).join(",")).join("\r\n")+"\r\n";}
+return Object.freeze({docs,versions,personas,rows,training,csv});
 });
