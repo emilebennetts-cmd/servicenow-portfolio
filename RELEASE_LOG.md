@@ -1,3 +1,7 @@
+## 2026-11-22 — Edition-aware documentation and role training reconciliation (SOURCE-ONLY / HOLD)
+
+Inspected the controlled Drive originals again and corrected a material inventory omission: September PDF As-Built/Training are source **4.6.1**, while October DOCX editions of those same titles and Architecture are **4.22.2**. The public [Documentation Currency Gate](documentation-currency-gate.html) now distinguishes six controlled file editions, supports five source-backed persona rehearsal tracks and exports six strict **NOT RUN / HOLD** CSV rows. Added CSP containment and updated Evidence Library, Node and Chromium assertions. **No new native DEV, Production, screenshot approval or signed training completion claims.** [Technical release](releases/2026-11-22-document-edition-lineage-persona-rehearsal.md).
+
 ## 2026-11-21 — Documentation currency and training readiness (SOURCE-ONLY / HOLD)
 
 Added a public [version-aware document currency gate](documentation-currency-gate.html) comparing four controlled As-Built, Training, Architecture and fictional Diagnostic runbook snapshots. The September 4.6.1 guides and October 4.22.2 Architecture are not interchangeable; matching metadata is not installed DEV proof. Browser-local four-row HOLD-only CSV, eight Node tests and a required quality-workflow step were implemented; navigation, sitemap and private control receipts updated. No new DEV or Production acceptance and no screenshot approvals. [Technical release](releases/2026-11-21-documentation-currency-gate.md).
