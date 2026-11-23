@@ -59,6 +59,27 @@ def main():
                 assert len(rows) == 7 and len(rows[0]) == 11
                 assert all(row[8:10] == ["NOT RUN", "HOLD"] for row in rows[1:])
                 assert not any(term in raw.lower() for term in ("sys_id", "dev438211", "service-now.com", "drive.google.com"))
+                # New source-only training-to-native protocol matrix. No execution or signoff changes.
+                assert page.locator("#protocol-list article.protocol-item").count() == 3
+                assert "NOT RUN" in page.locator("#protocol-count").inner_text()
+                for role in ("presales", "delivery", "architect", "test", "platform"):
+                    page.select_option("#persona", role)
+                    assert page.locator("#protocol-list article.protocol-item").count() == 3
+                    assert page.locator("#protocol-list").inner_text().count("SOURCE-ONLY") == 3
+                page.select_option("#protocol-filter", "all")
+                assert page.locator("#protocol-list article.protocol-item").count() == 15
+                with page.expect_download() as protocol_info:
+                    page.locator("#protocol-export").click()
+                protocol_dl = protocol_info.value
+                assert protocol_dl.suggested_filename == "native-training-acceptance-4.6.1-all-hold.csv"
+                protocol_csv = Path(protocol_dl.path()).read_text("utf-8")
+                protocol_rows = list(csv.reader(io.StringIO(protocol_csv)))
+                assert len(protocol_rows) == 16
+                assert len(protocol_rows[0]) == 13
+                assert all(row[8:11] == ["SOURCE-ONLY", "NOT RUN", "HOLD"] for row in protocol_rows[1:])
+                assert all(row[11:13] == ["NOT VERIFIED", "NOT AUTHORISED"] for row in protocol_rows[1:])
+                assert all(len(row[6]) > 35 for row in protocol_rows[1:])  # negative-path tests
+                assert not any(term in protocol_csv.lower() for term in ("sys_id", "dev438211", "drive.google.com", "service-now.com"))
                 assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1"), f"Horizontal overflow {width}"
                 assert not errors, (width, errors)
                 assert not outside, (width, outside)
