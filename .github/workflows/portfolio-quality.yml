@@ -19,6 +19,8 @@ jobs:
           node-version: '22'
       - name: Test document currency and native HOLD model
         run: node --test tests/documentation-currency-model.test.cjs
+      - name: Test fifteen role-specific native training protocols and HOLD exports
+        run: node --test tests/documentation-training-protocol.test.cjs
       - name: Test screenshot receipt safety, SHA-256 binding and secret-safe exports
         run: node --test tests/screenshot-review-safety.test.cjs
       - name: Test Change Management browser-local model and HOLD-only CSV
