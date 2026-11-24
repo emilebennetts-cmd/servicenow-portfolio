@@ -44,9 +44,9 @@ class ResponsiveNavigationTests(unittest.TestCase):
         self.assertEqual(
             links,
             [
-                "engineering-case-studies.html",
-                "workbench-architecture-gallery.html",
-                "visual-evidence.html",
+                "delivery-case-study.html",
+                "diagnostic-workbench-case-study.html",
+                "pattern-library.html#pattern-families",
                 "#contact",
             ],
         )
