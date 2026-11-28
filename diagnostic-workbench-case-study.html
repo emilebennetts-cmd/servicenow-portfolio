@@ -134,6 +134,41 @@
 <details><summary>06 · Restricted persona — enforce access</summary><p><strong>Fixture:</strong> A user without the appropriate engagement or evidence permissions attempts to read or approve a receipt.</p><p><strong>Expected:</strong> Enforce server-side access controls and deny unauthorised changes, regardless of the browser presentation.</p></details>
 <p class="note"><strong>All six scenarios: NOT RUN / HOLD.</strong> The proposed control is configuration-driven and engagement-scoped; no new ServiceNow runtime execution, release approval, licence validation or screenshot approval is claimed.</p>
 </div>
+<div id="configured-collection-lab" class="card" aria-labelledby="configured-collection-title">
+<p class="eyebrow">Configuration-driven design · offline evidence rehearsal · 28 November 2026</p>
+<h3 id="configured-collection-title">From a one-off fix to an engagement-isolated collection contract</h3>
+<p>Use a governed template revision to determine which metric qualifies, not a hard-coded engagement exception. The examples below are synthetic and do not establish an installed native implementation.</p>
+<div class="grid"><article class="boundary-lane"><span class="lane-tag">01 · Configuration</span><h4>Active template</h4><p>Stable template identity, metric, revision and threshold; ambiguous matches require review.</p></article><article class="boundary-lane"><span class="lane-tag">02 · Reconciliation</span><h4>Attributable receipt</h4><p>Validate engagement, environment and counts; identical replay does not create another candidate row.</p></article><article class="boundary-lane ki"><span class="lane-tag">03 · Assurance</span><h4>Independent acceptance</h4><p>A candidate is not completed collection, deployment approval or a passed ACL test.</p></article></div>
+<h4>Explore the decision boundary</h4>
+<div class="diag-controls">
+<label for="configured-threshold">Threshold (percentage)<select id="configured-threshold"><option value="1000">10%</option><option value="2500">25%</option><option value="3000">30%</option></select></label>
+<label for="configured-scenario">Synthetic fixture<select id="configured-scenario"><option value="breach">Same engagement · 5 of 20</option><option value="exact">Same engagement · 2 of 20</option><option value="inactive">Inactive template · 5 of 20</option><option value="foreign">Different engagement · 5 of 20</option><option value="rounding">Boundary rounding · 1,001 of 10,001</option></select></label>
+</div>
+<div class="boundary-map"><article class="boundary-lane"><h4>Expected control response</h4><p id="configured-result" aria-live="polite"><strong>CANDIDATE</strong> · 1 review row; 0 completed</p><p id="configured-metric">25% synthetic ratio; threshold 10%; strict greater-than comparison.</p></article><article class="boundary-lane ki"><h4>Release boundary</h4><p><strong>NOT RUN / HOLD</strong></p><p>No native execution, screenshots, approval, external requests or ServiceNow changes.</p></article></div>
+<noscript><p>Interactive controls require JavaScript. The default fixture is 5 of 20 with a 10% threshold; the expected response is one candidate for independent review, zero completed.</p></noscript>
+<div class="proof-table"><table><thead><tr><th>Additional synthetic contract checks</th><th>Expected outcome</th></tr></thead><tbody>
+<tr><td>Identical receipt replay</td><td>One candidate, zero completed</td></tr>
+<tr><td>Conflicting replay or two active templates for one metric</td><td>Review required; no candidate credit</td></tr>
+<tr><td>Two separately configured metrics with eligible receipts</td><td>Two independent candidates; zero completed</td></tr>
+<tr><td>Unmatched metric or invalid counts</td><td>Review required</td></tr>
+<tr><td>Restricted persona or production context</td><td>Deny or reject; actual server ACL tests remain unexecuted</td></tr>
+</tbody></table></div>
+<p class="note">The offline contract is source-only and its fixtures are mock-only. Matching metadata or a successful replay does not establish package equivalence, role enforcement or native gate progression. <a href="releases/2026-11-28-configured-collection-rehearsal.md">Release and evidence limits</a>.</p>
+</div>
+<script>
+(()=>{'use strict';
+const threshold=document.getElementById('configured-threshold'),scenario=document.getElementById('configured-scenario'),result=document.getElementById('configured-result'),metric=document.getElementById('configured-metric');
+if(!threshold||!scenario||!result||!metric)return;
+const fixtures={breach:[5,20,true,true],exact:[2,20,true,true],inactive:[5,20,false,true],foreign:[5,20,true,false],rounding:[1001,10001,true,true]};
+function preview(affected,total,threshold,active,isolated){
+  if(!isolated)return ["REJECTED",0];
+  if(!active)return ["BLOCKED",0];
+  return affected*10000>total*threshold?["CANDIDATE",1]:["BLOCKED",0];
+}
+function render(){const fixture=fixtures[scenario.value],p=Number(threshold.value);if(!fixture||![1000,2500,3000].includes(p))return;const [affected,total,active,isolated]=fixture;const [state,n]=preview(affected,total,p,active,isolated);result.textContent=state+' · '+n+' review row'+(n===1?'':'s')+'; 0 completed';metric.textContent=affected.toLocaleString('en-AU')+' of '+total.toLocaleString('en-AU')+' ('+(affected*100/total).toFixed(4)+'% displayed); threshold '+p/100+'%; strict comparison uses exact counts.';}
+threshold.addEventListener('change',render);scenario.addEventListener('change',render);render();
+})();
+</script>
 <p class="note"><strong>Acceptance boundary:</strong> Native Incident routing, ATF, live collectors, restricted-persona ACL tests, operational acceptance and production verification remain unestablished. No real customer data or screenshots are included. <a href="releases/2026-11-26-incident-pilot-evidence.md">Read the sanitised release note</a>.</p>
 </section>
 <section id="evidence"><h2>Evidence register &amp; verification</h2><div id="dev-verification-checkpoint" class="card" aria-labelledby="dev-checkpoint-title">
